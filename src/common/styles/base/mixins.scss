@@ -1,0 +1,19 @@
+@mixin header-link {
+  display: inline-flex;
+  align-items: center;
+  position: relative;
+  height: 100%;
+  padding: 28px 20px;
+  font-size: $font-size-lg;
+  line-height: $line-height-lg;
+  color: $color-text-default;
+  text-decoration: none;
+  border-radius: 5px;
+  cursor: pointer;
+  &:hover{
+    color: $color-primary;
+    span{
+      color: $color-primary;
+    }
+  }
+}

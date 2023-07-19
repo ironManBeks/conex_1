@@ -1,0 +1,10 @@
+.skeleton{
+  &_wrapper{
+    margin-bottom: 20px;
+    .ant-skeleton-input{
+      width: 100%;
+      min-width: 30px;
+    }
+  }
+}
+

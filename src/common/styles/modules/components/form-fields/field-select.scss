@@ -1,0 +1,118 @@
+.form-field_wrapper._select {
+  --x-p: 10px;
+  --y-p: 10px;
+  --bg-color: transparent;
+  .form-field{
+    &_field.ant-select{
+      .ant-select{
+        &-selector{
+          height: auto;
+          background-color: var(--bg-color);
+          border: 1px solid $color-grey-400;
+          padding: var(--y-p) var(--x-p);
+          font-size: $line-height-md;
+          line-height: $line-height-md;
+          color: $color-grey-800;
+          outline: none !important;
+          border-radius: $border-radius-bs;
+          overflow: hidden;
+          &:hover, &:focus{
+            box-shadow: none;
+            &:not([disabled]){
+              border-color: $color-primary;
+            }
+          }
+          &:after{
+            line-height: $line-height-bs;
+          }
+        }
+        &-selection-search{
+          inset-inline-start: 0;
+          inset-inline-end: 0;
+          font-size: $line-height-md;
+          line-height: $line-height-md;
+          padding: 0 var(--x-p);
+        }
+        &-selection-search-input{
+          outline: none !important;
+          height: 100%;
+        }
+        &-selection-placeholder{
+          display: flex;
+          align-items: center;
+          inset-inline-start: 0;
+          inset-inline-end: 0;
+          padding: 0 var(--x-p) 0 0;
+          line-height: 1;
+        }
+        &-selection-item{
+          align-items: center;
+          font-size: $line-height-md;
+          line-height: $line-height-md;
+          color: $color-grey-600;
+        }
+        &-selection-overflow{
+          .ant-select{
+            &-selection-search{
+              inset-inline-start: unset;
+              inset-inline-end: unset;
+              padding: 0;
+              margin: 0;
+            }
+          }
+        }
+      }
+      &.ant-select-multiple{
+        .ant-select{
+          &-selection-placeholder{
+            padding: 0 var(--x-p);
+          }
+        }
+      }
+      &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+        box-shadow: none;
+        border-color: $color-primary;
+      }
+      &._disabled{
+        .ant-select{
+          &-selector{
+            cursor: not-allowed;
+            background-color: $color-disabled-bg;
+            border-color: $color-disabled-border;
+            color: $color-disabled-text;
+            &:hover, &:focus{
+              box-shadow: none;
+              border-color: $color-disabled-border;
+            }
+          }
+          &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
+            box-shadow: none;
+            background-color: $color-grey-500;
+          }
+        }
+      }
+    }
+  }
+}
+
+.form-field_dropdown._select{
+  --x-p: 10px;
+  --y-p: 10px;
+  border-radius: $border-radius-bs;
+  .ant-select-item{
+    &-option{
+      padding: var(--y-p) var(--x-p);
+      &-selected{
+        background-color: $color-yellow-100;
+      }
+      &-content{
+        font-size: $line-height-bs;
+        line-height: $line-height-bs;
+        color: $color-grey-800;
+      }
+      &-disabled{
+        background-color: $color-disabled-selection-bg;
+      }
+    }
+  }
+}

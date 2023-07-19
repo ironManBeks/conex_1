@@ -1,0 +1,109 @@
+.header{
+  &_wrapper{
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: $color-white;
+    box-shadow: $box-shadow-md;
+    z-index: $z-index-header;
+  }
+
+  &_left-side{
+    display: flex;
+  }
+
+  &_logo{
+    margin-right: 100px;
+  }
+
+  &_nav-links{
+    &__wrapper{
+      display: flex;
+      .nav-links_item{
+        &__wrapper{
+          a{
+            @include header-link;
+          }
+          &._active{
+            a, span{
+              color: $color-primary;
+            }
+          }
+          &._builder{
+            a{
+              color: $color-grey-600;
+              span{
+                transition: .3s;
+                padding: 0 5px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &_nav-actions{
+    &__wrapper{
+      display: flex;
+
+      .nav-actions{
+        &_search{
+          &__wrapper{
+            display: flex;
+            align-items: center;
+            .form-field{
+              &_wrapper{
+                margin: 0;
+              }
+              &_field{
+                font-size: $font-size-bs;
+                line-height: $line-height-bs;
+              }
+            }
+          }
+        }
+        &_cart{
+          &__wrapper{
+            display: flex;
+            align-items: center;
+            margin-left: 28px;
+            &:hover{
+              cursor: pointer;
+              .common-title{
+                color: $color-yellow-500;
+              }
+            }
+          }
+          &__icon{
+            width: 27px;
+            height: 27px;
+            background-color: $color-grey-200;
+            border-radius: $border-radius-circle;
+            display: inline-flex;
+            justify-content: center;
+            align-items: center;
+          }
+          &__content{
+            margin-left: 15px;
+            text-align: center;
+            .common-title{
+              font-size: $font-size-bs;
+              font-family: $font-family-primary;
+              color: $color-grey-900;
+              transition: .3s;
+            }
+            .common-text{
+              color: $color-grey-450;
+              font-size: $font-size-xs;
+              font-weight: 400;
+              margin-bottom: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

@@ -1,0 +1,289 @@
+.common-btn{
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  font-family: $font-family-primary;
+  font-size: $font-size-lg;
+  text-decoration: none;
+  text-align: center;
+  border-radius: $border-radius-bs;
+  box-sizing: border-box;
+  font-weight: 400;
+  border: 1px solid;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover{
+    box-shadow: $box-shadow-bs-hover;
+  }
+
+  &.__small{
+    padding: 6px 18px;
+    font-size: $font-size-bs;
+    line-height: $line-height-bs;
+    min-width: 150px;
+  }
+
+  &.__medium{
+    padding: 12px 36px;
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
+    min-width: 180px;
+  }
+
+  &.__large{
+    padding: 14px 44px;
+    font-size: $font-size-xl;
+    line-height: $line-height-xl;
+    min-width: 210px;
+  }
+
+  &.__default{
+    color: $color-grey-800;
+    background-color: $color-grey-30;
+    border-color: $color-primary;
+    &:hover{
+      background-color: $color-grey-50;
+    }
+    &:active{
+      background-color: $color-grey-50;
+    }
+    &.__shadow{
+      box-shadow: $box-shadow-bs;
+      &:hover {
+        box-shadow: $box-shadow-bs-hover;
+      }
+    }
+    &.__disabled{
+      &:hover{
+        color: $color-grey-400;
+        background-color: $color-white !important;
+      }
+    }
+  }
+
+  &.__transparent{
+    color: $color-grey-500;
+    background-color: transparent;
+    border-color: transparent;
+  }
+
+  &.__primary{
+    color: $color-text-default;
+    background-color: $color-primary;
+    border-color: $color-primary;
+    &:hover{
+      background-color: $color-primary-hover;
+      border-color: $color-primary-hover;
+    }
+    &:active{
+      background-color: $color-primary;
+      border-color: $color-primary;
+    }
+    svg path {
+      fill: $color-white;
+    }
+    &.__shadow{
+      box-shadow: $box-shadow-bs;
+      &:hover {
+        box-shadow: $box-shadow-bs-hover;
+      }
+    }
+    &.__outline{
+      color: $color-grey-500;
+      background-color: $color-white;
+      &:hover{
+        color: $color-white;
+        background-color: $color-primary-hover;
+        border-color: $color-primary-hover;
+        svg path {
+          fill: $color-white;
+        }
+      }
+      &:active{
+        color: $color-white;
+        background-color: $color-primary;
+        border-color: $color-primary;
+        svg path {
+          fill: $color-white;
+        }
+      }
+      svg path {
+        fill: $color-primary;
+      }
+    }
+    &.__disabled{
+      &:hover{
+        background-color: $color-primary !important;
+      }
+      &.__outline{
+        &:hover,
+        &:active{
+          color: $color-grey-500;
+          background-color: $color-white !important;
+        }
+      }
+    }
+  }
+
+  &.__secondary{
+    color: $color-white;
+    background-color: $color-secondary;
+    border-color: $color-secondary;
+    &:hover{
+      background-color: $color-secondary-hover;
+      border-color: $color-secondary-hover;
+    }
+    &:active{
+      background-color: $color-secondary;
+      border-color: $color-secondary;
+    }
+    svg path {
+      fill: $color-white;
+    }
+    &.__shadow{
+      box-shadow: $box-shadow-bs;
+      &:hover {
+        box-shadow: $box-shadow-bs-hover;
+      }
+    }
+    &.__outline{
+      color: $color-grey-500;
+      background-color: $color-white;
+      &:hover{
+        color: $color-white;
+        background-color: $color-secondary-hover;
+        border-color: $color-secondary-hover;
+        svg path {
+          fill: $color-white;
+        }
+      }
+      &:active{
+        color: $color-white;
+        background-color: $color-secondary;
+        border-color: $color-secondary;
+        svg path {
+          fill: $color-white;
+        }
+      }
+      svg path {
+        fill: $color-secondary;
+      }
+    }
+    &.__disabled{
+      &:hover{
+        background-color: $color-secondary !important;
+      }
+      &.__outline{
+        &:hover,
+        &:active{
+          color: $color-grey-500;
+          background-color: $color-white !important;
+        }
+      }
+    }
+  }
+
+  &.__danger{
+    color: $color-white;
+    background-color: $color-danger;
+    border-color: $color-danger;
+    &:hover{
+      background-color: $color-danger-hover;
+      border-color: $color-danger-hover;
+    }
+    &:active{
+      background-color: $color-danger;
+      border-color: $color-danger;
+    }
+    svg path {
+      fill: $color-white;
+    }
+    &.__shadow{
+      box-shadow: $box-shadow-bs;
+      &:hover {
+        box-shadow: $box-shadow-bs-hover;
+      }
+    }
+    &.__outline{
+      color: $color-grey-500;
+      background-color: $color-white;
+      &:hover{
+        color: $color-white;
+        background-color: $color-danger;
+        border-color: $color-danger;
+        svg path {
+          fill: $color-white;
+        }
+      }
+      &:active{
+        color: $color-white;
+        background-color: $color-danger;
+        border-color: $color-danger;
+        svg path {
+          fill: $color-white;
+        }
+        &:hover{
+          background-color: $color-danger-hover;
+          border-color: $color-danger-hover;
+          svg path {
+            fill: $color-white;
+          }
+        }
+      }
+      svg path {
+        fill: $color-danger;
+      }
+    }
+    &.__disabled{
+      &:hover{
+        background-color: $color-danger !important;
+      }
+      &.__outline{
+        &:hover,
+        &:active{
+          color: $color-grey-500;
+          background-color: $color-white !important;
+        }
+      }
+    }
+  }
+
+  &.__disabled{
+    cursor: not-allowed !important;
+    text-decoration: none !important;
+    opacity: 0.5;
+    &:active{
+      pointer-events: none !important;
+    }
+    &.__shadow{
+      box-shadow: none !important;
+      &:hover {
+        box-shadow: none !important;
+      }
+    }
+  }
+
+  &.__notText{
+    svg{
+      margin: 0 !important;
+    }
+    .btn-custom_icon{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+    }
+  }
+
+  &_icon{
+    display: inline-flex;
+    align-items: center;
+    &._left{
+      margin-right: 6px;
+    }
+    &._right{
+      margin-left: 6px;
+    }
+  }
+
+}

@@ -1,0 +1,61 @@
+.form-field_wrapper._radioButtonArray{
+  --x-p: 15px;
+  --y-p: 10px;
+  --bg-color: transparent;
+  --wrapper-mb: 20px;
+  --item-mb: 10px;
+
+  margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
+
+  .form-field{
+    &_field-wrapper{
+      .ant-radio-group{
+        display: flex;
+      }
+    }
+    &_field{
+      display: flex;
+      align-items: center;
+      height: auto;
+      margin-right: 25px;
+      margin-bottom: var(--item-mb);
+      padding: var(--y-p) var(--x-p);
+      border-radius: $border-radius-bs;
+      border: 1px solid $color-grey-275;
+      background-color: var(--bg-color);
+      box-shadow: $box-shadow-bs;
+      font-size: $font-size-md;
+      line-height: $line-height-md;
+      color: $color-grey-800;
+      &:before{
+        display: none;
+      }
+      &:hover{
+        border-color: $color-primary;
+        box-shadow: $box-shadow-bs-hover;
+      }
+      &:active{
+        border-color: $color-primary;
+      }
+      &.ant-radio-button-wrapper{
+        &-checked{
+          background-color: $color-primary;
+          border-color: $color-primary;
+          color: $color-white;
+          box-shadow: $box-shadow-bs;
+          &:hover, &:active, &:focus{
+            background-color: $color-primary;
+            border-color: $color-primary;
+          }
+        }
+        &-disabled{
+          background-color: $color-disabled-bg;
+          border-color: $color-disabled-border;
+          color: $color-disabled-text;
+          box-shadow: none;
+        }
+      }
+    }
+  }
+
+}

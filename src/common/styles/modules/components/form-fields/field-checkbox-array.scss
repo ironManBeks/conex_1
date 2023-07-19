@@ -1,0 +1,33 @@
+.form-field_wrapper._checkboxArray{
+  --wrapper-mb: 20px;
+  --item-mb: 10px;
+
+  margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
+
+
+  .form-field{
+    &_field-wrapper{
+      .ant-checkbox-group{
+        display: flex;
+      }
+    }
+    &_field{
+      display: flex;
+      align-items: center;
+      margin-right: 25px;
+      margin-bottom: var(--item-mb);
+      &._checked{
+        span{
+          &:not(.ant-checkbox){
+            background-color: $color-primary;
+            border-color: $color-primary;
+            svg{
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}
