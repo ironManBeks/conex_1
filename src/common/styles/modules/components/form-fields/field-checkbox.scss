@@ -1,0 +1,88 @@
+.form-field_wrapper._checkbox, .form-field_wrapper._checkboxArray{
+  --x-p: 10px;
+  --y-p: 10px;
+  --bg-color: transparent;
+
+  .form-field{
+    &_field-wrapper{
+      display: flex;
+      align-items: center;
+    }
+    &_field{
+      width: auto;
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+      .ant-checkbox{
+        display: none;
+      }
+      span{
+        &:not(.ant-checkbox){
+          position: relative;
+          width: 32px;
+          height: 32px;
+          background-color: var(--bg-color);
+          border: 1px solid $color-grey-400;
+          border-radius: $border-radius-md;
+          transition: .2s;
+          svg{
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            opacity: 0;
+            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+          }
+          &:hover{
+            border-color: $color-primary;
+          }
+        }
+      }
+    }
+
+    &_sub-label{
+      cursor: pointer;
+      font-size: $line-height-md;
+      line-height: $line-height-md;
+      color: $color-grey-800;
+      padding-left: var(--x-p);
+    }
+
+  }
+
+  &._disabled{
+    .form-field{
+      &_field{
+        span{
+          &:not(.ant-checkbox){
+            background-color: $color-disabled-bg;
+            border-color: $color-disabled-border;
+            &:hover{
+              border-color: $color-disabled-bg;
+            }
+          }
+        }
+      }
+      &_sub-label{
+        color: $color-disabled-text;
+        cursor: not-allowed;
+      }
+    }
+  }
+
+  &._checked{
+    .form-field{
+      &_field{
+        span{
+          &:not(.ant-checkbox){
+            background-color: $color-primary;
+            border-color: $color-primary;
+            svg{
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+}

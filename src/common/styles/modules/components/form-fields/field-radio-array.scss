@@ -1,0 +1,113 @@
+.form-field_wrapper._radioArray{
+  --x-p: 15px;
+  --y-p: 12px;
+  --bg-color: transparent;
+  --wrapper-mb: 20px;
+  --item-mb: 10px;
+
+  margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
+
+  .form-field{
+    &_field-wrapper{
+      .ant-radio-group{
+        display: flex;
+      }
+    }
+    &_field{
+      width: auto;
+      margin-right: 25px;
+      margin-bottom: var(--item-mb);
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+      align-items: center;
+      &.ant-radio-wrapper-disabled{
+        .ant-radio-inner{
+          background-color: $color-disabled-bg;
+          border-color: $color-disabled-border;
+        }
+        .ant-radio{
+          &:hover{
+            .ant-radio-inner{
+              border-color: $color-disabled-border;
+            }
+          }
+        }
+        & > {
+          span:not(.ant-radio){
+            color: $color-disabled-text;
+          }
+        }
+      }
+      .ant-radio-inner{
+        position: relative;
+        width: 32px;
+        height: 32px;
+        background-color: var(--bg-color);
+        border: 1px solid $color-grey-400;
+        border-radius: $border-radius-circle;
+        transition: .2s;
+        box-shadow: none;
+        &:after{
+          transform: translate(-50%, -50%) scale(0);
+          margin: 0;
+          background-color: $color-primary;
+          width: 16px;
+          height: 16px;
+          transition: all 0.2s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+        }
+      }
+      .ant-radio{
+        top: 0;
+        &:hover{
+          .ant-radio-inner{
+            border-color: $color-primary;
+          }
+        }
+        &.ant-radio-checked{
+          &:after{
+            border-color: $color-primary;
+          }
+          .ant-radio-inner{
+            border-color: $color-primary;
+            &:after{
+              transform: translate(-50%, -50%) scale(1);
+            }
+          }
+        }
+      }
+      & > {
+        span:not(.ant-radio){
+          padding: 0 0 0 10px;
+        }
+      }
+    }
+  }
+
+  &._disabled{
+    .form-field{
+      &_field{
+        span{
+          &:not(.ant-radio){
+            &:hover{
+              border-color: inherit;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  //&._checked{
+  //  .form-field{
+  //    &_field{
+  //      .ant-radio-inner{
+  //        background-color: $color-primary;
+  //        border-color: $color-primary;
+  //        //&:after{
+  //        //  transform: scale(0.5);
+  //        //}
+  //      }
+  //    }
+  //  }
+  //}
+}

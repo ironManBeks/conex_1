@@ -1,0 +1,28 @@
+.error-page{
+  &_wrapper{
+    padding: 10vh 0;
+  }
+  &_content{
+    &__wrapper{
+      text-align: center;
+      .common-title{
+        &._h2{
+          font-size: 6rem;
+          margin-bottom: 50px;
+        }
+        &._h3{
+          font-size: 4rem;
+          margin-bottom: 30px;
+        }
+      }
+      .common-text{
+        font-size: $font-size-xl;
+        margin-bottom: 50px;
+      }
+    }
+    &__actions{
+      display: flex;
+      justify-content: center;
+    }
+  }
+}

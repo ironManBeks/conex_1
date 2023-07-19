@@ -1,0 +1,179 @@
+.builder-page{
+
+  &_layout__inner-wrapper{
+    --right-side-width: 290px;
+    --right-side-ml: 40px;
+
+    padding: 50px 0 35px;
+  }
+
+  &_progress__wrapper{
+    margin-bottom: 50px;
+    .common-progress{
+      width: calc(100% - var(--right-side-width) - var(--right-side-ml));
+    }
+  }
+
+  &_content__wrapper{
+    width: 100%;
+    display: flex;
+    margin-bottom: 30px;
+  }
+
+  &_left-side__wrapper{
+
+  }
+
+  &_right-side{
+    &__wrapper{
+      width: var(--right-side-width);
+      flex: 0 0 auto;
+      margin-left: var(--right-side-ml);
+    }
+    &__inner-wrapper{
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      padding: 30px 20px;
+      background-color: $color-white;
+      box-shadow: $box-shadow-bs;
+      border-radius: $border-radius-lg;
+    }
+    &__content{
+      .common-title{
+        font-size: $font-size-xl;
+        line-height: $line-height-xl;
+        margin-bottom: 25px;
+        text-align: center;
+      }
+    }
+    &__total{
+      &._wrapper{
+        margin-top: auto;
+      }
+      &._charges, &._grand{
+        display: flex;
+        justify-content: space-between;
+        &:not(:last-child){
+          margin-bottom: 20px;
+        }
+        .common-title{
+          padding-right: 15px;
+        }
+        .common-text{
+          margin-bottom: 0;
+        }
+      }
+      &._charges{
+        .common-title{
+          color: $color-grey-300;
+        }
+        .common-text, .common-title{
+          font-size: $font-size-bs;
+          line-height: $line-height-bs;
+          font-family: $font-family-primary;
+        }
+      }
+      &._grand{
+        .common-text, .common-title {
+          font-size: $font-size-md;
+          line-height: $line-height-md;
+          font-family: $font-family-primary;
+        }
+      }
+    }
+  }
+
+  &_form{
+    &__wrapper{
+      padding: 40px 30px 60px;
+      background-color: $color-white;
+      box-shadow: $box-shadow-bs;
+      border-radius: $border-radius-lg;
+    }
+    &__title{
+      text-align: center;
+      margin-bottom: 50px;
+      font-size: $builder-form-title-font-size;
+      line-height: calc($builder-form-title-font-size + 2px);
+    }
+    &__content{
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-bottom: 50px;
+    }
+    &__item{
+      &._wrapper{
+        margin-bottom: 25px;
+        padding: 0 15px;
+      }
+      &._inner-wrapper{
+        position: relative;
+        width: 100%;
+        padding: 20px;
+        background-color: $color-white;
+        box-shadow: $box-shadow-bs;
+        border-radius: $border-radius-lg;
+        transition: .2s;
+        cursor: pointer;
+        text-align: center;
+        word-break: break-word;
+        &:hover{
+          box-shadow: $box-shadow-bs-hover;
+        }
+        &._active{
+          box-shadow: $box-shadow-active-builder-form-item;
+        }
+      }
+      .img-custom_wrapper{
+        margin-bottom: 10px;
+      }
+      .common-title{
+        font-size: $font-size-md;
+        line-height: $line-height-md;
+        font-family: $font-family-primary;
+        &._h4{
+          margin-bottom: 10px;
+          font-weight: 500;
+        }
+        &._h5{
+          margin-bottom: 20px;
+          font-weight: 300;
+        }
+      }
+      .common-text{
+        margin-bottom: 0;
+        font-size: $font-size-md;
+        line-height: $line-height-md;
+      }
+    }
+    &__info{
+      display: flex;
+      justify-content: center;
+      .common-text{
+        padding: 10px 20px;
+        width: 100%;
+        max-width: 600px;
+        text-align: center;
+        background-color: $color-grey-40;
+        border-radius: $border-radius-bs;
+        font-size: $font-size-bs;
+        line-height: $line-height-bs;
+        color: $color-grey-700;
+        font-weight: 300;
+      }
+    }
+  }
+
+  &_actions{
+    &__wrapper{
+      width: 100%;
+    }
+    &__inner-wrapper{
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+    }
+  }
+}

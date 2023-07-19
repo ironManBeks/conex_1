@@ -1,0 +1,84 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "esModuleInterop": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "jsx": "preserve",
+    "baseUrl": ".",
+    "paths": {
+      "@components/*": [
+        "src/components/*"
+      ],
+      "@components": [
+        "src/components/index"
+      ],
+      "@consts/*": [
+        "src/consts/*"
+      ],
+      "@consts": [
+        "src/consts/index"
+      ],
+      "@globalTypes/*": [
+        "src/globalTypes/*"
+      ],
+      "@globalTypes": [
+        "src/globalTypes/index"
+      ],
+      "@public/*": [
+        "public/*"
+      ],
+      "@public": [
+        "public/index"
+      ],
+      "@helpers/*": [
+        "src/helpers/*"
+      ],
+      "@helpers": [
+        "src/helpers/index"
+      ],
+      "@common/*": [
+        "src/common/*"
+      ],
+      "@common": [
+        "src/common/index"
+      ],
+      "@mobx/*": [
+        "src/mobx/*"
+      ],
+      "@mobx": [
+        "src/mobx"
+      ],
+      "@i18n": [
+        "./i18n"
+      ],
+      "@utils/*": [
+        "src/utils/*"
+      ],
+      "@utils": [
+        "src/utils/index"
+      ]
+    },
+    "incremental": true
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
+}

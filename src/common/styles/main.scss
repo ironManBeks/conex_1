@@ -1,0 +1,26 @@
+// Base
+@import 'base/normalize';
+@import 'base/fonts';
+@import 'base/variables/variables';
+@import 'base/animations';
+@import 'base/mixins';
+
+// Global
+@import 'modules/global-styles';
+@import 'modules/main-content';
+
+// Components
+@import 'modules/components/z-main-components';
+
+// Segments
+@import 'modules/segments/z-main-segments';
+
+// Global
+@import 'modules/global-media';
+
+// Pages
+@import 'modules/pages/z-main-pages';
+
+//body{
+//  background-color: red !important;
+//}

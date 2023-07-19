@@ -1,0 +1,28 @@
+# npm
+node_modules
+# next.js build files
+.next
+# environment variables
+.env
+.env.*
+.env*.local
+!.env.example
+
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+
+dist
+coverage
+.DS_Store
+.idea
+.project
+.vscode
+.jest
+out

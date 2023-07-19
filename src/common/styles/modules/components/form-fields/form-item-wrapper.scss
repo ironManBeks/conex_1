@@ -1,0 +1,56 @@
+.form-field{
+
+  &_wrapper{
+    margin-bottom: 20px;
+    position: relative;
+  }
+
+  &_label-wrapper{
+    margin-bottom: 6px;
+    padding-left: 10px;
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
+    color: $color-grey-800;
+  }
+
+  &_sub-label{
+    cursor: pointer;
+  }
+
+  &_content-wrapper{
+    flex: 0 1 auto;
+    width: 100%;
+  }
+
+  &_field-wrapper{
+    position: relative;
+    > *{
+      width: 100%;
+    }
+  }
+
+  &_error-wrapper{
+    color: $color-danger;
+    span{
+      color: $color-danger;
+    }
+  }
+
+  // Если есть подсчёт символов в поле
+  &_char-counter{
+    position: absolute;
+    bottom: 10px;
+    right: 20px;
+    width: auto;
+    padding: 4px 8px;
+    border-radius: $border-radius-bs;
+    background-color: $color-white;
+    z-index: 1;
+    &._disabled{
+      cursor: not-allowed;
+      background-color: $color-grey-550;
+      color: $color-black;
+    }
+  }
+
+}
