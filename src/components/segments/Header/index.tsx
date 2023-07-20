@@ -1,7 +1,7 @@
 import { FC, useRef, RefObject, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
-import { useRootStore } from "@mobx";
+import { useRootStore } from "src/store";
 import { observer } from "mobx-react";
 
 import Container from "@components/globalComponents/Container";

@@ -43,7 +43,7 @@
         width: 32px;
         height: 32px;
         background-color: var(--bg-color);
-        border: 1px solid $color-grey-400;
+        border: 1px solid $color-grey-250;
         border-radius: $border-radius-circle;
         transition: .2s;
         box-shadow: none;
@@ -97,17 +97,4 @@
     }
   }
 
-  //&._checked{
-  //  .form-field{
-  //    &_field{
-  //      .ant-radio-inner{
-  //        background-color: $color-primary;
-  //        border-color: $color-primary;
-  //        //&:after{
-  //        //  transform: scale(0.5);
-  //        //}
-  //      }
-  //    }
-  //  }
-  //}
 }

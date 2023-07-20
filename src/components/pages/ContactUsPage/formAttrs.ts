@@ -20,7 +20,7 @@ export type TFormFields = {
     [EFieldNames.checkboxArray]: Record<string, boolean>; // { label1: true, label2: false }
 };
 
-export const formCreateResolver = (): Resolver<TFormFields> => {
+export const formResolver = (): Resolver<TFormFields> => {
     const requiredText = "This field is required";
     const oneFieldRequiredText = "At least one field must be filled";
     const mustBeActiveText = "This field must be active";

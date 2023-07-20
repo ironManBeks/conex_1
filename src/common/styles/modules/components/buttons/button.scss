@@ -184,6 +184,16 @@
     }
   }
 
+  &.__orange{
+    color: $color-white;
+    background-color: $color-orange-500;
+    border-color: $color-orange-500;
+    &:hover, &:active{
+      background-color: $color-orange-400;
+      border-color: $color-orange-400;
+    }
+  }
+
   &.__danger{
     color: $color-white;
     background-color: $color-danger;

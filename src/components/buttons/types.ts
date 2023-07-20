@@ -26,6 +26,7 @@ export enum EButtonColor {
     secondary = "secondary",
     default = "default",
     danger = "danger",
+    orange = "orange",
     transparent = "transparent",
 }
 

@@ -1,4 +1,4 @@
-import { RootStoreProvider } from "@mobx";
+import { RootStoreProvider } from "src/store";
 import { AppProps } from "next/app";
 
 import "antd/dist/antd.css";

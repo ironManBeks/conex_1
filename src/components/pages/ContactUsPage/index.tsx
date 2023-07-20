@@ -13,7 +13,7 @@ import FieldRadioButtonArrayController from "@components/form/formControllers/Fi
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import {
     EFieldNames,
-    formCreateResolver,
+    formResolver,
     formDefaultValues,
     optionsMockup,
     TFormFields,
@@ -24,7 +24,7 @@ import { EDirection } from "@globalTypes/commonTypes";
 const ContactUsPage: FC = () => {
     const classPrefix = "contact-us-page";
     const methods = useForm<TFormFields>({
-        resolver: formCreateResolver(),
+        resolver: formResolver(),
         defaultValues: formDefaultValues,
     });
     const [formValues, setFormValues] = useState<any>();
