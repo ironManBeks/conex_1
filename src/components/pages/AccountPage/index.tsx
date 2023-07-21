@@ -5,7 +5,6 @@ import Container from "@components/globalComponents/Container";
 import AccountInfo from "./components/AccountInfo";
 import AccountOrder from "./components/AccountOrder";
 
-
 const AccountPage = () => {
     const classPrefix = "account-page";
 
