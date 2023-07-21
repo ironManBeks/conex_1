@@ -5,4 +5,12 @@ module.exports = withPlugins([], {
     swcMinify: true,
     forceSwcTransforms: true,
     optimizeFonts: true,
+    images: {
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "picsum.photos",
+            },
+        ],
+    },
 });

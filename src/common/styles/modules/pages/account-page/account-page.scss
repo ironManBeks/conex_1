@@ -1,7 +1,6 @@
 .account-page{
   &_layout__inner-wrapper{
-    margin-top: 15px;
-    margin-bottom: 50px;
+    padding: 15px 0 50px;
   }
 
   &_content__wrapper{
@@ -140,7 +139,7 @@
         border: 1px solid #A4A3A3;
         border-radius: $border-radius-lg;
         transition: .2s;
-        &._visible{
+        &._open{
           padding-bottom: 5px;
           border-color: $color-primary;
           .common-title._h4{

@@ -1,4 +1,4 @@
-import { FC, useRef, RefObject, useEffect } from "react";
+import { FC, useRef, RefObject, useEffect, useCallback } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { useRootStore } from "src/store";
@@ -18,10 +18,12 @@ export const Header: FC<THeader> = observer(
         const { commonStore } = useRootStore();
 
         useEffect(() => {
-            if (headerRef?.current?.clientHeight) {
-                commonStore.setHeaderHeight(headerRef.current.clientHeight);
+            if (headerRef?.current) {
+                commonStore.setHeaderHeight(
+                    Math.ceil(headerRef.current.getBoundingClientRect().height),
+                );
             }
-        }, [headerRef?.current?.clientHeight]);
+        }, [headerRef?.current?.getBoundingClientRect().height]);
 
         return (
             <header

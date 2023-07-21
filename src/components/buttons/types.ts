@@ -6,7 +6,7 @@ export type TButtonCommon = {
     disabled?: boolean;
     color?: EButtonColor;
     size?: EButtonSize;
-    icon?: JSX.Element;
+    icon?: ReactNode;
     iconPosition?: "left" | "right";
     isOutline?: boolean;
     isLoading?: boolean;

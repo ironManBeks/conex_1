@@ -148,20 +148,11 @@
       }
     }
     &.__outline{
-      color: $color-grey-500;
+      color: $color-orange-600;
       background-color: $color-white;
-      &:hover{
-        color: $color-white;
-        background-color: $color-secondary-hover;
+      &:hover, &:active{
+        background-color: $color-yellow-100;
         border-color: $color-secondary-hover;
-        svg path {
-          fill: $color-white;
-        }
-      }
-      &:active{
-        color: $color-white;
-        background-color: $color-secondary;
-        border-color: $color-secondary;
         svg path {
           fill: $color-white;
         }

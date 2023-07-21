@@ -5,6 +5,7 @@ import IconCheck from "./common/IconCheck";
 import IconPlusCircle from "./common/IconPlusCircle";
 import IconPoint from "./common/IconPoint";
 import IconCopy from "./common/IconCopy";
+import IconOpenFilter from "./common/IconOpenFilter";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
@@ -21,5 +22,6 @@ export {
     IconPlusCircle,
     IconPoint,
     IconCopy,
+    IconOpenFilter,
     IconMastercard,
 };

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import cn from "classnames";
 import { useRootStore } from "src/store";
 import { observer } from "mobx-react";
@@ -15,31 +15,45 @@ export const Layout: FC<TLayout> = observer(
         const [layoutSpaceTop, setLayoutSpaceTop] = useState<number>(0);
 
         useEffect(() => {
+            console.log("commonStore.headerHeight", commonStore.headerHeight);
             setLayoutSpaceTop(commonStore.headerHeight);
         }, [commonStore.headerHeight]);
 
-        return (
-            <div
-                className={cn(
-                    `${classPrefix}_wrapper`,
-                    layoutClassName,
-                    `${pageClassPrefix}_layout__wrapper`,
-                )}
-                style={{ paddingTop: layoutSpaceTop }}
-            >
-                <Header
-                    pageClassPrefix={pageClassPrefix}
-                    className={headerClassName}
-                />
+        useEffect(() => {
+            console.log("layoutSpaceTop", layoutSpaceTop);
+        }, [layoutSpaceTop]);
+
+        return useMemo(
+            () => (
                 <div
                     className={cn(
-                        `${classPrefix}_inner-wrapper`,
-                        `${pageClassPrefix}_layout__inner-wrapper`,
+                        `${classPrefix}_wrapper`,
+                        layoutClassName,
+                        `${pageClassPrefix}_layout__wrapper`,
                     )}
+                    style={{ paddingTop: layoutSpaceTop }}
                 >
-                    {children}
+                    <Header
+                        pageClassPrefix={pageClassPrefix}
+                        className={headerClassName}
+                    />
+                    <div
+                        className={cn(
+                            `${classPrefix}_inner-wrapper`,
+                            `${pageClassPrefix}_layout__inner-wrapper`,
+                        )}
+                    >
+                        {children}
+                    </div>
                 </div>
-            </div>
+            ),
+            [
+                layoutSpaceTop,
+                layoutClassName,
+                classPrefix,
+                pageClassPrefix,
+                children,
+            ],
         );
     },
 );

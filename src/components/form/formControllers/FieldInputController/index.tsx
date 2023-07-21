@@ -9,10 +9,22 @@ import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputController } from "./types";
+import { isFunction } from "lodash";
 
 const FieldInputController: FC<TFieldInputController> = (props) => {
-    const { name, onChangeValue, label, wrapperClassName, disabled, ...rest } =
-        props;
+    const {
+        name,
+        onChangeValue,
+        label,
+        wrapperClassName,
+        disabled,
+        addonAfter,
+        onAddonClick,
+        minAddonWidth,
+        ...rest
+    } = props;
+    const addonAfterRef = useRef<HTMLDivElement>(null);
+    const [addonAfterWidth, setAddonAfterWidth] = useState<number>(0);
     const {
         control,
         formState: { errors, touchedFields },
@@ -20,6 +32,12 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     const errorMessage = errors[name]?.message;
     const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<InputRef | null>(null);
+
+    useEffect(() => {
+        if (addonAfterRef?.current?.clientHeight) {
+            setAddonAfterWidth(addonAfterRef.current.clientHeight);
+        }
+    }, [addonAfterRef?.current?.clientHeight]);
 
     return (
         <Controller
@@ -31,7 +49,9 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                         fieldType={EFormFieldType.input}
                         errorMessage={errorMessage}
                         label={label}
-                        wrapperClassName={wrapperClassName}
+                        wrapperClassName={cn(wrapperClassName, {
+                            _addonAfter: addonAfter,
+                        })}
                     >
                         <AntInput
                             {...field}
@@ -47,7 +67,25 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                                 if (onChangeValue) onChangeValue(val);
                             }}
                             disabled={disabled}
+                            style={{
+                                paddingRight: `${addonAfterWidth + 10}px`,
+                            }}
                         />
+                        {addonAfter && (
+                            <div
+                                className={cn(
+                                    `${FORM_FIELD_CLASSNAME_PREFIX}_addonAfter`,
+                                    {
+                                        _click: isFunction(onAddonClick),
+                                    },
+                                )}
+                                ref={addonAfterRef}
+                                onClick={onAddonClick}
+                                style={{ minWidth: minAddonWidth }}
+                            >
+                                {addonAfter}
+                            </div>
+                        )}
                     </FormItemWrapper>
                 );
             }}

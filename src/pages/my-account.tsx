@@ -3,7 +3,7 @@ import { FC } from "react";
 import HeadMeta from "@components/segments/HeadMeta";
 import AccountPage from "@components/pages/AccountPage";
 
-const HomePageLayout: FC = () => {
+const AccountPageLayout: FC = () => {
     return (
         <>
             <HeadMeta title="My account" />
@@ -12,4 +12,4 @@ const HomePageLayout: FC = () => {
     );
 };
 
-export default HomePageLayout;
+export default AccountPageLayout;

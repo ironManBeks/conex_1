@@ -25,11 +25,11 @@ const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
     status,
 }) => {
     const listRef = useRef<HTMLUListElement>(null);
-    const [isVisible, setIsVisible] = useState(false);
+    const [isOpen, setIsOpen] = useState(false);
     const [listHeight, setListHeight] = useState<number>(0);
 
-    const handleVisible = (val: boolean) => {
-        setIsVisible(val);
+    const handleOpen = (val: boolean) => {
+        setIsOpen(val);
     };
 
     const listTransitionStyles: Partial<
@@ -52,18 +52,18 @@ const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
     return (
         <div
             className={cn(`${classPrefix}__item _wrapper`, {
-                _visible: isVisible,
+                _open: isOpen,
             })}
             onClick={() => {
-                if (!isVisible) handleVisible(true);
+                if (!isOpen) handleOpen(true);
             }}
         >
             <div
                 className={cn(`${classPrefix}__item _inner-wrapper`, {
-                    _visible: isVisible,
+                    _open: isOpen,
                 })}
                 onClick={() => {
-                    if (isVisible) handleVisible(false);
+                    if (isOpen) handleOpen(false);
                 }}
             >
                 <H5>Order number</H5>
@@ -71,14 +71,14 @@ const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
                     {orderNumber}
                     <CopyText text={orderNumber} />
                 </H4>
-                <Transition in={isVisible} timeout={0}>
+                <Transition in={isOpen} timeout={0}>
                     {(state) => (
                         <div
                             style={{
                                 transition: "all 0.3s",
                                 transitionProperty: "height",
                                 overflow: "hidden",
-                                marginBottom: isVisible ? "20px" : 0,
+                                marginBottom: isOpen ? "20px" : 0,
                                 ...listTransitionStyles[state],
                             }}
                         >
@@ -105,7 +105,7 @@ const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
                 </Transition>
                 <P className="item_address">
                     <IconPoint
-                        color={isVisible ? ColorTheme.green._500 : "#8D8D8D"}
+                        color={isOpen ? ColorTheme.green._500 : "#8D8D8D"}
                     />
                     {address}
                     <span>{status}</span>
@@ -115,10 +115,7 @@ const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
                     <span className="value">{deliveryWillCompleted}</span>
                 </P>
             </div>
-            <OrderLiveTracking
-                classPrefix={classPrefix}
-                isVisible={isVisible}
-            />
+            <OrderLiveTracking classPrefix={classPrefix} isVisible={isOpen} />
         </div>
     );
 };
@@ -181,7 +178,7 @@ const OrderLiveTracking = ({
                         <H5>Live Tracking</H5>
                         <iframe
                             width="100%"
-                            height="210px"
+                            height="210"
                             className="gmap_iframe"
                             src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=University of Oxford&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                         />
