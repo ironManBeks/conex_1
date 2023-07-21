@@ -55,11 +55,11 @@
       "@common": [
         "src/common/index"
       ],
-      "@mobx/*": [
-        "src/mobx/*"
+      "@store/*": [
+        "src/store/*"
       ],
-      "@mobx": [
-        "src/mobx"
+      "@store": [
+        "src/store"
       ],
       "@i18n": [
         "./i18n"

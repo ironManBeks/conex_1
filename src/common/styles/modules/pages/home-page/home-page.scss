@@ -1,7 +1,7 @@
 .home-page {
 
   &_layout__inner-wrapper{
-    margin-bottom: 300px;
+    padding-bottom: 300px;
   }
 
   &_main-banner {
@@ -27,6 +27,7 @@
       .common-btn{
         width: 100%;
         max-width: 380px;
+        color: #F7F4EE;
       }
       .common-text{
         font-size: $font-size-lg;
@@ -85,7 +86,13 @@
       .common-btn{
         width: 100%;
         max-width: 380px;
+        font-size: $font-size-xl;
+        line-height: $line-height-xl;
+        color: $color-blue-800;
       }
+    }
+    &__content{
+      width: 100%;
     }
     &__title{
       margin-bottom: 80px;

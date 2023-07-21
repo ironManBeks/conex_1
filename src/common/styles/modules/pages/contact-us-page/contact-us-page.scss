@@ -1,3 +1,112 @@
 .contact-us-page{
 
+  &_layout__inner-wrapper{
+    padding: 50px 0 100px;
+  }
+
+  &_content{
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 30px 70px;
+    background: rgba(251, 246, 221, 0.38);
+    box-shadow: 0 0 20px 0 rgba(250, 187, 30, 0.12);
+    border-radius: $border-radius-lg;
+  }
+
+  &_contacts{
+    &__wrapper{
+      position: relative;
+      width: calc(60% - 40px);
+    }
+    &__title{
+      margin-bottom: 5px;
+      font-size: $contacts-us-title-font-size;
+      line-height: calc($contacts-us-title-font-size + 2px);
+      color: $color-primary;
+      font-family: $font-family-primary;
+      font-weight: 600;
+    }
+    &__description{
+      margin-bottom: 0;
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+      color: $color-grey-800;
+      font-weight: 600;
+    }
+    &__map{
+      margin-top: 40px;
+      .common-title{
+        margin-bottom: 10px;
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+        font-family: $font-family-primary;
+      }
+      iframe{
+        border: 0;
+      }
+    }
+    &__list{
+      margin-top: 40px;
+      display: flex;
+      flex-wrap: wrap;
+    }
+    &__item{
+      margin-right: 40px;
+      margin-bottom: 20px;
+      .common-title{
+        margin-bottom: 8px;
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+        font-family: $font-family-primary;
+      }
+      .common-text,{
+        font-size: $font-size-md;
+        line-height: $line-height-md;
+        font-weight: 300;
+        &:not(:last-of-type){
+          margin-bottom: 8px;
+        }
+        a{
+          color: $color-text-default;
+          border-bottom: 1px solid $color-black;
+          &:hover{
+            color: $color-secondary;
+            border-color: $color-secondary;
+          }
+        }
+      }
+    }
+  }
+
+  &_form{
+    &__wrapper{
+      width: 40%;
+      margin-top: 60px;
+    }
+    &__form{
+      padding: 30px;
+      background-color: $color-white;
+      border-radius: $border-radius-lg;
+      box-shadow: 0 0 20px 0 rgba(250, 187, 30, 0.12);
+      .form-field_wrapper{
+        .form-field {
+          ._textarea{
+            margin-top: 40px;
+          }
+          &_field {
+            padding-top: 20px;
+            padding-bottom: 20px;
+            font-size: $font-size-lg;
+            line-height: $line-height-lg;
+          }
+        }
+      }
+    }
+    &__actions{
+      margin-top: 40px;
+      display: flex;
+      justify-content: flex-end;
+    }
+  }
+
 }

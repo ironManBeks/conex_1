@@ -53,6 +53,10 @@
           &__wrapper{
             display: flex;
             align-items: center;
+            width: 220px;
+            form{
+              width: 100%;
+            }
             .form-field{
               &_wrapper{
                 margin: 0;
@@ -60,6 +64,8 @@
               &_field{
                 font-size: $font-size-bs;
                 line-height: $line-height-bs;
+                padding-top: 6px;
+                padding-bottom: 6px;
               }
             }
           }

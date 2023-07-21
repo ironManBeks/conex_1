@@ -1,10 +1,14 @@
 .skeleton{
   &_wrapper{
     margin-bottom: 20px;
+    .ant-skeleton{
+      width: 100%;
+    }
     .ant-skeleton-input{
       width: 100%;
+      min-height: 100%;
       min-width: 30px;
+      border-radius: $border-radius-bs;
     }
   }
 }
-

@@ -6,7 +6,7 @@ export type TButtonCommon = {
     disabled?: boolean;
     color?: EButtonColor;
     size?: EButtonSize;
-    icon?: JSX.Element;
+    icon?: ReactNode;
     iconPosition?: "left" | "right";
     isOutline?: boolean;
     isLoading?: boolean;
@@ -26,6 +26,7 @@ export enum EButtonColor {
     secondary = "secondary",
     default = "default",
     danger = "danger",
+    orange = "orange",
     transparent = "transparent",
 }
 

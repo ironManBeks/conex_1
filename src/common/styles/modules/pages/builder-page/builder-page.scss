@@ -54,7 +54,7 @@
       &._charges, &._grand{
         display: flex;
         justify-content: space-between;
-        &:not(:last-child){
+        &:not(:last-of-type){
           margin-bottom: 20px;
         }
         .common-title{
@@ -86,7 +86,7 @@
 
   &_form{
     &__wrapper{
-      padding: 40px 30px 60px;
+      padding: 40px 25px 60px;
       background-color: $color-white;
       box-shadow: $box-shadow-bs;
       border-radius: $border-radius-lg;
@@ -106,7 +106,8 @@
     &__item{
       &._wrapper{
         margin-bottom: 25px;
-        padding: 0 15px;
+        padding: 0 10px;
+        width: 25%;
       }
       &._inner-wrapper{
         position: relative;

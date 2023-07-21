@@ -10,6 +10,11 @@ $color-yellow-500: #FFD700;
 $color-yellow-700: #EFB333;
 $color-yellow-800: #F4AC12;
 
+$color-orange-400: #E08C62;
+$color-orange-500: #E18450;
+$color-orange-600: #F79225;
+$color-orange-800: #D98D3B;
+
 $color-grey-30: #F5F4F4;
 $color-grey-40: #FAFBFB;
 $color-grey-50: #EFF3FA;
@@ -30,6 +35,7 @@ $color-grey-900: #5C5A5A;
 $color-blue-700: #204459;
 $color-blue-800: #1B1841;
 
+$color-green-200: #8FB48C;
 $color-green-300: #72BE6B;
 $color-green-500: #5D9A57;
 
@@ -77,8 +83,9 @@ $font-size-xl: 1.5rem;
 $font-size-xxl: 2rem;
 
 $main-banner-font-size: 5rem;
-$secondary-banner-font-size: 4.25rem;
+$secondary-banner-font-size: 4.375rem;
 $builder-form-title-font-size: 2.25rem;
+$contacts-us-title-font-size: 3.125rem;
 
 // Line-height
 $line-height-xs: calc($font-size-xs + 2px);
@@ -117,9 +124,9 @@ $box-shadow-md-hover: 0 0 22px 0 rgba(87, 110, 124, 0.53), 0 0 22px 0 rgba(250, 
 $box-shadow-active-builder-form-item: -1px -1px 5px 0px rgba(250, 187, 30, 0.38), 1px 1px 3px 0px rgba(250, 187, 30, 0.56);
 
 //// Code variables
-$border-bs-default: 1.5px solid $color-grey-500;
-$border-bs-default-light: 1.5px solid rgba($color-primary, 0.7);
-$border-bs-primary: 1.5px solid $color-primary;
+$border-bs-default: 1px solid $color-grey-500;
+$border-bs-default-light: 1px solid rgba($color-primary, 0.7);
+$border-bs-primary: 1px solid $color-primary;
 
 $border-mb-default: 2px solid $color-primary;
 $border-lg-default: 3px solid $color-primary;
@@ -132,7 +139,8 @@ $header-filter-item-height: 36px;
 
 // Z-indexes
 $z-index-header: 1100;
+$z-index-notification: 1110;
 
-$z-index-modal-wrapper: 1105;
-$z-index-modal-mask: 1104;
-$z-index-modal-content: 1106;
+//$z-index-modal-wrapper: 1105;
+//$z-index-modal-mask: 1104;
+//$z-index-modal-content: 1106;

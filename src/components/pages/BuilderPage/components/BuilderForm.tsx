@@ -1,4 +1,4 @@
-import { CSSProperties, FC, useState } from "react";
+import { FC, useState } from "react";
 import { TBuilderForm } from "../types";
 import { H2, P } from "@components/Text";
 import BuilderFormCard from "@components/pages/BuilderPage/components/BuilderFormCard";
@@ -6,12 +6,6 @@ import BuilderFormCard from "@components/pages/BuilderPage/components/BuilderFor
 const BuilderForm: FC<TBuilderForm> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
     const [selectedValue, setSelectedValue] = useState<string | undefined>();
-
-    const length = 3;
-
-    const styles: CSSProperties = {
-        width: length >= 4 ? "25%" : "33%",
-    };
 
     return (
         <div className={`${classPrefix}__wrapper`}>
@@ -21,7 +15,6 @@ const BuilderForm: FC<TBuilderForm> = ({ pageClassPrefix }) => {
                     <BuilderFormCard
                         key={index}
                         wrapperClassPrefix={classPrefix}
-                        wrapperStyles={styles}
                         value={item.value}
                         onClick={(value) => setSelectedValue(value)}
                         title={item.title}

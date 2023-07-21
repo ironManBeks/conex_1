@@ -3,7 +3,7 @@ import React from "react";
 import HeadMeta from "@components/segments/HeadMeta";
 import BuilderPage from "@components/pages/BuilderPage";
 
-const BuilderPagePageLayout: React.FC = () => {
+const BuilderPageLayout: React.FC = () => {
     return (
         <>
             <HeadMeta title="Door Builder" />
@@ -12,4 +12,4 @@ const BuilderPagePageLayout: React.FC = () => {
     );
 };
 
-export default BuilderPagePageLayout;
+export default BuilderPageLayout;

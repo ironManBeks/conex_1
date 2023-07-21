@@ -1,0 +1,28 @@
+.common-segmented{
+  width: 100%;
+  padding: 4px;
+  background: rgba(164, 163, 163, 0.20);
+  border-radius: $border-radius-round;
+  .ant-segmented{
+    &-group{
+      justify-content: space-between;
+    }
+    &-item {
+      padding: 10px 25px;
+      border-radius: $border-radius-round;
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+      color: $color-grey-800;
+      &-label {
+        padding: 0;
+        transition: 0s;
+      }
+      &-selected{
+        color: $color-orange-600;
+      }
+    }
+    &-thumb{
+      border-radius: $border-radius-round;
+    }
+  }
+}

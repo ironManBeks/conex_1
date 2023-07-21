@@ -1,0 +1,15 @@
+.common-tooltip{
+  .ant-tooltip{
+    &-inner{
+      background: $color-grey-900;
+      border-radius: $border-radius-sm;
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+    }
+    &-arrow-content{
+      &:before{
+        background: $color-grey-900;
+      }
+    }
+  }
+}

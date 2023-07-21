@@ -12,6 +12,7 @@ export enum EFormFieldType {
     radio = "radio",
     radioArray = "radioArray",
     radioButtonArray = "radioButtonArray",
+    textArea = "textarea",
 }
 
 export type TDefaultOption = {
