@@ -6,7 +6,6 @@ import { observer } from "mobx-react";
 import { Header } from "../Header";
 
 import { TLayout } from "./types";
-import { notification } from "antd";
 
 export const Layout: FC<TLayout> = observer(
     ({ children, pageClassPrefix, headerClassName, layoutClassName }) => {
@@ -15,13 +14,8 @@ export const Layout: FC<TLayout> = observer(
         const [layoutSpaceTop, setLayoutSpaceTop] = useState<number>(0);
 
         useEffect(() => {
-            console.log("commonStore.headerHeight", commonStore.headerHeight);
             setLayoutSpaceTop(commonStore.headerHeight);
         }, [commonStore.headerHeight]);
-
-        useEffect(() => {
-            console.log("layoutSpaceTop", layoutSpaceTop);
-        }, [layoutSpaceTop]);
 
         return useMemo(
             () => (

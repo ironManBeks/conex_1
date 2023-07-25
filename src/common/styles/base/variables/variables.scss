@@ -32,6 +32,7 @@ $color-grey-700: #636161;
 $color-grey-800: #5E5E5E;
 $color-grey-900: #5C5A5A;
 
+$color-blue-400: #5084A0;
 $color-blue-700: #204459;
 $color-blue-800: #1B1841;
 
@@ -41,6 +42,7 @@ $color-green-500: #5D9A57;
 
 $color-red-300: #DA6D6E;
 $color-red-500: #BE5253;
+$color-red-800: #D62343;
 
 
 // Project Colors
@@ -112,8 +114,8 @@ $border-radius-circle: 50%;
 $border-radius-round: 55px;
 
 //// Box-shadow
-$box-shadow-sm: 1px 1px 8px rgba(89, 63, 45, 0.1);
-$box-shadow-sm-hover: 2px 4px 10px rgba(89, 63, 45, 0.2);
+$box-shadow-sm:  0 0 10px 0 rgba(87, 110, 124, 0.23), 0 0 10px 0 rgba(250, 187, 30, 0.12);
+$box-shadow-sm-hover:  0 0 10px 0 rgba(87, 110, 124, 0.3), 0 0 10px 0 rgba(250, 187, 30, 0.2);
 
 $box-shadow-bs: 0 0 20px 0 rgba(87, 110, 124, 0.23), 0 0 20px 0 rgba(250, 187, 30, 0.12);
 $box-shadow-bs-hover: 0 0 20px 2px rgba(87, 110, 124, 0.3), 0 0 20px 2px rgba(250, 187, 30, 0.2);
@@ -141,6 +143,6 @@ $header-filter-item-height: 36px;
 $z-index-header: 1100;
 $z-index-notification: 1110;
 
-//$z-index-modal-wrapper: 1105;
-//$z-index-modal-mask: 1104;
-//$z-index-modal-content: 1106;
+$z-index-modal-wrapper: 1105;
+$z-index-modal-mask: 1104;
+$z-index-modal-content: 1106;

@@ -1,15 +1,18 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import cn from "classnames";
-import { isNil } from "lodash";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
-import { H3, H5, P } from "@components/Text";
-
-import { TProductSearchCard } from "../types";
+import { H5 } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import { EButtonColor, EButtonSize } from "@components/buttons/types";
+import ProductCardTitle from "../components/ProductCardTitle";
+import ProductCardDescription from "../components/ProductCardDescription";
+import ProductCardList from "../components/ProductCardList";
+
+import { PRODUCT_CARD_CLASSNAME } from "../consts";
 import { notImplemented } from "@helpers/notImplemented";
 import { cutText } from "@helpers/textHelpers";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
+import { TProductInfoListItem, TProductSearchCard } from "../types";
 
 const ProductSearchCard: FC<TProductSearchCard> = ({
     className,
@@ -24,29 +27,27 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
 }) => {
     const classPrefix = "product-search-card";
 
+    const optionsList: TProductInfoListItem[] = [
+        { label: "Material", value: cutText(material, 20) },
+        { label: "Size", value: cutText(size, 20) },
+        { label: "Color", value: cutText(color, 20) },
+    ];
+
     return (
-        <div className={cn(`${classPrefix}_wrapper`, className)}>
+        <div
+            className={cn(
+                `${classPrefix}_wrapper`,
+                PRODUCT_CARD_CLASSNAME,
+                className,
+            )}
+        >
             <div className={`${classPrefix}_inner-wrapper`}>
                 <div className={`${classPrefix}_info__wrapper`}>
                     <ImgWrapper src={src} />
-
                     <div className={`${classPrefix}_info__details`}>
-                        <H3>{cutText(title, 25)}</H3>
-                        <ul>
-                            <ProductInfoListItem
-                                label="Material"
-                                value={cutText(material, 20)}
-                            />
-                            <ProductInfoListItem
-                                label="Size"
-                                value={cutText(size, 20)}
-                            />
-                            <ProductInfoListItem
-                                label="Color"
-                                value={cutText(color, 20)}
-                            />
-                        </ul>
-                        {description && <P>{cutText(description, 80)}</P>}
+                        <ProductCardTitle title={title} />
+                        <ProductCardList optionsList={optionsList} />
+                        <ProductCardDescription description={""} />
                     </div>
                 </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
@@ -75,19 +76,3 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
 };
 
 export default ProductSearchCard;
-
-const ProductInfoListItem = ({
-    label,
-    value,
-}: {
-    label: string;
-    value: ReactNode;
-}) => {
-    if (isNil(value)) return <></>;
-    return (
-        <li>
-            <span className="label">{label}:</span>
-            <span className="value">{value}</span>
-        </li>
-    );
-};

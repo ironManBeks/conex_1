@@ -46,6 +46,7 @@ const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix }) => {
                             alt="Hammer"
                             width="20"
                             height="20"
+                            isTypeWebp={true}
                         />
                         <span>Door Builder</span>
                         <ImgWrapper
@@ -53,6 +54,7 @@ const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix }) => {
                             alt="Hammer"
                             width="20"
                             height="20"
+                            isTypeWebp={true}
                         />
                     </>
                 }

@@ -1,6 +1,6 @@
 import { TProductDoorData } from "@store/stores/products/types";
 
-export const ProductDoorListMockup: TProductDoorData[] = [
+export const ProductSearchListDataMockup: TProductDoorData[] = [
     {
         id: "1",
         title: "123",

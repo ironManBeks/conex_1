@@ -1,15 +1,12 @@
-import { InputProps } from "antd/lib/input/Input";
-
 import {
     TFormItemLabel,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
+import { InputNumberProps } from "antd/lib/input-number";
 
-export type TFieldInputController = {
+export type TFieldInputNumberController = {
     name: string;
     onChangeValue?: (value: unknown) => void;
-    onAddonClick?: () => void;
-    minAddonWidth?: number;
-} & InputProps &
+} & InputNumberProps &
     TFormItemLabel &
     TFormWrapperClassName;

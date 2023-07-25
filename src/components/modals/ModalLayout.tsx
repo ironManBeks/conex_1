@@ -28,33 +28,31 @@ const ModalLayout: React.FC<TModalLayout> = ({
     isCloseBtn = true,
     forceRender = false,
     maskZIndex,
-    isSticky = false,
 }) => {
+    const classPrefix = "common-modal";
     const maskStyles = {
         zIndex: maskZIndex,
         maskStyle,
     };
 
     const closeButton = isCloseBtn ? (
-        <button className="custom-modal_close" onClick={handleCancel}>
+        <button className={`${classPrefix}_close`} onClick={handleCancel}>
             <IconCross color={COLOR_BLACK} />
         </button>
-    ) : (
-        <></>
-    );
+    ) : null;
 
     const headerSection = headContent ? (
         headContent
     ) : title ? (
         <>
-            <H3 className="custom-modal_header__title">{title}</H3>
+            <H3 className={`${classPrefix}_header__title`}>{title}</H3>
             {subTitle && (
-                <H4 className="custom-modal_header__sub-title">{subTitle}</H4>
+                <H4 className={`${classPrefix}_header__sub-title`}>
+                    {subTitle}
+                </H4>
             )}
         </>
-    ) : (
-        <></>
-    );
+    ) : null;
 
     useEffect(() => {
         disableBodyScroll(modalVisible);
@@ -66,23 +64,19 @@ const ModalLayout: React.FC<TModalLayout> = ({
             onCancel={handleCancel}
             title={null}
             footer={null}
-            rootClassName={cn(
-                "custom-modal_wrapper",
-                wrapperClassName,
-                modalSize,
-                { _sticky: isSticky },
-            )}
-            wrapClassName={cn("custom-modal_inner-wrapper")}
+            className={cn(`${classPrefix}_inner-wrapper`, modalSize)}
+            wrapClassName={cn(`${classPrefix}_wrapper`, wrapperClassName)}
             maskStyle={maskStyles}
             style={wrapperStyles}
             forceRender={forceRender}
+            closeIcon={<IconCross />}
         >
-            <div className="custom-modal_content__wrapper">
+            <div className={`${classPrefix}_content__wrapper`}>
                 {closeButton}
                 {headerSection && (
                     <div
                         className={cn(
-                            "custom-modal_header__wrapper",
+                            `${classPrefix}_header__wrapper`,
                             headClassName,
                         )}
                     >
@@ -92,7 +86,7 @@ const ModalLayout: React.FC<TModalLayout> = ({
                 {bodyContent && (
                     <div
                         className={cn(
-                            "custom-modal_body__wrapper",
+                            `${classPrefix}_body__wrapper`,
                             bodyClassName,
                         )}
                     >
@@ -102,7 +96,7 @@ const ModalLayout: React.FC<TModalLayout> = ({
                 {footerContent && (
                     <div
                         className={cn(
-                            "custom-modal_footer__wrapper",
+                            `${classPrefix}_footer__wrapper`,
                             footerClassName,
                         )}
                     >

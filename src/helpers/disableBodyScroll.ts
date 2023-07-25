@@ -1,4 +1,4 @@
-const disableBodyScroll = (value: boolean) => {
+const disableBodyScroll = (value: boolean): void => {
     const DISABLE_SCROLL_CLASSNAME = "disable-scroll";
     if (document && document.body) {
         if (value) {

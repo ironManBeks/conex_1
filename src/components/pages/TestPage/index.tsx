@@ -21,6 +21,7 @@ import {
 } from "./formAttrs";
 import { EDirection } from "@globalTypes/commonTypes";
 import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
+import FieldInputNumberController from "@components/form/formControllers/FieldInputNumberController";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
@@ -47,20 +48,6 @@ const TestPage: FC = () => {
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <FieldInputController
-                                name={EFieldNames.input}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                            />
-                            <FieldInputController
-                                name={EFieldNames.input + "123"}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                                disabled={true}
-                            />
-                            <br />
-                            <br />
-                            <br />
                             <FieldSelectController
                                 name={EFieldNames.select}
                                 placeholder={EFieldNames.select}
@@ -142,6 +129,34 @@ const TestPage: FC = () => {
                                 name={EFieldNames.textArea + "123"}
                                 placeholder={EFieldNames.textArea}
                                 label={EFieldNames.textArea}
+                                disabled={true}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                            <FieldInputController
+                                name={EFieldNames.input}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                            />
+                            <FieldInputController
+                                name={EFieldNames.input + "123"}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                                disabled={true}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                            <FieldInputNumberController
+                                name={EFieldNames.inputNumber}
+                                placeholder={EFieldNames.inputNumber}
+                                label={EFieldNames.inputNumber}
+                            />
+                            <FieldInputNumberController
+                                name={EFieldNames.inputNumber + "123"}
+                                placeholder={EFieldNames.inputNumber}
+                                label={EFieldNames.inputNumber}
                                 disabled={true}
                             />
                             <br />

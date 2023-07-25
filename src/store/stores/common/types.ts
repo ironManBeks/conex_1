@@ -3,4 +3,6 @@ export interface ICommonStore {
     setHeaderHeight: (value: number) => void;
     urlParams: Record<string, string>;
     setUlParams: (value: Record<string, string>) => void;
+    modalConfirmToDeleteVisible: boolean;
+    setModalConfirmToDeleteVisible: (value: boolean) => void;
 }

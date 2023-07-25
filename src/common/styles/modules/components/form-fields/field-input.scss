@@ -1,7 +1,35 @@
 .form-field_wrapper._input{
   --x-p: 10px;
   --y-p: 8px;
+  --icon-width: 16px;
+
   --bg-color: transparent;
+  &._icon{
+    .common-icon{
+      position: absolute;
+      left: 15px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 24px;
+    }
+    &._icon-right{
+      .common-icon{
+        left: unset;
+        right: 15px;
+      }
+      .form-field{
+        &_field{
+          padding-left: var(--x-p);
+          padding-right: calc(var(--icon-width) + 30px);
+        }
+      }
+    }
+    .form-field{
+      &_field{
+        padding-left: calc(var(--icon-width) + 30px);
+      }
+    }
+  }
   .form-field{
     &_field{
       width: 100%;

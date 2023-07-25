@@ -1,20 +1,19 @@
-import { CSSProperties } from "react";
+import { CSSProperties, ReactNode } from "react";
 
 export type TModalLayout = {
     title?: string;
     subTitle?: string;
-    headContent?: JSX.Element;
+    headContent?: ReactNode;
     headClassName?: string;
-    bodyContent?: JSX.Element;
+    bodyContent?: ReactNode;
     bodyClassName?: string;
-    footerContent?: JSX.Element;
+    footerContent?: ReactNode;
     footerClassName?: string;
     handleCancel: () => void;
     modalVisible: boolean;
     isCloseBtn?: boolean;
     forceRender?: boolean;
     maskZIndex?: number;
-    isSticky?: boolean;
 } & IModalProps;
 
 export interface IModalProps {

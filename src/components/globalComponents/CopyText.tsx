@@ -38,9 +38,7 @@ const CopyText: FC<TCopyText> = ({ className, text, onCopy: onCopyText }) => {
                 </span>
             </Tooltip>
         </CopyToClipboard>
-    ) : (
-        <></>
-    );
+    ) : null;
 };
 
 export default CopyText;

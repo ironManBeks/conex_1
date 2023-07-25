@@ -1,7 +1,7 @@
 import { makeAutoObservable, observable } from "mobx";
 
 import { IProductsStore, TProductDoorData } from "./types";
-import { ProductDoorListMockup } from "../../../mockups/ProductDoorListMockup";
+import { ProductSearchListDataMockup } from "../../../mockups/ProductSearchListDataMockup";
 
 export class ProductsStore implements IProductsStore {
     productList: TProductDoorData[] = [];
@@ -16,7 +16,7 @@ export class ProductsStore implements IProductsStore {
 
     getProductListRequest = (searchParams: string) => {
         setTimeout(() => {
-            this.setProductList(ProductDoorListMockup);
+            this.setProductList(ProductSearchListDataMockup);
             this.setProductListFetching(false);
         }, 1000);
     };

@@ -1,43 +1,26 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { Input as AntInput, InputRef } from "antd";
+import { FC } from "react";
+import { InputNumber as AntInputNumber } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import { IconArrowSingle } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 
 import { EFormFieldType } from "@components/form/types";
-import { TFieldInputController } from "./types";
-import { isFunction } from "lodash";
+import { TFieldInputNumberController } from "./types";
+import { EArrowDirection } from "@components/Icons/types";
 
-const FieldInputController: FC<TFieldInputController> = (props) => {
-    const {
-        name,
-        onChangeValue,
-        label,
-        wrapperClassName,
-        disabled,
-        addonAfter,
-        onAddonClick,
-        minAddonWidth,
-        ...rest
-    } = props;
-    const addonAfterRef = useRef<HTMLDivElement>(null);
-    const [addonAfterWidth, setAddonAfterWidth] = useState<number>(0);
+const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
+    const { name, onChangeValue, label, wrapperClassName, disabled, ...rest } =
+        props;
     const {
         control,
         formState: { errors, touchedFields },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const isError = !!errorMessage && !!touchedFields;
-    const fieldRef = useRef<InputRef | null>(null);
-
-    useEffect(() => {
-        if (addonAfterRef?.current?.clientHeight) {
-            setAddonAfterWidth(addonAfterRef.current.clientHeight);
-        }
-    }, [addonAfterRef?.current?.clientHeight]);
 
     return (
         <Controller
@@ -46,46 +29,37 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
             render={({ field }) => {
                 return (
                     <FormItemWrapper
-                        fieldType={EFormFieldType.input}
+                        fieldType={EFormFieldType.inputNumber}
                         errorMessage={errorMessage}
                         label={label}
-                        wrapperClassName={cn(wrapperClassName, {
-                            _addonAfter: addonAfter,
-                        })}
+                        wrapperClassName={cn(wrapperClassName)}
                     >
-                        <AntInput
+                        <AntInputNumber
                             {...field}
                             {...rest}
-                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                             )}
                             value={field.value}
-                            onChange={(e) => {
-                                const val = e.target.value;
-                                field.onChange(val);
-                                if (onChangeValue) onChangeValue(val);
+                            onChange={(value) => {
+                                // const val = e.target.value;
+                                field.onChange(value);
+                                if (onChangeValue) onChangeValue(value);
                             }}
                             disabled={disabled}
-                            style={{
-                                paddingRight: `${addonAfterWidth + 10}px`,
+                            controls={{
+                                upIcon: (
+                                    <IconArrowSingle width={5} height={5} />
+                                ),
+                                downIcon: (
+                                    <IconArrowSingle
+                                        width={5}
+                                        height={5}
+                                        direction={EArrowDirection.bottom}
+                                    />
+                                ),
                             }}
                         />
-                        {addonAfter && (
-                            <div
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_addonAfter`,
-                                    {
-                                        _click: isFunction(onAddonClick),
-                                    },
-                                )}
-                                ref={addonAfterRef}
-                                onClick={onAddonClick}
-                                style={{ minWidth: minAddonWidth }}
-                            >
-                                {addonAfter}
-                            </div>
-                        )}
                     </FormItemWrapper>
                 );
             }}
@@ -93,4 +67,4 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     );
 };
 
-export default FieldInputController;
+export default FieldInputNumberController;

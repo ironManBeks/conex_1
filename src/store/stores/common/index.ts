@@ -5,11 +5,13 @@ import { ICommonStore } from "./types";
 export class CommonStore implements ICommonStore {
     headerHeight = 0;
     urlParams = {};
+    modalConfirmToDeleteVisible = false;
 
     constructor() {
         makeAutoObservable(this, {
             headerHeight: observable,
             urlParams: observable,
+            modalConfirmToDeleteVisible: observable,
         });
     }
 
@@ -19,5 +21,9 @@ export class CommonStore implements ICommonStore {
 
     setUlParams = (value: Record<string, string>): void => {
         this.urlParams = value;
+    };
+
+    setModalConfirmToDeleteVisible = (value: boolean): void => {
+        this.modalConfirmToDeleteVisible = value;
     };
 }

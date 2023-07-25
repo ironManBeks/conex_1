@@ -9,6 +9,8 @@ import { IconOpenFilter } from "@components/Icons";
 import { ColorTheme } from "@common/theme/colorTheme";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { useRootStore } from "@store";
+import AdditionalServices from "@components/globalComponents/AdditionalServices";
+import { TAdditionalServicesOption } from "@components/globalComponents/types";
 
 const SearchFilter: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_filter`;
@@ -63,6 +65,10 @@ const FilterInfo = ({ onClose }: { onClose: () => void }): ReactElement => {
     const classPrefix = "filter-info";
     const filterData = filterDataMockup;
 
+    const additionalServicesOptions: TAdditionalServicesOption[] = [
+        { label: "Additional charges", value: "$23.00" },
+    ];
+
     return (
         <div className={`${classPrefix}_wrapper`}>
             <div className={`${classPrefix}_head`} onClick={onClose}>
@@ -98,16 +104,14 @@ const FilterInfo = ({ onClose }: { onClose: () => void }): ReactElement => {
                         ))}
                     </div>
                 )}
-                <div className={`${classPrefix}_total__wrapper`}>
-                    <div className={cn(`${classPrefix}_total__charges`)}>
-                        <H5>Additional charges</H5>
-                        <P>$23.00</P>
-                    </div>
-                    <div className={cn(`${classPrefix}_total__grand`)}>
-                        <H5>Grand Total</H5>
-                        <P>$2,323.00</P>
-                    </div>
-                </div>
+                <AdditionalServices
+                    className={`${classPrefix}_total__wrapper`}
+                    options={additionalServicesOptions}
+                    totalOption={{
+                        label: "Grand Total",
+                        value: "$2,323.00",
+                    }}
+                />
             </div>
         </div>
     );

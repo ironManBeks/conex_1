@@ -10,14 +10,18 @@ export type TFormWrapperClassName = {
     wrapperClassName?: string;
 };
 
-export type TFormItemWrapper = {
-    children: ReactNode;
-    fieldType: EFormFieldType;
+export type TFormWrapperErrorMessage = {
     errorMessage:
         | string
         | FieldError
         | Merge<FieldError, FieldErrorsImpl<any>>
         | undefined;
+};
+
+export type TFormItemWrapper = {
+    children: ReactNode;
+    fieldType: EFormFieldType;
     required?: boolean;
 } & TFormItemLabel &
-    TFormWrapperClassName;
+    TFormWrapperClassName &
+    TFormWrapperErrorMessage;

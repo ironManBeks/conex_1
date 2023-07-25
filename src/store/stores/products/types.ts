@@ -10,6 +10,10 @@ export type TProductDoorData = {
     src: string;
 };
 
+export type TProductCartData = {
+    quantity: number;
+} & TProductDoorData;
+
 export interface IProductsStore {
     productList: TProductDoorData[];
     setProductList: (data: TProductDoorData[]) => void;
