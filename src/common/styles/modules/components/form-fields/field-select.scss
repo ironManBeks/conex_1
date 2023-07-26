@@ -93,6 +93,20 @@
       }
     }
   }
+
+  &._error{
+    .form-field_field.ant-select{
+      .ant-select-selector {
+        border-color: $color-red-250 !important;
+        &:hover, &:focus{
+          &:not([disabled]){
+            border-color: $color-primary !important;
+          }
+        }
+      }
+    }
+  }
+
 }
 
 .form-field_dropdown._select{

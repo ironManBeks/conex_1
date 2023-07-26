@@ -4,6 +4,7 @@ import { useRootStore } from "src/store";
 import { observer } from "mobx-react";
 
 import { Header } from "../Header";
+import ModalAuth from "@components/modals/components/ModalAuth";
 
 import { TLayout } from "./types";
 
@@ -39,6 +40,7 @@ export const Layout: FC<TLayout> = observer(
                     >
                         {children}
                     </div>
+                    <ModalAuth />
                 </div>
             ),
             [

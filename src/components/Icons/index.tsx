@@ -10,9 +10,13 @@ import IconEdit from "./common/IconEdit";
 import IconTrash from "./common/IconTrash";
 import IconArrowSingle from "./common/IconArrowSingle";
 import IconCross from "./common/IconCross";
+import IconBankDollar from "./common/IconBankDollar";
+import IconCreditCard from "./common/IconCreditCard";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
+import IconPaypal from "./social/IconPaypal";
+import IconAmazonPay from "./social/IconAmazonPay";
 
 //---Logo
 import LogoMain from "./logo/LogoMain";
@@ -31,5 +35,9 @@ export {
     IconTrash,
     IconArrowSingle,
     IconCross,
+    IconBankDollar,
+    IconCreditCard,
     IconMastercard,
+    IconAmazonPay,
+    IconPaypal,
 };

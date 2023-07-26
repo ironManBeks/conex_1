@@ -3,6 +3,17 @@
   &_wrapper{
     margin-bottom: 20px;
     position: relative;
+    &._floating{
+      .form-field_label-wrapper{
+        position: absolute;
+        transform: translateY(-50%);
+        font-size: $font-size-bs;
+        line-height: $line-height-bs;
+        font-weight: 300;
+        padding: 0 10px;
+        left: 10px;
+      }
+    }
   }
 
   &_label-wrapper{
@@ -52,9 +63,12 @@
   }
 
   &_error-wrapper{
-    color: $color-danger;
+    color: $color-red-200;
+    font-weight: 300;
+    font-size: $font-size-bs;
+    line-height: $line-height-bs;
     span{
-      color: $color-danger;
+      color: $color-red-200;
     }
   }
 

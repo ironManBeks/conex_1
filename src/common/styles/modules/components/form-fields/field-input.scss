@@ -30,6 +30,7 @@
       }
     }
   }
+
   .form-field{
     &_field{
       width: 100%;
@@ -55,4 +56,16 @@
       }
     }
   }
+
+  &._error{
+    .form-field_field{
+      border-color: $color-red-250 !important;
+      &:hover, &:focus{
+        &:not([disabled]){
+          border-color: $color-primary !important;
+        }
+      }
+    }
+  }
+
 }

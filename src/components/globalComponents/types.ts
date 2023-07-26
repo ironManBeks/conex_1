@@ -52,7 +52,7 @@ export type TAdditionalServices = {
 };
 
 export type TChoiceMode = {
-    wrapperClassName?: string;
+    className?: string;
     options: {
         label: string;
         value: string;
