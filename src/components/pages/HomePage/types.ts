@@ -4,4 +4,6 @@ export type THowItWorksItem = {
     description?: string;
     src?: string;
     classPrefix: string;
+    imgWidth?: number;
+    imgHeight?: number;
 };

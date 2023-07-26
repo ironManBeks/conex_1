@@ -1,0 +1,23 @@
+.modal-confirm{
+  .common-modal{
+    &_inner-wrapper.ant-modal .ant-modal-content{
+      padding-top: 40px;
+      padding-bottom: 40px;
+    }
+    &_body__wrapper{
+      padding-top: 60px;
+      text-align: center;
+      font-family: $font-family-primary;
+    }
+    &_footer__wrapper{
+      margin-top: 60px;
+      display: flex;
+      justify-content: space-between;
+      .common-btn{
+        padding: 10px;
+      }
+    }
+  }
+
+
+}

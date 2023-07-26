@@ -9,7 +9,7 @@ export interface IIcon {
 }
 
 export type TIconArrow = {
-    direction: EArrowDirection;
+    direction?: EArrowDirection;
 } & IIcon;
 
 export enum EArrowDirection {

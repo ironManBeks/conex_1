@@ -1,0 +1,129 @@
+.product-cart-card{
+  &_wrapper{
+    --left-side-mr: 20px;
+    --left-side-width: 100px;
+
+    position: relative;
+    width: 100%;
+    &:before{
+      position: absolute;
+      content: '';
+      bottom: 0;
+      left: 45px;
+      width: calc(100% - 45px - 150px);
+      height: 1px;
+      background: linear-gradient(180deg, rgba(0, 0, 0, 0.09) 0%, rgba(0, 0, 0, 0.61) 38.54%, rgba(0, 0, 0, 0.44) 56.25%, rgba(0, 0, 0, 0.00) 100%);
+      opacity: 0;
+    }
+  }
+
+  &_inner-wrapper{
+    display: flex;
+    justify-content: space-between;
+    padding: 27px 40px;
+    background-color: $color-white;
+    border-radius: $border-radius-md;
+  }
+
+  &_info{
+    &__wrapper{
+      display: flex;
+      width: 100%;
+      min-width: 55%;
+      .img-custom_wrapper{
+        width: var(--left-side-width);
+        max-height: 150px;
+        margin-right: var(--left-side-mr);
+        flex: 0 0 auto;
+      }
+    }
+    &__details{
+      width: 100%;
+    }
+  }
+
+  &_price__wrapper{
+    display: flex;
+    align-items: center;
+    width: 20%;
+    min-width: 140px;
+    margin-left: 30px;
+    padding-bottom: 30px;
+    flex: 0 0 auto;
+    .common-title{
+      font-size: $font-size-md;
+      line-height: $line-height-md;
+      font-family: $font-family-primary;
+      font-weight: 500;
+      color: $color-red-800;
+      &._old{
+        color: $color-grey-800;
+        margin-left: 15px;
+        text-decoration: line-through;
+      }
+    }
+  }
+
+  &_quantity{
+    &__wrapper{
+      display: flex;
+      align-items: center;
+      width: 25%;
+      min-width: 140px;
+      position: relative;
+      flex: 0 0 auto;
+      padding-bottom: 30px;
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+      color: rgba(94, 94, 94, 0.53);
+      font-weight: 500;
+      .form-field_wrapper{
+        margin-bottom: 0;
+        margin-left: 6px;
+        border-color: rgba(141, 141, 141, 0.44);
+        width: 70px;
+        .form-field_field{
+          color: $color-blue-800;
+          text-align: center;
+          .ant-input-number-input{
+            padding: 5px;
+            text-align: center;
+          }
+        }
+      }
+    }
+    &__inner-wrapper{
+      display: flex;
+      align-items: center;
+    }
+  }
+
+  &_actions{
+    &__wrapper{
+      position: absolute;
+      top: 15px;
+      right: 40px;
+      display: flex;
+      align-items: center;
+      z-index: 1;
+      .common-btn{
+        width: 24px;
+        height: 24px;
+        min-width: auto;
+        padding: 0;
+        border-radius: $border-radius-circle;
+        margin-left: 5px;
+        &:hover{
+          box-shadow: $box-shadow-sm-hover;
+          &._delete{
+            background-color: $color-red-300;
+            svg{
+              fill: $color-white;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}

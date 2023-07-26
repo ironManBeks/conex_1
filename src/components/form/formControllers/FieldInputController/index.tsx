@@ -21,6 +21,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
         addonAfter,
         onAddonClick,
         minAddonWidth,
+        floatingLabel,
         ...rest
     } = props;
     const addonAfterRef = useRef<HTMLDivElement>(null);
@@ -51,6 +52,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                         label={label}
                         wrapperClassName={cn(wrapperClassName, {
                             _addonAfter: addonAfter,
+                            _floating: floatingLabel,
                         })}
                     >
                         <AntInput
@@ -68,7 +70,9 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             }}
                             disabled={disabled}
                             style={{
-                                paddingRight: `${addonAfterWidth + 10}px`,
+                                paddingRight: addonAfterWidth
+                                    ? `${addonAfterWidth + 10}px`
+                                    : undefined,
                             }}
                         />
                         {addonAfter && (

@@ -23,36 +23,6 @@
         margin-right: var(--left-side-mr);
         flex: 0 0 auto;
       }
-      .common-title{
-        margin-bottom: 8px;
-        font-size: $font-size-md;
-        line-height: $line-height-md;
-        font-family: $font-family-primary;
-      }
-      ul{
-        margin-bottom: 8px;
-        padding: 0;
-        li{
-          list-style-type: none;
-          font-size: $font-size-bs;
-          line-height: $line-height-bs;
-          &:not(:last-of-type){
-            margin-bottom: 8px;
-          }
-          .label{
-            color: $color-grey-800;
-            padding-right: 8px;
-          }
-          .value{
-            font-weight: 300;
-          }
-        }
-      }
-      .common-text{
-        margin-bottom: 0;
-        color: $color-grey-800;
-        font-weight: 500;
-      }
     }
     &__details{
       width: 100%;
@@ -65,7 +35,7 @@
       .common-title{
         width: var(--left-side-width);
         margin-right: var(--left-side-mr);
-        text-shadow: 0 4px 4px 0 rgba(0, 0, 0, 0.25);
+        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
         font-size: $font-size-lg;
         line-height: $line-height-lg;
         color: rgba(0, 0, 0, 0.67);
@@ -79,6 +49,9 @@
       flex-wrap: wrap;
       .common-btn{
         width: calc(50% - 30px);
+        &._add{
+          background-color: #F99F3F;
+        }
         &:not(:last-of-type){
           margin-right: 20px;
         }

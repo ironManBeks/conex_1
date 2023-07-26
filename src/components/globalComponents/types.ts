@@ -25,6 +25,7 @@ export type TImgWrapper = {
     onWrapperClick?: (e: MouseEvent<HTMLDivElement>) => void;
     imageClassName?: string;
     wrapperClassName?: string;
+    isTypeWebp?: boolean;
 } & ImageProps;
 
 export type TProgressWrapper = { wrapperClassPrefix?: string } & ProgressProps;
@@ -41,3 +42,21 @@ export type TCopyText = {
 };
 
 export type TTooltip = TooltipProps;
+
+export type TAdditionalServicesOption = { label: string; value: ReactNode };
+
+export type TAdditionalServices = {
+    className?: string;
+    options: TAdditionalServicesOption[];
+    totalOption?: TAdditionalServicesOption;
+};
+
+export type TChoiceMode = {
+    className?: string;
+    options: {
+        label: string;
+        value: string;
+        isActive: boolean;
+        onClick?: () => void;
+    }[];
+};

@@ -1,35 +1,16 @@
-.icon-custom{
+.common-icon{
   &.icon-arrow{
     &.top{
-      transform: rotate(-180deg);
-    }
-    &.right{
-      transform: rotate(-90deg);
-    }
-    &.left{
-      transform: rotate(90deg);
-    }
-    &.bottom{
       transform: rotate(0);
     }
-  }
-  &.icon-dots-rectangle{
-    &.vertical{
-      transform: rotate(90deg);
-    }
-  }
-  &.icon-arrow-curved{
-    &.top{
-      transform: rotate(-90deg);
-    }
     &.right{
-      transform: rotate(0deg);
+      transform: rotate(90deg);
     }
     &.left{
-      transform: rotate(180deg);
+      transform: rotate(-90deg);
     }
     &.bottom{
-      transform: rotate(90deg);
+      transform: rotate(-180deg);
     }
   }
 }

@@ -150,6 +150,7 @@
     &.__outline{
       color: $color-orange-600;
       background-color: $color-white;
+      border-color: #FFD700;
       &:hover, &:active{
         background-color: $color-yellow-100;
         border-color: $color-secondary-hover;

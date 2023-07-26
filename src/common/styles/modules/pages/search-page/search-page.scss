@@ -29,8 +29,8 @@
     &_title{
       margin-bottom: 20px;
       font-family: $font-family-primary;
-      font-size: $font-size-xl;
-      line-height: $line-height-xl;
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
       text-align: center;
     }
   }
@@ -47,6 +47,9 @@
       line-height: $line-height-xl;
       color: $color-grey-800;
       font-weight: 500;
+    }
+    .common-btn{
+      color: $color-grey-800;
     }
   }
 
@@ -181,37 +184,6 @@
   &_total{
     &__wrapper{
       margin-top: auto;
-      padding-top: 30px;
-    }
-    &__charges, &__grand{
-      display: flex;
-      justify-content: space-between;
-      &:not(:last-of-type){
-        margin-bottom: 20px;
-      }
-      .common-title{
-        padding-right: 15px;
-      }
-      .common-text{
-        margin-bottom: 0;
-      }
-    }
-    &__charges{
-      .common-title{
-        color: $color-grey-300;
-      }
-      .common-text, .common-title{
-        font-size: $font-size-bs;
-        line-height: $line-height-bs;
-        font-family: $font-family-primary;
-      }
-    }
-    &__grand{
-      .common-text, .common-title {
-        font-size: $font-size-md;
-        line-height: $line-height-md;
-        font-family: $font-family-primary;
-      }
     }
   }
 }

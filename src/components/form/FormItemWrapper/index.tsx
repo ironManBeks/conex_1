@@ -16,7 +16,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
         <div
             className={cn(
                 `${FORM_FIELD_CLASSNAME_PREFIX}_wrapper`,
-                `_${fieldType}`,
+                fieldType && `_${fieldType}`,
                 wrapperClassName,
                 { _error: errorMessage },
             )}

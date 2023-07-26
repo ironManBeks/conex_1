@@ -1,18 +1,26 @@
-import { DefaultOptionType, SelectProps } from "antd/lib/select";
+import { FC, JSX, ReactNode, SVGAttributes } from "react";
+import { SelectProps } from "antd/lib/select";
 import { InputProps } from "antd/lib/input/Input";
 import { CheckboxProps } from "antd/lib/checkbox";
 import { RadioProps } from "antd/lib/radio";
-import { ReactNode } from "react";
+import { InputNumberProps } from "antd/lib/input-number";
+import {
+    TFormItemLabel,
+    TFormWrapperClassName,
+    TFormWrapperErrorMessage,
+} from "@components/form/FormItemWrapper/types";
+import { IIcon } from "@components/Icons/types";
 
 export enum EFormFieldType {
     input = "input",
     select = "select",
     checkbox = "checkbox",
-    checkboxArray = "checkboxArray",
+    checkboxArray = "checkboxarray",
     radio = "radio",
-    radioArray = "radioArray",
-    radioButtonArray = "radioButtonArray",
+    radioArray = "radioarray",
+    radioButtonArray = "radiobuttonarray",
     textArea = "textarea",
+    inputNumber = "inputnumber",
 }
 
 export type TDefaultOption = {
@@ -23,9 +31,22 @@ export type TDefaultOption = {
 
 export type TFormFieldInput = {
     name: string;
+    icon?: JSX.Element;
+    iconPosition?: "left" | "right";
+    onIconClick?: () => void;
+} & InputProps &
+    TFormWrapperClassName &
+    TFormItemLabel &
+    TFormWrapperErrorMessage;
+
+export type TFormFieldInputNumber = {
+    name: string;
     icon?: ReactNode;
     onIconClick?: () => void;
-} & InputProps;
+} & InputNumberProps &
+    TFormWrapperClassName &
+    TFormItemLabel &
+    TFormWrapperErrorMessage;
 
 export type TFormFieldSelect = {
     name: string;

@@ -10,6 +10,8 @@ export type TFieldInputController = {
     onChangeValue?: (value: unknown) => void;
     onAddonClick?: () => void;
     minAddonWidth?: number;
+    floatingLabel?: boolean;
+    floatingBgColor?: `#${string}`;
 } & InputProps &
     TFormItemLabel &
     TFormWrapperClassName;

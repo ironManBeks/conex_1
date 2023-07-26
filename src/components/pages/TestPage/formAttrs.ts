@@ -10,6 +10,7 @@ export enum EFieldNames {
     checkbox = "Checkbox",
     checkboxArray = "CheckboxArray",
     textArea = "TextArea",
+    inputNumber = "InputNumber",
 }
 
 export type TFormFields = {
@@ -20,6 +21,7 @@ export type TFormFields = {
     [EFieldNames.checkbox]: boolean;
     [EFieldNames.checkboxArray]: Record<string, boolean>;
     [EFieldNames.textArea]: string;
+    [EFieldNames.inputNumber]: number;
 };
 
 export const formResolver = (): Resolver<TFormFields> => {
@@ -40,6 +42,10 @@ export const formResolver = (): Resolver<TFormFields> => {
                 .object<Record<string, boolean>>()
                 .required(requiredText),
             [EFieldNames.textArea]: yup.string().required(requiredText),
+            [EFieldNames.inputNumber]: yup
+                .number()
+                .max(100, "Max count 99")
+                .required(requiredText),
         }),
     );
 };
@@ -52,6 +58,7 @@ export const formDefaultValues: TFormFields = {
     [EFieldNames.checkbox]: false,
     [EFieldNames.checkboxArray]: {},
     [EFieldNames.textArea]: "",
+    [EFieldNames.inputNumber]: 0,
 };
 
 export const optionsMockup = [

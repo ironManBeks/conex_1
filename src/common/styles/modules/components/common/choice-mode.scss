@@ -1,0 +1,29 @@
+.choice-mode{
+  &_wrapper{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+    .common-btn{
+      max-width: 50%;
+      min-width: auto;
+      border-radius: $border-radius-round;
+      padding: 8px 20px;
+      color: $color-blue-400;
+      font-size: $font-size-md;
+      line-height: $line-height-md;
+      box-shadow: none;
+      background-color: transparent;
+      border-color: transparent;
+      &._active{
+        cursor: auto;
+        color: $color-grey-800;
+        border-color: rgba(250, 187, 30, 0.18);
+        box-shadow: 1px 1px 2px 0 rgba(250, 187, 30, 0.18);
+        &:hover{
+          box-shadow: 1px 1px 2px 0 rgba(250, 187, 30, 0.18);
+          background-color: transparent;
+        }
+      }
+    }
+  }
+}

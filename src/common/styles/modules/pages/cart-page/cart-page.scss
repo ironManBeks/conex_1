@@ -1,0 +1,33 @@
+.cart-page{
+  &_layout__inner-wrapper{
+    padding: 20px 0 100px;
+    .common-title._h2{
+      margin-bottom: 8px;
+      padding-left: 30px;
+      font-size: $font-size-xxl;
+      line-height: $line-height-xxl;
+      font-family: $font-family-primary;
+    }
+  }
+
+  &_list{
+    &__wrapper{
+      width: 100%;
+      padding-right: 22px;
+    }
+    &__content{
+      padding: 20px 0;
+      background: $color-white;
+      box-shadow: $box-shadow-bs;
+      border-radius: $border-radius-lg;
+      .product-cart-card_wrapper{
+        &:not(:last-of-type){
+          &:before{
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+
+}

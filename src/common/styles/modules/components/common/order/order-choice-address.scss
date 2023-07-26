@@ -1,0 +1,29 @@
+.order-choice-address{
+  &_wrapper{
+    .form-field_wrapper._input{
+      .form-field_field {
+        padding-top: 15px;
+        padding-bottom: 15px;
+        background-color: rgba(217, 217, 217, 0.24);
+        border-color: transparent;
+        border-radius: $border-radius-lg;
+        font-size: $font-size-bs;
+        line-height: $line-height-bs;
+        color: $color-grey-800;
+        &::placeholder{
+          color: $color-grey-800;
+        }
+      }
+    }
+    .common-text{
+      margin-bottom: 8px;
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+      color: $color-grey-800;
+    }
+    iframe{
+      border-radius: $border-radius-lg;
+      border: 0;
+    }
+  }
+}

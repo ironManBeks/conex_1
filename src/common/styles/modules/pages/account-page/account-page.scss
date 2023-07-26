@@ -41,6 +41,9 @@
       flex-wrap: wrap;
       justify-content: space-between;
     }
+    &__title{
+      color: $color-grey-800;
+    }
     &__item{
       &._wrapper{
         position: relative;
@@ -160,7 +163,7 @@
         }
         .common-title{
           font-family: $font-family-primary;
-          color: $color-grey-800;
+          color: rgba(94, 94, 94, 0.66);
           transition: .2s;
           &._h5{
             margin-bottom: 10px;
@@ -170,8 +173,8 @@
           &._h4{
             display: flex;
             align-items: center;
-            font-size: $font-size-lg;
-            line-height: $line-height-lg;
+            font-size: $font-size-xl;
+            line-height: $line-height-xl;
             font-weight: 500;
             margin-bottom: 20px;
             .common-copy-text{
@@ -233,7 +236,7 @@
             font-size: $font-size-bs;
             line-height: $line-height-bs;
             .label{
-              color: #5E5E5E;
+              color: $color-grey-800;
             }
             .value{
               color: #A4A3A3;
@@ -257,6 +260,8 @@
               justify-content: center;
               margin-top: 35px;
               .common-btn{
+                font-size: $font-size-md;
+                line-height: $line-height-md;
                 padding: 10px 15px;
               }
             }

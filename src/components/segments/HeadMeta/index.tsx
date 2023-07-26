@@ -30,7 +30,7 @@ const HeadMeta = ({
     locale = "en",
 }: IHeadMeta) => {
     const { asPath } = useRouter();
-    // TODO change "siteName"
+    // ToDo change "siteName"
     const siteName = "WEBSITE";
     const pageTitle = title ? `${title} - ${siteName}` : siteName;
     const currentUrl = `${url || asPath}`;
