@@ -47,7 +47,7 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
                     <div className={`${classPrefix}_info__details`}>
                         <ProductCardTitle title={title} />
                         <ProductCardList optionsList={optionsList} />
-                        <ProductCardDescription description={""} />
+                        <ProductCardDescription description={description} />
                     </div>
                 </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
@@ -57,6 +57,7 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
                             color={EButtonColor.secondary}
                             size={EButtonSize.sm}
                             onClick={() => notImplemented()}
+                            className="_add"
                         >
                             Add to cart
                         </ButtonPrimary>

@@ -11,6 +11,8 @@ const HowItWorksItem: FC<THowItWorksItem> = ({
     description,
     src,
     classPrefix,
+    imgWidth,
+    imgHeight,
 }) => {
     return (
         <div className={`${classPrefix}_item__wrapper`}>
@@ -21,8 +23,8 @@ const HowItWorksItem: FC<THowItWorksItem> = ({
                 <ImgWrapper
                     src={src}
                     alt={secondTitle ?? title}
-                    width="256"
-                    height="164"
+                    width={imgWidth ?? 256}
+                    height={imgHeight ?? 164}
                 />
             )}
         </div>

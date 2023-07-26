@@ -34,7 +34,7 @@ const AccountPayment: FC<TSectionTypes> = ({ pageClassPrefix }) => {
 
     return (
         <Fragment>
-            <H2>Saved Payment</H2>
+            <H2 className={`${classPrefix}__title`}>Saved Payment</H2>
             <div className={`${classPrefix}__wrapper`}>
                 {paymentCardMockup.map((item, index) => (
                     <AccountPaymentItem
