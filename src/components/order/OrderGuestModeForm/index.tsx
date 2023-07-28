@@ -1,6 +1,7 @@
 import { FC, useEffect, useImperativeHandle } from "react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import cn from "classnames";
+import { isFunction } from "lodash";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 
@@ -10,8 +11,7 @@ import {
     guestModeFormResolver,
     TGuestModeForm,
 } from "./formAttrs";
-import { TOrderGuestModeForm } from "./types";
-import { isFunction } from "lodash";
+import { TOrderGuestModeForm } from "../types";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
 
 const OrderGuestModeForm: FC<TOrderGuestModeForm> = ({

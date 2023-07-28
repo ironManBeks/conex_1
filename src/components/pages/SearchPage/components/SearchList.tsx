@@ -1,21 +1,22 @@
 import { FC, useEffect, useMemo } from "react";
 import { observer } from "mobx-react";
 import { useRootStore } from "@store";
-import { Spin, Empty } from "antd";
+import { Empty } from "antd";
 
 import ProductSearchCard from "@components/cards/ProductSearchCard";
-import ButtonLink from "@components/buttons/ButtonLink";
 import { H2 } from "@components/Text";
+import ProductSearchCardSkeleton from "@components/skeletons/ProductSearchCardSkeleton";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
-import { PATH_CUSTOM_QUOTE_PAGE } from "@consts/pathsConsts";
 import { EButtonColor } from "@components/buttons/types";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import ProductSearchCardSkeleton from "@components/skeletons/ProductSearchCardSkeleton";
+import ModalCustomQuote from "@components/modals/components/ModalCustomQuote";
 
 const SearchList: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
-    const { productsStore } = useRootStore();
+    const { productsStore, commonStore } = useRootStore();
     const { productList, productListFetching, getProductListRequest } =
         productsStore;
+    const { setModalCustomQuoteVisible } = commonStore;
     const classPrefix = `${pageClassPrefix}_list`;
 
     useEffect(() => {
@@ -64,18 +65,21 @@ const SearchList: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     }, [productList, productListFetching, classPrefix]);
 
     return (
-        <div className={`${classPrefix}__wrapper`}>
-            {listContent}
-            <div className={`${pageClassPrefix}_request__wrapper`}>
-                <H2>Didn’t find what you were looking for?</H2>
-                <ButtonLink
-                    color={EButtonColor.primary}
-                    href={PATH_CUSTOM_QUOTE_PAGE}
-                >
-                    Request quote
-                </ButtonLink>
+        <>
+            <div className={`${classPrefix}__wrapper`}>
+                {listContent}
+                <div className={`${pageClassPrefix}_request__wrapper`}>
+                    <H2>Didn’t find what you were looking for?</H2>
+                    <ButtonPrimary
+                        color={EButtonColor.primary}
+                        onClick={() => setModalCustomQuoteVisible(true)}
+                    >
+                        Request quote
+                    </ButtonPrimary>
+                </div>
             </div>
-        </div>
+            <ModalCustomQuote />
+        </>
     );
 });
 

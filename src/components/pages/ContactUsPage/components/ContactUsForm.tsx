@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
@@ -51,6 +51,7 @@ const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         placeholder="Message"
                         label="Message"
                         minHeight={140}
+                        maxSymbolLength={1000}
                     />
                     <div className={`${classPrefix}__actions`}>
                         <ButtonPrimary

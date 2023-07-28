@@ -11,7 +11,7 @@ import { EButtonColor } from "@components/buttons/types";
 import { ECartCheckoutModes } from "../types";
 import { PATH_CHECKOUT_PAGE } from "@consts/pathsConsts";
 import OrderSettingsLayout from "@components/order/OrderSettingsLayout";
-import OrderChoiceAddress from "@components/order/OrderChoiceAddress";
+import AddressSelection from "@components/globalComponents/AddressSelection";
 import { AdditionalServicesOptionsMockup } from "../../../../mockups/AdditionalServicesOptionsMockup";
 
 const CartCheckout: FC<TSectionTypes> = ({ pageClassPrefix }) => {
@@ -47,7 +47,10 @@ const CartCheckout: FC<TSectionTypes> = ({ pageClassPrefix }) => {
             }
             bodyContent={
                 selectedMode === ECartCheckoutModes.delivery && (
-                    <OrderChoiceAddress className={classPrefix} />
+                    <AddressSelection
+                        className={classPrefix}
+                        errorMessage={undefined}
+                    />
                 )
             }
             footerContent={

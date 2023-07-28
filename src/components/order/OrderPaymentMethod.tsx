@@ -1,25 +1,18 @@
 import { FC, useState } from "react";
 import cn from "classnames";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import FormFieldInput from "@components/form/formFields/FormFieldInput";
 import { H3, H4 } from "@components/Text";
-import FieldInputController from "@components/form/formControllers/FieldInputController";
 import {
     IconAmazonPay,
     IconBankDollar,
     IconCreditCard,
     IconPaypal,
 } from "@components/Icons";
+import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
 
 import { notImplemented } from "@helpers/notImplemented";
-import {
-    EPaymentMethodFromFieldsNames,
-    orderPaymentMethodDefaultValues,
-    orderPaymentMethodFormResolver,
-    TOrderPaymentMethodFrom,
-} from "./formAttrs";
 import { EPaymentMethodsNames, TOrderPaymentMethod } from "./types";
 import { ECheckoutUserModes } from "@components/pages/CheckoutPage/types";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
@@ -32,20 +25,6 @@ const OrderPaymentMethod: FC<TOrderPaymentMethod> = ({
     const [formVisible, setFormVisible] = useState(false);
     const [activePaymentMethod, setActivePaymentMethod] =
         useState<EPaymentMethodsNames>();
-
-    const methods = useForm<TOrderPaymentMethodFrom>({
-        resolver: orderPaymentMethodFormResolver(),
-        // ToDo remove "as"
-        defaultValues:
-            orderPaymentMethodDefaultValues as TOrderPaymentMethodFrom,
-    });
-
-    const { handleSubmit } = methods;
-
-    const onSubmit: SubmitHandler<TOrderPaymentMethodFrom> = (data) => {
-        console.log("SubmitHandler", data);
-        notImplemented(`value: ${JSON.stringify(data)}`);
-    };
 
     const changeMethodHandle = (value: EPaymentMethodsNames) => {
         if (value === EPaymentMethodsNames.card) {
@@ -117,39 +96,7 @@ const OrderPaymentMethod: FC<TOrderPaymentMethod> = ({
                     </ButtonPrimary>
                 )}
             </div>
-            {formVisible && (
-                <FormProvider {...methods}>
-                    <form
-                        onSubmit={handleSubmit(onSubmit)}
-                        className={`${classPrefix}_form`}
-                    >
-                        <FieldInputController
-                            name={EPaymentMethodFromFieldsNames.nameOnCard}
-                            label="Name on the card"
-                            floatingLabel={true}
-                        />
-                        <FieldInputController
-                            name={EPaymentMethodFromFieldsNames.cardNumber}
-                            label="Card number"
-                            floatingLabel={true}
-                        />
-                        <div className={`${classPrefix}_form__sub-fields`}>
-                            <FieldInputController
-                                name={EPaymentMethodFromFieldsNames.cvv}
-                                label="CVV"
-                                floatingLabel={true}
-                                wrapperClassName={"_cvv"}
-                            />
-                            <FieldInputController
-                                name={EPaymentMethodFromFieldsNames.expDate}
-                                label="Exp. date"
-                                floatingLabel={true}
-                                wrapperClassName={"_exp"}
-                            />
-                        </div>
-                    </form>
-                </FormProvider>
-            )}
+            {formVisible && <PaymentCardForm />}
             <div className={`${classPrefix}_discount-code__wrapper`}>
                 <H4>Discount code</H4>
                 <div className={`${classPrefix}_discount-code__inner-wrapper`}>

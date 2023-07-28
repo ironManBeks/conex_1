@@ -24,6 +24,7 @@ const IconCopy: FC<IIcon> = ({ color, className, width, height, onClick }) => {
                 y="0.5"
                 width="17"
                 height="21"
+                rx="0.5"
                 stroke={color || DEFAULT_ICON_COLOR}
             />
             <rect
@@ -31,6 +32,8 @@ const IconCopy: FC<IIcon> = ({ color, className, width, height, onClick }) => {
                 y="3.5"
                 width="17"
                 height="21"
+                rx="0.5"
+                fill="white"
                 stroke={color || DEFAULT_ICON_COLOR}
             />
         </svg>

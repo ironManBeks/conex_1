@@ -1,4 +1,4 @@
-import { FC, JSX, ReactNode, SVGAttributes } from "react";
+import { JSX, ReactNode } from "react";
 import { SelectProps } from "antd/lib/select";
 import { InputProps } from "antd/lib/input/Input";
 import { CheckboxProps } from "antd/lib/checkbox";
@@ -6,10 +6,10 @@ import { RadioProps } from "antd/lib/radio";
 import { InputNumberProps } from "antd/lib/input-number";
 import {
     TFormItemLabel,
+    TFormShowError,
     TFormWrapperClassName,
     TFormWrapperErrorMessage,
 } from "@components/form/FormItemWrapper/types";
-import { IIcon } from "@components/Icons/types";
 
 export enum EFormFieldType {
     input = "input",
@@ -37,11 +37,12 @@ export type TFormFieldInput = {
 } & InputProps &
     TFormWrapperClassName &
     TFormItemLabel &
-    TFormWrapperErrorMessage;
+    TFormWrapperErrorMessage &
+    TFormShowError;
 
 export type TFormFieldInputNumber = {
     name: string;
-    icon?: ReactNode;
+    icon?: JSX.Element;
     onIconClick?: () => void;
 } & InputNumberProps &
     TFormWrapperClassName &

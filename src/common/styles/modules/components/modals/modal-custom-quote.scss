@@ -1,0 +1,59 @@
+.modal-custom-quote{
+  &_content{
+    .common-title._h2{
+      margin-bottom: 60px;
+      text-align: center;
+      font-size: $font-size-xl;
+      line-height: $line-height-xl;
+      font-family: $font-family-primary;
+      color: $color-blue-800;
+      font-weight: 500;
+    }
+  }
+
+  &_form{
+
+    &__main-fields{
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 30px;
+      .form-field_wrapper{
+        width: calc(50%  - 12px);
+      }
+    }
+
+    .form-field{
+      &_label-wrapper{
+        font-size: $font-size-md;
+        line-height: $line-height-md;
+        font-weight: 500;
+      }
+      &_wrapper._input, &_wrapper._textarea {
+        .form-field_field{
+          border-color: $color-grey-275;
+        }
+      }
+    }
+
+    .address-selection_wrapper{
+      margin-bottom: 30px;
+      .form-field{
+        &_label-wrapper{
+          margin-bottom: 15px;
+        }
+        &_wrapper._input {
+          .form-field_field{
+            border-color: transparent;
+          }
+        }
+      }
+    }
+
+  }
+
+  &_actions{
+    display: flex;
+    justify-content: center;
+    margin-top: 50px;
+  }
+}

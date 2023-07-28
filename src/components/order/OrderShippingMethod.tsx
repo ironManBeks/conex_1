@@ -37,9 +37,9 @@ const OrderShippingMethod: FC<TOrderShippingMethod> = ({
                         })}
                         onClick={() => handleSelectedMethod(item.value)}
                     >
-                        {item.icon && (
+                        {item.iconSrc && (
                             <ImgWrapper
-                                src={item.icon}
+                                src={item.iconSrc}
                                 width={20}
                                 height={20}
                             />

@@ -1,7 +1,6 @@
 import { ReactNode, Ref } from "react";
-import { TGuestModeForm } from "@components/order/formAttrs";
+import { TGuestModeForm } from "@components/order/OrderGuestModeForm/formAttrs";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { ECheckoutUserModes } from "@components/pages/CheckoutPage/types";
 
 export type TOrderSettingsLayout = {
     className?: string;
@@ -10,10 +9,6 @@ export type TOrderSettingsLayout = {
     bodyContent?: ReactNode;
     footerContent?: ReactNode;
     footerActions?: ReactNode;
-};
-
-export type TOrderChoiceAddress = {
-    className?: string;
 };
 
 export interface IOrderGuestModeFormRef {
@@ -33,7 +28,7 @@ export type TShippingMethod = {
     value: string;
     dayFrom?: number;
     dayTo?: number;
-    icon?: string;
+    iconSrc?: string;
 };
 
 export type TOrderShippingMethod = {
@@ -41,6 +36,8 @@ export type TOrderShippingMethod = {
     onChange?: (value: string) => void;
     options: TShippingMethod[];
 };
+
+import { ECheckoutUserModes } from "@components/pages/CheckoutPage/types";
 
 export type TOrderPaymentMethod = {
     className?: string;

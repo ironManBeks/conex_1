@@ -1,0 +1,54 @@
+.payment-card-form {
+
+  &_form{
+    margin-top: 20px;
+    padding: 20px 15px 5px;
+    background: #FDFCF9;
+    box-shadow: 0 1px 4px rgba(250, 187, 30, 0.18);
+    border-radius: $border-radius-md;
+    .form-field_wrapper._name{
+      .form-field_field{
+        text-transform: uppercase
+      }
+    }
+    &__sub-fields{
+      display: flex;
+      justify-content: space-between;
+      margin-top: 25px;
+      .form-field_wrapper{
+        &._input .form-field_field {
+          padding-top: 6px !important;
+          padding-bottom: 6px !important;
+          text-align: center;
+        }
+        &._cvv{
+          max-width: 70px;
+        }
+        &._exp{
+          max-width: 110px;
+        }
+      }
+    }
+
+    .form-field_wrapper._input .form-field_field{
+      padding-top: 14px;
+      padding-bottom: 14px;
+    }
+
+    .form-field_label-wrapper{
+      background: #FDFCF9;
+      color: rgba(94, 94, 94, 0.63);
+      z-index: 2;
+    }
+  }
+
+  &_errors{
+    .common-text{
+      color: $color-red-200;
+      font-weight: 300;
+      font-size: $font-size-bs;
+      line-height: $line-height-bs;
+      margin-bottom: 5px;
+    }
+  }
+}

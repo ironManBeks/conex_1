@@ -13,7 +13,7 @@ export const ShippingMethodsMockup: TShippingMethod[] = [
         value: "ups",
         dayFrom: 3,
         dayTo: 3,
-        icon: "https://picsum.photos/id/111/55/15",
+        iconSrc: "https://picsum.photos/id/111/55/15",
     },
     {
         name: "QERTY",
@@ -21,7 +21,7 @@ export const ShippingMethodsMockup: TShippingMethod[] = [
         value: "fedex",
         dayFrom: 10,
         dayTo: 10,
-        icon: "https://picsum.photos/id/122/20/20",
+        iconSrc: "https://picsum.photos/id/122/20/20",
     },
     {
         name: "QERTYQERTY",
@@ -29,6 +29,6 @@ export const ShippingMethodsMockup: TShippingMethod[] = [
         value: "usps",
         dayFrom: 100,
         dayTo: 100,
-        icon: "https://picsum.photos/id/123/200/300",
+        iconSrc: "https://picsum.photos/id/123/200/300",
     },
 ];

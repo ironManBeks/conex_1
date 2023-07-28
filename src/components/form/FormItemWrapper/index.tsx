@@ -11,6 +11,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
     errorMessage,
     label,
     wrapperClassName,
+    showError,
 }) => {
     return (
         <div
@@ -43,7 +44,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                     >
                         {children}
                     </div>
-                    {errorMessage && (
+                    {errorMessage && showError && (
                         <div
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,

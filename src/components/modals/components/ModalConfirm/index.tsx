@@ -12,23 +12,25 @@ import { EButtonSize } from "@components/buttons/types";
 
 const ModalConfirm: FC<TModalConfirm> = observer(
     ({ text, onConfirm, confirmColor, confirmText }) => {
+        const classPrefix = "modal-confirm";
         const { commonStore } = useRootStore();
-        const { modalConfirmToDeleteVisible, setModalConfirmToDeleteVisible } =
-            commonStore;
+        const { modalConfirmVisible, setModalConfirmVisible } = commonStore;
+
+        const handleCloseModal = () => {
+            setModalConfirmVisible(true);
+        };
 
         return (
             <ModalLayout
-                wrapperClassName="modal-confirm"
-                modalVisible={modalConfirmToDeleteVisible}
-                handleCancel={() => setModalConfirmToDeleteVisible(false)}
+                wrapperClassName={classPrefix}
+                modalVisible={modalConfirmVisible}
+                handleCancel={handleCloseModal}
                 modalSize={EModalSize.md}
                 bodyContent={<H3>{text}</H3>}
                 footerContent={
                     <>
                         <ButtonPrimary
-                            onClick={() =>
-                                setModalConfirmToDeleteVisible(false)
-                            }
+                            onClick={handleCloseModal}
                             size={EButtonSize.sm}
                         >
                             Close
@@ -38,7 +40,7 @@ const ModalConfirm: FC<TModalConfirm> = observer(
                             color={confirmColor}
                             onClick={() => {
                                 onConfirm();
-                                setModalConfirmToDeleteVisible(false);
+                                handleCloseModal();
                             }}
                         >
                             {confirmText ?? "Confirm"}

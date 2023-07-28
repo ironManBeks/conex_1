@@ -4,8 +4,10 @@ export interface ICommonStore {
     urlParams: Record<string, string>;
     setUlParams: (value: Record<string, string>) => void;
     //Modals
-    modalConfirmToDeleteVisible: boolean;
-    setModalConfirmToDeleteVisible: (value: boolean) => void;
+    modalConfirmVisible: boolean;
+    setModalConfirmVisible: (value: boolean) => void;
     modalAuthVisible: boolean;
     setModalAuthVisible: (value: boolean) => void;
+    modalCustomQuoteVisible: boolean;
+    setModalCustomQuoteVisible: (value: boolean) => void;
 }

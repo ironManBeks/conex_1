@@ -14,6 +14,7 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
         errorMessage,
         icon,
         iconPosition,
+        showError,
         ...rest
     } = props;
 
@@ -21,6 +22,7 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
         <FormItemWrapper
             fieldType={EFormFieldType.input}
             errorMessage={errorMessage}
+            showError={showError}
             label={label}
             wrapperClassName={cn(
                 wrapperClassName,
