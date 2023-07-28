@@ -1,14 +1,13 @@
 .modal-custom-quote{
-  &_content{
-    .common-title._h2{
-      margin-bottom: 60px;
-      text-align: center;
-      font-size: $font-size-xl;
-      line-height: $line-height-xl;
-      font-family: $font-family-primary;
-      color: $color-blue-800;
-      font-weight: 500;
-    }
+  .common-title._h2{
+    margin-top: 30px;
+    margin-bottom: 60px;
+    text-align: center;
+    font-size: $font-size-xl;
+    line-height: $line-height-xl;
+    font-family: $font-family-primary;
+    color: $color-blue-800;
+    font-weight: 500;
   }
 
   &_form{

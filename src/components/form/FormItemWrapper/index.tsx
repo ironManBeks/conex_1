@@ -11,7 +11,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
     errorMessage,
     label,
     wrapperClassName,
-    showError,
+    showError = true,
 }) => {
     return (
         <div
