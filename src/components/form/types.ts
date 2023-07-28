@@ -6,6 +6,7 @@ import { RadioProps } from "antd/lib/radio";
 import { InputNumberProps } from "antd/lib/input-number";
 import {
     TFormItemLabel,
+    TFormShowError,
     TFormWrapperClassName,
     TFormWrapperErrorMessage,
 } from "@components/form/FormItemWrapper/types";
@@ -36,7 +37,8 @@ export type TFormFieldInput = {
 } & InputProps &
     TFormWrapperClassName &
     TFormItemLabel &
-    TFormWrapperErrorMessage;
+    TFormWrapperErrorMessage &
+    TFormShowError;
 
 export type TFormFieldInputNumber = {
     name: string;

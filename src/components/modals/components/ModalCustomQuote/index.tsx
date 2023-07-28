@@ -54,10 +54,6 @@ const ModalCustomQuote: FC = observer(() => {
         reset();
     };
 
-    useEffect(() => {
-        console.log("errors");
-    }, [errors]);
-
     return (
         <ModalLayout
             wrapperClassName={classPrefix}
