@@ -6,16 +6,18 @@ export class CommonStore implements ICommonStore {
     headerHeight = 0;
     urlParams = {};
     // Modals
-    modalConfirmToDeleteVisible = false;
+    modalConfirmVisible = false;
     modalAuthVisible = false;
+    modalCustomQuoteVisible = false;
 
     constructor() {
         makeAutoObservable(this, {
             headerHeight: observable,
             urlParams: observable,
             // Modals
-            modalConfirmToDeleteVisible: observable,
+            modalConfirmVisible: observable,
             modalAuthVisible: observable,
+            modalCustomQuoteVisible: observable,
         });
     }
 
@@ -30,12 +32,16 @@ export class CommonStore implements ICommonStore {
     //  ***____***____***____
     //  ***____ Modals
     // ***____***____***____
-    setModalConfirmToDeleteVisible = (value: boolean): void => {
-        this.modalConfirmToDeleteVisible = value;
+    setModalConfirmVisible = (value: boolean): void => {
+        this.modalConfirmVisible = value;
     };
 
     setModalAuthVisible = (value: boolean): void => {
         this.modalAuthVisible = value;
+    };
+
+    setModalCustomQuoteVisible = (value: boolean): void => {
+        this.modalCustomQuoteVisible = value;
     };
     //  ***____***____***____
     //  ***____ END Modals

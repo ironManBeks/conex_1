@@ -1,5 +1,6 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Input as AntInput, InputRef } from "antd";
+import MaskedInput from "react-text-mask";
+
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 
@@ -8,10 +9,10 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 
 import { EFormFieldType } from "@components/form/types";
-import { TFieldInputController } from "./types";
+import { TFieldInputMaskController } from "./types";
 import { isFunction } from "lodash";
 
-const FieldInputController: FC<TFieldInputController> = (props) => {
+const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const {
         name,
         onChangeValue,
@@ -22,6 +23,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
         onAddonClick,
         minAddonWidth,
         floatingLabel,
+        style,
         showError = true,
         ...rest
     } = props;
@@ -33,7 +35,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const isError = !!errorMessage && !!touchedFields;
-    const fieldRef = useRef<InputRef | null>(null);
+    const fieldRef = useRef<MaskedInput>(null);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
@@ -57,7 +59,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             _floating: floatingLabel,
                         })}
                     >
-                        <AntInput
+                        <MaskedInput
                             {...field}
                             {...rest}
                             ref={fieldRef}
@@ -72,6 +74,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             }}
                             disabled={disabled}
                             style={{
+                                ...style,
                                 paddingRight: addonAfterWidth
                                     ? `${addonAfterWidth + 10}px`
                                     : undefined,
@@ -99,4 +102,4 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     );
 };
 
-export default FieldInputController;
+export default FieldInputMaskController;

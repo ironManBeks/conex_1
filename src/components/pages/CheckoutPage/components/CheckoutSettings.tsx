@@ -4,22 +4,19 @@ import { observer } from "mobx-react";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ChoiceMode from "@components/globalComponents/ChoiceMode";
 import OrderSettingsLayout from "@components/order/OrderSettingsLayout";
-import OrderChoiceAddress from "@components/order/OrderChoiceAddress";
+import AddressSelection from "@components/globalComponents/AddressSelection";
 import OrderGuestModeForm from "@components/order/OrderGuestModeForm";
 import OrderShippingMethod from "@components/order/OrderShippingMethod";
 import AuthForm from "@components/globalComponents/AuthForm";
+import OrderPaymentMethod from "@components/order/OrderPaymentMethod";
+import AdditionalServices from "@components/globalComponents/AdditionalServices";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { EButtonColor } from "@components/buttons/types";
 import { ECheckoutStep, ECheckoutUserModes } from "../types";
-import {
-    IOrderGuestModeFormRef,
-    TShippingMethod,
-} from "@components/order/types";
+import { IOrderGuestModeFormRef } from "@components/order/types";
 import { useRootStore } from "@store";
-import OrderPaymentMethod from "@components/order/OrderPaymentMethod";
-import { TGuestModeForm } from "@components/order/formAttrs";
-import AdditionalServices from "@components/globalComponents/AdditionalServices";
+import { TGuestModeForm } from "@components/order/OrderGuestModeForm/formAttrs";
 import { AdditionalServicesOptionsMockup } from "../../../../mockups/AdditionalServicesOptionsMockup";
 import { ShippingMethodsMockup } from "../../../../mockups/ShippingMethodsMockup";
 import { notImplemented } from "@helpers/notImplemented";
@@ -30,7 +27,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const { setModalAuthVisible } = commonStore;
 
     const [checkoutStep, setCheckoutStep] = useState<ECheckoutStep>(
-        ECheckoutStep.delivery,
+        ECheckoutStep.payment,
     );
     const [selectedMode, setSelectedMode] = useState<ECheckoutUserModes>(
         ECheckoutUserModes.guest,
@@ -83,7 +80,10 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             reference={formRef}
                         />
                     )}
-                    <OrderChoiceAddress className={classPrefix} />
+                    <AddressSelection
+                        className={classPrefix}
+                        errorMessage={undefined}
+                    />
                     <OrderShippingMethod
                         className={classPrefix}
                         onChange={(value) => setSelectedDelivery(value)}

@@ -10,7 +10,7 @@ import CopyText from "@components/globalComponents/CopyText";
 
 import { notImplemented } from "@helpers/notImplemented";
 import { TAccountOrderItem } from "@components/pages/AccountPage/types";
-import { EButtonColor, EButtonSize } from "@components/buttons/types";
+import { EButtonColor } from "@components/buttons/types";
 import { ColorTheme } from "@common/theme/colorTheme";
 
 const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({

@@ -5,25 +5,44 @@ import FormFieldInput from "@components/form/formFields/FormFieldInput";
 import { IconPoint } from "@components/Icons";
 import { P } from "@components/Text";
 
-import { TOrderChoiceAddress } from "./types";
+import { isFunction } from "lodash";
+import { TAddressSelection } from "./types";
 
-const OrderChoiceAddress: FC<TOrderChoiceAddress> = ({ className }) => {
-    const classPrefix = "order-choice-address";
+const AddressSelection: FC<TAddressSelection> = ({
+    className,
+    onValueChange,
+    label,
+    errorMessage,
+    name,
+}) => {
+    const classPrefix = "address-selection";
+    // const [addressValue, setAddressValue] = useState<string>();
+
+    const handeValueChange = (value: string) => {
+        if (isFunction(onValueChange)) {
+            onValueChange(value);
+        }
+    };
 
     return (
         <div className={cn(`${classPrefix}_wrapper`, className)}>
             <FormFieldInput
-                name="address"
+                name={name ?? "address"}
+                label={label}
                 placeholder="Address"
-                errorMessage={undefined}
+                errorMessage={errorMessage}
                 icon={<IconPoint color="#8D8D8D" />}
                 iconPosition="left"
+                onChange={(e) => {
+                    const value = e.target.value;
+                    handeValueChange(value);
+                }}
             />
             <div className={`${classPrefix}_map`}>
                 <P>Select location manually</P>
                 <iframe
                     width="100%"
-                    height="150"
+                    height="200"
                     className="gmap_iframe"
                     src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=University of Oxford&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
                 />
@@ -32,4 +51,4 @@ const OrderChoiceAddress: FC<TOrderChoiceAddress> = ({ className }) => {
     );
 };
 
-export default OrderChoiceAddress;
+export default AddressSelection;

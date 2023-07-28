@@ -1,6 +1,6 @@
 import { ReactNode } from "react";
 import { EFormFieldType } from "@components/form/types";
-import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
+import { TFormItemError } from "@components/form/FormItemError/types";
 
 export type TFormItemLabel = {
     label?: ReactNode;
@@ -10,13 +10,11 @@ export type TFormWrapperClassName = {
     wrapperClassName?: string;
 };
 
-export type TFormWrapperErrorMessage = {
-    errorMessage:
-        | string
-        | FieldError
-        | Merge<FieldError, FieldErrorsImpl<any>>
-        | undefined;
+export type TFormShowError = {
+    showError?: boolean;
 };
+
+export type TFormWrapperErrorMessage = TFormItemError;
 
 export type TFormItemWrapper = {
     children: ReactNode;
@@ -24,4 +22,5 @@ export type TFormItemWrapper = {
     required?: boolean;
 } & TFormItemLabel &
     TFormWrapperClassName &
-    TFormWrapperErrorMessage;
+    TFormWrapperErrorMessage &
+    TFormShowError;

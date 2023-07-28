@@ -98,7 +98,7 @@ const ProductCartCard: FC<TProductCartCard> = observer(
                         </ButtonPrimary>
                         <ButtonPrimary
                             onClick={() =>
-                                commonStore.setModalConfirmToDeleteVisible(true)
+                                commonStore.setModalConfirmVisible(true)
                             }
                             color={EButtonColor.transparent}
                             className="_delete"

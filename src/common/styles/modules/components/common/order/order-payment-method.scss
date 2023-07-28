@@ -34,9 +34,6 @@
           fill: rgba(250, 188, 30, 0.81);
         }
       }
-      &:hover{
-
-      }
     }
     &__sub-actions{
       display: flex;
@@ -45,44 +42,8 @@
         width: calc(50% - 8px);
       }
     }
-
   }
 
-  &_form{
-    margin-top: 20px;
-    padding: 20px 15px 5px;
-    background: #FDFCF9;
-    box-shadow: 0 1px 4px rgba(250, 187, 30, 0.18);
-    border-radius: $border-radius-md;
-    &__sub-fields{
-      display: flex;
-      justify-content: space-between;
-      margin-top: 25px;
-      .form-field_wrapper{
-        &._input .form-field_field {
-          padding-top: 6px !important;
-          padding-bottom: 6px !important;
-        }
-        &._cvv{
-          max-width: 70px;
-        }
-        &._exp{
-          max-width: 110px;
-        }
-      }
-    }
-
-    .form-field_wrapper._input .form-field_field{
-      padding-top: 14px;
-      padding-bottom: 14px;
-    }
-
-    .form-field_label-wrapper{
-      background: #FDFCF9;
-      color: rgba(94, 94, 94, 0.63);
-      z-index: 2;
-    }
-  }
 
   &_discount-code{
     &__wrapper{

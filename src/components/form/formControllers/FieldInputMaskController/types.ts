@@ -1,4 +1,5 @@
-import { InputProps } from "antd/lib/input/Input";
+import { MaskedInputProps } from "react-text-mask";
+import { ReactNode } from "react";
 
 import {
     TFormItemLabel,
@@ -6,14 +7,15 @@ import {
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
 
-export type TFieldInputController = {
+export type TFieldInputMaskController = {
     name: string;
     onChangeValue?: (value: unknown) => void;
     onAddonClick?: () => void;
+    addonAfter?: ReactNode;
     minAddonWidth?: number;
     floatingLabel?: boolean;
     floatingBgColor?: `#${string}`;
-} & InputProps &
-    TFormItemLabel &
+} & TFormItemLabel &
     TFormWrapperClassName &
+    MaskedInputProps &
     TFormShowError;
