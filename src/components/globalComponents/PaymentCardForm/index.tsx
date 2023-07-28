@@ -144,7 +144,6 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({ className }) => {
                         <P key={index}>{item}</P>
                     ))}
                 </div>
-                <button type="submit">save</button>
             </form>
         </FormProvider>
     );

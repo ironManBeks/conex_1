@@ -22,7 +22,7 @@ const OrderPaymentMethod: FC<TOrderPaymentMethod> = ({
     userMode,
 }) => {
     const classPrefix = "order-payment-method";
-    const [formVisible, setFormVisible] = useState(true);
+    const [formVisible, setFormVisible] = useState(false);
     const [activePaymentMethod, setActivePaymentMethod] =
         useState<EPaymentMethodsNames>();
 

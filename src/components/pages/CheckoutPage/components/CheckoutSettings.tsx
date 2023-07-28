@@ -27,7 +27,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const { setModalAuthVisible } = commonStore;
 
     const [checkoutStep, setCheckoutStep] = useState<ECheckoutStep>(
-        ECheckoutStep.payment,
+        ECheckoutStep.delivery,
     );
     const [selectedMode, setSelectedMode] = useState<ECheckoutUserModes>(
         ECheckoutUserModes.guest,
