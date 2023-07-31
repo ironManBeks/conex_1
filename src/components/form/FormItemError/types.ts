@@ -4,6 +4,6 @@ export type TFormItemError = {
     errorMessage:
         | string
         | FieldError
-        | Merge<FieldError, FieldErrorsImpl<any>>
+        | Merge<FieldError, FieldErrorsImpl>
         | undefined;
 };

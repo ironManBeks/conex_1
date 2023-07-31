@@ -1,4 +1,4 @@
-import { FC, useRef, RefObject, useEffect, useCallback } from "react";
+import { FC, useRef, RefObject, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { useRootStore } from "src/store";

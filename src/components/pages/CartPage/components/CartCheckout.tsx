@@ -6,7 +6,6 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ChoiceMode from "@components/globalComponents/ChoiceMode";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { TAdditionalServicesOption } from "@components/globalComponents/types";
 import { EButtonColor } from "@components/buttons/types";
 import { ECartCheckoutModes } from "../types";
 import { PATH_CHECKOUT_PAGE } from "@consts/pathsConsts";

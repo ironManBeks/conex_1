@@ -16,7 +16,6 @@ import { TProductInfoListItem, TProductSearchCard } from "../types";
 
 const ProductSearchCard: FC<TProductSearchCard> = ({
     className,
-    id,
     title,
     material,
     size,

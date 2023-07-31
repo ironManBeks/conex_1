@@ -5,6 +5,7 @@ module.exports = withPlugins([], {
     swcMinify: true,
     forceSwcTransforms: true,
     optimizeFonts: true,
+    outputColorFormat: "rgb",
     images: {
         remotePatterns: [
             {

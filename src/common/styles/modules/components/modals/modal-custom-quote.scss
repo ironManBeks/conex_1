@@ -54,5 +54,13 @@
     display: flex;
     justify-content: center;
     margin-top: 50px;
+    .common-btn{
+      color: $color-grey-800;
+      font-size: $font-size-md;
+      line-height: $line-height-md;
+      &:hover{
+        box-shadow: none;
+      }
+    }
   }
 }

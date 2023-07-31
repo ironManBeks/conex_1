@@ -4,7 +4,7 @@ import { Select } from "antd";
 import { TFormFieldSelect } from "../types";
 
 const FormFieldSelect: FC<TFormFieldSelect> = (props) => {
-    const { name, options, ...rest } = props;
+    const { options, ...rest } = props;
     return (
         <Select
             {...rest}

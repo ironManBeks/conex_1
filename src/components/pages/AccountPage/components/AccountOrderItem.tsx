@@ -174,7 +174,10 @@ const OrderLiveTracking = ({
                         ...transitionStyles[state],
                     }}
                 >
-                    <div className="item_map__wrapper" ref={mapRef}>
+                    <div
+                        className={cn("item_map__wrapper", classPrefix)}
+                        ref={mapRef}
+                    >
                         <H5>Live Tracking</H5>
                         <iframe
                             width="100%"

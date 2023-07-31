@@ -14,7 +14,8 @@ export class ProductsStore implements IProductsStore {
         });
     }
 
-    getProductListRequest = (searchParams: string) => {
+    getProductListRequest = (searchParams: string): void => {
+        console.log("searchParams", searchParams);
         setTimeout(() => {
             this.setProductList(ProductSearchListDataMockup);
             this.setProductListFetching(false);

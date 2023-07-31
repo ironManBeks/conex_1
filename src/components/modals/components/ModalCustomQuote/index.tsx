@@ -1,6 +1,5 @@
 import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react";
-import cn from "classnames";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { H2 } from "@components/Text";
@@ -103,6 +102,7 @@ const ModalCustomQuote: FC = observer(() => {
                                 <ButtonPrimary
                                     type="submit"
                                     color={EButtonColor.primary}
+                                    withShadow={false}
                                 >
                                     Send request
                                 </ButtonPrimary>

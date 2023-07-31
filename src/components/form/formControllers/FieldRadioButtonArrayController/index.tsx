@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 import { Radio as AntRadio } from "antd";

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { RootStore } from "./stores";
 import { IRoot } from "./stores/store";
@@ -11,7 +11,7 @@ export const RootStoreProvider = ({
     children,
 }: {
     children: React.ReactNode;
-}) => {
+}): ReactElement => {
     const root = store ?? new RootStore();
 
     return (
@@ -19,7 +19,7 @@ export const RootStoreProvider = ({
     );
 };
 
-export const useRootStore = () => {
+export const useRootStore = (): RootStore => {
     const context = React.useContext(StoreContext);
     if (context === undefined) {
         throw new Error("useRootStore must be used within RootStoreProvider");
