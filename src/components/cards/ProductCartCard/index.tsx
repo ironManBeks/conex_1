@@ -21,7 +21,6 @@ import { useRootStore } from "@store";
 const ProductCartCard: FC<TProductCartCard> = observer(
     ({
         className,
-        id,
         title,
         material,
         size,
@@ -45,9 +44,9 @@ const ProductCartCard: FC<TProductCartCard> = observer(
             console.log("handleQuantityChange", val);
         };
 
-        const handleString = (val: string) => {
-            console.log("handleString", val);
-        };
+        // const handleString = (val: string) => {
+        //     console.log("handleString", val);
+        // };
 
         return (
             <div

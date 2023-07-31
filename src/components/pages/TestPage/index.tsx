@@ -29,7 +29,7 @@ const TestPage: FC = () => {
         resolver: formResolver(),
         defaultValues: formDefaultValues,
     });
-    const [formValues, setFormValues] = useState<any>();
+    const [formValues, setFormValues] = useState<TFormFields>();
 
     const { handleSubmit } = methods;
 

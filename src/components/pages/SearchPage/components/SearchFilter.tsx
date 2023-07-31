@@ -3,13 +3,13 @@ import cn from "classnames";
 import { observer } from "mobx-react";
 import { CSSTransition } from "react-transition-group";
 
-import { H3, H4, H5, P } from "@components/Text";
+import { H3, H4, P } from "@components/Text";
 import { IconOpenFilter } from "@components/Icons";
+import AdditionalServices from "@components/globalComponents/AdditionalServices";
 
 import { ColorTheme } from "@common/theme/colorTheme";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { useRootStore } from "@store";
-import AdditionalServices from "@components/globalComponents/AdditionalServices";
 import { TAdditionalServicesOption } from "@components/globalComponents/types";
 
 const SearchFilter: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {

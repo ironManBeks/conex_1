@@ -1,4 +1,6 @@
-export const EnvExample = () => {
+import { FC } from "react";
+
+export const EnvExample: FC = () => {
     return (
         <div>
             <div>NEXT_PUBLIC_ENV_VARIABLE</div>

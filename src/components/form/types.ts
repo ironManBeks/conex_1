@@ -2,7 +2,6 @@ import { JSX, ReactNode } from "react";
 import { SelectProps } from "antd/lib/select";
 import { InputProps } from "antd/lib/input/Input";
 import { CheckboxProps } from "antd/lib/checkbox";
-import { RadioProps } from "antd/lib/radio";
 import { InputNumberProps } from "antd/lib/input-number";
 import {
     TFormItemLabel,
@@ -58,8 +57,3 @@ export type TFormFieldCheckbox = {
     name: string;
     label?: string;
 } & CheckboxProps;
-
-export type TFormFieldRadio = {
-    name: string;
-    options: TDefaultOption[];
-} & RadioProps;

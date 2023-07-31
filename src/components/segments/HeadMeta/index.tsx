@@ -1,4 +1,4 @@
-import React from "react";
+import React, { FC } from "react";
 import Head from "next/head";
 import { useRouter } from "next/router";
 
@@ -19,7 +19,7 @@ interface IHeadMeta {
     };
 }
 
-const HeadMeta = ({
+const HeadMeta: FC<IHeadMeta> = ({
     title,
     url,
     article,
@@ -28,7 +28,7 @@ const HeadMeta = ({
     image = article?.social_image ? article.social_image : undefined,
     keywords = Array.isArray(article?.tags) ? article?.tags : undefined,
     locale = "en",
-}: IHeadMeta) => {
+}) => {
     const { asPath } = useRouter();
     // ToDo change "siteName"
     const siteName = "WEBSITE";

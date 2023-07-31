@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { SegmentedLabeledOption } from "antd/lib/segmented";
 
-import { H2, H4, H5, P } from "@components/Text";
+import { H2 } from "@components/Text";
 import Segmented from "@components/globalComponents/Segmented";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";

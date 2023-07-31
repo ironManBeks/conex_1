@@ -26,7 +26,7 @@ export type TFormFields = {
 
 export const formResolver = (): Resolver<TFormFields> => {
     const requiredText = "This field is required";
-    const oneFieldRequiredText = "At least one field must be filled";
+    // const oneFieldRequiredText = "At least one field must be filled";
     const mustBeActiveText = "This field must be active";
     return yupResolver(
         yup.object().shape({

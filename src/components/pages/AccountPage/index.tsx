@@ -1,3 +1,4 @@
+import { FC } from "react";
 import cn from "classnames";
 
 import { Layout } from "@components/segments/Layout";
@@ -5,7 +6,7 @@ import Container from "@components/globalComponents/Container";
 import AccountInfo from "./components/AccountInfo";
 import AccountOrder from "./components/AccountOrder";
 
-const AccountPage = () => {
+const AccountPage: FC = () => {
     const classPrefix = "account-page";
 
     return (
