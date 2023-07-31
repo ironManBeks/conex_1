@@ -1,11 +1,11 @@
 const withPlugins = require("next-compose-plugins");
+const colorConverter = require("postcss-color-converter");
 
 module.exports = withPlugins([], {
     reactStrictMode: false,
     swcMinify: true,
     forceSwcTransforms: true,
     optimizeFonts: true,
-    outputColorFormat: "rgb",
     images: {
         remotePatterns: [
             {
@@ -14,4 +14,6 @@ module.exports = withPlugins([], {
             },
         ],
     },
+    syntax: "postcss-scss",
+    plugins: [colorConverter({ outputColorFormat: "rgb" })],
 });
