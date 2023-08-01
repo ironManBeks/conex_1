@@ -1,22 +1,21 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import {
     Controller,
     ControllerRenderProps,
     FieldValues,
     useFormContext,
 } from "react-hook-form";
-
-import FormItemWrapper from "@components/form/FormItemWrapper";
-
-import { EFormFieldType } from "@components/form/types";
-import { TFieldCheckboxArrayController } from "./types";
 import cn from "classnames";
 import { Checkbox as AntCheckbox, Checkbox } from "antd";
-import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
+
+import FormItemWrapper from "@components/form/FormItemWrapper";
 import { IconCheck } from "@components/Icons";
+
+import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { COLOR_WHITE } from "@common/theme/colorTheme";
-import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { EDirection } from "@globalTypes/commonTypes";
+import { EFormFieldType } from "@components/form/types";
+import { TFieldCheckboxArrayController } from "./types";
 
 const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
     props,
@@ -32,53 +31,35 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
     } = props;
     const {
         control,
-        setValue,
         getValues,
         formState: { errors, touchedFields },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const isError = !!errorMessage && !!touchedFields;
 
-    useEffect(() => {
-        console.log("errors", errors[name]);
-    }, [errors]);
-
-    const getCheckboxValues = (field?: string): Record<string, boolean> => {
-        const checkboxValues = getValues();
-        if (!field) {
-            return checkboxValues;
-        }
-        return checkboxValues[field] || {};
-    };
-
-    const getCheckboxValue = (
-        field: string,
-        checkboxName?: string | number | null,
+    const getIsChecked = (
+        value: string | number | null | undefined,
     ): boolean => {
-        if (!checkboxName) {
-            return false;
+        const fieldValues = getValues();
+        if (fieldValues[name]) {
+            return fieldValues[name].includes(value);
         }
-        const checkboxValues = getCheckboxValues(field);
-        const result: boolean | undefined = checkboxValues[`${checkboxName}`];
-        return result === undefined ? false : result;
+        return false;
     };
 
-    const checkboxOnChangeHandlerFactory =
-        (
-            field: ControllerRenderProps<FieldValues, string>,
-            name?: string | number | null,
-        ) =>
-        (e: CheckboxChangeEvent): void => {
-            if (!name) {
-                return;
-            }
-            const val = e.target.checked;
-            const values = getCheckboxValues(field.name);
-            field.onChange({
-                ...values,
-                [`${name}`]: val,
-            });
-        };
+    const getUpdatedFieldValue = (
+        field: ControllerRenderProps<FieldValues, string>,
+        value: string | number | null | undefined,
+    ): string[] => {
+        let result: string[] = [];
+        const isIncludes = getIsChecked(value);
+        if (!isIncludes) {
+            result = [...field.value, value];
+        } else {
+            result = field.value.filter((item: string) => item !== value);
+        }
+        return result;
+    };
 
     return (
         <Controller
@@ -102,56 +83,67 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                         : "row",
                             }}
                         >
-                            {options.map((item) => (
-                                <div
-                                    className={cn(
-                                        `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                        {
-                                            _checked: getCheckboxValue(
-                                                field.name,
-                                                item.value,
-                                            ),
-                                        },
-                                    )}
-                                    key={`${field.name}.${item.value}`}
-                                >
-                                    <AntCheckbox
-                                        {...rest}
-                                        ref={field.ref}
-                                        onChange={checkboxOnChangeHandlerFactory(
-                                            field,
-                                            item.value,
-                                        )}
-                                        id={`id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`}
-                                        value={`${field.name}.${item.value}`}
-                                        checked={getCheckboxValue(
-                                            field.name,
-                                            item.value,
-                                        )}
-                                        disabled={disabled}
-                                    >
-                                        <IconCheck
-                                            color={COLOR_WHITE}
-                                            width={16}
-                                            height={16}
-                                        />
-                                    </AntCheckbox>
+                            {options.map((item) => {
+                                // console.log("item", item);
+                                const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
+                                return (
                                     <div
                                         className={cn(
-                                            `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label-wrapper`,
+                                            `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
+                                            {
+                                                _checked: getIsChecked(
+                                                    item.value,
+                                                ),
+                                            },
+                                            {
+                                                _disabled: item.disabled,
+                                            },
                                         )}
+                                        key={`${field.name}.${item.value}`}
                                     >
-                                        <label
-                                            htmlFor={`id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`}
+                                        <AntCheckbox
+                                            {...rest}
+                                            ref={field.ref}
+                                            onChange={(event) => {
+                                                // const val =
+                                                //     event.target.checked;
+                                                if (!item.disabled) {
+                                                    field.onChange(
+                                                        getUpdatedFieldValue(
+                                                            field,
+                                                            event.target.value,
+                                                        ),
+                                                    );
+                                                }
+                                            }}
+                                            id={checkboxId}
+                                            value={item.value}
+                                            checked={getIsChecked(item.value)}
+                                            disabled={disabled || item.disabled}
+                                        >
+                                            <IconCheck
+                                                color={COLOR_WHITE}
+                                                width={16}
+                                                height={16}
+                                            />
+                                        </AntCheckbox>
+                                        <div
                                             className={cn(
-                                                `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label`,
+                                                `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label-wrapper`,
                                             )}
                                         >
-                                            {item.label}
-                                        </label>
+                                            <label
+                                                htmlFor={checkboxId}
+                                                className={cn(
+                                                    `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label`,
+                                                )}
+                                            >
+                                                {item.label}
+                                            </label>
+                                        </div>
                                     </div>
-                                </div>
-                            ))}
+                                );
+                            })}
                         </Checkbox.Group>
                     </FormItemWrapper>
                 );

@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import { Layout } from "@components/segments/Layout";
@@ -10,6 +10,10 @@ import FieldRadioArrayController from "@components/form/formControllers/FieldRad
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
 import FieldCheckboxController from "@components/form/formControllers/FieldCheckboxController";
+import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
+import FieldInputNumberController from "@components/form/formControllers/FieldInputNumberController";
+
+import { H1 } from "@components/Text";
 
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import {
@@ -20,8 +24,7 @@ import {
     TFormFields,
 } from "./formAttrs";
 import { EDirection } from "@globalTypes/commonTypes";
-import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
-import FieldInputNumberController from "@components/form/formControllers/FieldInputNumberController";
+import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
@@ -29,22 +32,28 @@ const TestPage: FC = () => {
         resolver: formResolver(),
         defaultValues: formDefaultValues,
     });
-    const [formValues, setFormValues] = useState<TFormFields>();
 
     const { handleSubmit } = methods;
 
     const onSubmit: SubmitHandler<TFormFields> = (data) => {
-        console.log("SubmitHandler", data);
-        setFormValues(data);
-    };
+        const checkboxArray = data[EFieldNames.checkboxArray];
+        const result = {
+            ...data,
+            [EFieldNames.checkboxArray]: convertCheckboxArrayToBoolean(
+                checkboxArray,
+                optionsMockup,
+            ),
+        };
 
-    useEffect(() => {
-        console.log("formValues", formValues);
-    }, [formValues]);
+        console.log("SubmitHandler", result);
+    };
 
     return (
         <Layout pageClassPrefix={classPrefix}>
             <Container flexDirection="column">
+                <H1 style={{ padding: "50px 0 0", fontWeight: "700" }}>
+                    Test page
+                </H1>
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
@@ -105,21 +114,6 @@ const TestPage: FC = () => {
                             <br />
                             <br />
                             <br />
-                            <FieldCheckboxArrayController
-                                name={EFieldNames.checkboxArray}
-                                options={optionsMockup}
-                                label={EFieldNames.checkboxArray}
-                            />
-                            <FieldCheckboxArrayController
-                                name={EFieldNames.checkboxArray + "123"}
-                                options={optionsMockup}
-                                label={EFieldNames.checkboxArray}
-                                direction={EDirection.vertical}
-                                disabled={true}
-                            />
-                            <br />
-                            <br />
-                            <br />
                             <FieldTextAreaController
                                 name={EFieldNames.textArea}
                                 placeholder={EFieldNames.textArea}
@@ -157,6 +151,21 @@ const TestPage: FC = () => {
                                 name={EFieldNames.inputNumber + "123"}
                                 placeholder={EFieldNames.inputNumber}
                                 label={EFieldNames.inputNumber}
+                                disabled={true}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                            <FieldCheckboxArrayController
+                                name={EFieldNames.checkboxArray}
+                                options={optionsMockup}
+                                label={EFieldNames.checkboxArray}
+                            />
+                            <FieldCheckboxArrayController
+                                name={EFieldNames.checkboxArray + "123"}
+                                options={optionsMockup}
+                                label={EFieldNames.checkboxArray}
+                                direction={EDirection.vertical}
                                 disabled={true}
                             />
                             <br />

@@ -19,14 +19,14 @@ export type TFormFields = {
     [EFieldNames.radioArray]: string;
     [EFieldNames.radioButtonArray]: string;
     [EFieldNames.checkbox]: boolean;
-    [EFieldNames.checkboxArray]: Record<string, boolean>;
+    [EFieldNames.checkboxArray]: string[];
     [EFieldNames.textArea]: string;
     [EFieldNames.inputNumber]: number;
 };
 
 export const formResolver = (): Resolver<TFormFields> => {
     const requiredText = "This field is required";
-    // const oneFieldRequiredText = "At least one field must be filled";
+    const oneFieldRequiredText = "At least one field must be filled";
     const mustBeActiveText = "This field must be active";
     return yupResolver(
         yup.object().shape({
@@ -38,13 +38,15 @@ export const formResolver = (): Resolver<TFormFields> => {
                 .boolean()
                 .oneOf([true], mustBeActiveText)
                 .required(requiredText),
-            [EFieldNames.checkboxArray]: yup
-                .object<Record<string, boolean>>()
-                .required(requiredText),
             [EFieldNames.textArea]: yup.string().required(requiredText),
             [EFieldNames.inputNumber]: yup
                 .number()
                 .max(100, "Max count 99")
+                .required(requiredText),
+            [EFieldNames.checkboxArray]: yup
+                .array()
+                .min(1, oneFieldRequiredText)
+                .of(yup.string().required())
                 .required(requiredText),
         }),
     );
@@ -56,7 +58,7 @@ export const formDefaultValues: TFormFields = {
     [EFieldNames.radioArray]: "",
     [EFieldNames.radioButtonArray]: "",
     [EFieldNames.checkbox]: false,
-    [EFieldNames.checkboxArray]: {},
+    [EFieldNames.checkboxArray]: [],
     [EFieldNames.textArea]: "",
     [EFieldNames.inputNumber]: 0,
 };

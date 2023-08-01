@@ -28,6 +28,21 @@
           }
         }
       }
+      &._disabled{
+        span{
+          &:not(.ant-checkbox){
+            background-color: $color-disabled-bg;
+            border-color: $color-disabled-border;
+            &:hover{
+              border-color: $color-disabled-bg;
+            }
+          }
+        }
+        .form-field_sub-label{
+          color: $color-disabled-text;
+          cursor: not-allowed;
+        }
+      }
     }
   }
 }
