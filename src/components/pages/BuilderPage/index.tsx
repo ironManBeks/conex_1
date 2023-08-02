@@ -3,7 +3,6 @@ import { FC } from "react";
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
 import ProgressWrapper from "@components/globalComponents/ProgressWrapper";
-
 import BuilderRightSide from "./components/BuilderRightSide";
 import BuilderForm from "./components/BuilderForm";
 import BuilderFormActions from "./components/BuilderFormActions";
