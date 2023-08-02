@@ -22,9 +22,11 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     tooltipClassName,
     onClick,
     value,
+    style,
 }) => {
     const buttonContent = (
         <button
+            style={style}
             type={type}
             className={cn(
                 `${commonButtonClassPrefix}`,

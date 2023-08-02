@@ -33,7 +33,7 @@ const NavActions: FC<TNavTypes> = observer(({ wrapperClassPrefix }) => {
 
     const onSubmit: SubmitHandler<TSearchForm> = (data) => {
         console.log("SubmitHandler", data);
-        commonStore.setUlParams({ search: data[ESearchFormNames.search] });
+        commonStore.setUrlParams({ search: data[ESearchFormNames.search] });
         router.push(PATH_SEARCH_PAGE);
     };
 

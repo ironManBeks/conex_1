@@ -14,6 +14,7 @@ export type TButtonCommon = {
     tooltipClassName?: string;
     withShadow?: boolean;
     value?: string;
+    style?: CSSProperties;
 };
 
 export type TButtonTypes = {
