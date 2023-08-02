@@ -6,7 +6,7 @@ import TestPage from "@components/pages/TestPage";
 const TestPageLayout: FC = () => {
     return (
         <>
-            <HeadMeta title="My account" />
+            <HeadMeta title="Test page" />
             <TestPage />
         </>
     );

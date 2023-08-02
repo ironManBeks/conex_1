@@ -15,7 +15,6 @@ import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { EButtonColor } from "@components/buttons/types";
 import { ECheckoutStep, ECheckoutUserModes } from "../types";
 import { IOrderGuestModeFormRef } from "@components/order/types";
-import { useRootStore } from "@store";
 import { TGuestModeForm } from "@components/order/OrderGuestModeForm/formAttrs";
 import { AdditionalServicesOptionsMockup } from "../../../../mockups/AdditionalServicesOptionsMockup";
 import { ShippingMethodsMockup } from "../../../../mockups/ShippingMethodsMockup";
@@ -23,8 +22,6 @@ import { notImplemented } from "@helpers/notImplemented";
 
 const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_settings`;
-    const { commonStore } = useRootStore();
-    const { setModalAuthVisible } = commonStore;
 
     const [checkoutStep, setCheckoutStep] = useState<ECheckoutStep>(
         ECheckoutStep.delivery,
@@ -34,7 +31,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     );
     const [selectedDelivery, setSelectedDelivery] = useState<string>("");
     const [guestFormValues, setGuestFormValues] = useState<TGuestModeForm>();
-    const formRef = useRef<IOrderGuestModeFormRef>(null);
+    const guestFormRef = useRef<IOrderGuestModeFormRef>(null);
 
     const choiceModeOptions = [
         {
@@ -77,7 +74,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             onValuesChange={(values) =>
                                 setGuestFormValues(values)
                             }
-                            reference={formRef}
+                            reference={guestFormRef}
                         />
                     )}
                     <AddressSelection
@@ -107,13 +104,14 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                 </>
             );
         }
+
         return null;
     }, [checkoutStep, selectedMode]);
 
     const handleDeliveryCheckout = useCallback(async () => {
         let userData: TGuestModeForm | null = null;
-        if (formRef?.current) {
-            await formRef.current
+        if (guestFormRef?.current) {
+            await guestFormRef.current
                 .submitForm()
                 .then((data) => {
                     console.log("data", data);
@@ -127,7 +125,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
         if (userData) {
             setCheckoutStep(ECheckoutStep.payment);
         }
-    }, [formRef]);
+    }, [guestFormRef]);
 
     const handlePaymentCheckout = () => {
         notImplemented();

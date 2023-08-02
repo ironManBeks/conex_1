@@ -38,9 +38,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({ className }) => {
 
     const methods = useForm<TPaymentCardFrom>({
         resolver: paymentCardFromResolver(),
-        // ToDo remove "as"
         defaultValues: paymentCardFromDefaultValues as TPaymentCardFrom,
-        // mode: "all",
     });
 
     const {
@@ -63,7 +61,6 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({ className }) => {
     }, [cardNumberValue]);
 
     useEffect(() => {
-        console.log("expDateValue", expDateValue);
         if (expDateValue) {
             const validationText = stripeCardExpValidation(expDateValue);
             if (validationText) {

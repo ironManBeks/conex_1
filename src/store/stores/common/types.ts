@@ -1,8 +1,12 @@
+export type TUrlParams = Record<string, string>;
+
 export interface ICommonStore {
     headerHeight: number;
     setHeaderHeight: (value: number) => void;
-    urlParams: Record<string, string>;
-    setUlParams: (value: Record<string, string>) => void;
+    urlParams: TUrlParams;
+    setUrlParams: (value: TUrlParams) => void;
+    getUrlParams: (value: string[]) => TUrlParams;
+    removeUrlParams: (value: string[]) => void;
     //Modals
     modalConfirmVisible: boolean;
     setModalConfirmVisible: (value: boolean) => void;

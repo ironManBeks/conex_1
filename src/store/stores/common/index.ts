@@ -1,10 +1,11 @@
 import { makeAutoObservable, observable } from "mobx";
+import { useRouter } from "next/router";
 
-import { ICommonStore } from "./types";
+import { ICommonStore, TUrlParams } from "./types";
 
 export class CommonStore implements ICommonStore {
     headerHeight = 0;
-    urlParams = {};
+    urlParams: TUrlParams = {};
     // Modals
     modalConfirmVisible = false;
     modalAuthVisible = false;
@@ -25,8 +26,29 @@ export class CommonStore implements ICommonStore {
         this.headerHeight = value;
     };
 
-    setUlParams = (value: Record<string, string>): void => {
-        this.urlParams = value;
+    // ToDo доработать
+    //  ***____***____***____
+    //  ***____ URL Params
+    //  ***____***____***____
+
+    setUrlParams = (value: TUrlParams): void => {
+        this.urlParams = { ...this.urlParams, ...value };
+    };
+
+    getUrlParams = (list: string[]): TUrlParams => {
+        let result: TUrlParams = {};
+        for (let i = 0; i < list.length; i++) {
+            if (Object.getOwnPropertyDescriptor(this.urlParams, list[i])) {
+                result = { ...result, [list[i]]: this.urlParams[list[i]] };
+            }
+        }
+        return result;
+    };
+
+    removeUrlParams = (list: string[]): void => {
+        for (let i = 0; i < list.length; i++) {
+            delete this.urlParams[list[i]];
+        }
     };
 
     //  ***____***____***____

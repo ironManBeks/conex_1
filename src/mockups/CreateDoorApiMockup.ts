@@ -120,7 +120,8 @@ export const CreateDoorApi_NEXT_STEP = {
 //////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////
 //
-// Тут в элементы у "firstStep" добавляется поле "steps".
+// Тут в элементы "firstStep" добавляется поле "steps".
+// Пишу pageId_3: { id: "pageId_3" } для более лёгкого понимания. Надо будет переделать.
 
 export const CreateDoorApi_ALL_STEPS = {
     firstStep: {
@@ -147,7 +148,7 @@ export const CreateDoorApi_ALL_STEPS = {
                         steps: {
                             pageId_2: {
                                 id: "pageId_2",
-                                // haveSubPage это есть ли в этой странице ответвление. Смотреть pageId_2.
+                                // haveSubPage или subPages это есть ли в этой странице ответвление. Смотреть pageId_2.
                                 // т.е. после второго шага пользователь возможно сразу перейдёт на страницу "pageId_3"
                                 // или пройдёт по "pageId_6" -> "pageId_7", а затем всё равно перейдёт на страницу "pageId_3"
                                 subPages: {
@@ -260,7 +261,7 @@ export const CreateDoorApi_ALL_STEPS = {
     },
 };
 
-// Допустим я выбрал "wood", "handle" и "bell".
+// Допустим я выбрал "wood", "handle" и "bell". Из CreateDoorApi_NEXT_STEP
 // На бэк отправится
 // *****___*****___*****
 // POST /create-door

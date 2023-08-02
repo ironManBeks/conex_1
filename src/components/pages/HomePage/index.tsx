@@ -7,7 +7,6 @@ import HomeCallUs from "@components/pages/HomePage/components/HomeCallUs";
 
 const HomePage: FC = () => {
     const classPrefix = "home-page";
-
     return (
         <Layout pageClassPrefix={classPrefix}>
             <HomeMainBanner pageClassPrefix={classPrefix} />

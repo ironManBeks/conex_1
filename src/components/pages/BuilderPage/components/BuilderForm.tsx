@@ -1,7 +1,9 @@
 import { FC, useState } from "react";
-import { TBuilderForm } from "../types";
+
 import { H2, P } from "@components/Text";
-import BuilderFormCard from "@components/pages/BuilderPage/components/BuilderFormCard";
+import BuilderFormCard from "./BuilderFormCard";
+
+import { TBuilderForm } from "../types";
 
 const BuilderForm: FC<TBuilderForm> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
@@ -41,34 +43,30 @@ export default BuilderForm;
 const builderMockupData = [
     {
         value: "1",
-        title: "qwe",
-        subTitle: "qwe",
-        subInfo: "qwe",
+        title: "Metal Door",
+        subTitle: "Interior and Exterior Use",
+        subInfo: "$345.00",
         src: "/images/png/door-test.png",
     },
     {
         value: "2",
-        title: "qwe qwe qwe",
-        subTitle: "qwe qwe qwe",
-        subInfo: "qwe qwe qwe",
+        title: "Wood Door",
+        subTitle: "Interior Use Only",
+        subInfo: "$345.00",
         src: "/images/png/door-test.png",
     },
     {
         value: "3",
-        title: "qwe qwe qwe qwe qwe qwe qwe qwe qwe",
-        subTitle: "qwe qwe qwe qwe qwe qwe qwe qwe qwe",
-        subInfo: "qwe qwe qwe qwe qwe qwe qwe qwe qwe",
+        title: "Metal Building Door",
+        subTitle: "Preengeniered steel",
+        subInfo: "$345.00",
+        src: "/images/png/door-test.png",
     },
     {
         value: "4",
-        title: "qweqweqweqweqweqweqweqweqweqweqwe",
-        subTitle: "qweqweqweqweqweqweqweqweqweqweqwe",
-        subInfo: "qweqweqweqweqweqweqweqweqweqweqwe",
-    },
-    {
-        value: "5",
-        title: "qweqweqweqweqweqweqweqweqweqweqwe",
-        subTitle: "qweqweqweqweqweqweqweqweqweqweqwe",
-        subInfo: "qweqweqweqweqweqweqweqweqweqweqwe",
+        title: "Metal Frame Only",
+        subTitle: "Frame only No door",
+        subInfo: "$3456.00",
+        src: "/images/png/door-test.png",
     },
 ];
