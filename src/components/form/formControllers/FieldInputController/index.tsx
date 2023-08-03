@@ -10,6 +10,9 @@ import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputController } from "./types";
 import { isFunction } from "lodash";
+import { IconEdit } from "@components/Icons";
+import { EButtonColor } from "@components/buttons/types";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 const FieldInputController: FC<TFieldInputController> = (props) => {
     const {
@@ -23,6 +26,9 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
         minAddonWidth,
         floatingLabel,
         showError = true,
+        readOnly: propsReadOnly = false,
+        editIcon,
+        onEditIconClick,
         ...rest
     } = props;
     const addonAfterRef = useRef<HTMLDivElement>(null);
@@ -76,6 +82,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                                     ? `${addonAfterWidth + 10}px`
                                     : undefined,
                             }}
+                            readOnly={propsReadOnly}
                         />
                         {addonAfter && (
                             <div
@@ -91,6 +98,21 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             >
                                 {addonAfter}
                             </div>
+                        )}
+                        {editIcon && (
+                            <ButtonPrimary
+                                onClick={() => {
+                                    if (isFunction(onEditIconClick)) {
+                                        onEditIconClick();
+                                    }
+                                }}
+                                color={EButtonColor.transparent}
+                                className={cn(
+                                    `${FORM_FIELD_CLASSNAME_PREFIX}_edit`,
+                                )}
+                            >
+                                <IconEdit color="#757474" />
+                            </ButtonPrimary>
                         )}
                     </FormItemWrapper>
                 );

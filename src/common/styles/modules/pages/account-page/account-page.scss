@@ -33,6 +33,13 @@
         width: calc(50% - 15px);
       }
     }
+    &__actions{
+      margin-top: 30px;
+      .common-btn{
+        min-width: 200px;
+        margin-right: 20px;
+      }
+    }
   }
 
   &_payment{
@@ -47,37 +54,15 @@
     &__item{
       &._wrapper{
         position: relative;
-        width: calc(50% - 15px);
-        padding: 22px 18px;
-        background: linear-gradient(133deg, #F79225 0%, rgba(255, 215, 0, 0.60) 100%);
-        border-radius: $border-radius-md;
+        width: calc(50% - 20px);
         color: $color-white;
         font-size: $font-size-bs;
         line-height: $line-height-bs;
         margin-bottom: 20px;
-        &._add{
-          display: flex;
-          justify-content: center;
-          align-items: center;
-          border: $border-bs-default-light;
-          background: rgba(252, 235, 193, 0.18);
-          box-shadow: 1px 1px 4px 0 rgba(250, 187, 30, 0.35);
-          cursor: pointer;
-          transition: .2s;
-          &:hover{
-            box-shadow: 1px 1px 6px 0 rgba(250, 187, 30, 0.65);
-          }
-          .common-icon{
-            position: relative;
-            top: unset;
-            right: unset;
-            transform: translate(0, 0);
-          }
-        }
-        .common-icon{
+        .img-custom_wrapper{
           position: absolute;
-          top: 20px;
-          right: 30px;
+          top: 30px;
+          right: 40px;
           transform: translate(50%, -50%);
         }
         span{
@@ -89,6 +74,69 @@
           margin-bottom: 0;
         }
       }
+      &._inner-wrapper{
+        position: relative;
+        padding: 22px 18px;
+        background: linear-gradient(133deg, #F79225 0%, rgba(255, 215, 0, 0.60) 100%);
+        border-radius: $border-radius-md;
+      }
+      &._delete.common-btn{
+        position: absolute;
+        top: -2px;
+        left: calc(100% + 5px);
+        width: 20px;
+        height: 20px;
+        min-width: auto;
+        padding: 0;
+        border-radius: $border-radius-circle;
+        &:hover{
+          background: $color-danger-hover;
+          svg{
+            fill: $color-white
+          }
+        }
+      }
+    }
+    &__add{
+      &._wrapper{
+        position: relative;
+        width: calc(50% - 20px);
+        min-height: 140px;
+        border: $border-bs-default-light;
+        background: #FFFBF4;
+        box-shadow: 1px 1px 4px 0 rgba(250, 187, 30, 0.35);
+        border-radius: $border-radius-md;
+        margin-bottom: 20px;
+        transition: .2s;
+        &:hover{
+          box-shadow: 1px 1px 6px 0 rgba(250, 187, 30, 0.65);
+        }
+        .common-icon{
+          position: relative;
+          top: unset;
+          right: unset;
+          transform: translate(0, 0);
+        }
+        .form-field_label-wrapper{
+          background: #FFFBF4;
+        }
+      }
+      &._inner-wrapper{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 100%;
+        height: 100%;
+        cursor: pointer;
+        padding: 22px 18px;
+      }
+    }
+    &__form{
+      width: 100%;
+      margin-top: 0;
+      padding: 22px 18px;
+      box-shadow: none;
+      background: transparent;
     }
   }
 

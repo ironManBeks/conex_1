@@ -6,6 +6,7 @@ import {
     TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
+import { THEX } from "@globalTypes/commonTypes";
 
 export type TFieldInputMaskController = {
     name: string;
@@ -14,7 +15,7 @@ export type TFieldInputMaskController = {
     addonAfter?: ReactNode;
     minAddonWidth?: number;
     floatingLabel?: boolean;
-    floatingBgColor?: `#${string}`;
+    floatingBgColor?: THEX;
 } & TFormItemLabel &
     TFormWrapperClassName &
     MaskedInputProps &

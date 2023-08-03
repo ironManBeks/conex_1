@@ -70,3 +70,13 @@ export type TAddressSelection = {
     name?: string;
 } & TFormItemError &
     TFormItemLabel;
+
+export type TAddedOptionsListItem = {
+    title: string;
+    list: { label: string; value: string | number }[];
+};
+
+export type TAddedOptionsList = {
+    optionsList: TAddedOptionsListItem[];
+    className?: string;
+};

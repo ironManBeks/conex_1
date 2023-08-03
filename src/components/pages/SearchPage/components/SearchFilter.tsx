@@ -3,14 +3,16 @@ import cn from "classnames";
 import { observer } from "mobx-react";
 import { CSSTransition } from "react-transition-group";
 
-import { H3, H4, P } from "@components/Text";
+import { H3 } from "@components/Text";
 import { IconOpenFilter } from "@components/Icons";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
+import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
 
 import { ColorTheme } from "@common/theme/colorTheme";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { useRootStore } from "@store";
 import { TAdditionalServicesOption } from "@components/globalComponents/types";
+import { AddedOptionsListMockup } from "../../../../mockups/AddedOptionsListMockup";
 
 const SearchFilter: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_filter`;
@@ -60,14 +62,17 @@ const SearchFilter: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
 
 export default SearchFilter;
 
-// ToDo Уточнить функционал фильтра. Если что, то вынести в отдельную компонентну + стили
 const FilterInfo = ({ onClose }: { onClose: () => void }): ReactElement => {
     const classPrefix = "filter-info";
-    const filterData = filterDataMockup;
 
     const additionalServicesOptions: TAdditionalServicesOption[] = [
         { label: "Additional charges", value: "$23.00" },
     ];
+
+    const additionalServicesTotalOption: TAdditionalServicesOption = {
+        label: "Grand Total",
+        value: "$2,323.00",
+    };
 
     return (
         <div className={`${classPrefix}_wrapper`}>
@@ -75,77 +80,16 @@ const FilterInfo = ({ onClose }: { onClose: () => void }): ReactElement => {
                 <H3>Your filters</H3>
             </div>
             <div className={`${classPrefix}_body`}>
-                {filterData.list.length && (
-                    <div className={`${classPrefix}_list`}>
-                        {filterData.list.map((item, index) => (
-                            <div
-                                key={index}
-                                className={`${classPrefix}_item__wrapper`}
-                            >
-                                <H4 className={`${classPrefix}_item__title`}>
-                                    {item.title}
-                                </H4>
-                                <div className={`${classPrefix}_item__list`}>
-                                    {item.list.map((subItem, subIndex) => (
-                                        <P key={subIndex}>
-                                            <span className="label">
-                                                {subItem.label}
-                                            </span>
-                                            <span className="value">
-                                                {typeof subItem.value ===
-                                                "number"
-                                                    ? `$${subItem.value}`
-                                                    : subItem.value}
-                                            </span>
-                                        </P>
-                                    ))}
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                )}
+                <AddedOptionsList
+                    optionsList={AddedOptionsListMockup}
+                    className={`${classPrefix}_added-options__wrapper`}
+                />
                 <AdditionalServices
                     className={`${classPrefix}_total__wrapper`}
                     options={additionalServicesOptions}
-                    totalOption={{
-                        label: "Grand Total",
-                        value: "$2,323.00",
-                    }}
+                    totalOption={additionalServicesTotalOption}
                 />
             </div>
         </div>
     );
-};
-
-const filterDataMockup = {
-    list: [
-        {
-            title: "Metal door type",
-            list: [
-                { label: "1", value: 1 },
-                { label: "q", value: "q" },
-            ],
-        },
-        {
-            title: "Fire protection",
-            list: [
-                { label: "qwertyuioqwertyuio", value: "qwertyuioqwertyuio" },
-                { label: "qwertyuioqwertyuio", value: 123456789 },
-            ],
-        },
-        {
-            title: "Extras",
-            list: [
-                { label: "Lorem 12345", value: 123 },
-                { label: "IPSUMOLD 1234512345", value: 1234 },
-                { label: "Replacement Replacement", value: 123 },
-                { label: "Replacement12345", value: "qweqweqwe" },
-                { label: "Replacement", value: 1234 },
-                { label: "ReplacementReplacement", value: 123 },
-                { label: "Replacement", value: 1234 },
-            ],
-        },
-    ],
-    additionalCharges: 123,
-    grandTotal: 123,
 };

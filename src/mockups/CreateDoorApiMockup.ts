@@ -202,8 +202,8 @@ export const CreateDoorApi_ALL_STEPS = {
                         {
                             mainTitle: "Есть окно",
                             // Если другой выбор, то продолжаю на следующий шаг,
-                            // который описан в firstStep->fields->fieldElements->steps->subPages->
-                            // А по окнончанию страниц в subPages к firstStep->fields->fieldElements->steps
+                            // который описан в firstStep->elements->fieldElements->steps->subPages->
+                            // А по окнончанию страниц в subPages к firstStep->elements->fieldElements->steps
                             value: "yesIn",
                         },
                     ],
