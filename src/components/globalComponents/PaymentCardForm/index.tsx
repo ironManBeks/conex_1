@@ -31,8 +31,14 @@ import {
 } from "@helpers/paymentMethodHelpers";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { pickOutErrorMessages } from "@helpers/errorsHelper";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 
-const PaymentCardForm: FC<TPaymentCardFormSection> = ({ className }) => {
+const PaymentCardForm: FC<TPaymentCardFormSection> = ({
+    className,
+    submitText,
+    actionsContent,
+}) => {
     const classPrefix = "payment-card-form";
     const [cardType, setCardType] = useState<EPaymentCardNames | undefined>();
 
@@ -141,6 +147,18 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({ className }) => {
                         <P key={index}>{item}</P>
                     ))}
                 </div>
+                {submitText && (
+                    <div className={`${classPrefix}_actions`}>
+                        {actionsContent && actionsContent}
+                        <ButtonPrimary
+                            type="submit"
+                            color={EButtonColor.secondary}
+                            size={EButtonSize.sm}
+                        >
+                            {submitText}
+                        </ButtonPrimary>
+                    </div>
+                )}
             </form>
         </FormProvider>
     );

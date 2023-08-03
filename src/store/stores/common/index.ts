@@ -1,5 +1,4 @@
 import { makeAutoObservable, observable } from "mobx";
-import { useRouter } from "next/router";
 
 import { ICommonStore, TUrlParams } from "./types";
 
@@ -7,15 +6,16 @@ export class CommonStore implements ICommonStore {
     headerHeight = 0;
     urlParams: TUrlParams = {};
     // Modals
+    confirmModalData: any = null;
     modalConfirmVisible = false;
     modalAuthVisible = false;
     modalCustomQuoteVisible = false;
-
     constructor() {
         makeAutoObservable(this, {
             headerHeight: observable,
             urlParams: observable,
             // Modals
+            confirmModalData: observable,
             modalConfirmVisible: observable,
             modalAuthVisible: observable,
             modalCustomQuoteVisible: observable,
@@ -30,7 +30,6 @@ export class CommonStore implements ICommonStore {
     //  ***____***____***____
     //  ***____ URL Params
     //  ***____***____***____
-
     setUrlParams = (value: TUrlParams): void => {
         this.urlParams = { ...this.urlParams, ...value };
     };
@@ -54,6 +53,11 @@ export class CommonStore implements ICommonStore {
     //  ***____***____***____
     //  ***____ Modals
     // ***____***____***____
+
+    setConfirmModalData = (confirmModalData: any): void => {
+        this.confirmModalData = confirmModalData;
+    };
+
     setModalConfirmVisible = (value: boolean): void => {
         this.modalConfirmVisible = value;
     };

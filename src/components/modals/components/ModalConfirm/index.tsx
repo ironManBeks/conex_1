@@ -9,15 +9,25 @@ import { useRootStore } from "@store";
 import { EModalSize } from "../../types";
 import { TModalConfirm } from "./types";
 import { EButtonSize } from "@components/buttons/types";
+import { isFunction } from "lodash";
 
 const ModalConfirm: FC<TModalConfirm> = observer(
-    ({ text, onConfirm, confirmColor, confirmText }) => {
+    ({ text, onConfirm, confirmColor, confirmText, onClose }) => {
         const classPrefix = "modal-confirm";
         const { commonStore } = useRootStore();
-        const { modalConfirmVisible, setModalConfirmVisible } = commonStore;
+        const {
+            modalConfirmVisible,
+            setModalConfirmVisible,
+            confirmModalData,
+            setConfirmModalData,
+        } = commonStore;
 
         const handleCloseModal = () => {
-            setModalConfirmVisible(true);
+            setModalConfirmVisible(false);
+            setConfirmModalData(null);
+            if (isFunction(onClose)) {
+                onClose();
+            }
         };
 
         return (
@@ -39,7 +49,7 @@ const ModalConfirm: FC<TModalConfirm> = observer(
                             size={EButtonSize.sm}
                             color={confirmColor}
                             onClick={() => {
-                                onConfirm();
+                                onConfirm(confirmModalData);
                                 handleCloseModal();
                             }}
                         >

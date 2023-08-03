@@ -1,6 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Resolver } from "react-hook-form";
+import { TAuthData } from "@store/stores/auth/types";
 
 export enum EAccountInfoFieldsNames {
     name = "name",
@@ -22,10 +23,14 @@ export type TAccountTrackerForm = {
     [EAccountTrackerFieldsNames.tracker]: string;
 };
 
-export const accountInfoDefaultValues: TAccountInfoForm = {
-    [EAccountInfoFieldsNames.name]: "",
-    [EAccountInfoFieldsNames.email]: "",
-    [EAccountInfoFieldsNames.phone]: "",
+export const accountInfoDefaultValues = (
+    authData?: TAuthData,
+): TAccountInfoForm => {
+    return {
+        [EAccountInfoFieldsNames.name]: authData?.name ?? "",
+        [EAccountInfoFieldsNames.email]: authData?.email ?? "",
+        [EAccountInfoFieldsNames.phone]: authData?.phone ?? "",
+    };
 };
 
 export const accountTrackerDefaultValues: TAccountTrackerForm = {
@@ -34,13 +39,14 @@ export const accountTrackerDefaultValues: TAccountTrackerForm = {
 
 export const accountInfoFormResolver = (): Resolver<TAccountInfoForm> => {
     const requiredText = "This field is required";
+    const emailNotValid = "Please enter valid email address";
 
     return yupResolver(
         yup.object().shape({
             [EAccountInfoFieldsNames.name]: yup.string().required(requiredText),
             [EAccountInfoFieldsNames.email]: yup
                 .string()
-                .email()
+                .email(emailNotValid)
                 .required(requiredText),
             [EAccountInfoFieldsNames.phone]: yup
                 .string()
