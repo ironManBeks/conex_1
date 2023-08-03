@@ -5,6 +5,7 @@ import {
     TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
+import { THEX } from "@globalTypes/commonTypes";
 
 export type TFieldInputController = {
     name: string;
@@ -12,7 +13,7 @@ export type TFieldInputController = {
     onAddonClick?: () => void;
     minAddonWidth?: number;
     floatingLabel?: boolean;
-    floatingBgColor?: `#${string}`;
+    floatingBgColor?: THEX;
     editIcon?: boolean;
     onEditIconClick?: () => void;
 } & InputProps &

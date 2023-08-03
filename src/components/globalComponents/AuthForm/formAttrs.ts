@@ -28,13 +28,13 @@ export const authFormResolver = (): Resolver<TAuthForm> => {
         yup.object().shape({
             [EAuthFormFieldsNames.name]: yup
                 .string()
-                .email(emailNotValid)
-                .required(requiredText),
+                .required(requiredText)
+                .email(emailNotValid),
             [EAuthFormFieldsNames.password]: yup
                 .string()
+                .required(requiredText)
                 .min(8, passwordMinSymbols)
-                .max(30, passwordMaxSymbols)
-                .required(requiredText),
+                .max(30, passwordMaxSymbols),
         }),
     );
 };

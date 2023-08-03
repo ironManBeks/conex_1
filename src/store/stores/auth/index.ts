@@ -4,7 +4,7 @@ import { IAuthStore, TAuthData } from "./types";
 import { AuthDataMockup } from "../../../mockups/AuthDataMockup";
 
 export class AuthStore implements IAuthStore {
-    authData: TAuthData = undefined;
+    authData: TAuthData = null;
     authDataFetching = true;
 
     constructor() {

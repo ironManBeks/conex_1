@@ -6,14 +6,12 @@ export type TAuthPaymentCard = {
     expYear: string;
 };
 
-export type TAuthData =
-    | {
-          name: string;
-          email: string;
-          phone: string;
-          cards: TAuthPaymentCard[];
-      }
-    | undefined;
+export type TAuthData = {
+    name: string;
+    email: string;
+    phone: string;
+    cards: TAuthPaymentCard[];
+} | null;
 
 export interface IAuthStore {
     authData: TAuthData;
