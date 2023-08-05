@@ -1,48 +1,50 @@
-import { FC, useState } from "react";
+import { FC } from "react";
 import cn from "classnames";
+import { observer } from "mobx-react";
 
+import BuilderField from "@components/pages/BuilderPage/components/BuilderField";
 import { H2, P } from "@components/Text";
-import BuilderFormActions from "./BuilderStepActions";
 
-import { TBuilderStepLayout } from "../types";
-import { notImplemented } from "@helpers/notImplemented";
+import { useRootStore } from "@store";
+import { TBuilderCompProps } from "../types";
 
-const BuilderStepLayout: FC<TBuilderStepLayout> = ({ pageClassPrefix }) => {
-    const classPrefix = `builder-step`;
+const BuilderStepLayout: FC<TBuilderCompProps> = observer(
+    ({ pageClassPrefix }) => {
+        const classPrefix = `${pageClassPrefix}_step`;
+        const { builderStore } = useRootStore();
+        const stepData = builderStore.getCurrentStepData();
 
-    const handleNext = () => {
-        notImplemented();
-    };
-
-    const handleBack = () => {
-        notImplemented();
-    };
-
-    return (
-        <>
-            <div className={cn(`${classPrefix}_layout`)}>
-                {/*{title && <H2 className={`${classPrefix}_title`}>{title}</H2>}*/}
-                {/*<div className={`${classPrefix}_content`}>*/}
-                {/*    {JSON.stringify(fields)}*/}
-                {/*</div>*/}
-                {/*{description && (*/}
-                {/*    <div className={`${classPrefix}_info`}>*/}
-                {/*        <P>{description}</P>*/}
-                {/*    </div>*/}
-                {/*)}*/}
-                {builderFieldsGenerator()}
-            </div>
-            <BuilderFormActions
-                pageClassPrefix={classPrefix}
-                onBackClick={handleBack}
-                onNextClick={handleNext}
-            />
-        </>
-    );
-};
+        return (
+            <>
+                <div className={cn(`${classPrefix}__wrapper`)}>
+                    {stepData?.stepTitle && (
+                        <H2 className={`${classPrefix}__title`}>
+                            {stepData.stepTitle}
+                        </H2>
+                    )}
+                    <div className={`${classPrefix}__content`}>
+                        {stepData?.fields.map((item) => (
+                            <BuilderField
+                                key={item.id}
+                                id={item.id}
+                                value={item.value}
+                                title={item.title}
+                                titleSize={item.titleSize}
+                                isRequired={item.isRequired}
+                                type={item.type}
+                                elements={item.elements}
+                            />
+                        ))}
+                    </div>
+                    {stepData?.stepDescription && (
+                        <div className={`${classPrefix}__description`}>
+                            <P>{stepData.stepDescription}</P>
+                        </div>
+                    )}
+                </div>
+            </>
+        );
+    },
+);
 
 export default BuilderStepLayout;
-
-const builderFieldsGenerator = () => {
-    return <div>123123123123</div>;
-};

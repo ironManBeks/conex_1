@@ -2,11 +2,14 @@ import { FC } from "react";
 
 import ProgressWrapper from "@components/globalComponents/ProgressWrapper";
 
-import { TBuilderProgress } from "../types";
+import { TBuilderCompProps } from "../types";
 import { observer } from "mobx-react";
+import { useRootStore } from "@store";
 
-const BuilderProgress: FC<TBuilderProgress> = observer(
+const BuilderProgress: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {
+        const { builderStore } = useRootStore();
+
         return (
             <ProgressWrapper
                 percent={22}

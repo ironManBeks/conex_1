@@ -9,6 +9,7 @@ import {
     TFormWrapperClassName,
     TFormWrapperErrorMessage,
 } from "@components/form/FormItemWrapper/types";
+import { RadioProps } from "antd/lib/radio";
 
 export enum EFormFieldType {
     input = "input",
@@ -57,3 +58,8 @@ export type TFormFieldCheckbox = {
     name: string;
     label?: string;
 } & CheckboxProps;
+
+export type TFormFieldRadio = {
+    name: string;
+    label?: string;
+} & RadioProps;

@@ -32,10 +32,9 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
     const {
         control,
         getValues,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
 
     const getIsChecked = (
         value: string | number | null | undefined,
@@ -45,20 +44,6 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
             return fieldValues[name].includes(value);
         }
         return false;
-    };
-
-    const getUpdatedFieldValue = (
-        field: ControllerRenderProps<FieldValues, string>,
-        value: string | number | null | undefined,
-    ): string[] => {
-        let result: string[] = [];
-        const isIncludes = getIsChecked(value);
-        if (!isIncludes) {
-            result = [...field.value, value];
-        } else {
-            result = field.value.filter((item: string) => item !== value);
-        }
-        return result;
     };
 
     return (
@@ -82,9 +67,11 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                         ? "column"
                                         : "row",
                             }}
+                            onChange={(checkedValue) => {
+                                field.onChange(checkedValue);
+                            }}
                         >
                             {options.map((item) => {
-                                // console.log("item", item);
                                 const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
                                 return (
                                     <div
@@ -103,22 +90,9 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                     >
                                         <AntCheckbox
                                             {...rest}
-                                            ref={field.ref}
-                                            onChange={(event) => {
-                                                // const val =
-                                                //     event.target.checked;
-                                                if (!item.disabled) {
-                                                    field.onChange(
-                                                        getUpdatedFieldValue(
-                                                            field,
-                                                            event.target.value,
-                                                        ),
-                                                    );
-                                                }
-                                            }}
+                                            {...field}
                                             id={checkboxId}
                                             value={item.value}
-                                            checked={getIsChecked(item.value)}
                                             disabled={disabled || item.disabled}
                                         >
                                             <IconCheck

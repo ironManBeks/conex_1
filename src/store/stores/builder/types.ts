@@ -1,7 +1,12 @@
+import { TBuilderStep } from "@components/pages/BuilderPage/types";
+
 export interface IBuilderStore {
-    builderData: any;
+    builderData: TBuilderStep[] | null;
     getBuilderData: () => void;
-    setBuilderData: (data: any) => void;
+    setBuilderData: (data: TBuilderStep[]) => void;
     builderDataFetching: boolean;
     setBuilderDataFetching: (value: boolean) => void;
+    passedSteps: string[];
+    getCurrentStepData: () => TBuilderStep | null;
+    setPassedStep: (value: string) => void;
 }
