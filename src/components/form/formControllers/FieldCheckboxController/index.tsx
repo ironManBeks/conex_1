@@ -12,8 +12,15 @@ import { Checkbox as AntCheckbox } from "antd";
 import { COLOR_WHITE } from "@common/theme/colorTheme";
 
 const FieldCheckboxController: FC<TFieldCheckboxController> = (props) => {
-    const { name, wrapperClassName, label, disabled, onChangeValue, ...rest } =
-        props;
+    const {
+        name,
+        wrapperClassName,
+        label,
+        disabled,
+        onChangeValue,
+        showError = true,
+        ...rest
+    } = props;
     const {
         control,
         formState: { errors, touchedFields },
@@ -31,6 +38,7 @@ const FieldCheckboxController: FC<TFieldCheckboxController> = (props) => {
                         fieldType={EFormFieldType.checkbox}
                         errorMessage={errorMessage}
                         label={undefined}
+                        showError={showError}
                         wrapperClassName={cn(wrapperClassName, {
                             _checked: field.value,
                             _disabled: disabled,

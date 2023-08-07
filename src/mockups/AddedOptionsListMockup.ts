@@ -31,3 +31,27 @@ export const AddedOptionsListMockup: TAddedOptionsListItem[] = [
         ],
     },
 ];
+
+export const BuilderAddedOptionsListMockup: TAddedOptionsListItem[] = [
+    {
+        title: "Metal door type",
+        list: [
+            { label: "Small", value: 1111 },
+            { label: "BIG", value: "string" },
+        ],
+    },
+    {
+        title: "Fire protection",
+        list: [
+            { label: "Rife", value: "123" },
+            { label: "Door", value: 123 },
+        ],
+    },
+    {
+        title: "Extras",
+        list: [
+            { label: "Lorem", value: "qwe" },
+            { label: "IPSUMOLD", value: "qwe" },
+        ],
+    },
+];

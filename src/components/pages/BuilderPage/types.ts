@@ -1,11 +1,6 @@
-import { CSSProperties } from "react";
 import { THEX } from "@globalTypes/commonTypes";
 
-export type TBuilderRightSide = {
-    pageClassPrefix: string;
-};
-
-export type TBuilderProgress = {
+export type TBuilderCompProps = {
     pageClassPrefix: string;
 };
 
@@ -17,43 +12,56 @@ export enum EBuilderFieldTypes {
     radio = "radio",
 }
 
-export type TBuilderElement = {
+export type TBuilderElementComp = {
+    onClick?: (value: string) => void;
+    isActive?: boolean;
+    fieldValue: string;
+};
+
+export interface IBuilderElementBase {
     id: string;
     value: string;
     title: string;
     popular?: boolean;
     disabled?: boolean;
     className?: string;
-    onClick: (value: string) => void;
-};
+}
 
-// EBuilderFieldTypes.card
-export type TBuilderElementCard = {
+export interface IBuilderElementCardProps extends IBuilderElementBase {
     subTitle: string;
     imgSrc: string;
     price: string;
     currency: string;
-} & TBuilderElement;
+}
 
-// EBuilderFieldTypes.checkbox
-export type TBuilderElementCheckbox = {
+export interface IBuilderElementCheckboxProps extends IBuilderElementBase {
     default?: boolean;
-} & TBuilderElement;
+}
 
-// EBuilderFieldTypes.colorPicker
-export type TBuilderElementColorPicker = {
+export interface IBuilderElementColorPickerProps extends IBuilderElementBase {
     color: THEX;
-} & TBuilderElement;
+}
 
-// EBuilderFieldTypes.radioButton
-export type TBuilderElementRadioButton = TBuilderElement;
+export type TReferenceProps<
+    T extends EBuilderFieldTypes,
+    E extends IBuilderElementBase = IBuilderElementBase,
+> = {
+    type: T;
+    elements: E[];
+};
 
-// EBuilderFieldTypes.radioButton
-export type TBuilderElementRadio = TBuilderElement;
+export type TBuilderElements =
+    | TReferenceProps<EBuilderFieldTypes.card, IBuilderElementCardProps>
+    | TReferenceProps<EBuilderFieldTypes.checkbox, IBuilderElementCheckboxProps>
+    | TReferenceProps<
+          EBuilderFieldTypes.colorPicker,
+          IBuilderElementColorPickerProps
+      >
+    | TReferenceProps<EBuilderFieldTypes.radio>
+    | TReferenceProps<EBuilderFieldTypes.radioButton>;
 
-export type TBuilderField = {
+export type TBuilderFieldBase = {
     id: string;
-    type: EBuilderFieldTypes;
     value: string;
     title?: string;
     titleSize?: "big" | "small";
@@ -71,28 +79,9 @@ export type TBuilderOpportunity = {
     };
 };
 
-export type TBuilderElements = {
-    elements:
-        | TBuilderElementCard[]
-        | TBuilderElementCheckbox[]
-        | TBuilderElementColorPicker[]
-        | TBuilderElementRadioButton[]
-        | TBuilderElementRadio[];
-};
-
-export type TBuilderStepLayout = {
-    pageClassPrefix: string;
-};
-
 export type TBuilderStep = {
-    id: string;
-    title?: string;
-    description?: string;
-    fields: TBuilderField[];
-};
-
-export type TBuilderStepActions = {
-    pageClassPrefix: string;
-    onBackClick: () => void;
-    onNextClick: () => void;
+    stepId: string;
+    stepTitle?: string;
+    stepDescription?: string;
+    fields: TBuilderFieldBase[];
 };

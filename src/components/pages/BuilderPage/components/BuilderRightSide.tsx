@@ -4,11 +4,11 @@ import cn from "classnames";
 import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
 
-import { AddedOptionsListMockup } from "../../../../mockups/AddedOptionsListMockup";
+import { BuilderAddedOptionsListMockup } from "../../../../mockups/AddedOptionsListMockup";
 import { TAdditionalServicesOption } from "@components/globalComponents/types";
-import { TBuilderRightSide } from "../types";
+import { TBuilderCompProps } from "../types";
 
-const BuilderRightSide: FC<TBuilderRightSide> = ({ pageClassPrefix }) => {
+const BuilderRightSide: FC<TBuilderCompProps> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_right-side`;
 
     const additionalServicesOptions: TAdditionalServicesOption[] = [
@@ -23,12 +23,8 @@ const BuilderRightSide: FC<TBuilderRightSide> = ({ pageClassPrefix }) => {
     return (
         <div className={cn(`${classPrefix}__wrapper`)}>
             <div className={cn(`${classPrefix}__inner-wrapper`)}>
-                <AddedOptionsList
-                    optionsList={AddedOptionsListMockup}
-                    className={`${classPrefix}_added-options__wrapper`}
-                />
+                <AddedOptionsList optionsList={BuilderAddedOptionsListMockup} />
                 <AdditionalServices
-                    className={`${classPrefix}_total__wrapper`}
                     options={additionalServicesOptions}
                     totalOption={additionalServicesTotalOption}
                 />

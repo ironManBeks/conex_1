@@ -33,6 +33,7 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const onSubmit: SubmitHandler<TAccountInfoForm> = (data) => {
         console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
+        setFormActionVisible(false);
     };
 
     const handleEditIconClick = (value: boolean) => {

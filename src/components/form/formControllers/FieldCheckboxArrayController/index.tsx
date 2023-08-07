@@ -1,10 +1,5 @@
 import { FC } from "react";
-import {
-    Controller,
-    ControllerRenderProps,
-    FieldValues,
-    useFormContext,
-} from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 import { Checkbox as AntCheckbox, Checkbox } from "antd";
 
@@ -27,15 +22,15 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
         disabled,
         options,
         direction,
+        showError = true,
         ...rest
     } = props;
     const {
         control,
         getValues,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
 
     const getIsChecked = (
         value: string | number | null | undefined,
@@ -47,20 +42,6 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
         return false;
     };
 
-    const getUpdatedFieldValue = (
-        field: ControllerRenderProps<FieldValues, string>,
-        value: string | number | null | undefined,
-    ): string[] => {
-        let result: string[] = [];
-        const isIncludes = getIsChecked(value);
-        if (!isIncludes) {
-            result = [...field.value, value];
-        } else {
-            result = field.value.filter((item: string) => item !== value);
-        }
-        return result;
-    };
-
     return (
         <Controller
             name={name}
@@ -70,6 +51,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                     <FormItemWrapper
                         fieldType={EFormFieldType.checkboxArray}
                         errorMessage={errorMessage}
+                        showError={showError}
                         label={label}
                         wrapperClassName={cn(wrapperClassName, {
                             _disabled: disabled,
@@ -82,9 +64,11 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                         ? "column"
                                         : "row",
                             }}
+                            onChange={(checkedValue) => {
+                                field.onChange(checkedValue);
+                            }}
                         >
                             {options.map((item) => {
-                                // console.log("item", item);
                                 const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
                                 return (
                                     <div
@@ -103,22 +87,9 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                     >
                                         <AntCheckbox
                                             {...rest}
-                                            ref={field.ref}
-                                            onChange={(event) => {
-                                                // const val =
-                                                //     event.target.checked;
-                                                if (!item.disabled) {
-                                                    field.onChange(
-                                                        getUpdatedFieldValue(
-                                                            field,
-                                                            event.target.value,
-                                                        ),
-                                                    );
-                                                }
-                                            }}
+                                            {...field}
                                             id={checkboxId}
                                             value={item.value}
-                                            checked={getIsChecked(item.value)}
                                             disabled={disabled || item.disabled}
                                         >
                                             <IconCheck
