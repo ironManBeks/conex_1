@@ -1,6 +1,8 @@
 import { FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { observer } from "mobx-react";
+import * as yup from "yup";
+import { yupResolver } from "@hookform/resolvers/yup";
 
 import BuilderProgress from "./BuilderProgress";
 import BuilderStepLayout from "./BuilderStepLayout";
@@ -16,7 +18,7 @@ import { useRootStore } from "@store";
 
 type TBuilderDefaultValue = string | string[] | number | number[] | null;
 
-const getBuilderDefaultValueByType = (
+const getBuilderDefaultValue = (
     fieldType: EBuilderFieldTypes,
 ): TBuilderDefaultValue => {
     switch (fieldType) {
@@ -32,25 +34,83 @@ const getBuilderDefaultValueByType = (
     }
 };
 
-const builderDefaultValuesGenerator = (fields?: TBuilderFieldBase[]) => {
+const builderDefaultValuesGenerator = (
+    fields?: TBuilderFieldBase[],
+): Record<string, TBuilderDefaultValue> => {
     const result: Record<string, TBuilderDefaultValue> = {};
     if (!fields?.length) return result;
+    for (let i = 0; i < fields.length; i++) {
+        result[fields[i].value] = getBuilderDefaultValue(fields[i].type);
+    }
+    return result;
+};
+
+const getBuilderFiledValidation = ({
+    fieldType,
+    fieldTitle,
+    stepTitle,
+}: {
+    fieldType: EBuilderFieldTypes;
+    fieldTitle?: string;
+    stepTitle?: string;
+}): any => {
+    const requiredText = `Field "${
+        fieldTitle ? fieldTitle : stepTitle ?? ""
+    }" is required`;
+    const oneFieldRequiredText = "At least one field must be filled";
+
+    switch (fieldType) {
+        case EBuilderFieldTypes.card:
+        case EBuilderFieldTypes.radio:
+        case EBuilderFieldTypes.colorPicker:
+        case EBuilderFieldTypes.radioButton:
+            return yup.string().required(requiredText);
+        case EBuilderFieldTypes.checkbox:
+            return yup
+                .array()
+                .min(1, oneFieldRequiredText)
+                .of(yup.string().required(requiredText))
+                .required(requiredText);
+        default:
+            return null;
+    }
+};
+
+const builderFormResolver = ({
+    fields,
+    stepTitle,
+}: {
+    fields?: TBuilderFieldBase[];
+    stepTitle?: string;
+}): any => {
+    if (!fields?.length) return undefined;
+
+    const validations: any = {};
 
     for (let i = 0; i < fields.length; i++) {
-        result[fields[i].value] = getBuilderDefaultValueByType(fields[i].type);
+        if (fields[i].isRequired) {
+            validations[fields[i].value] = getBuilderFiledValidation({
+                fieldType: fields[i].type,
+                fieldTitle: fields[i].title,
+                stepTitle: stepTitle,
+            });
+        }
     }
 
-    return result;
+    return yupResolver(yup.object().shape(validations));
 };
 
 const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
     const { builderStore } = useRootStore();
-    const { builderData, passedSteps, getCurrentStepData } = builderStore;
+    const { builderData, passedSteps, currentStepData, updateCurrentStepData } =
+        builderStore;
 
     const methods = useForm({
-        defaultValues: builderDefaultValuesGenerator(
-            getCurrentStepData()?.fields,
-        ),
+        resolver: builderFormResolver({
+            fields: currentStepData?.fields,
+            stepTitle: currentStepData?.stepTitle,
+        }),
+        defaultValues: builderDefaultValuesGenerator(currentStepData?.fields),
     });
 
     const {
@@ -58,8 +118,8 @@ const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
     } = methods;
 
     useEffect(() => {
-        console.log("defaultValues", defaultValues);
-    }, [defaultValues]);
+        updateCurrentStepData("start");
+    }, []);
 
     return (
         <FormProvider {...methods}>

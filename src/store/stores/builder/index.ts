@@ -1,21 +1,25 @@
 import { TBuilderStep } from "@components/pages/BuilderPage/types";
-import { makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable, observable, toJS } from "mobx";
 
 import { BuilderDataMockup } from "../../../mockups/BuilderStepsMockup";
 
-import { IBuilderStore } from "./types";
+import { IBuilderStore, TCreatingDoorData } from "./types";
 import { isEmpty } from "lodash";
 
 export class BuilderStore implements IBuilderStore {
     builderData: TBuilderStep[] | null = null;
     builderDataFetching = true;
+    currentStepData: TBuilderStep | null = null;
+    creatingDoorData: TCreatingDoorData = {};
     passedSteps: string[] = [];
 
     constructor() {
         makeAutoObservable(this, {
             builderData: observable,
             builderDataFetching: observable,
+            currentStepData: observable,
             passedSteps: observable,
+            creatingDoorData: observable,
         });
     }
 
@@ -34,19 +38,60 @@ export class BuilderStore implements IBuilderStore {
         this.builderDataFetching = value;
     };
 
-    getCurrentStepData = (): TBuilderStep | null => {
-        const currentStepId = this.passedSteps[this.passedSteps.length];
-        const result = this.builderData?.find(
-            (item) => item.stepId === currentStepId,
-        );
-        if (!isEmpty(result)) {
-            return result;
+    setCurrentStepData = (data: TBuilderStep | null): void => {
+        this.currentStepData = data;
+    };
+
+    updateCurrentStepData = (way: "next" | "back" | "start"): void => {
+        if (!this.builderData) return;
+        if (way === "start") {
+            this.setCurrentStepData(this.builderData[0]);
+            return;
         }
-        return null;
-        // return this.passedSteps[this.passedSteps.length];
+
+        if (way === "next" && !isEmpty(this.currentStepData)) {
+            const currentStepIndex = this.builderData?.findIndex(
+                (step) => step.stepId === this.currentStepData?.stepId,
+            );
+            const nextPage = this.builderData[currentStepIndex + 1];
+            this.setCurrentStepData(nextPage);
+            return;
+        }
+
+        if (way === "back" && !isEmpty(this.currentStepData)) {
+            const currentStepIndex = this.builderData?.findIndex(
+                (step) => step.stepId === this.currentStepData?.stepId,
+            );
+            const prevPage = this.builderData[currentStepIndex - 1];
+            this.setCurrentStepData(prevPage);
+            return;
+        }
     };
 
     setPassedStep = (value: string): void => {
-        this.passedSteps.push(value);
+        if (value && value !== this.passedSteps[this.passedSteps.length - 1]) {
+            this.passedSteps = [...this.passedSteps, value];
+        }
+    };
+
+    getStepWay = (): "start" | "end" | undefined => {
+        if (this.builderData) {
+            if (
+                this.passedSteps[this.passedSteps.length - 1] ===
+                this.builderData[this.builderData?.length - 1].stepId
+            ) {
+                return "end";
+            } else if (
+                this.currentStepData &&
+                this.builderData[0].stepId === this.currentStepData.stepId
+            ) {
+                return "start";
+            } else return undefined;
+        }
+        return undefined;
+    };
+
+    setCreatingDoorData = (data: TCreatingDoorData): void => {
+        this.creatingDoorData = data;
     };
 }

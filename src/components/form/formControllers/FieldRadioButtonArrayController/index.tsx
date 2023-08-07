@@ -12,7 +12,14 @@ import { TFieldRadioButtonArrayController } from "./types";
 const FieldRadioButtonArrayController: FC<TFieldRadioButtonArrayController> = (
     props,
 ) => {
-    const { name, wrapperClassName, label, disabled, options } = props;
+    const {
+        name,
+        wrapperClassName,
+        label,
+        disabled,
+        options,
+        showError = true,
+    } = props;
     const {
         control,
         formState: { errors, touchedFields },
@@ -30,6 +37,7 @@ const FieldRadioButtonArrayController: FC<TFieldRadioButtonArrayController> = (
                         fieldType={EFormFieldType.radioButtonArray}
                         errorMessage={errorMessage}
                         label={label}
+                        showError={showError}
                         wrapperClassName={wrapperClassName}
                     >
                         <AntRadio.Group

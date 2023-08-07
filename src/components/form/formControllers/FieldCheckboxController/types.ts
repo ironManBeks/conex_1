@@ -1,6 +1,7 @@
 import { CheckboxProps } from "antd/lib/checkbox";
 import {
     TFormItemLabel,
+    TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
 
@@ -9,4 +10,5 @@ export type TFieldCheckboxController = {
     onChangeValue?: (e: boolean) => void;
 } & CheckboxProps &
     TFormWrapperClassName &
-    TFormItemLabel;
+    TFormItemLabel &
+    TFormShowError;

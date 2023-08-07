@@ -20,11 +20,16 @@ const BuilderField: FC<TBuilderFieldBase> = ({
     titleSize,
     value,
     elements,
+    isRequired,
 }) => {
     const classPrefix = `builder-field`;
 
     return (
-        <div className={cn(`${classPrefix}_wrapper`, className)}>
+        <div
+            className={cn(`${classPrefix}_wrapper`, className, {
+                _required: isRequired,
+            })}
+        >
             {title && (
                 <H2
                     className={cn(`${classPrefix}_title`, {
@@ -35,6 +40,8 @@ const BuilderField: FC<TBuilderFieldBase> = ({
                 </H2>
             )}
             <div className={`${classPrefix}_content`}>
+                {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
+                {/*// @ts-ignore*/}
                 {getElementsListByType({
                     type,
                     elements,
@@ -78,6 +85,7 @@ const getElementsListByType = ({
                         value: item.value,
                         disabled: item.disabled,
                     }))}
+                    showError={false}
                 />
             );
         case EBuilderFieldTypes.radio:
@@ -89,6 +97,7 @@ const getElementsListByType = ({
                         value: item.value,
                         disabled: item.disabled,
                     }))}
+                    showError={false}
                 />
             );
         case EBuilderFieldTypes.radioButton:
@@ -100,6 +109,7 @@ const getElementsListByType = ({
                         value: item.value,
                         disabled: item.disabled,
                     }))}
+                    showError={false}
                 />
             );
         default:

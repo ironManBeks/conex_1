@@ -1,6 +1,7 @@
 import { RadioProps } from "antd/lib/radio";
 import {
     TFormItemLabel,
+    TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
 import { TDefaultOption } from "@components/form/types";
@@ -13,4 +14,5 @@ export type TFieldRadioArrayController = {
     direction?: EDirection;
 } & RadioProps &
     TFormWrapperClassName &
-    TFormItemLabel;
+    TFormItemLabel &
+    TFormShowError;

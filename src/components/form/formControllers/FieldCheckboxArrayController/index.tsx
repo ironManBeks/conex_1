@@ -1,10 +1,5 @@
 import { FC } from "react";
-import {
-    Controller,
-    ControllerRenderProps,
-    FieldValues,
-    useFormContext,
-} from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 import { Checkbox as AntCheckbox, Checkbox } from "antd";
 
@@ -27,6 +22,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
         disabled,
         options,
         direction,
+        showError = true,
         ...rest
     } = props;
     const {
@@ -55,6 +51,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                     <FormItemWrapper
                         fieldType={EFormFieldType.checkboxArray}
                         errorMessage={errorMessage}
+                        showError={showError}
                         label={label}
                         wrapperClassName={cn(wrapperClassName, {
                             _disabled: disabled,

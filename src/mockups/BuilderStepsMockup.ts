@@ -109,7 +109,7 @@ const BuilderElementsRadioButtonMockup: IBuilderElementBase[] = [
 export const BuilderDataMockup: TBuilderStep[] = [
     {
         stepId: "stepId_1",
-        stepTitle: "Главный заголовок первого шага",
+        stepTitle: "Main title 1",
         stepDescription:
             "leo et aliquam blandit. Pellentesque aliquet eget orci ut iaculis. Praesent purus erat, varius et libero sed, aliquet malesuada sapien. Etiam tempor p.",
         fields: [
@@ -119,6 +119,7 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 value: "filed_value_card",
                 title: "Cards field",
                 elements: BuilderElementsCardMockup,
+                isRequired: true,
             },
             {
                 id: "BuilderField_2",
@@ -126,12 +127,13 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 value: "filed_value_checkbox",
                 title: "Checkbox field",
                 elements: BuilderElementsCheckboxMockup,
+                isRequired: true,
             },
         ],
     },
     {
         stepId: "stepId_2",
-        stepTitle: "Главный заголовок 2",
+        stepTitle: "Main title 2",
         fields: [
             {
                 id: "BuilderField_3",
@@ -140,6 +142,7 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 title: "Radio field",
                 titleSize: "small",
                 elements: BuilderElementsRadioMockup,
+                isRequired: true,
             },
             {
                 id: "BuilderField_4",
@@ -148,6 +151,18 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 title: "RadioButton field",
                 titleSize: "small",
                 elements: BuilderElementsRadioButtonMockup,
+            },
+        ],
+    },
+    {
+        stepId: "stepId_3",
+        fields: [
+            {
+                id: "BuilderField_5",
+                type: EBuilderFieldTypes.card,
+                value: "filed_value_card_2",
+                title: "Cards field 2",
+                elements: BuilderElementsCardMockup,
             },
         ],
     },

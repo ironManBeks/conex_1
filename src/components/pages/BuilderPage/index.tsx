@@ -13,7 +13,8 @@ import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoade
 const BuilderPage: FC = observer(() => {
     const classPrefix = "builder-page";
     const { builderStore } = useRootStore();
-    const { getBuilderData, builderData, builderDataFetching } = builderStore;
+    const { getBuilderData, builderData, passedSteps, builderDataFetching } =
+        builderStore;
 
     useEffect(() => {
         getBuilderData();

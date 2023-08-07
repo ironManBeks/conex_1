@@ -20,6 +20,7 @@ const FieldRadioArrayController: FC<TFieldRadioArrayController> = (props) => {
         options,
         onChangeValue,
         direction,
+        showError = true,
     } = props;
     const {
         control,
@@ -38,6 +39,7 @@ const FieldRadioArrayController: FC<TFieldRadioArrayController> = (props) => {
                         fieldType={EFormFieldType.radioArray}
                         errorMessage={errorMessage}
                         label={label}
+                        showError={showError}
                         wrapperClassName={wrapperClassName}
                     >
                         <AntRadio.Group
