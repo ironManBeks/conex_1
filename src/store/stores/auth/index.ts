@@ -22,7 +22,7 @@ export class AuthStore implements IAuthStore {
         setTimeout(() => {
             this.setAuthData(AuthDataMockup);
             this.setAuthDataFetching(false);
-        }, 1000);
+        }, 500);
     };
 
     setAuthDataFetching = (value: boolean): void => {

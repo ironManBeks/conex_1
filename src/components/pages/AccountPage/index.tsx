@@ -22,14 +22,6 @@ const AccountPage: FC = observer(() => {
         authStore.getAuthData();
     }, []);
 
-    useEffect(() => {
-        console.log("authData", authData);
-    }, [authData]);
-
-    useEffect(() => {
-        console.log("authDataFetching", authDataFetching);
-    }, [authDataFetching]);
-
     const accountContent = useMemo(() => {
         if (authDataFetching) {
             return (

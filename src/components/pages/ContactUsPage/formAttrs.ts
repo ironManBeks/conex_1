@@ -2,6 +2,8 @@ import { Resolver } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
+import { yupPhoneRequired } from "@consts/validationConsts";
+
 export enum EContactsUsFieldsNames {
     name = "name",
     phone = "phone",
@@ -26,7 +28,7 @@ export const contactsUsFormResolver = (): Resolver<TContactsUsForm> => {
     return yupResolver(
         yup.object().shape({
             [EContactsUsFieldsNames.name]: yup.string().required(requiredText),
-            [EContactsUsFieldsNames.phone]: yup.string().required(requiredText),
+            [EContactsUsFieldsNames.phone]: yupPhoneRequired(),
             [EContactsUsFieldsNames.message]: yup
                 .string()
                 .required(requiredText),

@@ -16,6 +16,9 @@ export type TFieldInputMaskController = {
     minAddonWidth?: number;
     floatingLabel?: boolean;
     floatingBgColor?: THEX;
+    saveOnlyNumber?: boolean;
+    editIcon?: boolean;
+    onEditIconClick?: () => void;
 } & TFormItemLabel &
     TFormWrapperClassName &
     MaskedInputProps &

@@ -1,6 +1,7 @@
 import { Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { yupPhoneRequired } from "@consts/validationConsts";
 
 export enum ECustomQuoteFieldsNames {
     name = "name",
@@ -29,9 +30,7 @@ export const customQuoteFormResolver = (): Resolver<TCustomQuoteForm> => {
     return yupResolver(
         yup.object().shape({
             [ECustomQuoteFieldsNames.name]: yup.string().required(requiredText),
-            [ECustomQuoteFieldsNames.phone]: yup
-                .string()
-                .required(requiredText),
+            [ECustomQuoteFieldsNames.phone]: yupPhoneRequired(),
             [ECustomQuoteFieldsNames.address]: yup
                 .string()
                 .required(requiredText),

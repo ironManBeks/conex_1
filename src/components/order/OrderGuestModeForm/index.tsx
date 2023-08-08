@@ -4,6 +4,7 @@ import cn from "classnames";
 import { isFunction } from "lodash";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
+import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 
 import {
     EGuestModeFormFieldsNames,
@@ -13,6 +14,7 @@ import {
 } from "./formAttrs";
 import { TOrderGuestModeForm } from "../types";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
+import { phoneNumberMask } from "@consts/masksConsts";
 
 const OrderGuestModeForm: FC<TOrderGuestModeForm> = ({
     className,
@@ -75,10 +77,11 @@ const OrderGuestModeForm: FC<TOrderGuestModeForm> = ({
                         placeholder="Your name"
                         label="Your name"
                     />
-                    <FieldInputController
+                    <FieldInputMaskController
                         name={EGuestModeFormFieldsNames.phone}
                         placeholder="Phone number"
                         label="Phone number"
+                        mask={phoneNumberMask}
                     />
                 </form>
             </FormProvider>

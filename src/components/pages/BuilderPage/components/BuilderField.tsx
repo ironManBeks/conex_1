@@ -40,6 +40,7 @@ const BuilderField: FC<TBuilderFieldBase> = ({
                 </H2>
             )}
             <div className={`${classPrefix}_content`}>
+                {/*// ToDo remove ts-ignore*/}
                 {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                 {/*// @ts-ignore*/}
                 {getElementsListByType({

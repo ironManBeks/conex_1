@@ -16,28 +16,35 @@ import { useRootStore } from "@store";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
+import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
+import { phoneNumberMask } from "@consts/masksConsts";
 
 const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
     const { authStore } = useRootStore();
     const { authData } = authStore;
-    const [formActionVisible, setFormActionVisible] = useState<boolean>(false);
+    const [editableField, setEditableField] = useState<
+        EAccountInfoFieldsNames | undefined
+    >(undefined);
 
     const methods = useForm<TAccountInfoForm>({
-        resolver: accountInfoFormResolver(),
+        resolver: accountInfoFormResolver(editableField),
         defaultValues: accountInfoDefaultValues(authData),
     });
 
     const { handleSubmit, reset } = methods;
 
     const onSubmit: SubmitHandler<TAccountInfoForm> = (data) => {
-        console.log("SubmitHandler", data);
-        notImplemented(`value: ${JSON.stringify(data)}`);
-        setFormActionVisible(false);
+        if (editableField) {
+            const changedValue = data[editableField];
+            notImplemented(`changedValue: ${changedValue}`);
+        }
+        setEditableField(undefined);
     };
 
-    const handleEditIconClick = (value: boolean) => {
-        setFormActionVisible(value);
+    const handleEditIconClick = (value: EAccountInfoFieldsNames) => {
+        setEditableField(value);
+        reset();
     };
 
     return (
@@ -53,11 +60,17 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             name={EAccountInfoFieldsNames.name}
                             placeholder="Name"
                             label="Name"
-                            editIcon={!formActionVisible}
-                            onEditIconClick={() =>
-                                handleEditIconClick(!formActionVisible)
+                            editIcon={
+                                editableField !== EAccountInfoFieldsNames.name
                             }
-                            readOnly={!formActionVisible}
+                            onEditIconClick={() =>
+                                handleEditIconClick(
+                                    EAccountInfoFieldsNames.name,
+                                )
+                            }
+                            readOnly={
+                                editableField !== EAccountInfoFieldsNames.name
+                            }
                         />
                     </div>
                     <div
@@ -70,24 +83,37 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             name={EAccountInfoFieldsNames.email}
                             placeholder="Email"
                             label="Email"
-                            editIcon={!formActionVisible}
-                            onEditIconClick={() =>
-                                handleEditIconClick(!formActionVisible)
+                            editIcon={
+                                editableField !== EAccountInfoFieldsNames.email
                             }
-                            readOnly={!formActionVisible}
+                            onEditIconClick={() =>
+                                handleEditIconClick(
+                                    EAccountInfoFieldsNames.email,
+                                )
+                            }
+                            readOnly={
+                                editableField !== EAccountInfoFieldsNames.email
+                            }
                         />
-                        <FieldInputController
+                        <FieldInputMaskController
                             name={EAccountInfoFieldsNames.phone}
                             placeholder="Phone"
                             label="Phone"
-                            editIcon={!formActionVisible}
-                            onEditIconClick={() =>
-                                handleEditIconClick(!formActionVisible)
+                            mask={phoneNumberMask}
+                            editIcon={
+                                editableField !== EAccountInfoFieldsNames.phone
                             }
-                            readOnly={!formActionVisible}
+                            onEditIconClick={() =>
+                                handleEditIconClick(
+                                    EAccountInfoFieldsNames.phone,
+                                )
+                            }
+                            readOnly={
+                                editableField !== EAccountInfoFieldsNames.phone
+                            }
                         />
                     </div>
-                    {formActionVisible && (
+                    {editableField && (
                         <div className={`${classPrefix}__actions`}>
                             <ButtonPrimary
                                 type="submit"
@@ -100,7 +126,7 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             <ButtonPrimary
                                 onClick={() => {
                                     reset();
-                                    setFormActionVisible(false);
+                                    setEditableField(undefined);
                                 }}
                                 color={EButtonColor.danger}
                                 isOutline={true}

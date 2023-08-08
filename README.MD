@@ -15,4 +15,4 @@ To clear next cash:
 npm cache clear -f; rm -rf .next/cache/;
 
 -------------------------
-Formik, Mobx, Typescript
+mobx, typescript, react-hook-form, yup

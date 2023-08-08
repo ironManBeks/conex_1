@@ -2,6 +2,7 @@ import * as yup from "yup";
 import { Resolver } from "react-hook-form";
 
 import { yupResolver } from "@hookform/resolvers/yup";
+import { yupPhoneRequired } from "@consts/validationConsts";
 
 export enum EGuestModeFormFieldsNames {
     name = "name",
@@ -26,9 +27,7 @@ export const guestModeFormResolver = (): Resolver<TGuestModeForm> => {
             [EGuestModeFormFieldsNames.name]: yup
                 .string()
                 .required(requiredText),
-            [EGuestModeFormFieldsNames.phone]: yup
-                .string()
-                .required(requiredText),
+            [EGuestModeFormFieldsNames.phone]: yupPhoneRequired(),
         }),
     );
 };

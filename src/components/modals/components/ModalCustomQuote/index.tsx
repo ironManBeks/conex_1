@@ -8,6 +8,7 @@ import ModalLayout from "@components/modals/ModalLayout";
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
 import AddressSelection from "@components/globalComponents/AddressSelection";
+import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 
 import { EModalSize } from "@components/modals/types";
 import { EButtonColor } from "@components/buttons/types";
@@ -19,6 +20,7 @@ import {
     ECustomQuoteFieldsNames,
     TCustomQuoteForm,
 } from "./formAttrs";
+import { phoneNumberMask } from "@consts/masksConsts";
 
 const ModalCustomQuote: FC = observer(() => {
     const classPrefix = "modal-custom-quote";
@@ -43,7 +45,6 @@ const ModalCustomQuote: FC = observer(() => {
     }, [addressValue]);
 
     const onSubmit: SubmitHandler<TCustomQuoteForm> = (data) => {
-        console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
         handleCloseModal();
     };
@@ -73,10 +74,11 @@ const ModalCustomQuote: FC = observer(() => {
                                     placeholder="Your name"
                                     label="Your name"
                                 />
-                                <FieldInputController
+                                <FieldInputMaskController
                                     name={ECustomQuoteFieldsNames.phone}
                                     placeholder="Phone number"
                                     label="Phone number"
+                                    mask={phoneNumberMask}
                                 />
                             </div>
                             <AddressSelection

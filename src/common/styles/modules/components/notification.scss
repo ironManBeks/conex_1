@@ -1,0 +1,38 @@
+.ant-notification{
+  //background: red;
+  &-notice{
+    border-radius: $border-radius-lg;
+    padding: 32px;
+    &-close{
+      display: flex;
+      align-content: center;
+      justify-content: center;
+      padding: 10px;
+      top: 12px;
+      right: 15px;
+      border-radius: $border-radius-circle;
+      transition: .3s;
+      &:hover{
+        background-color: $color-grey-200;
+      }
+    }
+    &-message{
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+    }
+    &-with-icon {
+      .ant-notification{
+        &-notice{
+          &-message{
+            font-size: $font-size-lg;
+            line-height: $line-height-lg;
+          }
+          &-description{
+            font-size: $font-size-bs;
+            line-height: $line-height-bs;
+          }
+        }
+      }
+    }
+  }
+}

@@ -114,11 +114,9 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
             await guestFormRef.current
                 .submitForm()
                 .then((data) => {
-                    console.log("data", data);
                     userData = data as TGuestModeForm;
                 })
                 .catch((err) => {
-                    console.log("err", err);
                     userData = null;
                 });
         }

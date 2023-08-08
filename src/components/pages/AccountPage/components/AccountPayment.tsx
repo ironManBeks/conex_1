@@ -21,7 +21,6 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
-import { toJS } from "mobx";
 
 const AccountPayment: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_payment`;

@@ -3,7 +3,7 @@ import { TAuthData } from "@store/stores/auth/types";
 export const AuthDataMockup: TAuthData = {
     name: "John Wick",
     email: "john.wick1@gmail.com",
-    phone: "4155550132",
+    phone: "18881234567",
     cards: [
         {
             id: "id1",
