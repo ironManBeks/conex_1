@@ -1,14 +1,13 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import cn from "classnames";
 import { observer } from "mobx-react";
+import { isEmpty } from "lodash";
 
 import BuilderField from "@components/pages/BuilderPage/components/BuilderField";
 import { H2, P } from "@components/Text";
 
 import { useRootStore } from "@store";
 import { TBuilderCompProps } from "../types";
-import { isEmpty } from "lodash";
-import { toJS } from "mobx";
 
 const BuilderStepLayout: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {
@@ -16,11 +15,7 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
         const { builderStore } = useRootStore();
         const { currentStepData, creatingDoorData } = builderStore;
 
-        useEffect(() => {
-            console.log("creatingDoorData", toJS(creatingDoorData));
-        }, [creatingDoorData]);
-
-        const stepContent = useMemo(() => {
+        return useMemo(() => {
             if (!isEmpty(currentStepData)) {
                 return (
                     <div className={cn(`${classPrefix}__wrapper`)}>
@@ -31,6 +26,7 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
                         )}
                         <div className={`${classPrefix}__content`}>
                             {currentStepData?.fields.map((item) => (
+                                // ToDo remove ts-ignore
                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                 //  @ts-ignore
                                 <BuilderField
@@ -64,10 +60,8 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
                 );
             }
 
-            return <></>;
+            return <div>12313123</div>;
         }, [currentStepData, creatingDoorData]);
-
-        return stepContent;
     },
 );
 

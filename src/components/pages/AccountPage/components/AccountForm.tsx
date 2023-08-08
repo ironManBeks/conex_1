@@ -31,7 +31,6 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const { handleSubmit, reset } = methods;
 
     const onSubmit: SubmitHandler<TAccountInfoForm> = (data) => {
-        console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
         setFormActionVisible(false);
     };

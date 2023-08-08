@@ -43,7 +43,6 @@ const ModalCustomQuote: FC = observer(() => {
     }, [addressValue]);
 
     const onSubmit: SubmitHandler<TCustomQuoteForm> = (data) => {
-        console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
         handleCloseModal();
     };

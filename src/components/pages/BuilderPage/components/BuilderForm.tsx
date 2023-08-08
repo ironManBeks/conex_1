@@ -45,6 +45,7 @@ const builderDefaultValuesGenerator = (
     return result;
 };
 
+// ToDo remove type any
 const getBuilderFiledValidation = ({
     fieldType,
     fieldTitle,
@@ -54,10 +55,9 @@ const getBuilderFiledValidation = ({
     fieldTitle?: string;
     stepTitle?: string;
 }): any => {
-    const requiredText = `Field "${
-        fieldTitle ? fieldTitle : stepTitle ?? ""
-    }" is required`;
-    const oneFieldRequiredText = "At least one field must be filled";
+    const currentFieldName = fieldTitle ? fieldTitle : stepTitle ?? "";
+    const requiredText = `Field "${currentFieldName}" is required`;
+    const oneFieldRequiredText = `At least one value in field "${currentFieldName}" must be filled";`;
 
     switch (fieldType) {
         case EBuilderFieldTypes.card:
@@ -76,6 +76,7 @@ const getBuilderFiledValidation = ({
     }
 };
 
+// ToDo remove type any
 const builderFormResolver = ({
     fields,
     stepTitle,
@@ -85,6 +86,7 @@ const builderFormResolver = ({
 }): any => {
     if (!fields?.length) return undefined;
 
+    // ToDo remove type any
     const validations: any = {};
 
     for (let i = 0; i < fields.length; i++) {
@@ -102,8 +104,7 @@ const builderFormResolver = ({
 
 const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
     const { builderStore } = useRootStore();
-    const { builderData, passedSteps, currentStepData, updateCurrentStepData } =
-        builderStore;
+    const { currentStepData, updateCurrentStepData } = builderStore;
 
     const methods = useForm({
         resolver: builderFormResolver({
@@ -112,10 +113,6 @@ const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
         }),
         defaultValues: builderDefaultValuesGenerator(currentStepData?.fields),
     });
-
-    const {
-        formState: { defaultValues },
-    } = methods;
 
     useEffect(() => {
         updateCurrentStepData("start");

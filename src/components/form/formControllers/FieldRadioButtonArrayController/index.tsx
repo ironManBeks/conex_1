@@ -42,6 +42,7 @@ const FieldRadioButtonArrayController: FC<TFieldRadioButtonArrayController> = (
                     >
                         <AntRadio.Group
                             onChange={(e) => field.onChange(e.target.value)}
+                            value={field.value}
                             optionType="button"
                             buttonStyle="solid"
                         >

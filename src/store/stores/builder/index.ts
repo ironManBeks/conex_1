@@ -1,10 +1,10 @@
-import { TBuilderStep } from "@components/pages/BuilderPage/types";
-import { makeAutoObservable, observable, toJS } from "mobx";
+import { makeAutoObservable, observable } from "mobx";
+import { isEmpty, isNil } from "lodash";
 
 import { BuilderDataMockup } from "../../../mockups/BuilderStepsMockup";
 
-import { IBuilderStore, TCreatingDoorData } from "./types";
-import { isEmpty } from "lodash";
+import { TBuilderStep } from "@components/pages/BuilderPage/types";
+import { EStepPosition, IBuilderStore, TCreatingDoorData } from "./types";
 
 export class BuilderStore implements IBuilderStore {
     builderData: TBuilderStep[] | null = null;
@@ -42,51 +42,75 @@ export class BuilderStore implements IBuilderStore {
         this.currentStepData = data;
     };
 
+    getCurrentStepIndex = (): number | undefined => {
+        return this.builderData?.findIndex(
+            (step) => step.stepId === this.currentStepData?.stepId,
+        );
+    };
+
     updateCurrentStepData = (way: "next" | "back" | "start"): void => {
         if (!this.builderData) return;
+        const currentStepIndex = this.getCurrentStepIndex() || 0;
         if (way === "start") {
             this.setCurrentStepData(this.builderData[0]);
             return;
         }
 
         if (way === "next" && !isEmpty(this.currentStepData)) {
-            const currentStepIndex = this.builderData?.findIndex(
-                (step) => step.stepId === this.currentStepData?.stepId,
-            );
             const nextPage = this.builderData[currentStepIndex + 1];
+            this.addPassedStep(this.currentStepData.stepId);
             this.setCurrentStepData(nextPage);
             return;
         }
 
-        if (way === "back" && !isEmpty(this.currentStepData)) {
-            const currentStepIndex = this.builderData?.findIndex(
-                (step) => step.stepId === this.currentStepData?.stepId,
-            );
-            const prevPage = this.builderData[currentStepIndex - 1];
-            this.setCurrentStepData(prevPage);
-            return;
+        if (way === "back") {
+            if (!isEmpty(this.currentStepData)) {
+                const prevPage = this.builderData[currentStepIndex - 1];
+                this.removePassedStep("", true);
+                this.setCurrentStepData(prevPage);
+                return;
+            }
+            if (!isEmpty(this.creatingDoorData)) {
+                const prevPage = this.builderData[this.builderData.length - 1];
+                this.removePassedStep("", true);
+                this.setCurrentStepData(prevPage);
+                this.setCreatingDoorData(null);
+                return;
+            }
         }
     };
 
-    setPassedStep = (value: string): void => {
+    setPassedStep = (data: string[]): void => {
+        this.passedSteps = data;
+    };
+
+    addPassedStep = (value: string): void => {
         if (value && value !== this.passedSteps[this.passedSteps.length - 1]) {
-            this.passedSteps = [...this.passedSteps, value];
+            this.setPassedStep([...this.passedSteps, value]);
+        }
+    };
+    removePassedStep = (value: string, removeLast?: boolean): void => {
+        if (removeLast) {
+            const result = [...this.passedSteps].slice(0, -1);
+            this.setPassedStep(result);
         }
     };
 
-    getStepWay = (): "start" | "end" | undefined => {
+    getStepPosition = (): EStepPosition | undefined => {
+        const currentStepIndex = this.getCurrentStepIndex();
+        if (isNil(currentStepIndex)) return undefined;
+
         if (this.builderData) {
-            if (
-                this.passedSteps[this.passedSteps.length - 1] ===
-                this.builderData[this.builderData?.length - 1].stepId
-            ) {
-                return "end";
+            if (currentStepIndex + 1 === this.builderData.length) {
+                return EStepPosition.end;
             } else if (
                 this.currentStepData &&
-                this.builderData[0].stepId === this.currentStepData.stepId
+                this.getCurrentStepIndex() === 0
             ) {
-                return "start";
-            } else return undefined;
+                return EStepPosition.start;
+            } else if (!isEmpty(this.creatingDoorData)) {
+                return EStepPosition.confirm;
+            }
         }
         return undefined;
     };

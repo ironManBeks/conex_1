@@ -119,7 +119,7 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 value: "filed_value_card",
                 title: "Cards field",
                 elements: BuilderElementsCardMockup,
-                isRequired: true,
+                isRequired: false,
             },
             {
                 id: "BuilderField_2",
@@ -127,7 +127,7 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 value: "filed_value_checkbox",
                 title: "Checkbox field",
                 elements: BuilderElementsCheckboxMockup,
-                isRequired: true,
+                isRequired: false,
             },
         ],
     },
@@ -142,7 +142,7 @@ export const BuilderDataMockup: TBuilderStep[] = [
                 title: "Radio field",
                 titleSize: "small",
                 elements: BuilderElementsRadioMockup,
-                isRequired: true,
+                isRequired: false,
             },
             {
                 id: "BuilderField_4",

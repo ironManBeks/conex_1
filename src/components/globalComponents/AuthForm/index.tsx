@@ -38,7 +38,6 @@ const AuthForm: FC<{ className: string; onAuth?: () => void }> = ({
     const { handleSubmit } = methods;
 
     const onSubmit: SubmitHandler<TAuthForm> = (data) => {
-        console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
         onAuthSuccess();
     };

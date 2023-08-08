@@ -8,7 +8,7 @@ export interface ICommonStore {
     getUrlParams: (value: string[]) => TUrlParams;
     removeUrlParams: (value: string[]) => void;
     //Modals
-    // ToDo заменить тип any
+    // ToDo remove type any
     confirmModalData: any;
     setConfirmModalData: (confirmModalData: any) => void;
     modalConfirmVisible: boolean;

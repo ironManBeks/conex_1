@@ -93,6 +93,10 @@
     background-color: transparent;
     cursor: pointer;
     margin-left: auto;
+    transition: 0.2s;
+    &:hover{
+      background-color: $color-grey-200;
+    }
   }
 
 }

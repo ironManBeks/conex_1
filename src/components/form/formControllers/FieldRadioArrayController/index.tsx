@@ -50,6 +50,7 @@ const FieldRadioArrayController: FC<TFieldRadioArrayController> = (props) => {
                                 }
                                 field.onChange(value);
                             }}
+                            value={field.value}
                             style={{
                                 flexDirection:
                                     direction === EDirection.vertical

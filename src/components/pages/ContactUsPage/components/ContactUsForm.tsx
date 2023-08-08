@@ -25,7 +25,6 @@ const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const { handleSubmit } = methods;
 
     const onSubmit: SubmitHandler<TContactsUsForm> = (data) => {
-        console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
     };
 

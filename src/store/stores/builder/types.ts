@@ -5,6 +5,12 @@ export type TCreatingDoorData = Record<
     string | string[] | number
 > | null;
 
+export enum EStepPosition {
+    start = "start",
+    end = "end",
+    confirm = "confirm",
+}
+
 export interface IBuilderStore {
     builderData: TBuilderStep[] | null;
     builderDataFetching: boolean;
@@ -17,7 +23,10 @@ export interface IBuilderStore {
     setBuilderDataFetching: (value: boolean) => void;
     setCurrentStepData: (data: TBuilderStep | null) => void;
     updateCurrentStepData: (way: "next" | "back" | "start") => void;
-    setPassedStep: (value: string) => void;
-    getStepWay: () => "start" | "end" | undefined;
+    getCurrentStepIndex: () => number | undefined;
+    setPassedStep: (data: string[]) => void;
+    addPassedStep: (value: string) => void;
+    removePassedStep: (value: string, removeLast?: boolean) => void;
+    getStepPosition: () => EStepPosition | undefined;
     setCreatingDoorData: (data: TCreatingDoorData) => void;
 }

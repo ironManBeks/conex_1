@@ -58,7 +58,6 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     const expDateValue = watch(EPaymentCardFromFieldsNames.expDate);
 
     const onSubmit: SubmitHandler<TPaymentCardFrom> = (data) => {
-        console.log("SubmitHandler", data);
         notImplemented(`value: ${JSON.stringify(data)}`);
     };
 
