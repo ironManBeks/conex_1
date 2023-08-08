@@ -2,6 +2,8 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Resolver } from "react-hook-form";
 import { TAuthData } from "@store/stores/auth/types";
+import { yupPhoneRequired } from "@consts/validationConsts";
+import { isEmpty } from "lodash";
 
 export enum EAccountInfoFieldsNames {
     name = "name",
@@ -14,9 +16,9 @@ export enum EAccountTrackerFieldsNames {
 }
 
 export type TAccountInfoForm = {
-    [EAccountInfoFieldsNames.name]: string;
-    [EAccountInfoFieldsNames.email]: string;
-    [EAccountInfoFieldsNames.phone]: string;
+    [EAccountInfoFieldsNames.name]?: string;
+    [EAccountInfoFieldsNames.email]?: string;
+    [EAccountInfoFieldsNames.phone]?: string;
 };
 
 export type TAccountTrackerForm = {
@@ -37,20 +39,44 @@ export const accountTrackerDefaultValues: TAccountTrackerForm = {
     [EAccountTrackerFieldsNames.tracker]: "",
 };
 
-export const accountInfoFormResolver = (): Resolver<TAccountInfoForm> => {
+export const accountInfoFormResolver = (
+    editableField: EAccountInfoFieldsNames | undefined,
+): Resolver<TAccountInfoForm> | undefined => {
     const requiredText = "This field is required";
     const emailNotValid = "Please enter valid email address";
 
-    return yupResolver(
-        yup.object().shape({
-            [EAccountInfoFieldsNames.name]: yup.string().required(requiredText),
-            [EAccountInfoFieldsNames.email]: yup
-                .string()
-                .email(emailNotValid)
-                .required(requiredText),
-            [EAccountInfoFieldsNames.phone]: yup
-                .string()
-                .required(requiredText),
-        }),
-    );
+    if (!editableField) return undefined;
+    let result: yup.ObjectSchema<
+        { [editableField: string]: string },
+        yup.AnyObject,
+        { [editableField: string]: undefined },
+        ""
+    > | null = null;
+
+    switch (editableField) {
+        case EAccountInfoFieldsNames.name:
+            result = yup.object().shape({
+                [EAccountInfoFieldsNames.name]: yup
+                    .string()
+                    .required(requiredText),
+            });
+            break;
+        case EAccountInfoFieldsNames.email:
+            result = yup.object().shape({
+                [EAccountInfoFieldsNames.email]: yup
+                    .string()
+                    .email(emailNotValid)
+                    .required(requiredText),
+            });
+            break;
+        case EAccountInfoFieldsNames.phone:
+            result = yup
+                .object()
+                .shape({ [EAccountInfoFieldsNames.phone]: yupPhoneRequired() });
+            break;
+    }
+
+    if (isEmpty(result)) return undefined;
+
+    return yupResolver(result);
 };

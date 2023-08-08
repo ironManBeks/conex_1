@@ -3,14 +3,16 @@ import MaskedInput from "react-text-mask";
 
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
+import { isFunction } from "lodash";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import { IconEdit } from "@components/Icons";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputMaskController } from "./types";
-import { isFunction } from "lodash";
+import { EButtonColor } from "@components/buttons/types";
 
 const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const {
@@ -25,6 +27,10 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
         floatingLabel,
         style,
         showError = true,
+        saveOnlyNumber = true,
+        readOnly: propsReadOnly = false,
+        editIcon,
+        onEditIconClick,
         ...rest
     } = props;
     const addonAfterRef = useRef<HTMLDivElement>(null);
@@ -68,7 +74,9 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                             )}
                             value={field.value}
                             onChange={(e) => {
-                                const val = e.target.value;
+                                const val = saveOnlyNumber
+                                    ? e.target.value.replace(/[^0-9]/g, "")
+                                    : e.target.value;
                                 field.onChange(val);
                                 if (onChangeValue) onChangeValue(val);
                             }}
@@ -79,6 +87,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                                     ? `${addonAfterWidth + 10}px`
                                     : undefined,
                             }}
+                            readOnly={propsReadOnly}
                         />
                         {addonAfter && (
                             <div
@@ -94,6 +103,21 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                             >
                                 {addonAfter}
                             </div>
+                        )}
+                        {editIcon && (
+                            <ButtonPrimary
+                                onClick={() => {
+                                    if (isFunction(onEditIconClick)) {
+                                        onEditIconClick();
+                                    }
+                                }}
+                                color={EButtonColor.transparent}
+                                className={cn(
+                                    `${FORM_FIELD_CLASSNAME_PREFIX}_edit`,
+                                )}
+                            >
+                                <IconEdit color="#757474" />
+                            </ButtonPrimary>
                         )}
                     </FormItemWrapper>
                 );

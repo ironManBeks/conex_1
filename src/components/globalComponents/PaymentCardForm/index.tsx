@@ -115,6 +115,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         )
                     }
                     guide={false}
+                    saveOnlyNumber={false}
                 />
                 <div className={`${classPrefix}_form__sub-fields`}>
                     <FieldInputMaskController
@@ -125,6 +126,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         mask={CARD_CVV_REGEX}
                         guide={false}
                         showError={false}
+                        saveOnlyNumber={false}
                     />
                     <FieldInputMaskController
                         name={EPaymentCardFromFieldsNames.expDate}
@@ -133,6 +135,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         wrapperClassName={"_exp"}
                         mask={CARD_EXPIRY_DATE_REGEX}
                         showError={false}
+                        saveOnlyNumber={false}
                     />
                 </div>
                 <div className={`${classPrefix}_errors`}>

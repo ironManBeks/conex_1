@@ -2,17 +2,17 @@ import { FC, useEffect, useRef, useState } from "react";
 import { Input as AntInput, InputRef } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
+import { isFunction } from "lodash";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { IconEdit } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputController } from "./types";
-import { isFunction } from "lodash";
-import { IconEdit } from "@components/Icons";
 import { EButtonColor } from "@components/buttons/types";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 const FieldInputController: FC<TFieldInputController> = (props) => {
     const {

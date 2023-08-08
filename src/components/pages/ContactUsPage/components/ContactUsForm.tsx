@@ -2,6 +2,9 @@ import { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
+import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
+import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import {
     contactsUsDefaultValues,
@@ -11,9 +14,8 @@ import {
 } from "@components/pages/ContactUsPage/formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { notImplemented } from "@helpers/notImplemented";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor } from "@components/buttons/types";
-import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
+import { phoneNumberMask } from "@consts/masksConsts";
 
 const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
@@ -40,10 +42,12 @@ const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         placeholder="Your Name"
                         label="Your Name"
                     />
-                    <FieldInputController
+                    <FieldInputMaskController
                         name={EContactsUsFieldsNames.phone}
                         placeholder="Phone number"
                         label="Phone number"
+                        mask={phoneNumberMask}
+                        saveOnlyNumber={true}
                     />
                     <FieldTextAreaController
                         name={EContactsUsFieldsNames.message}
