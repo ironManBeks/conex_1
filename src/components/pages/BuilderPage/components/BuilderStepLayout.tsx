@@ -8,6 +8,7 @@ import { H2, P } from "@components/Text";
 
 import { useRootStore } from "@store";
 import { TBuilderCompProps } from "../types";
+import { FieldErrors } from "react-hook-form/dist/types/errors";
 
 const BuilderStepLayout: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {
@@ -51,11 +52,26 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
             }
 
             if (!isEmpty(creatingDoorData)) {
+                const keys = Object.keys(creatingDoorData);
+                const result: { key: string; value: string }[] = [];
+
+                for (let i = 0; i < keys.length; i++) {
+                    const currentKey: keyof FieldErrors = keys[i];
+                    result.push({
+                        key: currentKey,
+                        value: creatingDoorData[currentKey] as string,
+                    });
+                }
+
                 return (
                     <div className={cn(`${classPrefix}__wrapper`)}>
                         <H2>Selected values in form:</H2>
                         <br />
-                        <P>{JSON.stringify(creatingDoorData, undefined, 4)}</P>
+                        {result.map((item, index) => (
+                            <P key={index}>
+                                <b>{item.key}:</b> {item.value}
+                            </P>
+                        ))}
                     </div>
                 );
             }

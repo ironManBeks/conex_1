@@ -1,11 +1,11 @@
 import { FC, useEffect, useState } from "react";
 import { observer } from "mobx-react";
+import { isEmpty } from "lodash";
 
 import ProgressWrapper from "@components/globalComponents/ProgressWrapper";
 
 import { useRootStore } from "@store";
 import { TBuilderCompProps } from "../types";
-import { isEmpty } from "lodash";
 
 const BuilderProgress: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {

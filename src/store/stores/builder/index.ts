@@ -1,4 +1,4 @@
-import { makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { isEmpty, isNil } from "lodash";
 
 import { BuilderDataMockup } from "../../../mockups/BuilderStepsMockup";
@@ -20,6 +20,11 @@ export class BuilderStore implements IBuilderStore {
             currentStepData: observable,
             passedSteps: observable,
             creatingDoorData: observable,
+            setBuilderData: action,
+            setBuilderDataFetching: action,
+            setCurrentStepData: action,
+            setPassedStep: action,
+            setCreatingDoorData: action,
         });
     }
 
