@@ -108,7 +108,7 @@ const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
                         color={isOpen ? ColorTheme.green._500 : "#8D8D8D"}
                     />
                     {address}
-                    <span>{status}</span>
+                    <span className="item_status">{status}</span>
                 </P>
                 <P className="item_delivery">
                     <span className="label">Delivery will be completed by</span>

@@ -1,26 +1,29 @@
 import { FC, Fragment, useEffect, useState } from "react";
 import { observer } from "mobx-react";
+import { useMediaQuery } from "react-responsive";
 
 import { H2, P } from "@components/Text";
 import { IconPlusCircle, IconTrash } from "@components/Icons";
+import ModalConfirm from "@components/modals/components/ModalConfirm";
+import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import ImgWrapper from "@components/globalComponents/ImgWrapper";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { paymentCardNumberMask } from "@helpers/textMaskHelper";
 import { TAuthPaymentCard } from "@store/stores/auth/types";
 import { useRootStore } from "@store";
 import { addZeroBefore } from "@helpers/textHelpers";
-import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import {
     CARD_ICON,
     CARDS_LIST,
     EPaymentCardNames,
 } from "@components/globalComponents/PaymentCardForm/consts";
 import { findDebitCardType } from "@helpers/paymentMethodHelpers";
-import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
-import ModalConfirm from "@components/modals/components/ModalConfirm";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { DEFAULT_ICON_COLOR } from "@components/Icons/consts";
 
 const AccountPayment: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_payment`;
@@ -31,6 +34,11 @@ const AccountPayment: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const handleFormVisible = (val: boolean) => {
         setFormVisible(val);
     };
+
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
 
     return (
         <Fragment>
@@ -70,11 +78,15 @@ const AccountPayment: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             className={`${classPrefix}__add _inner-wrapper`}
                             onClick={() => handleFormVisible(!formVisible)}
                         >
-                            <IconPlusCircle
-                                width={24}
-                                height={24}
-                                color="#F79225"
-                            />
+                            {isMobile ? (
+                                "Add a new card"
+                            ) : (
+                                <IconPlusCircle
+                                    width={24}
+                                    height={24}
+                                    color="#F79225"
+                                />
+                            )}
                         </div>
                     )}
                 </div>
@@ -102,27 +114,50 @@ const AccountPaymentItem: FC<
             EPaymentCardNames | undefined
         >();
 
+        const isMobile = useMediaQuery({
+            minWidth: mediaBreakpoints.xsMedia,
+            maxWidth: mediaBreakpoints.smMediaEnd,
+        });
+
         useEffect(() => {
             setCardType(findDebitCardType(cardNumber));
         }, [cardNumber]);
 
-        return (
-            <div className={`${classPrefix}__item _wrapper`}>
-                <div className={`${classPrefix}__item _inner-wrapper`}>
-                    {cardType && CARDS_LIST.includes(cardType) && (
-                        <ImgWrapper
-                            src={CARD_ICON[cardType]}
-                            width={50}
-                            height={24}
-                        />
-                    )}
-                    <ButtonPrimary
-                        color={EButtonColor.transparent}
-                        className={`${classPrefix}__item _delete`}
-                        onClick={() => onDelete(id)}
-                    >
-                        <IconTrash />
-                    </ButtonPrimary>
+        const cardIconContent = cardType && CARDS_LIST.includes(cardType) && (
+            <ImgWrapper src={CARD_ICON[cardType]} width={50} height={24} />
+        );
+        const cardNumberContent = <P>{paymentCardNumberMask(cardNumber)}</P>;
+        const deleteButtonContent = (
+            <ButtonPrimary
+                color={EButtonColor.transparent}
+                className={`${classPrefix}__item _delete`}
+                onClick={() => onDelete(id)}
+            >
+                <IconTrash color={isMobile ? "#A4A3A3" : DEFAULT_ICON_COLOR} />
+            </ButtonPrimary>
+        );
+
+        const ItemLayout: FC = ({ children }) => {
+            return (
+                <div className={`${classPrefix}__item _wrapper`}>
+                    <div className={`${classPrefix}__item _inner-wrapper`}>
+                        {children}
+                    </div>
+                </div>
+            );
+        };
+
+        return isMobile ? (
+            <ItemLayout>
+                {cardIconContent}
+                {cardNumberContent}
+                {deleteButtonContent}
+            </ItemLayout>
+        ) : (
+            <ItemLayout>
+                <>
+                    {cardIconContent}
+                    {deleteButtonContent}
                     <div className={`${classPrefix}__item _info`}>
                         <span>Name</span>
                         <P>{name.toUpperCase()}</P>
@@ -140,7 +175,7 @@ const AccountPaymentItem: FC<
                             }}
                         >
                             <span>Card Number</span>
-                            <P>{paymentCardNumberMask(cardNumber)}</P>
+                            {cardNumberContent}
                         </div>
                         <div className={`${classPrefix}__item _info`}>
                             <span>Exp date</span>
@@ -150,8 +185,8 @@ const AccountPaymentItem: FC<
                             </P>
                         </div>
                     </div>
-                </div>
-            </div>
+                </>
+            </ItemLayout>
         );
     },
 );
