@@ -1,5 +1,7 @@
 export type TUrlParams = Record<string, string>;
 
+type TSetElementVisible = (value: boolean) => void;
+
 export interface ICommonStore {
     headerHeight: number;
     setHeaderHeight: (value: number) => void;
@@ -7,14 +9,17 @@ export interface ICommonStore {
     setUrlParams: (value: TUrlParams) => void;
     getUrlParams: (value: string[]) => TUrlParams;
     removeUrlParams: (value: string[]) => void;
-    //Modals
+    //Modals and Drawers
     // ToDo remove type any
     confirmModalData: any;
+    // ToDo remove type any
     setConfirmModalData: (confirmModalData: any) => void;
     modalConfirmVisible: boolean;
-    setModalConfirmVisible: (value: boolean) => void;
+    setModalConfirmVisible: TSetElementVisible;
     modalAuthVisible: boolean;
-    setModalAuthVisible: (value: boolean) => void;
+    setModalAuthVisible: TSetElementVisible;
     modalCustomQuoteVisible: boolean;
-    setModalCustomQuoteVisible: (value: boolean) => void;
+    setModalCustomQuoteVisible: TSetElementVisible;
+    headerDrawerVisible: boolean;
+    setHeaderDrawerVisible: TSetElementVisible;
 }

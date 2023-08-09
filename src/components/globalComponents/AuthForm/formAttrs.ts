@@ -21,8 +21,8 @@ export const authFormDefaultValues: TAuthForm = {
 export const authFormResolver = (): Resolver<TAuthForm> => {
     const requiredText = "This field is required";
     const emailNotValid = "Email address not valid";
-    const passwordMinSymbols = "Password must contains minimum 8 symbols";
-    const passwordMaxSymbols = "Password must contains max 30 symbols";
+    const passwordMinText = "Password cannot contain less than 8 symbols";
+    const passwordMaxText = "Password cannot contain more than 30 symbols";
 
     return yupResolver(
         yup.object().shape({
@@ -33,8 +33,8 @@ export const authFormResolver = (): Resolver<TAuthForm> => {
             [EAuthFormFieldsNames.password]: yup
                 .string()
                 .required(requiredText)
-                .min(8, passwordMinSymbols)
-                .max(30, passwordMaxSymbols),
+                .min(8, passwordMinText)
+                .max(30, passwordMaxText),
         }),
     );
 };

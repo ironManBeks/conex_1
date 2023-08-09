@@ -1,0 +1,129 @@
+
+@media (min-width: $xs-media) and (max-width: $md-media-end) {
+
+  .home-page{
+    &_how-it-works{
+      &__list{
+        flex-direction: column;
+        margin-bottom: 25px;
+        .how-it-works_item__wrapper{
+          margin-bottom: 35px;
+        }
+      }
+      &__column{
+        width: 100%;
+        &:nth-child(1){
+          .how-it-works_item__wrapper{
+            display: flex;
+            justify-content: space-between;
+            .img-custom_wrapper{
+              flex: 0 0 auto;
+            }
+          }
+        }
+        &:nth-child(2){
+          .how-it-works_item__wrapper{
+            .img-custom_wrapper{
+              margin-top: 20px;
+              margin-left: 0;
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .home-page{
+    &_layout__inner-wrapper{
+      padding-bottom: 100px;
+    }
+
+    &_main-banner{
+      &__wrapper{
+        padding: 35px 0;
+      }
+      &__content{
+        .common-title{
+          font-size: $font-size-xxl;
+          line-height: $line-height-xxl;
+          margin-bottom: 40px;
+        }
+        .common-text{
+          font-size: $font-size-bs;
+          line-height: $line-height-bs;
+        }
+        .img-custom_wrapper{
+          max-width: 85%;
+          width: 100% !important;
+          height: 240px !important;
+        }
+        .common-btn{
+          max-width: 256px;
+        }
+      }
+    }
+
+    &_how-it-works{
+      &__title{
+        font-size: $font-size-xxl;
+        line-height: $line-height-xxl;
+        margin-bottom: 65px;
+      }
+      &__description{
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+      }
+    }
+
+    &_call-us{
+      &__wrapper{
+        .common-btn{
+          max-width: 256px;
+          height: 40px;
+        }
+      }
+      &__title{
+        font-size: $font-size-lg;
+        line-height: $font-size-lg;
+        margin-bottom: 20px;
+      }
+    }
+  }
+
+}
+
+@media (min-width: $sm-media) and (max-width: $md-media-end) {
+
+  .home-page{
+    &_main-banner{
+      &__content{
+        .common-title{
+          font-size: $main-banner-font-size-sm;
+          line-height: calc($main-banner-font-size-sm + 2px);
+        }
+      }
+    }
+
+    &_how-it-works{
+      &__title{
+        font-size: $secondary-banner-font-size-sm;
+        line-height: calc($secondary-banner-font-size-sm + 2px);
+      }
+      &__list{
+        width: 80%;
+        margin: 0 auto;
+      }
+    }
+
+    &_call-us__title{
+      font-size: $main-banner-font-size-sm;
+      line-height: calc($main-banner-font-size-sm + 2px);
+    }
+
+  }
+
+}

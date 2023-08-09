@@ -1,24 +1,33 @@
-import { makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 
 import { ICommonStore, TUrlParams } from "./types";
 
 export class CommonStore implements ICommonStore {
     headerHeight = 0;
     urlParams: TUrlParams = {};
-    // Modals
+    // Modals and Drawers
+    // ToDo remove type any
     confirmModalData: any = null;
     modalConfirmVisible = false;
     modalAuthVisible = false;
     modalCustomQuoteVisible = false;
+    headerDrawerVisible = false;
+
     constructor() {
         makeAutoObservable(this, {
             headerHeight: observable,
             urlParams: observable,
-            // Modals
+            // Modals and Drawers
             confirmModalData: observable,
             modalConfirmVisible: observable,
             modalAuthVisible: observable,
             modalCustomQuoteVisible: observable,
+            headerDrawerVisible: observable,
+            setConfirmModalData: action,
+            setModalConfirmVisible: action,
+            setModalAuthVisible: action,
+            setModalCustomQuoteVisible: action,
+            setHeaderDrawerVisible: action,
         });
     }
 
@@ -51,9 +60,9 @@ export class CommonStore implements ICommonStore {
     };
 
     //  ***____***____***____
-    //  ***____ Modals
+    //  ***____ Modals and Drawers
     // ***____***____***____
-
+    // ToDo remove type any
     setConfirmModalData = (confirmModalData: any): void => {
         this.confirmModalData = confirmModalData;
     };
@@ -69,7 +78,11 @@ export class CommonStore implements ICommonStore {
     setModalCustomQuoteVisible = (value: boolean): void => {
         this.modalCustomQuoteVisible = value;
     };
+
+    setHeaderDrawerVisible = (value: boolean): void => {
+        this.headerDrawerVisible = value;
+    };
     //  ***____***____***____
-    //  ***____ END Modals
+    //  ***____ END Modals and Drawers
     // ***____***____***____
 }

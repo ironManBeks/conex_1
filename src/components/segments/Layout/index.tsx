@@ -7,6 +7,7 @@ import { Header } from "../Header";
 import ModalAuth from "@components/modals/components/ModalAuth";
 
 import { TLayout } from "./types";
+import DrawerHeader from "@components/drawers/components/DrawerHeader";
 
 export const Layout: FC<TLayout> = observer(
     ({ children, pageClassPrefix, headerClassName, layoutClassName }) => {
@@ -41,6 +42,7 @@ export const Layout: FC<TLayout> = observer(
                         {children}
                     </div>
                     <ModalAuth />
+                    <DrawerHeader />
                 </div>
             ),
             [

@@ -7,7 +7,6 @@ import { THowItWorksItem } from "@components/pages/HomePage/types";
 
 const HowItWorksItem: FC<THowItWorksItem> = ({
     title,
-    secondTitle,
     description,
     src,
     classPrefix,
@@ -16,13 +15,14 @@ const HowItWorksItem: FC<THowItWorksItem> = ({
 }) => {
     return (
         <div className={`${classPrefix}_item__wrapper`}>
-            <H4>{title}</H4>
-            {description && <P>{description}</P>}
-            {secondTitle && <H4>{secondTitle}</H4>}
+            <div className={`${classPrefix}_item__content`}>
+                <H4>{title}</H4>
+                {description && <P>{description}</P>}
+            </div>
             {src && (
                 <ImgWrapper
                     src={src}
-                    alt={secondTitle ?? title}
+                    alt={title}
                     width={imgWidth ?? 256}
                     height={imgHeight ?? 164}
                 />

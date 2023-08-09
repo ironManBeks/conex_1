@@ -12,6 +12,7 @@ import IconArrowSingle from "./common/IconArrowSingle";
 import IconCross from "./common/IconCross";
 import IconBankDollar from "./common/IconBankDollar";
 import IconCreditCard from "./common/IconCreditCard";
+import IconBurger from "./common/IconBurger";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
@@ -40,4 +41,5 @@ export {
     IconMastercard,
     IconAmazonPay,
     IconPaypal,
+    IconBurger,
 };
