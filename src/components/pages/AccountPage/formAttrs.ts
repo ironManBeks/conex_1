@@ -44,6 +44,8 @@ export const accountInfoFormResolver = (
 ): Resolver<TAccountInfoForm> | undefined => {
     const requiredText = "This field is required";
     const emailNotValid = "Please enter valid email address";
+    const emailMaxText = "Email cannot contain more than 255 symbols";
+    const onlyLatin = "Field may contains only latin symbols and numbers";
 
     if (!editableField) return undefined;
     let result: yup.ObjectSchema<
@@ -58,7 +60,8 @@ export const accountInfoFormResolver = (
             result = yup.object().shape({
                 [EAccountInfoFieldsNames.name]: yup
                     .string()
-                    .required(requiredText),
+                    .required(requiredText)
+                    .matches(/^([a-zA-Z0-9 _-]+)$/, onlyLatin),
             });
             break;
         case EAccountInfoFieldsNames.email:
@@ -66,6 +69,7 @@ export const accountInfoFormResolver = (
                 [EAccountInfoFieldsNames.email]: yup
                     .string()
                     .email(emailNotValid)
+                    .max(255, emailMaxText)
                     .required(requiredText),
             });
             break;

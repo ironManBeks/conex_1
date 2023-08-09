@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Modal } from "antd";
+import { Drawer } from "antd";
 import cn from "classnames";
 
 import { IconCross } from "@components/Icons";
@@ -7,35 +7,35 @@ import { H3, H4 } from "@components/Text";
 
 import disableBodyScroll from "@helpers/disableBodyScroll";
 import { COLOR_BLACK } from "@common/theme/colorTheme";
-import { EModalSize, TModalLayout } from "./types";
+import { TDrawerLayout } from "./types";
 
-const ModalLayout: React.FC<TModalLayout> = ({
-    handleCancel,
-    modalVisible,
-    modalSize = EModalSize.lg,
-    title,
-    subTitle,
-    wrapperClassName,
-    headContent,
-    bodyContent,
-    footerContent,
-    maskStyle,
-    wrapperStyles,
-    headClassName,
-    bodyClassName,
-    footerClassName,
-    isCloseBtn = true,
-    forceRender = false,
-    maskZIndex,
-}) => {
-    const classPrefix = "common-modal";
+const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
+    const {
+        onClose,
+        title,
+        subTitle,
+        headContent,
+        bodyContent,
+        footerContent,
+        maskStyle,
+        headClassName,
+        bodyClassName,
+        footerClassName,
+        isCloseBtn = true,
+        className,
+        maskZIndex,
+        wrapperClassName,
+        open,
+        ...rest
+    } = props;
+    const classPrefix = "common-drawer";
     const maskStyles = {
         zIndex: maskZIndex,
         maskStyle,
     };
 
     const closeButton = isCloseBtn ? (
-        <button className={`${classPrefix}_close`} onClick={handleCancel}>
+        <button className={`${classPrefix}_close`} onClick={onClose}>
             <IconCross color={COLOR_BLACK} />
         </button>
     ) : null;
@@ -54,20 +54,22 @@ const ModalLayout: React.FC<TModalLayout> = ({
     ) : null;
 
     useEffect(() => {
-        disableBodyScroll(modalVisible);
-    }, [modalVisible]);
+        disableBodyScroll(open);
+    }, [open]);
 
     return (
-        <Modal
-            open={modalVisible}
-            onCancel={handleCancel}
+        <Drawer
+            {...rest}
             title={null}
             footer={null}
-            className={cn(`${classPrefix}_inner-wrapper`, modalSize)}
-            wrapClassName={cn(`${classPrefix}_wrapper`, wrapperClassName)}
+            onClose={onClose}
+            open={open}
             maskStyle={maskStyles}
-            style={wrapperStyles}
-            forceRender={forceRender}
+            className={cn(
+                `${classPrefix}_wrapper`,
+                className,
+                wrapperClassName,
+            )}
             closeIcon={<IconCross />}
         >
             <div className={`${classPrefix}_content__wrapper`}>
@@ -103,8 +105,8 @@ const ModalLayout: React.FC<TModalLayout> = ({
                     </div>
                 )}
             </div>
-        </Modal>
+        </Drawer>
     );
 };
 
-export default ModalLayout;
+export default DrawerLayout;

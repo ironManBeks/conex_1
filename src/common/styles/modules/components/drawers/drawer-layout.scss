@@ -1,0 +1,77 @@
+.common-drawer{
+  &_wrapper{
+    z-index: $z-index-drawer-wrapper;
+    .ant-drawer {
+      &-mask{
+        z-index: $z-index-drawer-mask;
+        background: rgba(217, 217, 217, 0.59);
+      }
+      &-content {
+        position: relative;
+        margin: 0 auto;
+        border: 0;
+        overflow: hidden;
+        padding: 60px 40px 30px;
+        &-wrapper{
+          overflow: hidden;
+          z-index: $z-index-drawer-content;
+          box-shadow: $box-shadow-md;
+          max-width: 90%;
+        }
+      }
+      &-header {
+        display: none;
+        background-color: transparent;
+      }
+      &-body {
+        padding: 0;
+      }
+      &-footer {
+        display: none;
+        background-color: transparent;
+      }
+      &-close {
+        display: none;
+      }
+    }
+    &.ant-drawer{
+      &-left{
+        .ant-drawer-content-wrapper{
+          border-radius: 0 $border-radius-lg $border-radius-lg 0;
+        }
+      }
+      &-right{
+        .ant-drawer-content-wrapper{
+          border-radius: $border-radius-lg 0 0 $border-radius-lg;
+        }
+        .common-drawer_close{
+          left: 18px;
+          right: unset;
+        }
+      }
+    }
+  }
+
+  &_close{
+    position: absolute;
+    right: 18px;
+    top: 18px;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 0 auto;
+    border: 0;
+    padding: 10px;
+    border-radius: $border-radius-circle;
+    box-shadow: none;
+    outline: none;
+    background-color: transparent;
+    cursor: pointer;
+    margin-left: auto;
+    transition: 0.2s;
+    &:hover{
+      background-color: $color-grey-200;
+    }
+  }
+
+}

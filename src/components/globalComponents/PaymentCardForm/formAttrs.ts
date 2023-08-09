@@ -31,7 +31,8 @@ export const paymentCardFromResolver = (): Resolver<TPaymentCardFrom> => {
         `Field "${fieldName}" is required`;
     const minLengthText = (fieldName: string, value: number) =>
         `Field "${fieldName}" cannot contain less than ${value} characters`;
-    const maxLengthText = 'Field "CVV" cannot contain more than 4 characters';
+    const maxLengthText = (fieldName: string, value: number) =>
+        `Field "${fieldName}" cannot contain more than ${value} characters`;
     const notValidDate = "Invalid date format";
 
     return yupResolver(
@@ -55,7 +56,7 @@ export const paymentCardFromResolver = (): Resolver<TPaymentCardFrom> => {
                 .string()
                 .required(requiredText("CVV"))
                 .min(3, minLengthText("CVV", 3))
-                .max(4, maxLengthText),
+                .max(4, maxLengthText("CVV", 4)),
             [EPaymentCardFromFieldsNames.expDate]: yup
                 .string()
                 .required(requiredText("Exp. date"))

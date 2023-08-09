@@ -3,6 +3,8 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { observer } from "mobx-react";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
+import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { H2 } from "@components/Text";
 
 import {
@@ -13,10 +15,8 @@ import {
 } from "../formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { useRootStore } from "@store";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
-import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 import { phoneNumberMask } from "@consts/masksConsts";
 
 const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {

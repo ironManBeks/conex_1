@@ -59,7 +59,7 @@
       justify-content: space-between;
       margin-bottom: 65px;
       .how-it-works_item__wrapper{
-        width: calc(33% - 45px);
+        width: 100%;
         .common-title{
           margin-bottom: 10px;
           font-size: $font-size-lg;
@@ -76,6 +76,9 @@
           margin-left: auto;
         }
       }
+    }
+    &__column{
+      width: calc(33% - 45px);
     }
   }
 

@@ -90,7 +90,9 @@ $font-size-xl: 1.5rem;
 $font-size-xxl: 2rem;
 
 $main-banner-font-size: 5rem;
+$main-banner-font-size-sm: 3rem;
 $secondary-banner-font-size: 4.375rem;
+$secondary-banner-font-size-sm: 2.75rem;
 $builder-form-title-font-size: 2.25rem;
 $contacts-us-title-font-size: 3.125rem;
 
@@ -152,3 +154,7 @@ $z-index-notification: 1110;
 $z-index-modal-wrapper: 1105;
 $z-index-modal-mask: 1104;
 $z-index-modal-content: 1106;
+
+$z-index-drawer-wrapper: 1112;
+$z-index-drawer-mask: 1111;
+$z-index-drawer-content: 1113;
