@@ -129,6 +129,10 @@
         height: 100%;
         cursor: pointer;
         padding: 22px 18px;
+        font-size: $font-size-bs;
+        line-height: $line-height-bs;
+        color: $color-orange-600;
+        font-weight: 500;
       }
     }
     &__form{
@@ -157,6 +161,7 @@
     }
     &__form{
       display: flex;
+      height: 60px;
       .form-field_wrapper{
         width: 100%;
         margin-bottom: 0;
@@ -172,7 +177,7 @@
       .common-btn{
         flex: 0 0 auto;
         min-width: 160px;
-        height: 60px;
+        height: 100%;
         font-size: 27px;
         line-height: 29px;
         margin-left: 20px;
@@ -244,6 +249,7 @@
               margin-bottom: 20px;
             }
             .label{
+              padding-right: 10px;
               font-size: $font-size-md;
               line-height: $line-height-md;
               color: $color-green-200;
@@ -269,11 +275,11 @@
               flex: 0 0 auto;
               margin-right: 5px;
             }
-            span{
-              margin-left: 20px;
-              color: $color-green-200;
-              font-weight: 300;
-            }
+          }
+          &_status{
+            margin-left: 20px;
+            color: $color-green-200;
+            font-weight: 300;
           }
           &_delivery{
             display: flex;

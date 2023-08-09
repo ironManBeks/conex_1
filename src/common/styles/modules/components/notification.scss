@@ -1,5 +1,6 @@
 .ant-notification{
   //background: red;
+  z-index: $z-index-notification;
   &-notice{
     border-radius: $border-radius-lg;
     padding: 32px;
@@ -35,4 +36,13 @@
       }
     }
   }
+}
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .ant-notification-notice{
+    max-width: 300px;
+    padding: 24px;
+  }
+
 }

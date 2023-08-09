@@ -1,6 +1,7 @@
 import { FC, Fragment, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { observer } from "mobx-react";
+import { useMediaQuery } from "react-responsive";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
@@ -18,6 +19,7 @@ import { useRootStore } from "@store";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
 import { phoneNumberMask } from "@consts/masksConsts";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 
 const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
@@ -26,6 +28,11 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const [editableField, setEditableField] = useState<
         EAccountInfoFieldsNames | undefined
     >(undefined);
+
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
 
     const methods = useForm<TAccountInfoForm>({
         resolver: accountInfoFormResolver(editableField),
@@ -49,7 +56,7 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
 
     return (
         <Fragment>
-            <H2>My Account</H2>
+            <H2>{isMobile ? "Personal info" : "My Account"}</H2>
             <FormProvider {...methods}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}

@@ -1,0 +1,247 @@
+
+@media (min-width: $lg-media) and (max-width: $lg-media-end) {
+
+  .account-page{
+
+    &_content{
+    }
+
+    &_info{
+      &__wrapper{
+        width: calc(50% - 40px);
+      }
+    }
+
+    &_form{
+      &__wrapper{
+        & > div{
+          flex-direction: column;
+        }
+        .form-field_wrapper{
+          width: calc(100% - 20px);
+        }
+      }
+      &__actions{
+        margin-top: 20px;
+        .common-btn{
+          min-width: 100px;
+        }
+      }
+    }
+
+    &_payment{
+      &__item{
+        &._wrapper{
+          width: calc(100% - 20px);
+        }
+      }
+      &__add{
+        &._wrapper{
+          width: calc(100% - 20px);
+        }
+      }
+    }
+
+    &_tracker{
+      &__wrapper{
+        margin-top: 50px;
+        padding: 10px;
+        .common-title{
+          font-size: $font-size-lg;
+          line-height: $line-height-lg;
+        }
+      }
+      &__form{
+        height: 42px;
+        .common-btn{
+          font-size: $font-size-bs;
+          line-height: $line-height-bs;
+          padding: 0;
+          min-width: 120px;
+        }
+      }
+    }
+
+
+    &_order{
+      &__wrapper{
+        width: 50%;
+      }
+    }
+
+  }
+
+}
+
+@media (min-width: $md-media) and (max-width: $md-media-end) {
+
+  .account-page{
+
+    &_content{
+      &__wrapper{
+        flex-direction: column;
+      }
+    }
+
+    &_info{
+      &__wrapper{
+        width: 100%;
+      }
+    }
+
+    &_tracker__wrapper{
+      margin-top: 50px;
+    }
+
+    &_order{
+      &__wrapper{
+        margin-top: 50px;
+        width: 100%;
+      }
+    }
+
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .account-page{
+
+    &_content__wrapper{
+      flex-direction: column;
+      box-shadow: none;
+      padding: 0;
+      .common-title._h2{
+        font-size: 1.375rem;
+        line-height: calc(1.375rem + 2px);
+        color: $color-grey-800;
+      }
+    }
+
+    &_info{
+      &__wrapper{
+        width: 100%;
+      }
+    }
+
+    &_payment{
+      &__item{
+        &._wrapper{
+          width: 100%;
+          color: rgba(250, 188, 30, 0.81);
+          margin-bottom: 10px;
+          .img-custom_wrapper{
+            position: relative;
+            top: unset;
+            right: unset;
+            transform: translate(0, 0);
+            margin-right: 10px;
+          }
+        }
+        &._inner-wrapper{
+          background: #F9F4EB;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          padding: 12px;
+          border: 1px solid rgba(250, 187, 30, 0.24);
+        }
+        &._delete.common-btn{
+          right: 10px;
+          top: 50%;
+          width: 24px;
+          height: 24px;
+          left: unset;
+          transform: translateY(-50%);
+        }
+      }
+      &__add{
+        &._wrapper{
+          width: 100%;
+          min-height: 36px;
+          background: rgba(255, 242, 209, 0.09);
+          box-shadow: none;
+        }
+        &._inner-wrapper{
+          padding: 12px;
+        }
+      }
+    }
+
+    &_form{
+      &__wrapper{
+        & > div{
+          flex-direction: column;
+        }
+        .form-field_wrapper{
+          width: calc(100% - 20px);
+        }
+      }
+      &__actions{
+        margin-top: 20px;
+        .common-btn{
+          min-width: 100px;
+        }
+      }
+    }
+
+    &_tracker{
+      &__wrapper{
+        margin-top: 25px;
+        margin-bottom: 30px;
+        padding: 10px;
+        .common-title{
+          font-size: $font-size-bs;
+          line-height: $line-height-bs;
+          font-weight: 300;
+        }
+      }
+      &__form{
+        height: 42px;
+        .common-btn{
+          font-size: $font-size-bs;
+          line-height: $line-height-bs;
+          padding: 0;
+          min-width: 120px;
+        }
+      }
+    }
+
+    &_order{
+      &__wrapper{
+        width: 100%;
+        margin-top: 40px;
+      }
+      &__item{
+        &._wrapper{
+          ul{
+            padding-left: 0;
+          }
+          .item_delivery{
+            padding-left: 0;
+          }
+          .common-title._h4{
+            word-break: break-all;
+          }
+          .item_address{
+            flex-wrap: wrap;
+          }
+          .item_status{
+            width: 100%;
+            margin-left: 0;
+            margin-top: 10px;
+          }
+          .item_map__wrapper{
+            padding: 15px;
+          }
+        }
+        &._inner-wrapper{
+          padding: 15px;
+        }
+      }
+    }
+
+  }
+
+}
