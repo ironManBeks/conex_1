@@ -22,7 +22,7 @@ import { useRootStore } from "@store";
 const ContactUsForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
     const { contactStore } = useRootStore();
-    const { createFeedbackRequest } = contactStore;
+    const { createFeedbackRequest, createFeedbackFetching } = contactStore;
 
     const methods = useForm<TContactsUsForm>({
         resolver: contactsUsFormResolver(),
@@ -67,6 +67,8 @@ const ContactUsForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.primary}
+                            isLoading={createFeedbackFetching}
+                            disabled={createFeedbackFetching}
                         >
                             Send
                         </ButtonPrimary>

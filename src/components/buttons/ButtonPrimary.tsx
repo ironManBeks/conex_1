@@ -1,6 +1,6 @@
 import React from "react";
 import cn from "classnames";
-import { Tooltip } from "antd";
+import { Spin, Tooltip } from "antd";
 
 import { commonButtonClassPrefix } from "./consts";
 
@@ -58,7 +58,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
                         {icon}
                     </span>
                 )}
-                {children}
+                {isLoading ? <Spin /> : children}
                 {icon && iconPosition === "right" && (
                     <span
                         className={cn(
