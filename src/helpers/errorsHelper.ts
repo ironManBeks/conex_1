@@ -1,7 +1,12 @@
-import { isEmpty } from "lodash";
+import { isEmpty, isObject, isString } from "lodash";
+import axios, { AxiosError } from "axios";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
+import { ArgsProps } from "antd/lib/notification";
 
-export const pickOutErrorMessages = <
+import { showNotification } from "@helpers/notificarionHelper";
+import { TResponseError } from "@globalTypes/requestTypes";
+
+export const pickOutFormErrorMessages = <
     S extends FieldErrors,
     T extends string[] = [],
 >(
@@ -29,4 +34,36 @@ export const pickOutErrorMessages = <
         }
     }
     return result;
+};
+
+export const showAxiosNotificationError = (
+    // ToDo remove type any
+    props: AxiosError | TResponseError | any,
+): void => {
+    let notificationProps: ArgsProps = {
+        message: `Unknown error`,
+        description: `Try to reload the page or report an error to the site administration`,
+    };
+
+    if (axios.isAxiosError(props) || axios.isAxiosError(props.data)) {
+        notificationProps = {
+            message: `Error ${props.response?.status}`,
+            description: props.message || props.response?.data.message,
+        };
+    } else if (isObject(props.data.error) && !isEmpty(props.data.error)) {
+        notificationProps = {
+            message: `Error ${props.data.error.status}`,
+            description: props.data.error.message,
+        };
+    } else if (isString(props.data)) {
+        notificationProps = {
+            message: `Error: ${props.data}`,
+            description: "Please try to reload the page",
+        };
+    }
+
+    showNotification({
+        ...notificationProps,
+        type: "error",
+    });
 };

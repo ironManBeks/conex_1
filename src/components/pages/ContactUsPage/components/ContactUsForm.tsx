@@ -1,5 +1,6 @@
 import { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { observer } from "mobx-react";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
@@ -10,24 +11,30 @@ import {
     contactsUsDefaultValues,
     contactsUsFormResolver,
     EContactsUsFieldsNames,
+    FEEDBACK_MAX_MESSAGE_LENGTH,
     TContactsUsForm,
 } from "@components/pages/ContactUsPage/formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { notImplemented } from "@helpers/notImplemented";
 import { EButtonColor } from "@components/buttons/types";
 import { phoneNumberMask } from "@consts/masksConsts";
+import { useRootStore } from "@store";
 
-const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
+const ContactUsForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
+    const { contactStore } = useRootStore();
+    const { createFeedbackRequest } = contactStore;
+
     const methods = useForm<TContactsUsForm>({
         resolver: contactsUsFormResolver(),
         defaultValues: contactsUsDefaultValues,
     });
 
-    const { handleSubmit } = methods;
+    const { handleSubmit, reset } = methods;
 
     const onSubmit: SubmitHandler<TContactsUsForm> = (data) => {
-        notImplemented(`value: ${JSON.stringify(data)}`);
+        createFeedbackRequest(data).then(() => {
+            reset();
+        });
     };
 
     return (
@@ -43,7 +50,7 @@ const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         label="Your Name"
                     />
                     <FieldInputMaskController
-                        name={EContactsUsFieldsNames.phone}
+                        name={EContactsUsFieldsNames.phoneNumber}
                         placeholder="Phone number"
                         label="Phone number"
                         mask={phoneNumberMask}
@@ -54,7 +61,7 @@ const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         placeholder="Message"
                         label="Message"
                         minHeight={140}
-                        maxSymbolLength={1000}
+                        maxSymbolLength={FEEDBACK_MAX_MESSAGE_LENGTH}
                     />
                     <div className={`${classPrefix}__actions`}>
                         <ButtonPrimary
@@ -68,6 +75,6 @@ const ContactUsForm: FC<TSectionTypes> = ({ pageClassPrefix }) => {
             </FormProvider>
         </div>
     );
-};
+});
 
 export default ContactUsForm;

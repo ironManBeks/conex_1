@@ -4,34 +4,41 @@ import { yupResolver } from "@hookform/resolvers/yup";
 
 import { yupPhoneRequired } from "@consts/validationConsts";
 
+export const FEEDBACK_MAX_MESSAGE_LENGTH = 1000;
+
 export enum EContactsUsFieldsNames {
     name = "name",
-    phone = "phone",
+    phoneNumber = "phoneNumber",
     message = "message",
 }
 
 export type TContactsUsForm = {
     [EContactsUsFieldsNames.name]: string;
-    [EContactsUsFieldsNames.phone]: string;
+    [EContactsUsFieldsNames.phoneNumber]: string;
     [EContactsUsFieldsNames.message]: string;
 };
 
 export const contactsUsDefaultValues: TContactsUsForm = {
     [EContactsUsFieldsNames.name]: "",
-    [EContactsUsFieldsNames.phone]: "",
+    [EContactsUsFieldsNames.phoneNumber]: "",
     [EContactsUsFieldsNames.message]: "",
 };
 
 export const contactsUsFormResolver = (): Resolver<TContactsUsForm> => {
     const requiredText = "This field is required";
+    const maxText = `This field cannot contain more than ${FEEDBACK_MAX_MESSAGE_LENGTH} symbols`;
 
     return yupResolver(
         yup.object().shape({
-            [EContactsUsFieldsNames.name]: yup.string().required(requiredText),
-            [EContactsUsFieldsNames.phone]: yupPhoneRequired(),
+            [EContactsUsFieldsNames.name]: yup
+                .string()
+                .required(requiredText)
+                .trim(),
+            [EContactsUsFieldsNames.phoneNumber]: yupPhoneRequired(),
             [EContactsUsFieldsNames.message]: yup
                 .string()
-                .required(requiredText),
+                .required(requiredText)
+                .max(FEEDBACK_MAX_MESSAGE_LENGTH, maxText),
         }),
     );
 };

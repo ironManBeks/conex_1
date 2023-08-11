@@ -9,7 +9,7 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
 import { useRootStore } from "@store";
-import { pickOutErrorMessages } from "@helpers/errorsHelper";
+import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
 import { notImplemented } from "@helpers/notImplemented";
 import { showNotification } from "@helpers/notificarionHelper";
 import { EStepPosition } from "@store/stores/builder/types";
@@ -31,7 +31,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
         } = builderStore;
         const stepPosition = getStepPosition();
 
-        const errorMessageList = pickOutErrorMessages<FieldErrors<any>, []>(
+        const errorMessageList = pickOutFormErrorMessages<FieldErrors<any>, []>(
             errors,
             [],
         );
