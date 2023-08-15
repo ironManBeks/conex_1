@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from "react";
 import { observer } from "mobx-react";
-import { Empty, Spin } from "antd";
+import { Empty } from "antd";
 import { isEmpty } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
@@ -13,8 +13,7 @@ import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoade
 const BuilderPage: FC = observer(() => {
     const classPrefix = "builder-page";
     const { builderStore } = useRootStore();
-    const { getBuilderData, builderData, passedSteps, builderDataFetching } =
-        builderStore;
+    const { getBuilderData, builderData, builderDataFetching } = builderStore;
 
     useEffect(() => {
         getBuilderData();

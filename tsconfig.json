@@ -69,6 +69,12 @@
       ],
       "@utils": [
         "src/utils/index"
+      ],
+      "@services/*": [
+        "src/services/*"
+      ],
+      "@services": [
+        "src/services/index"
       ]
     },
     "incremental": true

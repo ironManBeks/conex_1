@@ -18,6 +18,7 @@
     width: 100%;
     display: flex;
     margin-bottom: 30px;
+    min-height: 50vh;
   }
 
   &_left-side__wrapper{
@@ -60,9 +61,6 @@
     align-items: center;
     justify-content: center;
     min-height: 50vh;
-    .ant-spin-dot-item{
-      background-color: $color-secondary;
-    }
   }
 
   &_step{

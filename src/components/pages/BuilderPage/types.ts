@@ -1,37 +1,26 @@
 import { THEX } from "@globalTypes/commonTypes";
+import {
+    EBuilderFieldTypes,
+    TBuilderElementDataDTO,
+    TBuilderStepDataDTO,
+} from "@store/stores/builder/types";
 
 export type TBuilderCompProps = {
     pageClassPrefix: string;
 };
 
-export enum EBuilderFieldTypes {
-    card = "card",
-    checkbox = "checkbox",
-    colorPicker = "colorPicker",
-    radioButton = "radioButton",
-    radio = "radio",
-}
-
 export type TBuilderElementComp = {
     onClick?: (value: string) => void;
     isActive?: boolean;
-    fieldValue: string;
+    fieldName: string;
 };
 
-export interface IBuilderElementBase {
-    id: string;
-    value: string;
-    title: string;
-    popular?: boolean;
-    disabled?: boolean;
+export interface IBuilderElementBase extends TBuilderElementDataDTO {
     className?: string;
 }
 
 export interface IBuilderElementCardProps extends IBuilderElementBase {
-    subTitle: string;
-    imgSrc: string;
-    price: string;
-    currency: string;
+    imgSrc: string | null;
 }
 
 export interface IBuilderElementCheckboxProps extends IBuilderElementBase {
@@ -61,27 +50,30 @@ export type TBuilderElements =
     | TReferenceProps<EBuilderFieldTypes.radioButton>;
 
 export type TBuilderFieldBase = {
-    id: string;
-    value: string;
-    title?: string;
-    titleSize?: "big" | "small";
-    isRequired?: boolean;
     className?: string;
-} & TBuilderElements &
-    TBuilderOpportunity;
+} & TBuilderStepDataDTO;
 
-export type TBuilderOpportunity = {
-    opportunity?: {
-        description: string;
-        value: string;
-        isRequired?: boolean;
-        position: "left" | "center" | "right";
-    };
-};
+// export type TBuilderFieldBase = {
+//     value: string;
+//     title?: string;
+//     titleSize?: "big" | "small";
+//     isRequired?: boolean;
+//     className?: string;
+// } & TBuilderElements &
+//     TBuilderOpportunity;
 
-export type TBuilderStep = {
-    stepId: string;
-    stepTitle?: string;
-    stepDescription?: string;
-    fields: TBuilderFieldBase[];
-};
+// export type TBuilderOpportunity = {
+//     opportunity?: {
+//         description: string;
+//         value: string;
+//         isRequired?: boolean;
+//         position: "left" | "center" | "right";
+//     };
+// };
+
+// export type TBuilderStep = {
+//     stepId: string;
+//     stepTitle?: string;
+//     stepDescription?: string;
+//     fields: TBuilderFieldBase[];
+// };

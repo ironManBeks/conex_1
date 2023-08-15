@@ -40,6 +40,7 @@
     }
 
     &_sub-label{
+      display: inline-flex;
       cursor: pointer;
       font-size: $line-height-md;
       line-height: $line-height-md;

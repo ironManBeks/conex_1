@@ -28,7 +28,7 @@ import { DEFAULT_ICON_COLOR } from "@components/Icons/consts";
 const AccountPayment: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_payment`;
     const { authStore, commonStore } = useRootStore();
-    const { authData } = authStore;
+    const { accountData } = authStore;
     const [formVisible, setFormVisible] = useState(false);
 
     const handleFormVisible = (val: boolean) => {
@@ -44,7 +44,7 @@ const AccountPayment: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
         <Fragment>
             <H2 className={`${classPrefix}__title`}>Saved Payment</H2>
             <div className={`${classPrefix}__wrapper`}>
-                {authData?.cards.map((item) => (
+                {accountData?.cards.map((item) => (
                     <AccountPaymentItem
                         key={item.id}
                         id={item.id}

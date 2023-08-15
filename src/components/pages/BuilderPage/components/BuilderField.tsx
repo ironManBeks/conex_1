@@ -1,42 +1,56 @@
 import { FC, ReactNode } from "react";
 import cn from "classnames";
 
-import { H2 } from "@components/Text";
+import { H1, H2, P } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 import FieldRadioArrayController from "@components/form/formControllers/FieldRadioArrayController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
 import BuilderElementCard from "./elements/BuilderElementCard";
 
+import { TBuilderElements, TBuilderFieldBase } from "../types";
 import {
     EBuilderFieldTypes,
-    TBuilderElements,
-    TBuilderFieldBase,
-} from "../types";
+    TBuilderElementDataDTO,
+} from "@store/stores/builder/types";
 
-const BuilderField: FC<TBuilderFieldBase> = ({
-    className,
-    type,
-    title,
-    titleSize,
-    value,
-    elements,
-    isRequired,
-}) => {
+const BuilderField: FC<TBuilderFieldBase> = ({ id, attributes, className }) => {
     const classPrefix = `builder-field`;
-
+    const {
+        fieldType,
+        fieldName,
+        fieldTitle,
+        fieldTitleSize,
+        fieldElements,
+        fieldRequired,
+    } = attributes;
     return (
         <div
             className={cn(`${classPrefix}_wrapper`, className, {
-                _required: isRequired,
+                _required: fieldRequired,
             })}
         >
-            {title && (
+            {fieldName && (
+                <P>
+                    <b>Field name:</b> {fieldName}
+                </P>
+            )}
+            {fieldType && (
+                <P>
+                    <b>Field type:</b> {fieldType}
+                </P>
+            )}
+            {fieldName && (
+                <P>
+                    <b>Step ID:</b> {id}
+                </P>
+            )}
+            {fieldTitle && (
                 <H2
                     className={cn(`${classPrefix}_title`, {
-                        [`_${titleSize}`]: titleSize,
+                        [`_${fieldTitleSize}`]: fieldTitleSize,
                     })}
                 >
-                    {title}
+                    {fieldTitle}
                 </H2>
             )}
             <div className={`${classPrefix}_content`}>
@@ -44,9 +58,9 @@ const BuilderField: FC<TBuilderFieldBase> = ({
                 {/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */}
                 {/*// @ts-ignore*/}
                 {getElementsListByType({
-                    type,
-                    elements,
-                    fieldValue: value,
+                    type: fieldType,
+                    elements: fieldElements,
+                    fieldName: fieldName,
                 })}
             </div>
         </div>
@@ -58,8 +72,12 @@ export default BuilderField;
 const getElementsListByType = ({
     type,
     elements,
-    fieldValue,
-}: TBuilderElements & { fieldValue: string }): ReactNode => {
+    fieldName,
+}: {
+    type: EBuilderFieldTypes;
+    elements: TBuilderElementDataDTO[];
+    fieldName: string;
+}): ReactNode => {
     switch (type) {
         case EBuilderFieldTypes.card:
             return elements.map((item) => (
@@ -67,24 +85,27 @@ const getElementsListByType = ({
                     key={item.id}
                     id={item.id}
                     value={item.value}
-                    title={item.title}
+                    mainTitle={item.mainTitle}
                     popular={item.popular}
-                    disabled={item.disabled}
                     subTitle={item.subTitle}
-                    imgSrc={item.imgSrc}
                     price={item.price}
-                    currency={item.currency}
-                    fieldValue={fieldValue}
+                    priceCurrency={item.priceCurrency}
+                    fieldName={fieldName}
+                    nextQuestion={item.nextQuestion}
+                    imgSrc={null}
+                    // disabled={item.disabled}
                 />
             ));
         case EBuilderFieldTypes.checkbox:
             return (
                 <FieldCheckboxArrayController
-                    name={fieldValue}
+                    name={fieldName}
                     options={elements.map((item) => ({
-                        label: item.title,
+                        label: `${item.mainTitle}. NEXT: ${
+                            item.nextQuestion || "null"
+                        }`,
                         value: item.value,
-                        disabled: item.disabled,
+                        // disabled: item.disabled,
                     }))}
                     showError={false}
                 />
@@ -92,11 +113,13 @@ const getElementsListByType = ({
         case EBuilderFieldTypes.radio:
             return (
                 <FieldRadioArrayController
-                    name={fieldValue}
+                    name={fieldName}
                     options={elements.map((item) => ({
-                        label: item.title,
+                        label: `${item.mainTitle}. NEXT: ${
+                            item.nextQuestion || "null"
+                        }`,
                         value: item.value,
-                        disabled: item.disabled,
+                        // disabled: item.disabled,
                     }))}
                     showError={false}
                 />
@@ -104,11 +127,36 @@ const getElementsListByType = ({
         case EBuilderFieldTypes.radioButton:
             return (
                 <FieldRadioButtonArrayController
-                    name={fieldValue}
+                    name={fieldName}
                     options={elements.map((item) => ({
-                        label: item.title,
+                        label: (
+                            <div>
+                                {item.mainTitle}
+                                {item.subTitle && (
+                                    <>
+                                        <br />
+                                        {item.subTitle}
+                                    </>
+                                )}
+                                {item.price && (
+                                    <>
+                                        <br />
+                                        <b>
+                                            {item.price}
+                                            {item.priceCurrency}
+                                        </b>
+                                    </>
+                                )}
+                                {item.nextQuestion && (
+                                    <b>
+                                        <br />
+                                        NEXT id: {item.nextQuestion || "null"}
+                                    </b>
+                                )}
+                            </div>
+                        ),
                         value: item.value,
-                        disabled: item.disabled,
+                        // disabled: item.disabled,
                     }))}
                     showError={false}
                 />

@@ -6,3 +6,5 @@ export const PATH_SEARCH_PAGE = "/search";
 export const PATH_CART_PAGE = "/cart";
 export const PATH_CUSTOM_QUOTE_PAGE = "/custom-quote";
 export const PATH_CHECKOUT_PAGE = "/checkout";
+
+export const PATH_LOGIN = "/auth/login";

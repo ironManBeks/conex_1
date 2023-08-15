@@ -1,7 +1,6 @@
 import { FC, useEffect, useMemo } from "react";
 import cn from "classnames";
 import { observer } from "mobx-react";
-import { isEmpty } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
@@ -9,21 +8,24 @@ import AccountInfo from "./components/AccountInfo";
 import AccountOrder from "./components/AccountOrder";
 import AccountInfoSkeleton from "@components/skeletons/AccountInfoSkeleton";
 import AccountOrderSkeleton from "@components/skeletons/AccountOrderSkeleton";
+import AuthForm from "@components/globalComponents/AuthForm";
 
 import { useRootStore } from "@store";
-import AuthForm from "@components/globalComponents/AuthForm";
+import { getStorage } from "@services/storage.service";
+import { AUTH_TOKEN } from "@consts/storageNamesContsts";
+import { isEmpty } from "lodash";
 
 const AccountPage: FC = observer(() => {
     const { authStore } = useRootStore();
-    const { authData, authDataFetching } = authStore;
+    const { accountDataFetching, accountData } = authStore;
     const classPrefix = "account-page";
 
     useEffect(() => {
-        authStore.getAuthData();
-    }, []);
+        console.log("accountData", accountData);
+    }, [accountData]);
 
     const accountContent = useMemo(() => {
-        if (authDataFetching) {
+        if (accountDataFetching) {
             return (
                 <>
                     <AccountInfoSkeleton />
@@ -32,20 +34,11 @@ const AccountPage: FC = observer(() => {
             );
         }
 
-        if (isEmpty(authData)) {
+        if (isEmpty(accountData)) {
             return (
-                <div
-                    style={{
-                        width: "100%",
-                        display: "flex",
-                        justifyContent: "center",
-                        alignItems: "center",
-                        padding: "50px",
-                        flexDirection: "column",
-                    }}
-                >
+                <>
                     <AuthForm className={classPrefix} />
-                </div>
+                </>
             );
         }
 
@@ -55,7 +48,7 @@ const AccountPage: FC = observer(() => {
                 <AccountOrder pageClassPrefix={classPrefix} />
             </>
         );
-    }, [authStore.authData, authStore.authDataFetching, classPrefix]);
+    }, [accountData, accountDataFetching, classPrefix]);
 
     return (
         <Layout pageClassPrefix={classPrefix}>

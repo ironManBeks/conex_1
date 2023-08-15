@@ -30,7 +30,7 @@ import {
     stripeCardExpValidation,
 } from "@helpers/paymentMethodHelpers";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { pickOutErrorMessages } from "@helpers/errorsHelper";
+import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 
@@ -139,7 +139,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                     />
                 </div>
                 <div className={`${classPrefix}_errors`}>
-                    {pickOutErrorMessages<
+                    {pickOutFormErrorMessages<
                         FieldErrors<TPaymentCardFrom>,
                         EPaymentCardFromFieldsNames[]
                     >(errors, [

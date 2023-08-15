@@ -1,3 +1,6 @@
+import { TSignUpForm } from "@components/globalComponents/AuthForm/components/SignUpForm/formAttrs";
+import { TSignInForm } from "@components/globalComponents/AuthForm/components/SignInForm/formAttrs";
+
 export type TAuthPaymentCard = {
     id: string;
     name: string;
@@ -6,17 +9,37 @@ export type TAuthPaymentCard = {
     expYear: string;
 };
 
-export type TAuthData = {
+export type TAccountData = {
     name: string;
     email: string;
     phone: string;
     cards: TAuthPaymentCard[];
 } | null;
 
+export type TAuthData = {
+    jwt: string;
+    user: {
+        id: number;
+        username: string;
+        email: string;
+        provider: string;
+        confirmed: boolean;
+        blocked: boolean;
+        createdAt: string;
+        updatedAt: string;
+    };
+} | null;
+
 export interface IAuthStore {
+    accountData: TAccountData;
+    getAccountData: () => void;
+    setAccountData: (data: TAccountData) => void;
+    accountDataFetching: boolean;
+    setAccountDataFetching: (value: boolean) => void;
     authData: TAuthData;
-    getAuthData: () => void;
     setAuthData: (data: TAuthData) => void;
-    authDataFetching: boolean;
-    setAuthDataFetching: (value: boolean) => void;
+    authRequestFetching: boolean;
+    setAuthRequestFetching: (value: boolean) => void;
+    authSignUpRequest: (data: TSignUpForm) => Promise<void>;
+    authSignInRequest: (data: TSignInForm) => Promise<void>;
 }

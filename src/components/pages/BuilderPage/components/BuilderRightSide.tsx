@@ -12,18 +12,28 @@ const BuilderRightSide: FC<TBuilderCompProps> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_right-side`;
 
     const additionalServicesOptions: TAdditionalServicesOption[] = [
-        { label: "Additional charges", value: "$23.00" },
+        { label: "Additional charges", value: "$111.00" },
     ];
 
     const additionalServicesTotalOption: TAdditionalServicesOption = {
         label: "Grand Total",
-        value: "$2,323.00",
+        value: "$123.00",
     };
 
     return (
         <div className={cn(`${classPrefix}__wrapper`)}>
             <div className={cn(`${classPrefix}__inner-wrapper`)}>
-                <AddedOptionsList optionsList={BuilderAddedOptionsListMockup} />
+                <AddedOptionsList
+                    optionsList={[
+                        {
+                            title: "qwe",
+                            list: [
+                                { label: "111", value: 111 },
+                                { label: "123", value: 123 },
+                            ],
+                        },
+                    ]}
+                />
                 <AdditionalServices
                     options={additionalServicesOptions}
                     totalOption={additionalServicesTotalOption}

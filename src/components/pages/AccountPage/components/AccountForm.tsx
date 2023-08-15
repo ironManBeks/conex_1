@@ -20,14 +20,17 @@ import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import Logout from "@components/globalComponents/Logout";
+import { useRouter } from "next/router";
 
 const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_form`;
     const { authStore } = useRootStore();
-    const { authData } = authStore;
+    const { accountData } = authStore;
     const [editableField, setEditableField] = useState<
         EAccountInfoFieldsNames | undefined
     >(undefined);
+    const router = useRouter();
 
     const isMobile = useMediaQuery({
         minWidth: mediaBreakpoints.xsMedia,
@@ -36,7 +39,7 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
 
     const methods = useForm<TAccountInfoForm>({
         resolver: accountInfoFormResolver(editableField),
-        defaultValues: accountInfoDefaultValues(authData),
+        defaultValues: accountInfoDefaultValues(accountData),
     });
 
     const { handleSubmit, reset } = methods;
@@ -56,7 +59,21 @@ const AccountForm: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
 
     return (
         <Fragment>
-            <H2>{isMobile ? "Personal info" : "My Account"}</H2>
+            <H2>
+                {isMobile ? "Personal info" : "My Account"}
+                <Logout
+                    pageLink={router.asPath}
+                    component={
+                        <ButtonPrimary
+                            size={EButtonSize.sm}
+                            color={EButtonColor.danger}
+                            isOutline={true}
+                        >
+                            Log Out
+                        </ButtonPrimary>
+                    }
+                />
+            </H2>
             <FormProvider {...methods}>
                 <form
                     onSubmit={handleSubmit(onSubmit)}

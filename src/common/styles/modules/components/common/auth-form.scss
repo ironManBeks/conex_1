@@ -11,6 +11,8 @@
 .auth-form{
   &_wrapper{
     padding-top: 40px;
+    max-width: 370px;
+    width: 100%;
     .img-custom_wrapper{
       margin: 0 auto 50px;
     }
@@ -51,6 +53,9 @@
     line-height: $line-height-bs;
     color: #6F7175;
     text-align: center;
+    a{
+      color: #2E7CF6;
+    }
   }
 
 }
