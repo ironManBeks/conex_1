@@ -21,6 +21,7 @@ export enum EFormFieldType {
     radioButtonArray = "radiobuttonarray",
     textArea = "textarea",
     inputNumber = "inputnumber",
+    password = "password",
 }
 
 export type TDefaultOption = {

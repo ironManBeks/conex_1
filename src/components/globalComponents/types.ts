@@ -1,4 +1,4 @@
-import { ReactNode, MouseEvent } from "react";
+import { ReactNode, MouseEvent, JSX } from "react";
 import { ImageProps } from "next/image";
 import { ProgressProps } from "antd/lib/progress/progress";
 import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
@@ -79,4 +79,9 @@ export type TAddedOptionsListItem = {
 export type TAddedOptionsList = {
     optionsList: TAddedOptionsListItem[];
     className?: string;
+};
+
+export type TLogout = {
+    component: JSX.Element;
+    pageLink?: string;
 };

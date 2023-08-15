@@ -1,8 +1,12 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Resolver } from "react-hook-form";
-import { TAuthData } from "@store/stores/auth/types";
-import { yupPhoneRequired } from "@consts/validationConsts";
+import { TAccountData } from "@store/stores/auth/types";
+import {
+    yupEmailRequired,
+    yupNameRequired,
+    yupPhoneRequired,
+} from "@consts/validationConsts";
 import { isEmpty } from "lodash";
 
 export enum EAccountInfoFieldsNames {
@@ -26,12 +30,12 @@ export type TAccountTrackerForm = {
 };
 
 export const accountInfoDefaultValues = (
-    authData?: TAuthData,
+    accountData?: TAccountData,
 ): TAccountInfoForm => {
     return {
-        [EAccountInfoFieldsNames.name]: authData?.name ?? "",
-        [EAccountInfoFieldsNames.email]: authData?.email ?? "",
-        [EAccountInfoFieldsNames.phone]: authData?.phone ?? "",
+        [EAccountInfoFieldsNames.name]: accountData?.name ?? "",
+        [EAccountInfoFieldsNames.email]: accountData?.email ?? "",
+        [EAccountInfoFieldsNames.phone]: accountData?.phone ?? "",
     };
 };
 
@@ -42,11 +46,6 @@ export const accountTrackerDefaultValues: TAccountTrackerForm = {
 export const accountInfoFormResolver = (
     editableField: EAccountInfoFieldsNames | undefined,
 ): Resolver<TAccountInfoForm> | undefined => {
-    const requiredText = "This field is required";
-    const emailNotValid = "Please enter valid email address";
-    const emailMaxText = "Email cannot contain more than 255 symbols";
-    const onlyLatin = "Field may contains only latin symbols and numbers";
-
     if (!editableField) return undefined;
     let result: yup.ObjectSchema<
         { [editableField: string]: string },
@@ -58,19 +57,12 @@ export const accountInfoFormResolver = (
     switch (editableField) {
         case EAccountInfoFieldsNames.name:
             result = yup.object().shape({
-                [EAccountInfoFieldsNames.name]: yup
-                    .string()
-                    .required(requiredText)
-                    .matches(/^([a-zA-Z0-9 _-]+)$/, onlyLatin),
+                [EAccountInfoFieldsNames.name]: yupNameRequired(),
             });
             break;
         case EAccountInfoFieldsNames.email:
             result = yup.object().shape({
-                [EAccountInfoFieldsNames.email]: yup
-                    .string()
-                    .email(emailNotValid)
-                    .max(255, emailMaxText)
-                    .required(requiredText),
+                [EAccountInfoFieldsNames.email]: yupEmailRequired(),
             });
             break;
         case EAccountInfoFieldsNames.phone:

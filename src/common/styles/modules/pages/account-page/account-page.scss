@@ -16,6 +16,9 @@
       font-size: $font-size-xxl;
       line-height: $line-height-xxl;
       font-family: $font-family-primary;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
     }
   }
 
@@ -328,5 +331,5 @@
       }
     }
   }
-  
+
 }

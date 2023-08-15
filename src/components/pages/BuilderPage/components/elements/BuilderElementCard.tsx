@@ -21,16 +21,16 @@ const BuilderElementCard: FC<
     IBuilderElementCardProps & TBuilderElementComp
 > = ({
     className,
-    title,
+    mainTitle,
     value,
     subTitle,
     imgSrc,
     price,
-    currency,
+    priceCurrency,
     popular,
-    disabled,
     onClick,
-    fieldValue,
+    fieldName,
+    nextQuestion,
 }) => {
     const classPrefix = `builder-element-card`;
     const {
@@ -38,21 +38,21 @@ const BuilderElementCard: FC<
         getValues,
         formState: { errors },
     } = useFormContext();
-    const errorMessage = errors[fieldValue]?.message;
+    const errorMessage = errors[fieldName]?.message;
 
     const getIsActive = (
         value: string | number | null | undefined,
     ): boolean => {
         const fieldValues = getValues();
-        if (fieldValues[fieldValue]) {
-            return fieldValues[fieldValue].includes(value);
+        if (fieldValues[fieldName]) {
+            return fieldValues[fieldName].includes(value);
         }
         return false;
     };
 
     return (
         <Controller
-            name={fieldValue}
+            name={fieldName}
             control={control}
             render={({ field }) => {
                 return (
@@ -63,23 +63,21 @@ const BuilderElementCard: FC<
                             className,
                             { _active: getIsActive(value) },
                             { _popular: popular },
-                            { _disabled: disabled },
+                            // { _disabled: disabled },
                         )}
                     >
                         <div
                             className={cn(`${classPrefix}_inner-wrapper`)}
                             onClick={() => {
-                                if (!disabled) {
-                                    field.onChange(value);
-                                    if (isFunction(onClick)) {
-                                        onClick(value);
-                                    }
+                                field.onChange(value);
+                                if (isFunction(onClick)) {
+                                    onClick(value);
                                 }
                             }}
                         >
-                            {title && (
+                            {mainTitle && (
                                 <H4 className={`${classPrefix}_title`}>
-                                    {title}
+                                    {mainTitle}
                                 </H4>
                             )}
                             {imgSrc && <ImgWrapper src={imgSrc} height={220} />}
@@ -87,8 +85,11 @@ const BuilderElementCard: FC<
                             {price && (
                                 <P>
                                     {price}
-                                    {currency}
+                                    {priceCurrency}
                                 </P>
+                            )}
+                            {nextQuestion && (
+                                <P>NEXT id: {nextQuestion || "null"}</P>
                             )}
                         </div>
                     </div>

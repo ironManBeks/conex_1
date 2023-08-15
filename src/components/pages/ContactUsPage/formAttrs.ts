@@ -2,7 +2,7 @@ import { Resolver } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
 
-import { yupPhoneRequired } from "@consts/validationConsts";
+import { yupNameRequired, yupPhoneRequired } from "@consts/validationConsts";
 
 export const FEEDBACK_MAX_MESSAGE_LENGTH = 1000;
 
@@ -30,10 +30,7 @@ export const contactsUsFormResolver = (): Resolver<TContactsUsForm> => {
 
     return yupResolver(
         yup.object().shape({
-            [EContactsUsFieldsNames.name]: yup
-                .string()
-                .required(requiredText)
-                .trim(),
+            [EContactsUsFieldsNames.name]: yupNameRequired(),
             [EContactsUsFieldsNames.phoneNumber]: yupPhoneRequired(),
             [EContactsUsFieldsNames.message]: yup
                 .string()

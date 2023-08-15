@@ -44,8 +44,15 @@ export const showAxiosNotificationError = (
         message: `Unknown error`,
         description: `Try to reload the page or report an error to the site administration`,
     };
+    if (!props) {
+        showNotification({
+            ...notificationProps,
+            type: "error",
+        });
+        return;
+    }
 
-    if (axios.isAxiosError(props) || axios.isAxiosError(props.data)) {
+    if (axios.isAxiosError(props) || axios.isAxiosError(props?.data)) {
         notificationProps = {
             message: `Error ${props.response?.status}`,
             description: props.message || props.response?.data.message,

@@ -2,17 +2,18 @@ import { FC, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { isEmpty } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
-import { EButtonColor } from "@components/buttons/types";
-import { TBuilderCompProps } from "../types";
 import { useRootStore } from "@store";
 import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
-import { notImplemented } from "@helpers/notImplemented";
 import { showNotification } from "@helpers/notificarionHelper";
-import { EStepPosition } from "@store/stores/builder/types";
+import { EButtonColor } from "@components/buttons/types";
+import { TBuilderCompProps } from "../types";
+import { TBuilderStepDataDTO } from "@store/stores/builder/types";
+import { isArray, isEmpty, isNumber } from "lodash";
+import { toJS } from "mobx";
+import { notImplemented } from "@helpers/notImplemented";
 
 const BuilderStepActions: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {
@@ -23,13 +24,14 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
             formState: { errors },
         } = useFormContext();
         const {
-            setCurrentStepData,
-            getStepPosition,
             updateCurrentStepData,
-            setCreatingDoorData,
-            creatingDoorData,
+            currentStepData,
+            stepQueue,
+            setStepQueue,
+            setResultDoorData,
+            setCurrentStepData,
+            resultDoorData,
         } = builderStore;
-        const stepPosition = getStepPosition();
 
         const errorMessageList = pickOutFormErrorMessages<FieldErrors<any>, []>(
             errors,
@@ -37,23 +39,66 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
         );
 
         const handleBack = () => {
-            updateCurrentStepData("back");
+            updateCurrentStepData("prev");
+        };
+
+        const getNextPageId = (
+            step: TBuilderStepDataDTO | null,
+            selectedValue: string | number | string[],
+        ): number | null | "end" | number[] => {
+            if (isEmpty(step) || !selectedValue) {
+                return null;
+            }
+            if (isArray(selectedValue)) {
+                const pages: number[] = [];
+                for (let i = 0; i < selectedValue.length; i++) {
+                    const selectedElement = step?.attributes.fieldElements.find(
+                        (item) => item.value === selectedValue[i],
+                    );
+                    if (selectedElement?.nextQuestion) {
+                        pages.push(selectedElement.nextQuestion);
+                    }
+                }
+                return pages;
+            } else {
+                const selectedElement = step?.attributes.fieldElements.find(
+                    (item) => item.value === selectedValue,
+                );
+                if (!isEmpty(selectedElement)) {
+                    if (isNumber(selectedElement.nextQuestion)) {
+                        return selectedElement.nextQuestion;
+                    } else return "end";
+                }
+            }
+
+            return null;
         };
 
         const handleNext = handleSubmit((data) => {
+            if (!isEmpty(resultDoorData)) {
+                notImplemented();
+            }
             if (!errorMessageList.length) {
-                if (stepPosition === EStepPosition.end) {
-                    if (isEmpty(creatingDoorData)) {
-                        setCurrentStepData(null);
-                        setCreatingDoorData(data);
-                    }
-                } else if (stepPosition === EStepPosition.confirm) {
-                    notImplemented("Create order");
-                } else {
-                    updateCurrentStepData("next");
+                const currentStepName =
+                    currentStepData?.attributes.fieldName || "";
+                const nextPage = getNextPageId(
+                    currentStepData,
+                    data[currentStepName],
+                );
+                if (isArray(nextPage) || isNumber(nextPage)) {
+                    setStepQueue(nextPage, "add");
+                }
+                if (nextPage === "end") {
+                    setResultDoorData(data);
+                    setCurrentStepData(null);
                 }
             }
         });
+
+        useEffect(() => {
+            updateCurrentStepData(stepQueue[0]);
+            console.log("stepQueue", toJS(stepQueue));
+        }, [stepQueue]);
 
         useEffect(() => {
             if (errorMessageList.length) {
@@ -66,16 +111,10 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
             }
         }, [errors]);
 
-        const nextButtonText = () => {
-            if (stepPosition === EStepPosition.end) return "Create door";
-            if (stepPosition === EStepPosition.confirm) return "Create order";
-            return "Next";
-        };
-
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__inner-wrapper`}>
-                    {stepPosition !== "start" && (
+                    {currentStepData?.id !== 1 && currentStepData?.id !== 0 && (
                         <ButtonPrimary onClick={handleBack}>Back</ButtonPrimary>
                     )}
                     <ButtonPrimary
@@ -85,7 +124,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
                             marginLeft: "auto",
                         }}
                     >
-                        {nextButtonText()}
+                        {isEmpty(resultDoorData) ? "Next" : "Create order"}
                     </ButtonPrimary>
                 </div>
             </div>
