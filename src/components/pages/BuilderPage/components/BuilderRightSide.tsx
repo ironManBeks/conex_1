@@ -58,7 +58,7 @@ const BuilderRightSide: FC<TBuilderCompProps> = observer(
                     title: currentStep.attributes.fieldTitle,
                     list: selectedElements.map((item) => ({
                         label: item.mainTitle,
-                        value: `${item.priceCurrency} ${item.price}`,
+                        value: item.price,
                     })),
                 });
             }
@@ -66,25 +66,34 @@ const BuilderRightSide: FC<TBuilderCompProps> = observer(
             return result;
         };
 
-        const additionalServicesOptions: TAdditionalServicesOption[] = [
-            { label: "Additional charges", value: "$111.00" },
-        ];
+        const getTotal = (): number => {
+            const list = getParamsByValue();
 
-        const additionalServicesTotalOption: TAdditionalServicesOption = {
-            label: "Approximate price",
-            value: "$123.00",
+            return list.reduce((accumulator, currentValue) => {
+                const fieldPrice = currentValue.list.reduce(
+                    (acc, cur) => acc + Number(cur.value),
+                    0,
+                );
+                return accumulator + fieldPrice;
+            }, 0);
         };
 
-        useEffect(() => {
-            console.log("resultDoorData", toJS(resultDoorData));
-        }, [resultDoorData]);
+        // const additionalServicesOptions: TAdditionalServicesOption[] = [
+        //     { label: "Additional charges", value: "$111.00" },
+        // ];
+
+        const additionalServicesTotalOption: TAdditionalServicesOption = {
+            label: "Grand Total",
+            value: `$${getTotal()}`,
+        };
 
         return (
             <div className={cn(`${classPrefix}__wrapper`)}>
                 <div className={cn(`${classPrefix}__inner-wrapper`)}>
                     <AddedOptionsList optionsList={getParamsByValue()} />
                     <AdditionalServices
-                        options={additionalServicesOptions}
+                        options={[]}
+                        // options={additionalServicesOptions}
                         totalOption={additionalServicesTotalOption}
                     />
                 </div>

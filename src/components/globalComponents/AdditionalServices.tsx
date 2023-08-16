@@ -13,7 +13,7 @@ const AdditionalServices: FC<TAdditionalServices> = ({
     const classPrefix = `additional-services`;
     return (
         <div className={cn(`${classPrefix}_wrapper`, className)}>
-            {options.length && (
+            {!!options.length && (
                 <div className={`${classPrefix}_list`}>
                     {options.map((item, index) => (
                         <div key={index} className={`${classPrefix}_item`}>
