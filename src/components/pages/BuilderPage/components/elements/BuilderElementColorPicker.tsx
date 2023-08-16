@@ -14,25 +14,27 @@ import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { BUILDER_ELEMENT_CLASSNAME } from "../../consts";
 import {
     IBuilderElementCardProps,
+    IBuilderElementColorPickerProps,
     TBuilderElementComp,
 } from "@components/pages/BuilderPage/types";
+import { isColorHex } from "@helpers/checkHelper";
 
-const BuilderElementCard: FC<
-    IBuilderElementCardProps & TBuilderElementComp
+const BuilderElementColorPicker: FC<
+    IBuilderElementColorPickerProps & TBuilderElementComp
 > = ({
     className,
     mainTitle,
     value,
     subTitle,
-    imgSrc,
     price,
     priceCurrency,
     popular,
     onClick,
     fieldName,
     nextQuestion,
+    color,
 }) => {
-    const classPrefix = `builder-element-card`;
+    const classPrefix = `builder-element-color-picker`;
     const {
         control,
         getValues,
@@ -75,18 +77,18 @@ const BuilderElementCard: FC<
                                 }
                             }}
                         >
+                            <div
+                                className={`${classPrefix}_field`}
+                                style={{
+                                    background: isColorHex(value)
+                                        ? value
+                                        : subTitle || "none",
+                                }}
+                            />
                             {mainTitle && (
                                 <H4 className={`${classPrefix}_title`}>
                                     {mainTitle}
                                 </H4>
-                            )}
-                            {imgSrc && (
-                                <ImgWrapper
-                                    src={imgSrc}
-                                    height={220}
-                                    alt={`image: ${mainTitle}`}
-                                    title={mainTitle}
-                                />
                             )}
                             {subTitle && <H5>{subTitle}</H5>}
                             {price && (
@@ -106,4 +108,4 @@ const BuilderElementCard: FC<
     );
 };
 
-export default BuilderElementCard;
+export default BuilderElementColorPicker;

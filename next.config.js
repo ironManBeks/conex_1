@@ -12,6 +12,10 @@ module.exports = withPlugins([], {
                 protocol: "https",
                 hostname: "picsum.photos",
             },
+            {
+                protocol: "https",
+                hostname: "conexwest-doors.opserver.store",
+            },
         ],
     },
     syntax: "postcss-scss",

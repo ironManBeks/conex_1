@@ -1,3 +1,5 @@
+import { TNullable } from "@globalTypes/commonTypes";
+
 export enum EBuilderFieldTypes {
     card = "card",
     checkbox = "checkbox",
@@ -9,12 +11,16 @@ export enum EBuilderFieldTypes {
 export type TBuilderElementDataDTO = {
     id: number;
     mainTitle: string;
-    subTitle: string | null;
+    subTitle: TNullable<string>;
     value: string;
     popular: boolean;
     price: number;
     priceCurrency: string;
-    nextQuestion: number | null;
+    image?: {
+        alt: TNullable<string>;
+        url: TNullable<string>;
+    };
+    nextQuestion: TNullable<number>;
 };
 
 export type TBuilderStepDataDTO = {
@@ -52,19 +58,20 @@ export type TStepQueueActions = "add" | "remove" | "clear";
 export type TResultDoorData = Record<string, string | string[] | number> | null;
 
 export interface IBuilderStore {
-    builderData: TBuilderDTO | null;
+    builderData: TNullable<TBuilderDTO>;
     builderDataFetching: boolean;
-    currentStepData: TBuilderStepDataDTO | null;
-    currentStepId: number | null;
+    currentStepData: TNullable<TBuilderStepDataDTO>;
+    currentStepId: TNullable<number>;
     stepHistory: number[];
     stepQueue: number[];
     resultDoorData: TResultDoorData;
+    endDoorData: TResultDoorData;
     // functions
     getBuilderData: () => Promise<void>;
     setBuilderData: (data: TBuilderDTO) => void;
     setBuilderDataFetching: (value: boolean) => void;
-    setCurrentStepData: (data: TBuilderStepDataDTO | null) => void;
-    setCurrentStepId: (value: number | null) => void;
+    setCurrentStepData: (data: TNullable<TBuilderStepDataDTO>) => void;
+    setCurrentStepId: (value: TNullable<number>) => void;
     updateCurrentStepData: (value: "start" | "prev" | number) => void;
     setStepHistory: (
         stepId: number | undefined,
@@ -75,4 +82,5 @@ export interface IBuilderStore {
         action: TStepQueueActions | undefined,
     ) => void;
     setResultDoorData: (data: TResultDoorData) => void;
+    setEndDoorData: (data: TResultDoorData) => void;
 }

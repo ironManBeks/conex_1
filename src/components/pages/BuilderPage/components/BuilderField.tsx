@@ -1,17 +1,18 @@
 import { FC, ReactNode } from "react";
 import cn from "classnames";
 
-import { H1, H2, P } from "@components/Text";
+import { H2, P } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 import FieldRadioArrayController from "@components/form/formControllers/FieldRadioArrayController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
 import BuilderElementCard from "./elements/BuilderElementCard";
 
-import { TBuilderElements, TBuilderFieldBase } from "../types";
+import { TBuilderFieldBase } from "../types";
 import {
     EBuilderFieldTypes,
     TBuilderElementDataDTO,
 } from "@store/stores/builder/types";
+import BuilderElementColorPicker from "@components/pages/BuilderPage/components/elements/BuilderElementColorPicker";
 
 const BuilderField: FC<TBuilderFieldBase> = ({ id, attributes, className }) => {
     const classPrefix = `builder-field`;
@@ -92,7 +93,7 @@ const getElementsListByType = ({
                     priceCurrency={item.priceCurrency}
                     fieldName={fieldName}
                     nextQuestion={item.nextQuestion}
-                    imgSrc={null}
+                    imgSrc={item.image?.url}
                     // disabled={item.disabled}
                 />
             ));
@@ -150,7 +151,7 @@ const getElementsListByType = ({
                                 {item.nextQuestion && (
                                     <b>
                                         <br />
-                                        NEXT id: {item.nextQuestion || "null"}
+                                        nextId: {item.nextQuestion || "null"}
                                     </b>
                                 )}
                             </div>
@@ -161,6 +162,23 @@ const getElementsListByType = ({
                     showError={false}
                 />
             );
+        case EBuilderFieldTypes.colorPicker:
+            return elements.map((item) => (
+                <BuilderElementColorPicker
+                    key={item.id}
+                    id={item.id}
+                    value={item.value}
+                    mainTitle={item.mainTitle}
+                    popular={item.popular}
+                    subTitle={item.subTitle}
+                    price={item.price}
+                    priceCurrency={item.priceCurrency}
+                    fieldName={fieldName}
+                    nextQuestion={item.nextQuestion}
+                    color={null}
+                    // disabled={item.disabled}
+                />
+            ));
         default:
             return <></>;
     }

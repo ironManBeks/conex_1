@@ -10,6 +10,7 @@ import BuilderForm from "./components/BuilderForm";
 import { useRootStore } from "@store";
 import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoader";
 
+// ToDo clean code :)
 const BuilderPage: FC = observer(() => {
     const classPrefix = "builder-page";
     const { builderStore } = useRootStore();

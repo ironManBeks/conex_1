@@ -105,16 +105,6 @@ const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
         // defaultValues: builderDefaultValuesGenerator(currentStepData?.fields),
     });
 
-    useEffect(() => {
-        if (isEmpty(currentStepData)) {
-            updateCurrentStepData("start");
-        }
-    }, []);
-
-    // useEffect(() => {
-    //     console.log("stepHistory", toJS(stepHistory));
-    // }, [stepHistory]);
-
     return (
         <FormProvider {...methods}>
             <form action="">

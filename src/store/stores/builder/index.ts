@@ -11,15 +11,17 @@ import {
 import axiosInstance from "../../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
 import { isArray, isEmpty, isNumber, uniq } from "lodash";
+import { TNullable } from "@globalTypes/commonTypes";
 
 export class BuilderStore implements IBuilderStore {
-    builderData: TBuilderDTO | null = null;
+    builderData: TNullable<TBuilderDTO> = null;
     builderDataFetching = true;
     currentStepData: TBuilderStepDataDTO | null = null;
-    currentStepId: number | null = null;
+    currentStepId: TNullable<number> = null;
     stepHistory: number[] = [];
     stepQueue: number[] = [];
     resultDoorData: TResultDoorData = null;
+    endDoorData: TResultDoorData = null;
 
     constructor() {
         makeAutoObservable(this, {
@@ -30,6 +32,7 @@ export class BuilderStore implements IBuilderStore {
             stepHistory: observable,
             stepQueue: observable,
             resultDoorData: observable,
+            endDoorData: observable,
             // functions
             setBuilderData: action,
             setBuilderDataFetching: action,
@@ -38,6 +41,7 @@ export class BuilderStore implements IBuilderStore {
             setCurrentStepId: action,
             setStepQueue: action,
             setResultDoorData: action,
+            setEndDoorData: action,
         });
     }
 
@@ -70,20 +74,20 @@ export class BuilderStore implements IBuilderStore {
     ): void => {
         if (!isNumber(stepId) && !action) {
             const nerArr = this.stepHistory.splice(-1);
-            this.stepHistory = [...nerArr];
+            this.stepHistory = uniq([...nerArr]);
             return;
         }
 
         if (action === "add") {
             if (isNumber(stepId)) {
-                this.stepHistory = [...this.stepHistory, stepId];
+                this.stepHistory = uniq([...this.stepHistory, stepId]);
             }
             return;
         }
 
         if (action === "remove") {
             const newArr = this.stepHistory.filter((item) => item !== stepId);
-            this.stepHistory = [...newArr];
+            this.stepHistory = uniq([...newArr]);
             return;
         }
     };
@@ -131,37 +135,35 @@ export class BuilderStore implements IBuilderStore {
         if (!this.builderData) return;
 
         if (way === "start") {
-            const firstStep = this.builderData.data[0];
             this.setCurrentStepData(this.builderData.data[0]);
-            // this.setStepHistory(firstStep.id, "add");
             return;
         }
 
         if (way === "prev") {
-            if (!isEmpty(this.resultDoorData)) {
-                this.setResultDoorData(null);
+            if (!isEmpty(this.endDoorData)) {
+                this.setEndDoorData(null);
             }
-            const prevPageId = this.stepHistory[this.stepHistory.length - 1];
-            if (isNumber(prevPageId)) {
-                const prevPage = this.builderData.data.find(
-                    (item) => item.id === prevPageId,
+            const prevStepId = this.stepHistory[this.stepHistory.length - 1];
+            if (isNumber(prevStepId)) {
+                const prevStep = this.builderData.data.find(
+                    (item) => item.id === prevStepId,
                 );
-                if (!isEmpty(prevPage)) {
-                    this.setCurrentStepData(prevPage);
-                    this.setStepHistory(prevPageId, "remove");
+                if (!isEmpty(prevStep)) {
+                    this.setCurrentStepData(prevStep);
+                    this.setStepHistory(prevStepId, "remove");
                 }
             }
             return;
         }
 
         if (isNumber(way)) {
-            const nextPage = this.builderData.data.find(
+            const nextStep = this.builderData.data.find(
                 (item) => item.id === way,
             );
-            if (!isEmpty(nextPage)) {
+            if (!isEmpty(nextStep)) {
                 this.setStepHistory(this.currentStepId, "add");
                 this.setStepQueue(this.currentStepId, "remove");
-                this.setCurrentStepData(nextPage);
+                this.setCurrentStepData(nextStep);
             }
             return;
         }
@@ -169,5 +171,9 @@ export class BuilderStore implements IBuilderStore {
 
     setResultDoorData = (data: TResultDoorData): void => {
         this.resultDoorData = data;
+    };
+
+    setEndDoorData = (data: TResultDoorData): void => {
+        this.endDoorData = data;
     };
 }
