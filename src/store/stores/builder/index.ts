@@ -143,6 +143,20 @@ export class BuilderStore implements IBuilderStore {
             if (!isEmpty(this.endDoorData)) {
                 this.setEndDoorData(null);
             }
+            // console.log("resultDoorData", toJS(this.resultDoorData));
+            // console.log("currentStepData", toJS(this.currentStepData));
+
+            if (
+                this.currentStepData?.attributes.fieldName &&
+                this.resultDoorData &&
+                this.currentStepData?.attributes.fieldName in
+                    this.resultDoorData
+            ) {
+                const newObj = { ...this.resultDoorData };
+                delete newObj[this.currentStepData?.attributes.fieldName];
+                this.setResultDoorData(newObj);
+            }
+
             const prevStepId = this.stepHistory[this.stepHistory.length - 1];
             if (isNumber(prevStepId)) {
                 const prevStep = this.builderData.data.find(

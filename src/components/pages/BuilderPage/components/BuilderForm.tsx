@@ -19,30 +19,32 @@ import {
 import { toJS } from "mobx";
 
 type TBuilderDefaultValue = string | string[] | number | number[] | null;
-//
-// const getBuilderDefaultValue = (
-//     fieldType: EBuilderFieldTypes,
-// ): TBuilderDefaultValue => {
-//     switch (fieldType) {
-//         case EBuilderFieldTypes.card:
-//         case EBuilderFieldTypes.radio:
-//         case EBuilderFieldTypes.colorPicker:
-//         case EBuilderFieldTypes.radioButton:
-//             return "";
-//         case EBuilderFieldTypes.checkbox:
-//             return [];
-//         default:
-//             return null;
-//     }
-// };
-//
+
+const getBuilderDefaultValue = (
+    fieldType: EBuilderFieldTypes,
+): TBuilderDefaultValue => {
+    switch (fieldType) {
+        case EBuilderFieldTypes.card:
+        case EBuilderFieldTypes.radio:
+        case EBuilderFieldTypes.colorPicker:
+        case EBuilderFieldTypes.radioButton:
+            return "";
+        case EBuilderFieldTypes.checkbox:
+            return [];
+        default:
+            return null;
+    }
+};
+
 // const builderDefaultValuesGenerator = (
 //     fields?: TBuilderFieldBase[],
 // ): Record<string, TBuilderDefaultValue> => {
 //     const result: Record<string, TBuilderDefaultValue> = {};
 //     if (!fields?.length) return result;
 //     for (let i = 0; i < fields.length; i++) {
-//         result[fields[i].value] = getBuilderDefaultValue(fields[i].type);
+//         result[fields[i].attributes.fieldName] = getBuilderDefaultValue(
+//             fields[i].attributes.fieldType,
+//         );
 //     }
 //     return result;
 // };
@@ -102,7 +104,7 @@ const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
 
     const methods = useForm({
         resolver: builderFormResolver(currentStepData?.attributes),
-        // defaultValues: builderDefaultValuesGenerator(currentStepData?.fields),
+        defaultValues: undefined,
     });
 
     return (

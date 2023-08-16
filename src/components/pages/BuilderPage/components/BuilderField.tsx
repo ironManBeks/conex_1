@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import cn from "classnames";
 
-import { H2, P } from "@components/Text";
+import { H2 } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 import FieldRadioArrayController from "@components/form/formControllers/FieldRadioArrayController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
@@ -87,7 +87,20 @@ const getElementsListByType = ({
                 <FieldCheckboxArrayController
                     name={fieldName}
                     options={elements.map((item) => ({
-                        label: `${item.mainTitle}`,
+                        label: (
+                            <div>
+                                {item.mainTitle}
+                                {item.price && (
+                                    <>
+                                        <br />
+                                        <b>
+                                            {item.price}
+                                            {item.priceCurrency}
+                                        </b>
+                                    </>
+                                )}
+                            </div>
+                        ),
                         value: item.value,
                         // disabled: item.disabled,
                     }))}
