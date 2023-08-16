@@ -30,21 +30,6 @@ const BuilderField: FC<TBuilderFieldBase> = ({ id, attributes, className }) => {
                 _required: fieldRequired,
             })}
         >
-            {fieldName && (
-                <P>
-                    <b>Field name:</b> {fieldName}
-                </P>
-            )}
-            {fieldType && (
-                <P>
-                    <b>Field type:</b> {fieldType}
-                </P>
-            )}
-            {fieldName && (
-                <P>
-                    <b>Step ID:</b> {id}
-                </P>
-            )}
             {fieldTitle && (
                 <H2
                     className={cn(`${classPrefix}_title`, {
@@ -102,9 +87,7 @@ const getElementsListByType = ({
                 <FieldCheckboxArrayController
                     name={fieldName}
                     options={elements.map((item) => ({
-                        label: `${item.mainTitle}. NEXT: ${
-                            item.nextQuestion || "null"
-                        }`,
+                        label: `${item.mainTitle}`,
                         value: item.value,
                         // disabled: item.disabled,
                     }))}
@@ -116,9 +99,7 @@ const getElementsListByType = ({
                 <FieldRadioArrayController
                     name={fieldName}
                     options={elements.map((item) => ({
-                        label: `${item.mainTitle}. NEXT: ${
-                            item.nextQuestion || "null"
-                        }`,
+                        label: `${item.mainTitle}`,
                         value: item.value,
                         // disabled: item.disabled,
                     }))}
@@ -147,12 +128,6 @@ const getElementsListByType = ({
                                             {item.priceCurrency}
                                         </b>
                                     </>
-                                )}
-                                {item.nextQuestion && (
-                                    <b>
-                                        <br />
-                                        nextId: {item.nextQuestion || "null"}
-                                    </b>
                                 )}
                             </div>
                         ),

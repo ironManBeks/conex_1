@@ -95,9 +95,6 @@ const BuilderElementCard: FC<
                                     {priceCurrency}
                                 </P>
                             )}
-                            <P>
-                                <b>nextId: {nextQuestion || "null"}</b>
-                            </P>
                         </div>
                     </div>
                 );
