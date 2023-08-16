@@ -15,11 +15,11 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_step`;
         const { builderStore } = useRootStore();
-        const { builderData, currentStepData, resultDoorData } = builderStore;
+        const { builderData, currentStepData, endDoorData } = builderStore;
 
-        useEffect(() => {
-            console.log("resultDoorData", toJS(resultDoorData));
-        }, [resultDoorData]);
+        // useEffect(() => {
+        //     console.log("endDoorData", toJS(endDoorData));
+        // }, [endDoorData]);
 
         return useMemo(() => {
             if (!isEmpty(currentStepData)) {
@@ -40,15 +40,15 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
                 );
             }
 
-            if (!isEmpty(resultDoorData)) {
-                const keys = Object.keys(resultDoorData);
+            if (!isEmpty(endDoorData)) {
+                const keys = Object.keys(endDoorData);
                 const result: { key: string; value: string }[] = [];
 
                 for (let i = 0; i < keys.length; i++) {
                     const currentKey: keyof FieldErrors = keys[i];
                     result.push({
                         key: currentKey,
-                        value: resultDoorData[currentKey] as string,
+                        value: endDoorData[currentKey] as string,
                     });
                 }
 
@@ -67,10 +67,10 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
 
             return (
                 <div style={{ textAlign: "center" }}>
-                    Current step not found. <br /> Please try to reload the page
+                    Something went wrong. <br /> Please try to reload the page
                 </div>
             );
-        }, [currentStepData, resultDoorData]);
+        }, [currentStepData, endDoorData]);
     },
 );
 

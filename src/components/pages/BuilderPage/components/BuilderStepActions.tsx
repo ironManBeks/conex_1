@@ -2,6 +2,7 @@ import { FC, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
+import { isArray, isEmpty, isNumber } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
@@ -11,9 +12,9 @@ import { showNotification } from "@helpers/notificarionHelper";
 import { EButtonColor } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
 import { TBuilderStepDataDTO } from "@store/stores/builder/types";
-import { isArray, isEmpty, isNumber } from "lodash";
-import { toJS } from "mobx";
 import { notImplemented } from "@helpers/notImplemented";
+import loginWithApple from "@components/globalComponents/AuthForm/components/LoginWithApple";
+import { toJS } from "mobx";
 
 const BuilderStepActions: FC<TBuilderCompProps> = observer(
     ({ pageClassPrefix }) => {
@@ -28,9 +29,10 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
             currentStepData,
             stepQueue,
             setStepQueue,
-            setResultDoorData,
+            endDoorData,
+            setEndDoorData,
             setCurrentStepData,
-            resultDoorData,
+            setResultDoorData,
         } = builderStore;
 
         const errorMessageList = pickOutFormErrorMessages<FieldErrors<any>, []>(
@@ -75,7 +77,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
         };
 
         const handleNext = handleSubmit((data) => {
-            if (!isEmpty(resultDoorData)) {
+            if (!isEmpty(endDoorData)) {
                 notImplemented();
             }
             if (!errorMessageList.length) {
@@ -85,20 +87,46 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
                     currentStepData,
                     data[currentStepName],
                 );
-                if (isArray(nextPage) || isNumber(nextPage)) {
-                    setStepQueue(nextPage, "add");
-                }
-                if (nextPage === "end") {
-                    setResultDoorData(data);
-                    setCurrentStepData(null);
+                setResultDoorData(data);
+                // console.log("stepQueue", toJS(stepQueue));
+                // console.log("nextPage", nextPage);
+
+                if (stepQueue.length) {
+                    updateCurrentStepData(stepQueue[0]);
+                    if (isNumber(nextPage)) {
+                        setStepQueue(nextPage, "add");
+                    }
+                } else {
+                    if (isNumber(nextPage)) {
+                        updateCurrentStepData(nextPage);
+                    }
+                    if (isArray(nextPage)) {
+                        if (stepQueue.length) {
+                            updateCurrentStepData(stepQueue[0]);
+                        } else {
+                            updateCurrentStepData(nextPage[0]);
+                        }
+                        setStepQueue(nextPage.slice(1, nextPage.length), "add");
+                    }
+                    if (nextPage === "end") {
+                        setEndDoorData(data);
+                        setCurrentStepData(null);
+                    }
                 }
             }
         });
 
+        // useEffect(() => {
+        //     console.log("__stepQueue", toJS(stepQueue));
+        // }, [stepQueue]);
+        //
+        // useEffect(() => {
+        //     console.log("__stepHistory", toJS(stepHistory));
+        // }, [stepHistory]);
+
         useEffect(() => {
-            updateCurrentStepData(stepQueue[0]);
-            console.log("stepQueue", toJS(stepQueue));
-        }, [stepQueue]);
+            updateCurrentStepData("start");
+        }, []);
 
         useEffect(() => {
             if (errorMessageList.length) {
@@ -124,7 +152,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
                             marginLeft: "auto",
                         }}
                     >
-                        {isEmpty(resultDoorData) ? "Next" : "Create order"}
+                        {isEmpty(endDoorData) ? "Next" : "Create order"}
                     </ButtonPrimary>
                 </div>
             </div>

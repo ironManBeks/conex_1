@@ -1,4 +1,4 @@
-import { THEX } from "@globalTypes/commonTypes";
+import { THEX, TNullable } from "@globalTypes/commonTypes";
 import {
     EBuilderFieldTypes,
     TBuilderElementDataDTO,
@@ -20,7 +20,7 @@ export interface IBuilderElementBase extends TBuilderElementDataDTO {
 }
 
 export interface IBuilderElementCardProps extends IBuilderElementBase {
-    imgSrc: string | null;
+    imgSrc?: TNullable<string>;
 }
 
 export interface IBuilderElementCheckboxProps extends IBuilderElementBase {
@@ -28,7 +28,7 @@ export interface IBuilderElementCheckboxProps extends IBuilderElementBase {
 }
 
 export interface IBuilderElementColorPickerProps extends IBuilderElementBase {
-    color: THEX;
+    color: THEX | null;
 }
 
 export type TReferenceProps<

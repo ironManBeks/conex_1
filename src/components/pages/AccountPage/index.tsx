@@ -36,9 +36,15 @@ const AccountPage: FC = observer(() => {
 
         if (isEmpty(accountData)) {
             return (
-                <>
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
+                    }}
+                >
                     <AuthForm className={classPrefix} />
-                </>
+                </div>
             );
         }
 
