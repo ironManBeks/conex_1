@@ -4,34 +4,34 @@ import { isFunction } from "lodash";
 import cn from "classnames";
 import { observer } from "mobx-react";
 
-import FieldInputController from "@components/form/formControllers/FieldInputController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import { H2, P } from "@components/Text";
+import { P } from "@components/Text";
+import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
 
-import { TAuthFormProps, TAuthFormTypes } from "../../types";
-import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
 import { EButtonColor } from "@components/buttons/types";
 import {
-    EForgotPasswordFormFieldsNames,
-    forgotPasswordFormDefaultValues,
-    forgotPasswordFormResolver,
-    TForgotPasswordForm,
+    EResetPasswordFormFieldsNames,
+    resetPasswordFormDefaultValues,
+    resetPasswordFormResolver,
+    TResetPasswordForm,
 } from "./formAttrs";
+import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
+import { TAuthFormProps, TAuthFormTypes } from "../../types";
 import { useRootStore } from "@store";
 
-const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
+const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
     ({ className, onAuth }) => {
         const { authStore } = useRootStore();
-        const { authRequestFetching, forgotPasswordRequest } = authStore;
-        const methods = useForm<TForgotPasswordForm>({
-            resolver: forgotPasswordFormResolver(),
-            defaultValues: forgotPasswordFormDefaultValues,
+        const { authRequestFetching, resetPasswordRequest } = authStore;
+        const methods = useForm<TResetPasswordForm>({
+            resolver: resetPasswordFormResolver(),
+            defaultValues: resetPasswordFormDefaultValues,
         });
 
         const { handleSubmit } = methods;
 
-        const onSubmit: SubmitHandler<TForgotPasswordForm> = (data) => {
-            forgotPasswordRequest(data);
+        const onSubmit: SubmitHandler<TResetPasswordForm> = (data) => {
+            resetPasswordRequest({ ...data, code: "what?" });
             if (isFunction(onAuth)) {
                 onAuth();
             }
@@ -46,15 +46,21 @@ const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
                         className,
                     )}
                 >
-                    <H2>Forgot your password?</H2>
                     <P>
-                        No worries! Fill in your email and we'll send you a link
-                        to reset your password.
+                        Fill in your new password and we'll send you a link to
+                        update your password.
                     </P>
-                    <FieldInputController
-                        name={EForgotPasswordFormFieldsNames.email}
-                        placeholder="Email"
-                        label="Email"
+                    <FieldPasswordController
+                        name={EResetPasswordFormFieldsNames.password}
+                        placeholder="Password"
+                        label="Password"
+                    />
+                    <FieldPasswordController
+                        name={
+                            EResetPasswordFormFieldsNames.passwordConfirmation
+                        }
+                        placeholder="Confirm password"
+                        label="Confirm password"
                     />
                     <P>
                         If link doesn’t appear within a few minutes, check your
@@ -67,7 +73,7 @@ const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
                             isLoading={authRequestFetching}
                             disabled={authRequestFetching}
                         >
-                            Reset password
+                            Change password
                         </ButtonPrimary>
                     </div>
                 </form>
@@ -76,4 +82,4 @@ const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
     },
 );
 
-export default ForgotPasswordForm;
+export default ResetPasswordForm;

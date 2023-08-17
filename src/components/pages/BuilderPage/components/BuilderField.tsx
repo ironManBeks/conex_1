@@ -30,6 +30,12 @@ const BuilderField: FC<TBuilderFieldBase> = ({ id, attributes, className }) => {
                 _required: fieldRequired,
             })}
         >
+            <div>
+                {id && <div>id: {id}</div>}
+                {fieldType && <div>Type: {fieldType}</div>}
+                {fieldRequired && <div>Required: {fieldRequired}</div>}
+            </div>
+
             {fieldTitle && (
                 <H2
                     className={cn(`${classPrefix}_title`, {

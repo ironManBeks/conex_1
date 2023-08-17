@@ -1,11 +1,15 @@
 //////////////////
 // Local Storage
 //
-export const setStorage = (key: string, value: string): void => {
-    localStorage.setItem(key, JSON.stringify(value));
+import { isNil } from "lodash";
+
+export const setStorage = (key: string, value: any): void => {
+    if (!isNil(value)) {
+        localStorage.setItem(key, JSON.stringify(value));
+    }
 };
 
-export const getStorage = (key: string): string | null => {
+export const getStorage = (key: string): any | null => {
     if (typeof window !== "undefined") {
         const value = localStorage.getItem(key);
         return value ? JSON.parse(value) : null;
@@ -30,7 +34,7 @@ export const setSessionStorage = (
     sessionStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getSessionStorage = (key: string): string | null => {
+export const getSessionStorage = (key: string): any | null => {
     if (typeof window !== "undefined") {
         const value = sessionStorage.getItem(key);
         return value ? JSON.parse(value) : null;

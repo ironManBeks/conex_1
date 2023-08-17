@@ -4,35 +4,33 @@ import { isFunction } from "lodash";
 import cn from "classnames";
 import { observer } from "mobx-react";
 
-import FieldInputController from "@components/form/formControllers/FieldInputController";
-import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import FieldInputController from "@components/form/formControllers/FieldInputController";
 
 import { EButtonColor } from "@components/buttons/types";
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
-import { EAuthFormType, TAuthFormProps, TAuthFormTypes } from "../../types";
+import { TAuthFormProps, TAuthFormTypes } from "../../types";
 import {
-    ESignInFormFieldsNames,
-    signInFormDefaultValues,
-    signInFormResolver,
-    TSignInForm,
+    EEmailConfirmationFormFieldsNames,
+    emailConfirmationFormDefaultValues,
+    emailConfirmationFormResolver,
+    TEmailConfirmationForm,
 } from "./formAttrs";
 import { useRootStore } from "@store";
 
-const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
-    ({ className, onAuth, setFormType }) => {
+const ChangePasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
+    ({ className, onAuth }) => {
         const { authStore } = useRootStore();
-        const { authRequestFetching, authSignInRequest } = authStore;
-
-        const methods = useForm<TSignInForm>({
-            resolver: signInFormResolver(),
-            defaultValues: signInFormDefaultValues,
+        const { authRequestFetching, emailConfirmationRequest } = authStore;
+        const methods = useForm<TEmailConfirmationForm>({
+            resolver: emailConfirmationFormResolver(),
+            defaultValues: emailConfirmationFormDefaultValues,
         });
 
         const { handleSubmit } = methods;
 
-        const onSubmit: SubmitHandler<TSignInForm> = (data) => {
-            authSignInRequest(data);
+        const onSubmit: SubmitHandler<TEmailConfirmationForm> = (data) => {
+            emailConfirmationRequest(data);
             if (isFunction(onAuth)) {
                 onAuth();
             }
@@ -48,22 +46,10 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
                     )}
                 >
                     <FieldInputController
-                        name={ESignInFormFieldsNames.identifier}
-                        placeholder="Username or email"
-                        label="Username or email"
+                        name={EEmailConfirmationFormFieldsNames.email}
+                        placeholder="Email"
+                        label="Email"
                     />
-                    <FieldPasswordController
-                        name={ESignInFormFieldsNames.password}
-                        placeholder="Password"
-                        label="Password"
-                    />
-                    <a
-                        onClick={() =>
-                            setFormType(EAuthFormType.forgotPassword)
-                        }
-                    >
-                        Forgot password?
-                    </a>
                     <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_actions`}>
                         <ButtonPrimary
                             type="submit"
@@ -71,7 +57,7 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
                             isLoading={authRequestFetching}
                             disabled={authRequestFetching}
                         >
-                            Log in
+                            Confirm email
                         </ButtonPrimary>
                     </div>
                 </form>
@@ -80,4 +66,4 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
     },
 );
 
-export default SignInForm;
+export default ChangePasswordForm;

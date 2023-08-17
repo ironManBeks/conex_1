@@ -5,16 +5,17 @@ import { isFunction } from "lodash";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { P } from "@components/Text";
-import ForgotPasswordForm from "./components/ForgotPasswordForm";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
+import ForgotPasswordForm from "./components/ForgotPasswordForm";
+import ResetPasswordForm from "./components/ResetPasswordForm";
+import ChangePasswordForm from "./components/ChangePasswordForm";
+import EmailConfirmationForm from "./components/EmailConfirmationForm";
+
 import AuthFooter from "./components/AuthFooter";
 
-import { AUTH_FORM_CLASSNAME_PREFIX } from "@components/globalComponents/AuthForm/consts";
-import {
-    EAuthFormType,
-    TAuthFormProps,
-} from "@components/globalComponents/AuthForm/types";
+import { AUTH_FORM_CLASSNAME_PREFIX } from "./consts";
+import { EAuthFormType, TAuthFormProps } from "./types";
 
 const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
     const [formType, setFormType] = useState<EAuthFormType>(
@@ -39,6 +40,33 @@ const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
         if (formType === EAuthFormType.forgotPassword) {
             return (
                 <ForgotPasswordForm
+                    setFormType={setFormType}
+                    formType={formType}
+                />
+            );
+        }
+
+        if (formType === EAuthFormType.resetPassword) {
+            return (
+                <ResetPasswordForm
+                    setFormType={setFormType}
+                    formType={formType}
+                />
+            );
+        }
+
+        if (formType === EAuthFormType.changePassword) {
+            return (
+                <ChangePasswordForm
+                    setFormType={setFormType}
+                    formType={formType}
+                />
+            );
+        }
+
+        if (formType === EAuthFormType.sendEmailConfirmation) {
+            return (
+                <EmailConfirmationForm
                     setFormType={setFormType}
                     formType={formType}
                 />

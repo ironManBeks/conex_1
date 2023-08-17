@@ -143,9 +143,8 @@ export class BuilderStore implements IBuilderStore {
             if (!isEmpty(this.endDoorData)) {
                 this.setEndDoorData(null);
             }
-            // console.log("resultDoorData", toJS(this.resultDoorData));
-            // console.log("currentStepData", toJS(this.currentStepData));
 
+            // Remove step in resultDoorData (right side panel)
             if (
                 this.currentStepData?.attributes.fieldName &&
                 this.resultDoorData &&
@@ -158,6 +157,7 @@ export class BuilderStore implements IBuilderStore {
             }
 
             const prevStepId = this.stepHistory[this.stepHistory.length - 1];
+
             if (isNumber(prevStepId)) {
                 const prevStep = this.builderData.data.find(
                     (item) => item.id === prevStepId,

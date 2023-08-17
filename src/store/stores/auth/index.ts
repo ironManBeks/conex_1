@@ -8,9 +8,18 @@ import { showNotification } from "@helpers/notificarionHelper";
 import axiosInstance from "../../../api/api";
 import { TSignUpForm } from "@components/globalComponents/AuthForm/components/SignUpForm/formAttrs";
 import { TSignInForm } from "@components/globalComponents/AuthForm/components/SignInForm/formAttrs";
-import { IAuthStore, TAccountData, TAuthData } from "./types";
-import { AUTH_DATA_STORAGE, AUTH_TOKEN } from "@consts/storageNamesContsts";
+import {
+    IAuthStore,
+    TAccountData,
+    TAuthData,
+    TEmailConfirmationResponse,
+    TResetPasswordRequest,
+} from "./types";
+import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
 import { AuthDataMockup } from "../../../mockups/AuthDataMockup";
+import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/components/ForgotPasswordForm/formAttrs";
+import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
+import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 
 export class AuthStore implements IAuthStore {
     accountData: TAccountData = null;
@@ -35,14 +44,6 @@ export class AuthStore implements IAuthStore {
         this.accountData = data;
     };
 
-    getAccountData = (): void => {
-        this.setAccountDataFetching(true);
-        setTimeout(() => {
-            this.setAccountData(AuthDataMockup);
-            this.setAccountDataFetching(false);
-        }, 500);
-    };
-
     setAccountDataFetching = (value: boolean): void => {
         this.accountDataFetching = value;
     };
@@ -51,13 +52,14 @@ export class AuthStore implements IAuthStore {
     // Auth
     //
     setAuthData = (data: TAuthData | null): void => {
+        console.log("setAuthData______", data);
         this.authData = data;
         if (!isEmpty(data)) {
-            setStorage(AUTH_DATA_STORAGE, JSON.stringify(data));
-            setStorage(AUTH_TOKEN, data?.jwt);
+            setStorage(JWT_TOKEN, data?.jwt);
+            setStorage(AUTH_DATA, data?.user);
         } else {
-            removeStorage(AUTH_DATA_STORAGE);
-            removeStorage(AUTH_TOKEN);
+            removeStorage(JWT_TOKEN);
+            removeStorage(AUTH_DATA);
         }
     };
 
@@ -96,6 +98,92 @@ export class AuthStore implements IAuthStore {
                     type: "success",
                     message: "Welcome to Conexwest",
                 });
+            })
+            .catch((err) => {
+                console.log("err", err);
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setAuthRequestFetching(false);
+            });
+    };
+
+    forgotPasswordRequest = (
+        formValues: TForgotPasswordForm,
+    ): Promise<void> => {
+        this.setAuthRequestFetching(true);
+        return axiosInstance
+            .post("/auth/local", formValues)
+            .then((data: AxiosResponse<{ ok: boolean }>) => {
+                console.log("forgotPasswordRequest ok", data.data.ok);
+                showNotification({
+                    type: "success",
+                    message:
+                        "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.",
+                });
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setAuthRequestFetching(false);
+            });
+    };
+
+    resetPasswordRequest = (
+        formValues: TResetPasswordRequest,
+    ): Promise<void> => {
+        this.setAuthRequestFetching(true);
+        return axiosInstance
+            .post("/auth/reset-password", formValues)
+            .then((data: AxiosResponse<TAuthData>) => {
+                console.log("resetPasswordRequest");
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setAuthRequestFetching(false);
+            });
+    };
+
+    changePasswordRequest = (
+        formValues: TChangePasswordForm,
+    ): Promise<void> => {
+        this.setAuthRequestFetching(true);
+        return axiosInstance
+            .post("/auth/change-password", formValues)
+            .then((data: AxiosResponse<TAuthData>) => {
+                console.log("changePasswordRequest");
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setAuthRequestFetching(false);
+            });
+    };
+
+    emailConfirmationRequest = (
+        formValues: TEmailConfirmationForm,
+    ): Promise<void> => {
+        this.setAuthRequestFetching(true);
+        return axiosInstance
+            .post("/auth/send-email-confirmation", formValues)
+            .then((response: AxiosResponse<TEmailConfirmationResponse>) => {
+                const { data } = response;
+                console.log("emailConfirmationRequest");
+                if (data.sent) {
+                    showNotification({
+                        type: "success",
+                        message:
+                            "Check your email for a link to confirm your email. If it doesn’t appear within a few minutes, check your spam folder.",
+                    });
+                }
             })
             .catch((err) => {
                 showAxiosNotificationError(err);

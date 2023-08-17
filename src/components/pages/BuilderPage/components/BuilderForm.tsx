@@ -107,6 +107,10 @@ const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
         defaultValues: undefined,
     });
 
+    useEffect(() => {
+        updateCurrentStepData("start");
+    }, []);
+
     return (
         <FormProvider {...methods}>
             <form action="">
