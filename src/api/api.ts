@@ -1,6 +1,6 @@
 import axios from "axios";
 
-import { ACCESS_TOKEN, AUTH_TOKEN } from "@consts/storageNamesContsts";
+import { JWT_TOKEN } from "@consts/storageNamesContsts";
 import { PATH_LOGIN } from "@consts/pathsConsts";
 import { getStorage } from "@services/storage.service";
 
@@ -14,7 +14,7 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use((request: any) => {
     const { url } = request;
     if (url !== PATH_LOGIN) {
-        const token = getStorage(AUTH_TOKEN) || getStorage(ACCESS_TOKEN);
+        const token = getStorage(JWT_TOKEN);
         const authorization = token
             ? {
                   Authorization: token ? `Bearer ${token}` : "",

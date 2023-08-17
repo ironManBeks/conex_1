@@ -17,8 +17,6 @@ export const forgotPasswordFormDefaultValues: TForgotPasswordForm = {
 };
 
 export const forgotPasswordFormResolver = (): Resolver<TForgotPasswordForm> => {
-    const requiredText = "This field is required";
-
     return yupResolver(
         yup.object().shape({
             [EForgotPasswordFormFieldsNames.email]: yupEmailRequired(),

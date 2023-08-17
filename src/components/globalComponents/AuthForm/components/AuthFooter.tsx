@@ -10,12 +10,12 @@ import {
 
 const AuthFooter: FC<TAuthFooter> = ({ formType, setFormType }) => {
     const footerContent = useMemo(() => {
-        if (formType === EAuthFormType.register) {
+        if (formType === EAuthFormType.login) {
             return (
                 <>
-                    Already have an account?{" "}
-                    <a onClick={() => setFormType(EAuthFormType.login)}>
-                        Log In
+                    Don’t have an account?{" "}
+                    <a onClick={() => setFormType(EAuthFormType.register)}>
+                        Sign Up
                     </a>
                 </>
             );
@@ -23,10 +23,8 @@ const AuthFooter: FC<TAuthFooter> = ({ formType, setFormType }) => {
 
         return (
             <>
-                Don’t have an account?{" "}
-                <a onClick={() => setFormType(EAuthFormType.register)}>
-                    Sign Up
-                </a>
+                Already have an account?{" "}
+                <a onClick={() => setFormType(EAuthFormType.login)}>Log In</a>
             </>
         );
     }, [formType]);
@@ -34,6 +32,18 @@ const AuthFooter: FC<TAuthFooter> = ({ formType, setFormType }) => {
     return (
         <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_footer`}>
             <P>{footerContent}</P>
+            <hr />
+            <a onClick={() => setFormType(EAuthFormType.resetPassword)}>
+                Reset password? (this link will be removed)
+            </a>
+            <br />
+            <a onClick={() => setFormType(EAuthFormType.changePassword)}>
+                Change password? (this link will be removed)
+            </a>
+            <br />
+            <a onClick={() => setFormType(EAuthFormType.sendEmailConfirmation)}>
+                Email confirmation? (this link will be removed)
+            </a>
         </div>
     );
 };

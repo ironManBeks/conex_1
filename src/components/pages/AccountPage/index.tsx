@@ -1,6 +1,7 @@
 import { FC, useEffect, useMemo } from "react";
 import cn from "classnames";
 import { observer } from "mobx-react";
+import { isEmpty } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
@@ -11,18 +12,15 @@ import AccountOrderSkeleton from "@components/skeletons/AccountOrderSkeleton";
 import AuthForm from "@components/globalComponents/AuthForm";
 
 import { useRootStore } from "@store";
-import { getStorage } from "@services/storage.service";
-import { AUTH_TOKEN } from "@consts/storageNamesContsts";
-import { isEmpty } from "lodash";
 
 const AccountPage: FC = observer(() => {
     const { authStore } = useRootStore();
-    const { accountDataFetching, accountData } = authStore;
+    const { accountDataFetching, authData } = authStore;
     const classPrefix = "account-page";
 
     useEffect(() => {
-        console.log("accountData", accountData);
-    }, [accountData]);
+        console.log("authData", authData);
+    }, [authData]);
 
     const accountContent = useMemo(() => {
         if (accountDataFetching) {
@@ -34,27 +32,35 @@ const AccountPage: FC = observer(() => {
             );
         }
 
-        // if (isEmpty(accountData)) {
-        //     return (
-        //         <div
-        //             style={{
-        //                 display: "flex",
-        //                 justifyContent: "center",
-        //                 width: "100%",
-        //             }}
-        //         >
-        //             <AuthForm className={classPrefix} />
-        //         </div>
-        //     );
-        // }
+        if (isEmpty(authData)) {
+            return (
+                <div
+                    style={{
+                        display: "flex",
+                        justifyContent: "center",
+                        width: "100%",
+                    }}
+                >
+                    <AuthForm className={classPrefix} />
+                </div>
+            );
+        }
+
+        if (!isEmpty(authData)) {
+            return (
+                <>
+                    <AccountInfo pageClassPrefix={classPrefix} />
+                    <AccountOrder pageClassPrefix={classPrefix} />
+                </>
+            );
+        }
 
         return (
-            <>
-                <AccountInfo pageClassPrefix={classPrefix} />
-                <AccountOrder pageClassPrefix={classPrefix} />
-            </>
+            <div style={{ textAlign: "center" }}>
+                Something went wrong. <br /> Please try to reload the page
+            </div>
         );
-    }, [accountData, accountDataFetching, classPrefix]);
+    }, [authData, accountDataFetching, classPrefix]);
 
     return (
         <Layout pageClassPrefix={classPrefix}>

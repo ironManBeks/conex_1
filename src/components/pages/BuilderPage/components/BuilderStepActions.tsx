@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { isArray, isEmpty, isNumber } from "lodash";
+import { isArray, isEmpty, isNumber, uniq } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
@@ -13,7 +13,6 @@ import { EButtonColor } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
 import { TBuilderStepDataDTO } from "@store/stores/builder/types";
 import { notImplemented } from "@helpers/notImplemented";
-import loginWithApple from "@components/globalComponents/AuthForm/components/LoginWithApple";
 import { toJS } from "mobx";
 
 const BuilderStepActions: FC<TBuilderCompProps> = observer(
@@ -23,6 +22,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
         const {
             handleSubmit,
             formState: { errors },
+            resetField,
         } = useFormContext();
         const {
             updateCurrentStepData,
@@ -33,6 +33,10 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
             setEndDoorData,
             setCurrentStepData,
             setResultDoorData,
+            stepHistory,
+            resultDoorData,
+            setStepHistory,
+            currentStepId,
         } = builderStore;
 
         const errorMessageList = pickOutFormErrorMessages<FieldErrors<any>, []>(
@@ -42,9 +46,13 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
 
         const handleBack = () => {
             updateCurrentStepData("prev");
+            const curr = currentStepData?.attributes.fieldName;
+            if (curr) {
+                resetField(curr);
+            }
         };
 
-        const getNextPageId = (
+        const getNextPage = (
             step: TBuilderStepDataDTO | null,
             selectedValue: string | number | string[],
         ): number | null | "end" | number[] => {
@@ -79,17 +87,16 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
         const handleNext = handleSubmit((data) => {
             if (!isEmpty(endDoorData)) {
                 notImplemented();
+                return;
             }
             if (!errorMessageList.length) {
                 const currentStepName =
                     currentStepData?.attributes.fieldName || "";
-                const nextPage = getNextPageId(
+                const nextPage = getNextPage(
                     currentStepData,
                     data[currentStepName],
                 );
                 setResultDoorData(data);
-                // console.log("stepQueue", toJS(stepQueue));
-                // console.log("nextPage", nextPage);
 
                 if (stepQueue.length) {
                     updateCurrentStepData(stepQueue[0]);
@@ -101,32 +108,26 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
                         updateCurrentStepData(nextPage);
                     }
                     if (isArray(nextPage)) {
+                        const uniqList = uniq(nextPage);
                         if (stepQueue.length) {
                             updateCurrentStepData(stepQueue[0]);
                         } else {
-                            updateCurrentStepData(nextPage[0]);
+                            updateCurrentStepData(uniqList[0]);
                         }
-                        setStepQueue(nextPage.slice(1, nextPage.length), "add");
+                        setStepQueue(uniqList.slice(1, uniqList.length), "add");
                     }
+                    console.log("nextPage", nextPage);
                     if (nextPage === "end") {
                         setEndDoorData(data);
                         setCurrentStepData(null);
+                        if (currentStepId) {
+                            setStepHistory(currentStepId, "add");
+                            setStepQueue(currentStepId, "remove");
+                        }
                     }
                 }
             }
         });
-
-        // useEffect(() => {
-        //     console.log("__stepQueue", toJS(stepQueue));
-        // }, [stepQueue]);
-        //
-        // useEffect(() => {
-        //     console.log("__stepHistory", toJS(stepHistory));
-        // }, [stepHistory]);
-
-        useEffect(() => {
-            updateCurrentStepData("start");
-        }, []);
 
         useEffect(() => {
             if (errorMessageList.length) {
@@ -138,6 +139,25 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
                 });
             }
         }, [errors]);
+
+        useEffect(() => {
+            console.log("stepQueue_______________", toJS(stepQueue));
+        }, [stepQueue]);
+
+        useEffect(() => {
+            console.log("stepHistory_______________", toJS(stepHistory));
+        }, [stepHistory]);
+
+        useEffect(() => {
+            console.log("resultDoorData_______________", toJS(resultDoorData));
+        }, [resultDoorData]);
+
+        useEffect(() => {
+            console.log(
+                "currentStepData_______________",
+                toJS(currentStepData),
+            );
+        }, [currentStepData]);
 
         return (
             <div className={`${classPrefix}__wrapper`}>

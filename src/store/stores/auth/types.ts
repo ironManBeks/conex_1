@@ -1,5 +1,9 @@
 import { TSignUpForm } from "@components/globalComponents/AuthForm/components/SignUpForm/formAttrs";
 import { TSignInForm } from "@components/globalComponents/AuthForm/components/SignInForm/formAttrs";
+import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/components/ForgotPasswordForm/formAttrs";
+import { TResetPasswordForm } from "@components/globalComponents/AuthForm/components/ResetPasswordForm/formAttrs";
+import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
+import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 
 export type TAuthPaymentCard = {
     id: string;
@@ -30,9 +34,17 @@ export type TAuthData = {
     };
 } | null;
 
+export type TResetPasswordRequest = {
+    code: string;
+} & TResetPasswordForm;
+
+export type TEmailConfirmationResponse = {
+    email: string;
+    sent: boolean;
+};
+
 export interface IAuthStore {
     accountData: TAccountData;
-    getAccountData: () => void;
     setAccountData: (data: TAccountData) => void;
     accountDataFetching: boolean;
     setAccountDataFetching: (value: boolean) => void;
@@ -42,4 +54,8 @@ export interface IAuthStore {
     setAuthRequestFetching: (value: boolean) => void;
     authSignUpRequest: (data: TSignUpForm) => Promise<void>;
     authSignInRequest: (data: TSignInForm) => Promise<void>;
+    forgotPasswordRequest: (data: TForgotPasswordForm) => Promise<void>;
+    resetPasswordRequest: (data: TResetPasswordRequest) => Promise<void>;
+    changePasswordRequest: (data: TChangePasswordForm) => Promise<void>;
+    emailConfirmationRequest: (data: TEmailConfirmationForm) => Promise<void>;
 }

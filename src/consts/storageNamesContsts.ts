@@ -1,4 +1,2 @@
-export const AUTH_TOKEN = "authToken";
-
-export const ACCESS_TOKEN = "accessToken";
-export const AUTH_DATA_STORAGE = "authData";
+export const JWT_TOKEN = "jwtToken";
+export const AUTH_DATA = "authData";

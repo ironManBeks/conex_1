@@ -9,7 +9,7 @@ import FieldPasswordController from "@components/form/formControllers/FieldPassw
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { TAuthFormProps } from "../../types";
-import { AUTH_FORM_CLASSNAME_PREFIX } from "@components/globalComponents/AuthForm/consts";
+import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
 import { EButtonColor } from "@components/buttons/types";
 import {
     ESignUpFormFieldsNames,
