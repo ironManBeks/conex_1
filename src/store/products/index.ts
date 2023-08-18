@@ -1,7 +1,7 @@
 import { makeAutoObservable, observable } from "mobx";
 
 import { IProductsStore, TProductDoorData } from "./types";
-import { ProductSearchListDataMockup } from "../../../mockups/ProductSearchListDataMockup";
+import { ProductSearchListDataMockup } from "../../mockups/ProductSearchListDataMockup";
 
 export class ProductsStore implements IProductsStore {
     productList: TProductDoorData[] = [];

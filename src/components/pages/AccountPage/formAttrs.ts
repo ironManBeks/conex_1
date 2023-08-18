@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Resolver } from "react-hook-form";
-import { TAccountData } from "@store/stores/auth/types";
+import { TAccountData } from "@store/auth/types";
 import {
     yupEmailRequired,
     yupNameRequired,
@@ -30,12 +30,12 @@ export type TAccountTrackerForm = {
 };
 
 export const accountInfoDefaultValues = (
-    accountData?: TAccountData,
+    data?: TAccountInfoForm,
 ): TAccountInfoForm => {
     return {
-        [EAccountInfoFieldsNames.name]: accountData?.name ?? "",
-        [EAccountInfoFieldsNames.email]: accountData?.email ?? "",
-        [EAccountInfoFieldsNames.phone]: accountData?.phone ?? "",
+        [EAccountInfoFieldsNames.name]: data?.name ?? "",
+        [EAccountInfoFieldsNames.email]: data?.email ?? "",
+        [EAccountInfoFieldsNames.phone]: data?.phone ?? "",
     };
 };
 

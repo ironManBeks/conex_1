@@ -1,4 +1,4 @@
-import { TAccountData } from "@store/stores/auth/types";
+import { TAccountData } from "@store/auth/types";
 
 export const AuthDataMockup: TAccountData = {
     name: "John Wick",

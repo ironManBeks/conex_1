@@ -1,8 +1,9 @@
 import { FC, useEffect } from "react";
 import { FormProvider, Resolver, useForm } from "react-hook-form";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
+import { isEmpty } from "lodash";
 
 import BuilderProgress from "./BuilderProgress";
 import BuilderStepLayout from "./BuilderStepLayout";
@@ -10,13 +11,8 @@ import BuilderRightSide from "./BuilderRightSide";
 import BuilderFormActions from "./BuilderStepActions";
 
 import { TBuilderCompProps, TBuilderFieldBase } from "../types";
-import { useRootStore } from "@store";
-import { isEmpty } from "lodash";
-import {
-    EBuilderFieldTypes,
-    TBuilderStepDataDTO,
-} from "@store/stores/builder/types";
-import { toJS } from "mobx";
+import { EBuilderFieldTypes, TBuilderStepDataDTO } from "@store/builder/types";
+import { IRoot } from "@store/store";
 
 type TBuilderDefaultValue = string | string[] | number | number[] | null;
 
@@ -97,34 +93,40 @@ const builderFormResolver = (
     return yupResolver(yup.object().shape(validation));
 };
 
-const BuilderForm: FC<TBuilderCompProps> = observer(({ pageClassPrefix }) => {
-    const { builderStore } = useRootStore();
-    const { currentStepData, updateCurrentStepData, stepHistory } =
-        builderStore;
+const BuilderForm: FC<TBuilderCompProps> = inject("store")(
+    observer(({ store, pageClassPrefix }) => {
+        const { builderStore } = store as IRoot;
+        const { currentStepData, updateCurrentStepData, stepHistory } =
+            builderStore;
 
-    const methods = useForm({
-        resolver: builderFormResolver(currentStepData?.attributes),
-        defaultValues: undefined,
-    });
+        const methods = useForm({
+            resolver: builderFormResolver(currentStepData?.attributes),
+            defaultValues: undefined,
+        });
 
-    useEffect(() => {
-        updateCurrentStepData("start");
-    }, []);
+        useEffect(() => {
+            updateCurrentStepData("start");
+        }, []);
 
-    return (
-        <FormProvider {...methods}>
-            <form action="">
-                <BuilderProgress pageClassPrefix={pageClassPrefix} />
-                <div className={`${pageClassPrefix}_content__wrapper`}>
-                    <div className={`${pageClassPrefix}_left-side__wrapper`}>
-                        <BuilderStepLayout pageClassPrefix={pageClassPrefix} />
+        return (
+            <FormProvider {...methods}>
+                <form action="">
+                    <BuilderProgress pageClassPrefix={pageClassPrefix} />
+                    <div className={`${pageClassPrefix}_content__wrapper`}>
+                        <div
+                            className={`${pageClassPrefix}_left-side__wrapper`}
+                        >
+                            <BuilderStepLayout
+                                pageClassPrefix={pageClassPrefix}
+                            />
+                        </div>
+                        <BuilderRightSide pageClassPrefix={pageClassPrefix} />
                     </div>
-                    <BuilderRightSide pageClassPrefix={pageClassPrefix} />
-                </div>
-                <BuilderFormActions pageClassPrefix={pageClassPrefix} />
-            </form>
-        </FormProvider>
-    );
-});
+                    <BuilderFormActions pageClassPrefix={pageClassPrefix} />
+                </form>
+            </FormProvider>
+        );
+    }),
+);
 
 export default BuilderForm;

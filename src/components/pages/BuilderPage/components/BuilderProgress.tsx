@@ -1,15 +1,15 @@
 import { FC, useEffect, useState } from "react";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import { isEmpty } from "lodash";
 
 import ProgressWrapper from "@components/globalComponents/ProgressWrapper";
 
-import { useRootStore } from "@store";
 import { TBuilderCompProps } from "../types";
+import { IRoot } from "@store/store";
 
-const BuilderProgress: FC<TBuilderCompProps> = observer(
-    ({ pageClassPrefix }) => {
-        const { builderStore } = useRootStore();
+const BuilderProgress: FC<TBuilderCompProps> = inject("store")(
+    observer(({ store, pageClassPrefix }) => {
+        const { builderStore } = store as IRoot;
         const { builderData, currentStepId, endDoorData, stepHistory } =
             builderStore;
         const [percent, setPercent] = useState<number>(0);
@@ -34,7 +34,7 @@ const BuilderProgress: FC<TBuilderCompProps> = observer(
                 wrapperClassPrefix={pageClassPrefix}
             />
         );
-    },
+    }),
 );
 
 export default BuilderProgress;

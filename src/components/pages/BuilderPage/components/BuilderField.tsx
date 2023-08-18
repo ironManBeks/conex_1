@@ -11,7 +11,7 @@ import { TBuilderFieldBase } from "../types";
 import {
     EBuilderFieldTypes,
     TBuilderElementDataDTO,
-} from "@store/stores/builder/types";
+} from "@store/builder/types";
 import BuilderElementColorPicker from "@components/pages/BuilderPage/components/elements/BuilderElementColorPicker";
 
 const BuilderField: FC<TBuilderFieldBase> = ({ id, attributes, className }) => {

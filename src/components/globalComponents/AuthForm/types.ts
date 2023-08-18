@@ -1,9 +1,10 @@
 import { Dispatch, SetStateAction } from "react";
+import { TStore } from "@globalTypes/storeTypes";
 
 export type TAuthFormProps = {
     onAuth?: () => void;
     className?: string;
-};
+} & TStore;
 
 export type TAuthFormTypes = {
     setFormType: Dispatch<SetStateAction<EAuthFormType>>;

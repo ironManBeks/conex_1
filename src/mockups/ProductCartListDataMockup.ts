@@ -1,4 +1,4 @@
-import { TProductCartData } from "@store/stores/products/types";
+import { TProductCartData } from "@store/products/types";
 
 export const ProductCartListDataMockup: TProductCartData[] = [
     {

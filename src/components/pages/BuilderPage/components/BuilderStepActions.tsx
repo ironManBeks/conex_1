@@ -1,24 +1,24 @@
 import { FC, useEffect } from "react";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { isArray, isEmpty, isNumber, uniq } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
-import { useRootStore } from "@store";
 import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
 import { showNotification } from "@helpers/notificarionHelper";
 import { EButtonColor } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
-import { TBuilderStepDataDTO } from "@store/stores/builder/types";
+import { TBuilderStepDataDTO } from "@store/builder/types";
 import { notImplemented } from "@helpers/notImplemented";
 import { toJS } from "mobx";
+import { IRoot } from "@store/store";
 
-const BuilderStepActions: FC<TBuilderCompProps> = observer(
-    ({ pageClassPrefix }) => {
+const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
+    observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_actions`;
-        const { builderStore } = useRootStore();
+        const { builderStore } = store as IRoot;
         const {
             handleSubmit,
             formState: { errors },
@@ -177,7 +177,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = observer(
                 </div>
             </div>
         );
-    },
+    }),
 );
 
 export default BuilderStepActions;

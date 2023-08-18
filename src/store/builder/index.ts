@@ -8,7 +8,7 @@ import {
     TResultDoorData,
     TStepHistoryActions,
 } from "./types";
-import axiosInstance from "../../../api/api";
+import axiosInstance from "../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
 import { isArray, isEmpty, isNumber, uniq } from "lodash";
 import { TNullable } from "@globalTypes/commonTypes";

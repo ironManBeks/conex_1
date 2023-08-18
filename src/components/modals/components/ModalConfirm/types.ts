@@ -1,4 +1,5 @@
 import { EButtonColor } from "@components/buttons/types";
+import { TStore } from "@globalTypes/storeTypes";
 
 export type TModalConfirm = {
     onConfirm: (confirmModalData: any) => void;
@@ -6,4 +7,4 @@ export type TModalConfirm = {
     confirmColor: EButtonColor.primary | EButtonColor.danger;
     text: string;
     confirmText?: string;
-};
+} & TStore;

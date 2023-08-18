@@ -1,28 +1,39 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
+import { inject, observer } from "mobx-react";
+import { useRouter } from "next/router";
 
 import DrawerLayout from "@components/drawers/DrawerLayout";
 import NavLinks from "@components/segments/components/NavLinks";
-import { observer } from "mobx-react";
-import { useRootStore } from "@store";
+import { TStore } from "@globalTypes/storeTypes";
+import { IRoot } from "@store/store";
 
-const DrawerHeader: FC = observer(() => {
-    const { commonStore } = useRootStore();
-    const { headerDrawerVisible, setHeaderDrawerVisible } = commonStore;
-    const classPrefix = "drawer-header";
+const DrawerHeader: FC<TStore> = inject("store")(
+    observer(({ store }) => {
+        const { commonStore } = store as IRoot;
+        const { headerDrawerVisible, setHeaderDrawerVisible } = commonStore;
+        const classPrefix = "drawer-header";
+        const router = useRouter();
 
-    return (
-        <DrawerLayout
-            wrapperClassName={classPrefix}
-            open={headerDrawerVisible}
-            onClose={() => setHeaderDrawerVisible(false)}
-            bodyContent={
-                <>
-                    <NavLinks wrapperClassPrefix={classPrefix} />
-                </>
+        useEffect(() => {
+            if (router.asPath) {
+                setHeaderDrawerVisible(false);
             }
-            placement="left"
-        />
-    );
-});
+        }, [router.asPath]);
+
+        return (
+            <DrawerLayout
+                wrapperClassName={classPrefix}
+                open={headerDrawerVisible}
+                onClose={() => setHeaderDrawerVisible(false)}
+                bodyContent={
+                    <>
+                        <NavLinks wrapperClassPrefix={classPrefix} />
+                    </>
+                }
+                placement="left"
+            />
+        );
+    }),
+);
 
 export default DrawerHeader;
