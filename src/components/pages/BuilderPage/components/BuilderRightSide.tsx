@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import cn from "classnames";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
@@ -10,17 +10,17 @@ import {
     TAdditionalServicesOption,
 } from "@components/globalComponents/types";
 import { TBuilderCompProps } from "../types";
-import { useRootStore } from "@store";
 import { toJS } from "mobx";
 import { isArray, isEmpty, isNumber } from "lodash";
 import {
     TBuilderElementDataDTO,
     TBuilderStepDataDTO,
-} from "@store/stores/builder/types";
+} from "@store/builder/types";
+import { IRoot } from "@store/store";
 
-const BuilderRightSide: FC<TBuilderCompProps> = observer(
-    ({ pageClassPrefix }) => {
-        const { builderStore } = useRootStore();
+const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
+    observer(({ store, pageClassPrefix }) => {
+        const { builderStore } = store as IRoot;
         const { builderData, resultDoorData } = builderStore;
         const classPrefix = `${pageClassPrefix}_right-side`;
 
@@ -99,7 +99,7 @@ const BuilderRightSide: FC<TBuilderCompProps> = observer(
                 </div>
             </div>
         );
-    },
+    }),
 );
 
 export default BuilderRightSide;

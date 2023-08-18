@@ -1,8 +1,6 @@
-import {
-    TProductCartData,
-    TProductDoorData,
-} from "@store/stores/products/types";
+import { TProductCartData, TProductDoorData } from "@store/products/types";
 import { ReactNode } from "react";
+import { TStore } from "@globalTypes/storeTypes";
 
 export type TProductSearchCard = {
     className?: string;
@@ -10,7 +8,8 @@ export type TProductSearchCard = {
 
 export type TProductCartCard = {
     className?: string;
-} & TProductCartData;
+} & TProductCartData &
+    TStore;
 
 export type TProductInfoListItem = {
     label: string;

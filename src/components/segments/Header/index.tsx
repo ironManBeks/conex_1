@@ -1,9 +1,7 @@
 import { FC, RefObject, useEffect, useRef } from "react";
 import cn from "classnames";
 import Link from "next/link";
-import { useRootStore } from "src/store";
-import { observer } from "mobx-react";
-import dynamic from "next/dynamic";
+import { inject, observer } from "mobx-react";
 
 import Container from "@components/globalComponents/Container";
 import { IconBurger } from "@components/Icons";
@@ -11,18 +9,19 @@ import NavLinks from "../components/NavLinks";
 import NavActions from "../components/NavActions";
 
 import { PATH_HOME_PAGE } from "@consts/pathsConsts";
-import { THeader } from "./types";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor } from "@components/buttons/types";
 import { ColorTheme } from "@common/theme/colorTheme";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { useMediaQuery } from "react-responsive";
+import { IRoot } from "@store/store";
+import { THeader } from "./types";
 
-export const Header: FC<THeader> = observer(
-    ({ pageClassPrefix, className }) => {
+const Header: FC<THeader> = inject("store")(
+    observer(({ store, pageClassPrefix, className }) => {
+        const { commonStore } = store as IRoot;
         const classPrefix = `header`;
         const headerRef = useRef<HTMLElement>(null);
-        const { commonStore } = useRootStore();
         const { setHeaderHeight, setHeaderDrawerVisible, headerDrawerVisible } =
             commonStore;
 
@@ -85,5 +84,7 @@ export const Header: FC<THeader> = observer(
                 </div>
             </header>
         );
-    },
+    }),
 );
+
+export default Header;

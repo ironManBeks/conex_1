@@ -5,7 +5,7 @@ import { isEmpty } from "lodash";
 import { removeStorage, setStorage } from "@services/storage.service";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
 import { showNotification } from "@helpers/notificarionHelper";
-import axiosInstance from "../../../api/api";
+import axiosInstance from "../../api/api";
 import { TSignUpForm } from "@components/globalComponents/AuthForm/components/SignUpForm/formAttrs";
 import { TSignInForm } from "@components/globalComponents/AuthForm/components/SignInForm/formAttrs";
 import {
@@ -16,7 +16,7 @@ import {
     TResetPasswordRequest,
 } from "./types";
 import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
-import { AuthDataMockup } from "../../../mockups/AuthDataMockup";
+import { AuthDataMockup } from "../../mockups/AuthDataMockup";
 import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/components/ForgotPasswordForm/formAttrs";
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";

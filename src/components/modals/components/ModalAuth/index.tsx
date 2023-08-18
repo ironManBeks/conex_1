@@ -1,26 +1,29 @@
 import { FC } from "react";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 import ModalLayout from "../../ModalLayout";
 import AuthForm from "@components/globalComponents/AuthForm";
 
-import { useRootStore } from "@store";
 import { EModalSize } from "../../types";
+import { TStore } from "@globalTypes/storeTypes";
+import { IRoot } from "@store/store";
 
-const ModalAuth: FC = observer(() => {
-    const { commonStore } = useRootStore();
-    const { modalAuthVisible, setModalAuthVisible } = commonStore;
+const ModalAuth: FC<TStore> = inject("store")(
+    observer(({ store }) => {
+        const { commonStore } = store as IRoot;
+        const { modalAuthVisible, setModalAuthVisible } = commonStore;
 
-    return (
-        <ModalLayout
-            wrapperClassName="modal-auth"
-            modalVisible={modalAuthVisible}
-            handleCancel={() => setModalAuthVisible(false)}
-            modalSize={EModalSize.md}
-            title={"ModalAuth"}
-            bodyContent={<AuthForm className="modal-auth" />}
-        />
-    );
-});
+        return (
+            <ModalLayout
+                wrapperClassName="modal-auth"
+                modalVisible={modalAuthVisible}
+                handleCancel={() => setModalAuthVisible(false)}
+                modalSize={EModalSize.md}
+                title={"ModalAuth"}
+                bodyContent={<AuthForm className="modal-auth" />}
+            />
+        );
+    }),
+);
 
 export default ModalAuth;

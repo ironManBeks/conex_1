@@ -6,7 +6,7 @@ import ProductCartCard from "@components/cards/ProductCartCard";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { TProductCartData } from "@store/stores/products/types";
+import { TProductCartData } from "@store/products/types";
 import { ProductCartListDataMockup } from "../../../../mockups/ProductCartListDataMockup";
 import { EButtonColor } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";

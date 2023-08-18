@@ -1,3 +1,4 @@
+import { TStore } from "@globalTypes/storeTypes";
 import { ReactNode } from "react";
 
 export type TLayout = {
@@ -6,4 +7,4 @@ export type TLayout = {
     headerClassName?: string;
     layoutClassName?: string;
     footerClassName?: string;
-};
+} & TStore;

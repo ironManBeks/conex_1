@@ -1,4 +1,4 @@
-import { TProductDoorData } from "@store/stores/products/types";
+import { TProductDoorData } from "@store/products/types";
 
 export const ProductSearchListDataMockup: TProductDoorData[] = [
     {

@@ -3,11 +3,12 @@ import {
     EBuilderFieldTypes,
     TBuilderElementDataDTO,
     TBuilderStepDataDTO,
-} from "@store/stores/builder/types";
+} from "@store/builder/types";
+import { TStore } from "@globalTypes/storeTypes";
 
 export type TBuilderCompProps = {
     pageClassPrefix: string;
-};
+} & TStore;
 
 export type TBuilderElementComp = {
     onClick?: (value: string) => void;

@@ -13,6 +13,7 @@ import {
 } from "@globalTypes/stylesTypes";
 import { TFormItemError } from "@components/form/FormItemError/types";
 import { TFormItemLabel } from "@components/form/FormItemWrapper/types";
+import { TStore } from "@globalTypes/storeTypes";
 
 export type TContainer = {
     children: ReactNode;
@@ -84,4 +85,4 @@ export type TAddedOptionsList = {
 export type TLogout = {
     component: JSX.Element;
     pageLink?: string;
-};
+} & TStore;

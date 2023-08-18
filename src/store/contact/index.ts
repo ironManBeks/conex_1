@@ -1,6 +1,6 @@
 import { makeAutoObservable, observable } from "mobx";
 
-import axiosInstance from "src/api/api";
+import axiosInstance from "../../api/api";
 import { showNotification } from "@helpers/notificarionHelper";
 import { TContactsUsForm } from "@components/pages/ContactUsPage/formAttrs";
 import { IContactStore } from "./types";

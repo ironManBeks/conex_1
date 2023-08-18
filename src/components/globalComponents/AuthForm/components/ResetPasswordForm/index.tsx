@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { isFunction } from "lodash";
 import cn from "classnames";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { P } from "@components/Text";
@@ -17,11 +17,11 @@ import {
 } from "./formAttrs";
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
 import { TAuthFormProps, TAuthFormTypes } from "../../types";
-import { useRootStore } from "@store";
+import { IRoot } from "@store/store";
 
-const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
-    ({ className, onAuth }) => {
-        const { authStore } = useRootStore();
+const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
+    observer(({ store, className, onAuth }) => {
+        const { authStore } = store as IRoot;
         const { authRequestFetching, resetPasswordRequest } = authStore;
         const methods = useForm<TResetPasswordForm>({
             resolver: resetPasswordFormResolver(),
@@ -79,7 +79,7 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
                 </form>
             </FormProvider>
         );
-    },
+    }),
 );
 
 export default ResetPasswordForm;

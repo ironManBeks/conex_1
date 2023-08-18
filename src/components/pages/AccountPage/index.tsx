@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from "react";
 import cn from "classnames";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import { isEmpty } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
@@ -11,66 +11,70 @@ import AccountInfoSkeleton from "@components/skeletons/AccountInfoSkeleton";
 import AccountOrderSkeleton from "@components/skeletons/AccountOrderSkeleton";
 import AuthForm from "@components/globalComponents/AuthForm";
 
-import { useRootStore } from "@store";
+import { IRoot } from "@store/store";
+import { TStore } from "@globalTypes/storeTypes";
 
-const AccountPage: FC = observer(() => {
-    const { authStore } = useRootStore();
-    const { accountDataFetching, authData } = authStore;
-    const classPrefix = "account-page";
+const AccountPage: FC<TStore> = inject("store")(
+    observer(({ store }) => {
+        const { authStore } = store as IRoot;
 
-    useEffect(() => {
-        console.log("authData", authData);
-    }, [authData]);
+        const { accountDataFetching, authData } = authStore;
+        const classPrefix = "account-page";
 
-    const accountContent = useMemo(() => {
-        if (accountDataFetching) {
+        useEffect(() => {
+            console.log("authData", authData);
+        }, [authData]);
+
+        const accountContent = useMemo(() => {
+            if (accountDataFetching) {
+                return (
+                    <>
+                        <AccountInfoSkeleton />
+                        <AccountOrderSkeleton />
+                    </>
+                );
+            }
+
+            if (isEmpty(authData)) {
+                return (
+                    <div
+                        style={{
+                            display: "flex",
+                            justifyContent: "center",
+                            width: "100%",
+                        }}
+                    >
+                        <AuthForm className={classPrefix} />
+                    </div>
+                );
+            }
+
+            if (!isEmpty(authData)) {
+                return (
+                    <>
+                        <AccountInfo pageClassPrefix={classPrefix} />
+                        <AccountOrder pageClassPrefix={classPrefix} />
+                    </>
+                );
+            }
+
             return (
-                <>
-                    <AccountInfoSkeleton />
-                    <AccountOrderSkeleton />
-                </>
-            );
-        }
-
-        if (isEmpty(authData)) {
-            return (
-                <div
-                    style={{
-                        display: "flex",
-                        justifyContent: "center",
-                        width: "100%",
-                    }}
-                >
-                    <AuthForm className={classPrefix} />
+                <div style={{ textAlign: "center" }}>
+                    Something went wrong. <br /> Please try to reload the page
                 </div>
             );
-        }
-
-        if (!isEmpty(authData)) {
-            return (
-                <>
-                    <AccountInfo pageClassPrefix={classPrefix} />
-                    <AccountOrder pageClassPrefix={classPrefix} />
-                </>
-            );
-        }
+        }, [authData, accountDataFetching, classPrefix]);
 
         return (
-            <div style={{ textAlign: "center" }}>
-                Something went wrong. <br /> Please try to reload the page
-            </div>
+            <Layout pageClassPrefix={classPrefix}>
+                <Container>
+                    <div className={cn(`${classPrefix}_content__wrapper`)}>
+                        {accountContent}
+                    </div>
+                </Container>
+            </Layout>
         );
-    }, [authData, accountDataFetching, classPrefix]);
-
-    return (
-        <Layout pageClassPrefix={classPrefix}>
-            <Container>
-                <div className={cn(`${classPrefix}_content__wrapper`)}>
-                    {accountContent}
-                </div>
-            </Container>
-        </Layout>
-    );
-});
+    }),
+);
 
 export default AccountPage;

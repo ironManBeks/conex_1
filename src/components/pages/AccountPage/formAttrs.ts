@@ -1,7 +1,7 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Resolver } from "react-hook-form";
-import { TAccountData } from "@store/stores/auth/types";
+import { TAccountData } from "@store/auth/types";
 import {
     yupEmailRequired,
     yupNameRequired,

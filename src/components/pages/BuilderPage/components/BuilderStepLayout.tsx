@@ -1,20 +1,20 @@
 import { FC, useEffect, useMemo } from "react";
 import cn from "classnames";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 import { isEmpty } from "lodash";
 
 import BuilderField from "@components/pages/BuilderPage/components/BuilderField";
 import { H2, P } from "@components/Text";
 
-import { useRootStore } from "@store";
 import { TBuilderCompProps } from "../types";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { toJS } from "mobx";
+import { IRoot } from "@store/store";
 
-const BuilderStepLayout: FC<TBuilderCompProps> = observer(
-    ({ pageClassPrefix }) => {
+const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
+    observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_step`;
-        const { builderStore } = useRootStore();
+        const { builderStore } = store as IRoot;
         const { builderData, currentStepData, endDoorData } = builderStore;
 
         // useEffect(() => {
@@ -71,7 +71,7 @@ const BuilderStepLayout: FC<TBuilderCompProps> = observer(
                 </div>
             );
         }, [currentStepData, endDoorData]);
-    },
+    }),
 );
 
 export default BuilderStepLayout;

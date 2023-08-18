@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { isFunction } from "lodash";
 import cn from "classnames";
-import { observer } from "mobx-react";
+import { inject, observer } from "mobx-react";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import FieldInputController from "@components/form/formControllers/FieldInputController";
@@ -16,11 +16,12 @@ import {
     emailConfirmationFormResolver,
     TEmailConfirmationForm,
 } from "./formAttrs";
-import { useRootStore } from "@store";
+import { IRoot } from "@store/store";
 
-const ChangePasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
-    ({ className, onAuth }) => {
-        const { authStore } = useRootStore();
+const ChangePasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
+    observer(({ store, className, onAuth }) => {
+        const { authStore } = store as IRoot;
+
         const { authRequestFetching, emailConfirmationRequest } = authStore;
         const methods = useForm<TEmailConfirmationForm>({
             resolver: emailConfirmationFormResolver(),
@@ -63,7 +64,7 @@ const ChangePasswordForm: FC<TAuthFormProps & TAuthFormTypes> = observer(
                 </form>
             </FormProvider>
         );
-    },
+    }),
 );
 
 export default ChangePasswordForm;
