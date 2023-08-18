@@ -17,6 +17,8 @@ import { TProductCartCard, TProductInfoListItem } from "../types";
 import { notImplemented } from "@helpers/notImplemented";
 import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
+import { useMediaQuery } from "react-responsive";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 
 const ProductCartCard: FC<TProductCartCard> = inject("store")(
     observer(
@@ -36,6 +38,11 @@ const ProductCartCard: FC<TProductCartCard> = inject("store")(
             const classPrefix = "product-cart-card";
             const { commonStore } = store as IRoot;
 
+            const isMobile = useMediaQuery({
+                minWidth: mediaBreakpoints.xsMedia,
+                maxWidth: mediaBreakpoints.smMediaEnd,
+            });
+
             const optionsList: TProductInfoListItem[] = [
                 { label: "Material", value: cutText(material, 20) },
                 { label: "Size", value: cutText(size, 20) },
@@ -46,9 +53,31 @@ const ProductCartCard: FC<TProductCartCard> = inject("store")(
                 console.log("handleQuantityChange", val);
             };
 
-            // const handleString = (val: string) => {
-            //     console.log("handleString", val);
-            // };
+            const quantityContent = (
+                <div className={`${classPrefix}_quantity__wrapper`}>
+                    <div className={`${classPrefix}_quantity__inner-wrapper`}>
+                        Quantity:
+                        <FormFieldInputNumber
+                            name="quantity"
+                            min={1}
+                            max={99}
+                            defaultValue={quantity}
+                            onChange={(val) => handleQuantityChange(val)}
+                            parser={(value) =>
+                                value ? Number(value.replace(".", "")) : ""
+                            }
+                            errorMessage={undefined}
+                        />
+                    </div>
+                </div>
+            );
+
+            const priceContent = (
+                <div className={`${classPrefix}_price__wrapper`}>
+                    <H5>${priceNew}</H5>
+                    {priceOld && <H5 className="_old">${priceOld}</H5>}
+                </div>
+            );
 
             return (
                 <div
@@ -69,32 +98,17 @@ const ProductCartCard: FC<TProductCartCard> = inject("store")(
                                 />
                             </div>
                         </div>
-                        <div className={`${classPrefix}_price__wrapper`}>
-                            <H5>${priceNew}</H5>
-                            {priceOld && <H5 className="_old">${priceOld}</H5>}
-                        </div>
-                        <div className={`${classPrefix}_quantity__wrapper`}>
-                            <div
-                                className={`${classPrefix}_quantity__inner-wrapper`}
-                            >
-                                Quantity:
-                                <FormFieldInputNumber
-                                    name="quantity"
-                                    min={1}
-                                    max={99}
-                                    defaultValue={quantity}
-                                    onChange={(val) =>
-                                        handleQuantityChange(val)
-                                    }
-                                    parser={(value) =>
-                                        value
-                                            ? Number(value.replace(".", ""))
-                                            : ""
-                                    }
-                                    errorMessage={undefined}
-                                />
+                        {isMobile ? (
+                            <div className={`${classPrefix}_sub-info__wrapper`}>
+                                {priceContent}
+                                {quantityContent}
                             </div>
-                        </div>
+                        ) : (
+                            <>
+                                {priceContent}
+                                {quantityContent}
+                            </>
+                        )}
                         <div className={`${classPrefix}_actions__wrapper`}>
                             <ButtonPrimary
                                 onClick={() => notImplemented()}

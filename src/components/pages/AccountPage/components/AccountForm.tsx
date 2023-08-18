@@ -28,7 +28,7 @@ const AccountForm: FC<TSectionTypes> = inject("store")(
         const classPrefix = `${pageClassPrefix}_form`;
         const { authStore } = store as IRoot;
 
-        const { accountData } = authStore;
+        const { accountData, authData, emailConfirmationRequest } = authStore;
         const [editableField, setEditableField] = useState<
             EAccountInfoFieldsNames | undefined
         >(undefined);
@@ -41,7 +41,10 @@ const AccountForm: FC<TSectionTypes> = inject("store")(
 
         const methods = useForm<TAccountInfoForm>({
             resolver: accountInfoFormResolver(editableField),
-            defaultValues: accountInfoDefaultValues(accountData),
+            defaultValues: accountInfoDefaultValues({
+                [EAccountInfoFieldsNames.email]: authData?.user.email,
+                [EAccountInfoFieldsNames.name]: authData?.user.username,
+            }),
         });
 
         const { handleSubmit, reset } = methods;
@@ -59,22 +62,40 @@ const AccountForm: FC<TSectionTypes> = inject("store")(
             reset();
         };
 
+        const handleConfirmEmail = () => {
+            if (authData?.user.email) {
+                emailConfirmationRequest({ email: authData?.user.email });
+            }
+        };
+
         return (
             <Fragment>
                 <H2>
                     {isMobile ? "Personal info" : "My Account"}
-                    <Logout
-                        pageLink={router.asPath}
-                        component={
+                    <div>
+                        {authData?.user.confirmed === false && (
                             <ButtonPrimary
                                 size={EButtonSize.sm}
-                                color={EButtonColor.danger}
+                                color={EButtonColor.secondary}
                                 isOutline={true}
+                                onClick={handleConfirmEmail}
                             >
-                                Log Out
+                                Confirm email
                             </ButtonPrimary>
-                        }
-                    />
+                        )}
+                        <Logout
+                            pageLink={router.asPath}
+                            component={
+                                <ButtonPrimary
+                                    size={EButtonSize.sm}
+                                    color={EButtonColor.danger}
+                                    isOutline={true}
+                                >
+                                    Log Out
+                                </ButtonPrimary>
+                            }
+                        />
+                    </div>
                 </H2>
                 <FormProvider {...methods}>
                     <form

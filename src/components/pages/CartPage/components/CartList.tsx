@@ -1,5 +1,6 @@
 import { FC, useEffect, useState } from "react";
 import { Empty } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 import { H2 } from "@components/Text";
 import ProductCartCard from "@components/cards/ProductCartCard";
@@ -10,10 +11,16 @@ import { TProductCartData } from "@store/products/types";
 import { ProductCartListDataMockup } from "../../../../mockups/ProductCartListDataMockup";
 import { EButtonColor } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 
 const CartList: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_list`;
     const [cartList, setCartList] = useState<TProductCartData[]>();
+
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
 
     useEffect(() => {
         setCartList(ProductCartListDataMockup);
@@ -21,7 +28,7 @@ const CartList: FC<TSectionTypes> = ({ pageClassPrefix }) => {
 
     return (
         <div className={`${classPrefix}__wrapper`}>
-            <H2>Cart</H2>
+            <H2>{isMobile ? "Your cart" : "Cart"}</H2>
             <div className={`${classPrefix}__content`}>
                 {cartList?.length ? (
                     cartList.map((item) => (

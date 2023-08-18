@@ -16,7 +16,6 @@ import {
     TResetPasswordRequest,
 } from "./types";
 import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
-import { AuthDataMockup } from "../../mockups/AuthDataMockup";
 import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/components/ForgotPasswordForm/formAttrs";
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
@@ -72,7 +71,6 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .post("/auth/local/register", formValues)
             .then((data: AxiosResponse<TAuthData>) => {
-                console.log("data", data);
                 this.setAuthData(data.data);
                 showNotification({
                     type: "success",

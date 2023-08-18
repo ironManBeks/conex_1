@@ -1,0 +1,35 @@
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .search-page{
+    &_list{
+      &__inner-wrapper{
+
+      }
+    }
+    &_filter__wrapper{
+      width: 70px;
+      .common-icon{
+        width: 30px;
+      }
+    }
+  }
+
+  .product-search-card_wrapper.product-card{
+    width: 100%;
+    .product-search-card{
+      &_inner-wrapper{
+        padding: 15px;
+      }
+      &_info__wrapper {
+        flex-direction: column;
+        .img-custom_wrapper{
+          height: 200px;
+          max-height: 200px;
+          width: 100%;
+          margin-bottom: 15px;
+        }
+      }
+    }
+  }
+
+}

@@ -32,7 +32,6 @@ const AuthFooter: FC<TAuthFooter> = ({ formType, setFormType }) => {
     return (
         <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_footer`}>
             <P>{footerContent}</P>
-            <hr />
             <a onClick={() => setFormType(EAuthFormType.resetPassword)}>
                 Reset password? (this link will be removed)
             </a>

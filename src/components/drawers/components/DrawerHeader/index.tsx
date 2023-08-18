@@ -1,5 +1,6 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
+import { useRouter } from "next/router";
 
 import DrawerLayout from "@components/drawers/DrawerLayout";
 import NavLinks from "@components/segments/components/NavLinks";
@@ -11,6 +12,13 @@ const DrawerHeader: FC<TStore> = inject("store")(
         const { commonStore } = store as IRoot;
         const { headerDrawerVisible, setHeaderDrawerVisible } = commonStore;
         const classPrefix = "drawer-header";
+        const router = useRouter();
+
+        useEffect(() => {
+            if (router.asPath) {
+                setHeaderDrawerVisible(false);
+            }
+        }, [router.asPath]);
 
         return (
             <DrawerLayout

@@ -30,12 +30,12 @@ export type TAccountTrackerForm = {
 };
 
 export const accountInfoDefaultValues = (
-    accountData?: TAccountData,
+    data?: TAccountInfoForm,
 ): TAccountInfoForm => {
     return {
-        [EAccountInfoFieldsNames.name]: accountData?.name ?? "",
-        [EAccountInfoFieldsNames.email]: accountData?.email ?? "",
-        [EAccountInfoFieldsNames.phone]: accountData?.phone ?? "",
+        [EAccountInfoFieldsNames.name]: data?.name ?? "",
+        [EAccountInfoFieldsNames.email]: data?.email ?? "",
+        [EAccountInfoFieldsNames.phone]: data?.phone ?? "",
     };
 };
 
