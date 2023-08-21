@@ -6,22 +6,31 @@ export enum EBuilderFieldTypes {
     colorPicker = "colorPicker",
     radioButton = "radioButton",
     radio = "radio",
+    multiple = "multiple",
 }
 
-export type TBuilderElementDataDTO = {
+export interface IBuilderElementDataDTO {
     id: number;
     mainTitle: string;
     subTitle: TNullable<string>;
     value: string;
-    popular: boolean;
     price: number;
     priceCurrency: string;
+    popular: boolean;
+    default: boolean;
     image?: {
         alt: TNullable<string>;
         url: TNullable<string>;
     };
     nextQuestion: TNullable<number>;
-};
+}
+
+export interface IBuilderFieldDataDTO {
+    id: number;
+    title: string;
+    fieldType: EBuilderFieldTypes;
+    questions: IBuilderElementDataDTO[];
+}
 
 export type TBuilderStepDataDTO = {
     id: number;
@@ -34,7 +43,7 @@ export type TBuilderStepDataDTO = {
         createdAt: string;
         updatedAt: string;
         publishedAt: string;
-        fieldElements: TBuilderElementDataDTO[];
+        subQuestions: IBuilderElementDataDTO[] | IBuilderFieldDataDTO[];
     };
 };
 
