@@ -10,7 +10,7 @@ import BuilderStepLayout from "./BuilderStepLayout";
 import BuilderRightSide from "./BuilderRightSide";
 import BuilderFormActions from "./BuilderStepActions";
 
-import { TBuilderCompProps, TBuilderFieldBase } from "../types";
+import { TBuilderCompProps, TBuilderStepBase } from "../types";
 import { EBuilderFieldTypes, TBuilderStepDataDTO } from "@store/builder/types";
 import { IRoot } from "@store/store";
 
@@ -33,7 +33,7 @@ const getBuilderDefaultValue = (
 };
 
 // const builderDefaultValuesGenerator = (
-//     fields?: TBuilderFieldBase[],
+//     fields?: TBuilderStepBase[],
 // ): Record<string, TBuilderDefaultValue> => {
 //     const result: Record<string, TBuilderDefaultValue> = {};
 //     if (!fields?.length) return result;

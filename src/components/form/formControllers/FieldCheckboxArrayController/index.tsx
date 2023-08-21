@@ -68,7 +68,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                 field.onChange(checkedValue);
                             }}
                         >
-                            {options.map((item) => {
+                            {options.map((item, index) => {
                                 const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
                                 return (
                                     <div
@@ -83,7 +83,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                                 _disabled: item.disabled,
                                             },
                                         )}
-                                        key={`${field.name}.${item.value}`}
+                                        key={`${field.name}.${item.value}.${index}`}
                                     >
                                         <AntCheckbox
                                             {...rest}

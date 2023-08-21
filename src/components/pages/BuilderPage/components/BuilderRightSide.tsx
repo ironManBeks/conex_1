@@ -13,16 +13,24 @@ import { TBuilderCompProps } from "../types";
 import { toJS } from "mobx";
 import { isArray, isEmpty, isNumber } from "lodash";
 import {
-    TBuilderElementDataDTO,
+    IBuilderElementDataDTO,
     TBuilderStepDataDTO,
 } from "@store/builder/types";
 import { IRoot } from "@store/store";
+import { useFormContext } from "react-hook-form";
 
 const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { builderData, resultDoorData } = builderStore;
+        const { builderData, resultDoorData, currentStepData } = builderStore;
         const classPrefix = `${pageClassPrefix}_right-side`;
+        const { watch } = useFormContext();
+
+        // const currentStepValue = watch(currentStepData?.attributes.fieldName);
+        //
+        // useEffect(() => {
+        //     console.log("currentStepValue", currentStepValue);
+        // }, [currentStepValue]);
 
         const getParamsByValue = (): TAddedOptionsListItem[] => {
             if (isEmpty(resultDoorData) || isEmpty(builderData)) {
@@ -37,18 +45,30 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
                     (item) => item.attributes.fieldName === stepName,
                 );
                 if (!currentStep) continue;
-                const selectedElements: TBuilderElementDataDTO[] = [];
+                const selectedElements: IBuilderElementDataDTO[] = [];
                 if (isArray(resultDoorData[stepName])) {
                     const doorArr = resultDoorData[stepName] as [];
                     for (let j = 0; j < doorArr.length; j++) {
                         const element =
-                            currentStep.attributes.fieldElements.find(
+                            // ToDo Remove ts-ignore
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
+                            currentStep.attributes.subQuestions.find(
+                                // ToDo Remove ts-ignore
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
                                 (item) => item.value === doorArr[j],
                             );
                         if (element) selectedElements.push(element);
                     }
                 } else {
-                    const element = currentStep.attributes.fieldElements.find(
+                    // ToDo Remove ts-ignore
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    const element = currentStep.attributes.subQuestions.find(
+                        // ToDo Remove ts-ignore
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         (item) => item.value === resultDoorData[stepName],
                     );
                     if (element) selectedElements.push(element);

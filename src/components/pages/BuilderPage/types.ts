@@ -1,7 +1,7 @@
 import { THEX, TNullable } from "@globalTypes/commonTypes";
 import {
     EBuilderFieldTypes,
-    TBuilderElementDataDTO,
+    IBuilderElementDataDTO,
     TBuilderStepDataDTO,
 } from "@store/builder/types";
 import { TStore } from "@globalTypes/storeTypes";
@@ -16,16 +16,12 @@ export type TBuilderElementComp = {
     fieldName: string;
 };
 
-export interface IBuilderElementBase extends TBuilderElementDataDTO {
+export interface IBuilderElementBase extends IBuilderElementDataDTO {
     className?: string;
 }
 
 export interface IBuilderElementCardProps extends IBuilderElementBase {
     imgSrc?: TNullable<string>;
-}
-
-export interface IBuilderElementCheckboxProps extends IBuilderElementBase {
-    default?: boolean;
 }
 
 export interface IBuilderElementColorPickerProps extends IBuilderElementBase {
@@ -42,7 +38,7 @@ export type TReferenceProps<
 
 export type TBuilderElements =
     | TReferenceProps<EBuilderFieldTypes.card, IBuilderElementCardProps>
-    | TReferenceProps<EBuilderFieldTypes.checkbox, IBuilderElementCheckboxProps>
+    | TReferenceProps<EBuilderFieldTypes.checkbox>
     | TReferenceProps<
           EBuilderFieldTypes.colorPicker,
           IBuilderElementColorPickerProps
@@ -50,31 +46,6 @@ export type TBuilderElements =
     | TReferenceProps<EBuilderFieldTypes.radio>
     | TReferenceProps<EBuilderFieldTypes.radioButton>;
 
-export type TBuilderFieldBase = {
+export type TBuilderStepBase = {
     className?: string;
 } & TBuilderStepDataDTO;
-
-// export type TBuilderFieldBase = {
-//     value: string;
-//     title?: string;
-//     titleSize?: "big" | "small";
-//     isRequired?: boolean;
-//     className?: string;
-// } & TBuilderElements &
-//     TBuilderOpportunity;
-
-// export type TBuilderOpportunity = {
-//     opportunity?: {
-//         description: string;
-//         value: string;
-//         isRequired?: boolean;
-//         position: "left" | "center" | "right";
-//     };
-// };
-
-// export type TBuilderStep = {
-//     stepId: string;
-//     stepTitle?: string;
-//     stepDescription?: string;
-//     fields: TBuilderFieldBase[];
-// };

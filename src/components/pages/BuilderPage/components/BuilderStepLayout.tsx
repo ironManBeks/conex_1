@@ -2,14 +2,14 @@ import { FC, useEffect, useMemo } from "react";
 import cn from "classnames";
 import { inject, observer } from "mobx-react";
 import { isEmpty } from "lodash";
-
-import BuilderField from "@components/pages/BuilderPage/components/BuilderField";
-import { H2, P } from "@components/Text";
-
-import { TBuilderCompProps } from "../types";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { toJS } from "mobx";
+
+import { H2, P } from "@components/Text";
+import BuilderStep from "./BuilderStep";
+
 import { IRoot } from "@store/store";
+import { TBuilderCompProps } from "../types";
+import { toJS } from "mobx";
 
 const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -17,25 +17,18 @@ const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
         const { builderStore } = store as IRoot;
         const { builderData, currentStepData, endDoorData } = builderStore;
 
-        // useEffect(() => {
-        //     console.log("endDoorData", toJS(endDoorData));
-        // }, [endDoorData]);
+        useEffect(() => {
+            console.log("currentStepData", toJS(currentStepData));
+        }, [currentStepData]);
 
         return useMemo(() => {
             if (!isEmpty(currentStepData)) {
                 return (
                     <div className={cn(`${classPrefix}__wrapper`)}>
-                        <div className={`${classPrefix}__content`}>
-                            <BuilderField
-                                id={currentStepData?.id}
-                                attributes={currentStepData?.attributes}
-                            />
-                        </div>
-                        {/*{currentStepData?.stepDescription && (*/}
-                        {/*    <div className={`${classPrefix}__description`}>*/}
-                        {/*        <P>{currentStepData.stepDescription}</P>*/}
-                        {/*    </div>*/}
-                        {/*)}*/}
+                        <BuilderStep
+                            id={currentStepData?.id}
+                            attributes={currentStepData?.attributes}
+                        />
                     </div>
                 );
             }

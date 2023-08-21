@@ -45,19 +45,7 @@ const BuilderPage: FC<TStore> = inject("store")(
                 );
             }
 
-            return (
-                <div
-                    style={{
-                        display: "flex",
-                        flexDirection: "column",
-                        justifyContent: "center",
-                        textAlign: "center",
-                    }}
-                >
-                    <h1>🚧️ REPAIR 🚧</h1>
-                </div>
-            );
-            // return <BuilderForm pageClassPrefix={classPrefix} />;
+            return <BuilderForm pageClassPrefix={classPrefix} />;
         }, [builderDataFetching, builderData, classPrefix]);
 
         return (
