@@ -58,6 +58,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                         })}
                     >
                         <Checkbox.Group
+                            value={field.value}
                             style={{
                                 flexDirection:
                                     direction === EDirection.vertical

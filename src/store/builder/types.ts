@@ -10,6 +10,7 @@ export enum EBuilderFieldTypes {
 }
 
 export interface IBuilderElementDataDTO {
+    subfieldName: TNullable<string>;
     id: number;
     mainTitle: string;
     subTitle: TNullable<string>;
@@ -27,8 +28,9 @@ export interface IBuilderElementDataDTO {
 
 export interface IBuilderFieldDataDTO {
     id: number;
-    title: string;
+    fieldTitle: string;
     fieldType: EBuilderFieldTypes;
+    subfieldName: TNullable<string>;
     questions: IBuilderElementDataDTO[];
 }
 
@@ -44,6 +46,7 @@ export type TBuilderStepDataDTO = {
         updatedAt: string;
         publishedAt: string;
         subQuestions: IBuilderElementDataDTO[] | IBuilderFieldDataDTO[];
+        nextQuestion: TNullable<number>;
     };
 };
 

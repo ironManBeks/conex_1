@@ -17,9 +17,9 @@ const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
         const { builderStore } = store as IRoot;
         const { builderData, currentStepData, endDoorData } = builderStore;
 
-        useEffect(() => {
-            console.log("currentStepData", toJS(currentStepData));
-        }, [currentStepData]);
+        // useEffect(() => {
+        //     console.log("currentStepData", toJS(currentStepData));
+        // }, [currentStepData]);
 
         return useMemo(() => {
             if (!isEmpty(currentStepData)) {

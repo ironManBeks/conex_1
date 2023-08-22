@@ -70,6 +70,7 @@
       background-color: $color-white;
       box-shadow: $box-shadow-bs;
       border-radius: $border-radius-lg;
+      position: relative;
     }
     &__title{
       margin-bottom: 35px;
@@ -123,15 +124,24 @@
       display: flex;
       flex-direction: column;
     }
-    .ant-radio-button-wrapper, .form-field_sub-label{
+    .ant-radio-button-wrapper, .ant-radio-wrapper, .form-field_sub-label{
       .common-text{
-        margin-bottom: 0;
+        margin-bottom: 5px;
+        &:last-of-type{
+          margin-bottom: 0;
+        }
         &.title{
-          margin-bottom: 5px;
+          font-size: $font-size-md;
+          line-height: $line-height-md;
         }
         &.sub-title{
           font-size: $font-size-bs;
           line-height: $line-height-bs;
+        }
+        &.price{
+          font-size: $font-size-md;
+          line-height: $line-height-md;
+          color: $color-text-default;
         }
       }
     }

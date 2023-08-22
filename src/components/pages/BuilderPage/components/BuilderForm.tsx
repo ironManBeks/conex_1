@@ -13,38 +13,9 @@ import BuilderFormActions from "./BuilderStepActions";
 import { TBuilderCompProps, TBuilderStepBase } from "../types";
 import { EBuilderFieldTypes, TBuilderStepDataDTO } from "@store/builder/types";
 import { IRoot } from "@store/store";
+import { toJS } from "mobx";
+import { TNullable } from "@globalTypes/commonTypes";
 
-type TBuilderDefaultValue = string | string[] | number | number[] | null;
-
-const getBuilderDefaultValue = (
-    fieldType: EBuilderFieldTypes,
-): TBuilderDefaultValue => {
-    switch (fieldType) {
-        case EBuilderFieldTypes.card:
-        case EBuilderFieldTypes.radio:
-        case EBuilderFieldTypes.colorPicker:
-        case EBuilderFieldTypes.radioButton:
-            return "";
-        case EBuilderFieldTypes.checkbox:
-            return [];
-        default:
-            return null;
-    }
-};
-
-// const builderDefaultValuesGenerator = (
-//     fields?: TBuilderStepBase[],
-// ): Record<string, TBuilderDefaultValue> => {
-//     const result: Record<string, TBuilderDefaultValue> = {};
-//     if (!fields?.length) return result;
-//     for (let i = 0; i < fields.length; i++) {
-//         result[fields[i].attributes.fieldName] = getBuilderDefaultValue(
-//             fields[i].attributes.fieldType,
-//         );
-//     }
-//     return result;
-// };
-//
 // // ToDo remove type any
 const getBuilderFiledValidation = ({
     fieldType,

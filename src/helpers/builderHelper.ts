@@ -1,13 +1,18 @@
 import {
     EBuilderFieldTypes,
     IBuilderElementDataDTO,
+    IBuilderFieldDataDTO,
     TBuilderStepDataDTO,
 } from "@store/builder/types";
 import { FieldValues } from "react-hook-form";
 import { isArray, isEmpty, isNumber } from "lodash";
-import { notImplemented } from "@helpers/notImplemented";
+import { toJS } from "mobx";
 
 export type TGetNextStepResult = number | number[] | "end" | null;
+export type TBuilderDefaultValue = string | string[] | number | number[] | null;
+export type TGetDefaultValuesResult =
+    | Record<string, TBuilderDefaultValue>
+    | undefined;
 
 export const getNextStep = (
     currentStep: TBuilderStepDataDTO | null,
@@ -18,21 +23,12 @@ export const getNextStep = (
     }
     const stepType = currentStep?.attributes.fieldType;
 
-    // console.log("step", currentStep);
-
-    console.log("fieldValues", fieldsList);
-
     for (const fieldKey in fieldsList) {
         const fieldValue = fieldsList[fieldKey];
         const isValueArray = isArray(fieldValue);
 
         if (stepType === EBuilderFieldTypes.multiple) {
-            if (isValueArray) {
-                console.log("multiple____isValueArray", fieldValue);
-                notImplemented("No logic on this page");
-            } else {
-                notImplemented("No logic on this page");
-            }
+            return currentStep.attributes.nextQuestion;
         } else {
             if (isValueArray) {
                 const steps: number[] = [];
@@ -71,24 +67,71 @@ export const getNextStep = (
     return null;
 };
 
-// if (isArray(selectedValue)) {
-//     const pages: number[] = [];
-//     for (let i = 0; i < selectedValue.length; i++) {
-//         const selectedElement = step?.attributes.fieldElements.find(
-//             (item) => item.value === selectedValue[i],
-//         );
-//         if (selectedElement?.nextQuestion) {
-//             pages.push(selectedElement.nextQuestion);
-//         }
-//     }
-//     return pages;
-// } else {
-//     const selectedElement = step?.attributes.fieldElements.find(
-//         (item) => item.value === selectedValue,
-//     );
-//     if (!isEmpty(selectedElement)) {
-//         if (isNumber(selectedElement.nextQuestion)) {
-//             return selectedElement.nextQuestion;
-//         } else return "end";
-//     }
-// }
+const convertBuilderDefaultValues = (
+    value: string[],
+    fieldType: EBuilderFieldTypes,
+) => {
+    switch (fieldType) {
+        case EBuilderFieldTypes.card:
+        case EBuilderFieldTypes.radio:
+        case EBuilderFieldTypes.colorPicker:
+        case EBuilderFieldTypes.radioButton:
+            return value[0];
+        case EBuilderFieldTypes.checkbox:
+            return value;
+        default:
+            return value;
+    }
+};
+
+export const getBuilderStepDefaultValues = (
+    attributes: TBuilderStepDataDTO["attributes"],
+): TGetDefaultValuesResult => {
+    if (isEmpty(attributes)) {
+        return undefined;
+    }
+    const isMultiStep = attributes.fieldType === EBuilderFieldTypes.multiple;
+
+    const result: TGetDefaultValuesResult = {};
+
+    // return { ["is_default"]: "Interior" };
+    if (isMultiStep) {
+        for (let i = 0; i < attributes.subQuestions.length; i++) {
+            // ToDo Remove ts-ignore
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const fieldsList: IBuilderFieldDataDTO[] = attributes.subQuestions;
+            if (fieldsList.length) {
+                for (let j = 0; j < fieldsList.length; j++) {
+                    const defaultValues: string[] = [];
+                    const elementsList = fieldsList[j].questions;
+                    for (let el = 0; el < elementsList.length; el++) {
+                        const element = elementsList[el];
+                        if (element.default) {
+                            // console.log("element.value", element.value);
+                            defaultValues.push(element.value);
+                        }
+                    }
+                    if (
+                        !isEmpty(fieldsList[j]) &&
+                        fieldsList[j].subfieldName &&
+                        defaultValues.length
+                    ) {
+                        // ToDo Remove ts-ignore
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        result[fieldsList[j].subfieldName] =
+                            convertBuilderDefaultValues(
+                                defaultValues,
+                                fieldsList[j].fieldType,
+                            );
+                    }
+                }
+            }
+        }
+    } else {
+        return undefined;
+    }
+
+    return isEmpty(result) ? undefined : result;
+};

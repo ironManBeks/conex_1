@@ -14,8 +14,10 @@
     &_field{
       display: flex;
       align-items: center;
-      margin-right: 25px;
       margin-bottom: var(--item-mb);
+      &:not(:last-of-type){
+        margin-right: 25px;
+      }
       &._checked{
         span{
           &:not(.ant-checkbox){

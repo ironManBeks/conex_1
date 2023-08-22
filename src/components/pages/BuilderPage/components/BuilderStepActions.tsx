@@ -73,18 +73,24 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                 } else {
                     if (isNumber(nextStep)) {
                         updateCurrentStepData(nextStep);
+                        return;
                     }
-                    if (isArray(nextStep)) {
+                    if (isArray(nextStep) && nextStep.length) {
                         const uniqList = uniq(nextStep);
+                        console.log("uniqList", uniqList);
                         if (stepQueue.length) {
                             updateCurrentStepData(stepQueue[0]);
                         } else {
                             updateCurrentStepData(uniqList[0]);
                         }
                         setStepQueue(uniqList.slice(1, uniqList.length), "add");
+                        return;
                     }
-                    console.log("nextStep", nextStep);
-                    if (nextStep === "end") {
+                    if (
+                        nextStep === "end" ||
+                        (isArray(nextStep) && !nextStep.length)
+                    ) {
+                        console.log("123123");
                         setEndDoorData(data);
                         setCurrentStepData(null);
                         if (currentStepId) {

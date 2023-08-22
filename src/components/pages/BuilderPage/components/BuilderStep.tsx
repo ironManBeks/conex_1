@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import cn from "classnames";
 
 import { H3, P } from "@components/Text";
@@ -12,9 +12,14 @@ import {
     EBuilderFieldTypes,
     IBuilderElementDataDTO,
     IBuilderFieldDataDTO,
+    TBuilderStepDataDTO,
 } from "@store/builder/types";
 import BuilderElementColorPicker from "@components/pages/BuilderPage/components/elements/BuilderElementColorPicker";
 import { TNullable } from "@globalTypes/commonTypes";
+import { useFormContext } from "react-hook-form";
+import { getBuilderStepDefaultValues } from "@helpers/builderHelper";
+import { toJS } from "mobx";
+import { isEmpty } from "lodash";
 
 const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
     const classPrefix = `builder-step`;
@@ -26,7 +31,23 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
         subQuestions,
         fieldRequired,
     } = attributes;
-    const isMultiField = fieldType === EBuilderFieldTypes.multiple;
+    const isMultiStep = fieldType === EBuilderFieldTypes.multiple;
+    const {
+        reset,
+        formState: { defaultValues },
+        setValue,
+    } = useFormContext();
+
+    useEffect(() => {
+        const builderDefaultValues = getBuilderStepDefaultValues(
+            toJS(attributes),
+        );
+        if (!isEmpty(builderDefaultValues)) {
+            for (const fieldName in builderDefaultValues) {
+                setValue(fieldName, builderDefaultValues[fieldName]);
+            }
+        }
+    }, [attributes]);
 
     return (
         <div
@@ -51,7 +72,7 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
                 </H3>
             )}
             <div className={`${classPrefix}_content`}>
-                {isMultiField ? (
+                {isMultiStep ? (
                     <>
                         {subQuestions.map(
                             // ToDo Remove ts-ignore
@@ -66,14 +87,14 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
                                             "_multi",
                                         )}
                                     >
-                                        {item.title && (
+                                        {item.fieldTitle && (
                                             <H3
                                                 className={cn(
                                                     `${classPrefix}_title`,
                                                     "_small",
                                                 )}
                                             >
-                                                {item.title}
+                                                {item.fieldTitle}
                                             </H3>
                                         )}
                                         <div
@@ -82,7 +103,8 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
                                             {getElementsListByType({
                                                 type: item.fieldType,
                                                 elements: item.questions,
-                                                fieldName: fieldName + item.id,
+                                                fieldName:
+                                                    item.subfieldName ?? "",
                                             })}
                                         </div>
                                     </div>
@@ -125,6 +147,8 @@ const getElementsListByType = ({
     elements: IBuilderElementDataDTO[];
     fieldName: string;
 }): ReactNode => {
+    // const {} = useFormContext();
+
     switch (type) {
         case EBuilderFieldTypes.card:
             return elements.map((item) => (
@@ -141,7 +165,7 @@ const getElementsListByType = ({
                     nextQuestion={item.nextQuestion}
                     imgSrc={item.image?.url}
                     default={item.default}
-                    // disabled={item.disabled}
+                    subfieldName={item.subfieldName}
                 />
             ));
         case EBuilderFieldTypes.checkbox:
@@ -158,7 +182,6 @@ const getElementsListByType = ({
                             />
                         ),
                         value: item.value,
-                        // disabled: item.disabled,
                     }))}
                     showError={false}
                 />
@@ -168,9 +191,15 @@ const getElementsListByType = ({
                 <FieldRadioArrayController
                     name={fieldName}
                     options={elements.map((item) => ({
-                        label: `${item.mainTitle}`,
+                        label: (
+                            <LabelContent
+                                title={item.mainTitle}
+                                subTitle={item.subTitle}
+                                price={item.price}
+                                priceCurrency={item.priceCurrency}
+                            />
+                        ),
                         value: item.value,
-                        // disabled: item.disabled,
                     }))}
                     showError={false}
                 />
@@ -189,8 +218,10 @@ const getElementsListByType = ({
                             />
                         ),
                         value: item.value,
-                        // disabled: item.disabled,
+                        // disabled: item.default,
                     }))}
+                    // value={defaultValue ? defaultValue.value : undefined}
+                    // defaultValue={defaultValue ? defaultValue.value : undefined}
                     showError={false}
                 />
             );
@@ -209,7 +240,7 @@ const getElementsListByType = ({
                     nextQuestion={item.nextQuestion}
                     color={null}
                     default={item.default}
-                    // disabled={item.disabled}
+                    subfieldName={item.subfieldName}
                 />
             ));
         default:
@@ -227,7 +258,7 @@ const LabelContent: FC<{
         <>
             {title && <P className="title">{title}</P>}
             {subTitle && <P className="sub-title">{subTitle}</P>}
-            {price && (
+            {!!price && (
                 <P className="price">
                     <b>
                         {price}
