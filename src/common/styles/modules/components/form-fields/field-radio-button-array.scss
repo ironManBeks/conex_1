@@ -17,7 +17,6 @@
       display: flex;
       align-items: center;
       height: auto;
-      margin-right: 25px;
       margin-bottom: var(--item-mb);
       padding: var(--y-p) var(--x-p);
       border-radius: $border-radius-bs;
@@ -27,6 +26,9 @@
       font-size: $font-size-md;
       line-height: $line-height-md;
       color: $color-grey-800;
+      &:not(:last-of-type){
+        margin-right: 25px;
+      }
       &:before{
         display: none;
       }
