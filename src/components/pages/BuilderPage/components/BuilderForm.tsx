@@ -15,6 +15,7 @@ import { EBuilderFieldTypes, TBuilderStepDataDTO } from "@store/builder/types";
 import { IRoot } from "@store/store";
 import { toJS } from "mobx";
 import { TNullable } from "@globalTypes/commonTypes";
+import { convertBuilderFieldName } from "@helpers/builderHelper";
 
 // // ToDo remove type any
 const getBuilderFiledValidation = ({
@@ -48,17 +49,19 @@ const getBuilderFiledValidation = ({
 };
 
 const builderFormResolver = (
+    pageId: number | null,
     attributes?: TBuilderStepDataDTO["attributes"],
 ): Resolver | undefined => {
-    if (isEmpty(attributes)) return undefined;
+    if (isEmpty(attributes) || !pageId) return undefined;
 
     // ToDo remove type any
     const validation = {
-        [attributes.fieldName]: getBuilderFiledValidation({
-            fieldType: attributes.fieldType,
-            fieldTitle: attributes.fieldTitle,
-            stepTitle: "",
-        }),
+        [convertBuilderFieldName(pageId, attributes.fieldName)]:
+            getBuilderFiledValidation({
+                fieldType: attributes.fieldType,
+                fieldTitle: attributes.fieldTitle,
+                stepTitle: "",
+            }),
     };
 
     return yupResolver(yup.object().shape(validation));
@@ -67,11 +70,18 @@ const builderFormResolver = (
 const BuilderForm: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { currentStepData, updateCurrentStepData, stepHistory } =
-            builderStore;
+        const {
+            currentStepId,
+            currentStepData,
+            updateCurrentStepData,
+            stepHistory,
+        } = builderStore;
 
         const methods = useForm({
-            resolver: builderFormResolver(currentStepData?.attributes),
+            resolver: builderFormResolver(
+                currentStepId,
+                currentStepData?.attributes,
+            ),
             defaultValues: undefined,
         });
 

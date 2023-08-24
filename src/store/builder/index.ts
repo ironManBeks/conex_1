@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable, toJS } from "mobx";
 import { AxiosResponse } from "axios";
 
 import {
@@ -20,8 +20,8 @@ export class BuilderStore implements IBuilderStore {
     currentStepId: TNullable<number> = null;
     stepHistory: number[] = [];
     stepQueue: number[] = [];
-    resultDoorData: TResultDoorData = null;
-    endDoorData: TResultDoorData = null;
+    resultDoorData: TNullable<TResultDoorData[]> = null;
+    endDoorData: TNullable<TResultDoorData[]> = null;
 
     constructor() {
         makeAutoObservable(this, {
@@ -146,18 +146,6 @@ export class BuilderStore implements IBuilderStore {
                 this.setEndDoorData(null);
             }
 
-            // Remove step in resultDoorData (for right side panel)
-            if (
-                this.currentStepData?.attributes.fieldName &&
-                this.resultDoorData &&
-                this.currentStepData?.attributes.fieldName in
-                    this.resultDoorData
-            ) {
-                const newObj = { ...this.resultDoorData };
-                delete newObj[this.currentStepData?.attributes.fieldName];
-                this.setResultDoorData(newObj);
-            }
-
             const prevStepId = this.stepHistory[this.stepHistory.length - 1];
 
             if (isNumber(prevStepId)) {
@@ -173,23 +161,23 @@ export class BuilderStore implements IBuilderStore {
         }
 
         if (isNumber(way)) {
-            const nextStep = this.builderData.data.find(
+            const nextStepData = this.builderData.data.find(
                 (item) => item.id === way,
             );
-            if (!isEmpty(nextStep)) {
+            if (!isEmpty(nextStepData)) {
                 this.setStepHistory(this.currentStepId, "add");
                 this.setStepQueue(this.currentStepId, "remove");
-                this.setCurrentStepData(nextStep);
+                this.setCurrentStepData(nextStepData);
             }
             return;
         }
     };
 
-    setResultDoorData = (data: TResultDoorData): void => {
+    setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
         this.resultDoorData = data;
     };
 
-    setEndDoorData = (data: TResultDoorData): void => {
+    setEndDoorData = (data: TNullable<TResultDoorData[]>): void => {
         this.endDoorData = data;
     };
 }

@@ -1,5 +1,7 @@
 import { FC, ReactNode, useEffect } from "react";
 import cn from "classnames";
+import { isEmpty } from "lodash";
+import { useFormContext } from "react-hook-form";
 
 import { H3, P } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
@@ -7,19 +9,20 @@ import FieldRadioArrayController from "@components/form/formControllers/FieldRad
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
 import BuilderElementCard from "./elements/BuilderElementCard";
 
-import { TBuilderStepBase } from "../types";
+import BuilderElementColorPicker from "@components/pages/BuilderPage/components/elements/BuilderElementColorPicker";
+import {
+    convertBuilderFieldName,
+    getBuilderStepDefaultValues,
+} from "@helpers/builderHelper";
+import { TNullable } from "@globalTypes/commonTypes";
 import {
     EBuilderFieldTypes,
     IBuilderElementDataDTO,
     IBuilderFieldDataDTO,
     TBuilderStepDataDTO,
 } from "@store/builder/types";
-import BuilderElementColorPicker from "@components/pages/BuilderPage/components/elements/BuilderElementColorPicker";
-import { TNullable } from "@globalTypes/commonTypes";
-import { useFormContext } from "react-hook-form";
-import { getBuilderStepDefaultValues } from "@helpers/builderHelper";
+import { TBuilderStepBase } from "../types";
 import { toJS } from "mobx";
-import { isEmpty } from "lodash";
 
 const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
     const classPrefix = `builder-step`;
@@ -32,19 +35,17 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
         fieldRequired,
     } = attributes;
     const isMultiStep = fieldType === EBuilderFieldTypes.multiple;
-    const {
-        reset,
-        formState: { defaultValues },
-        setValue,
-    } = useFormContext();
+    const { setValue } = useFormContext();
 
     useEffect(() => {
         const builderDefaultValues = getBuilderStepDefaultValues(
+            id,
             toJS(attributes),
         );
+
         if (!isEmpty(builderDefaultValues)) {
-            for (const fieldName in builderDefaultValues) {
-                setValue(fieldName, builderDefaultValues[fieldName]);
+            for (const key in builderDefaultValues) {
+                setValue(key, builderDefaultValues[key]);
             }
         }
     }, [attributes]);
@@ -104,7 +105,10 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
                                                 type: item.fieldType,
                                                 elements: item.questions,
                                                 fieldName:
-                                                    item.subfieldName ?? "",
+                                                    convertBuilderFieldName(
+                                                        id,
+                                                        item.subfieldName || "",
+                                                    ),
                                             })}
                                         </div>
                                     </div>
@@ -121,7 +125,10 @@ const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                 // @ts-ignore
                                 elements: subQuestions,
-                                fieldName: fieldName,
+                                fieldName: convertBuilderFieldName(
+                                    id,
+                                    fieldName,
+                                ),
                             })}
                         </div>
                     </div>
