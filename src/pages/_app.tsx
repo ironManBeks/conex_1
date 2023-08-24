@@ -35,9 +35,9 @@ const CustomAppWrapper = inject("store")(
                 }
             }, []);
 
-            useEffect(() => {
-                console.log("authData", toJS(authData));
-            }, [authData]);
+            // useEffect(() => {
+            //     console.log("authData", toJS(authData));
+            // }, [authData]);
 
             return <>{children}</>;
         },

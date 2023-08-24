@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { FieldValues, useFormContext } from "react-hook-form";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { isArray, isEmpty, isNumber, uniq } from "lodash";
+import { isArray, isEmpty, isNil, isNumber, uniq } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
@@ -10,11 +10,14 @@ import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
 import { showNotification } from "@helpers/notificarionHelper";
 import { EButtonColor } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
-import { EBuilderFieldTypes, TBuilderStepDataDTO } from "@store/builder/types";
+import { TResultDoorData } from "@store/builder/types";
 import { notImplemented } from "@helpers/notImplemented";
-import { toJS } from "mobx";
 import { IRoot } from "@store/store";
-import { getNextStep } from "@helpers/builderHelper";
+import {
+    convertFormValuesToResultData,
+    getNextStep,
+} from "@helpers/builderHelper";
+import { toJS } from "mobx";
 
 const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -31,13 +34,13 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             stepQueue,
             setStepQueue,
             endDoorData,
-            setEndDoorData,
             setCurrentStepData,
             setResultDoorData,
             stepHistory,
             resultDoorData,
             setStepHistory,
             currentStepId,
+            setEndDoorData,
         } = builderStore;
 
         const errorMessageList = pickOutFormErrorMessages<FieldErrors<any>, []>(
@@ -51,19 +54,47 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             if (curr) {
                 resetField(curr);
             }
+            const newResult = resultDoorData?.filter(
+                (item) => item.stepId !== currentStepData?.id,
+            );
+            setResultDoorData(isArray(newResult) ? newResult : []);
         };
 
-        const handleNext = handleSubmit((data) => {
+        const updateResultDoorData = (formData: FieldValues) => {
+            const newResult = convertFormValuesToResultData(
+                formData,
+                currentStepData,
+            );
+
+            const renderResult = (): TResultDoorData[] => {
+                const oldResultIndex = resultDoorData?.findIndex(
+                    (item) => item.stepId === currentStepId,
+                );
+                const arr: TResultDoorData[] = resultDoorData?.length
+                    ? resultDoorData
+                    : [];
+                if (newResult) {
+                    if (!isNil(oldResultIndex) && oldResultIndex !== -1) {
+                        arr.splice(oldResultIndex, 1);
+                    }
+
+                    arr.push(newResult);
+                }
+                return arr;
+            };
+
+            setResultDoorData(renderResult());
+        };
+
+        const handleNext = handleSubmit((formData) => {
             if (!isEmpty(endDoorData)) {
                 notImplemented();
                 return;
             }
             if (!errorMessageList.length) {
-                const currentStepName =
-                    currentStepData?.attributes.fieldName || "";
-                const nextStep = getNextStep(currentStepData, data);
+                const nextStep = getNextStep(currentStepData, formData);
 
-                setResultDoorData(data);
+                updateResultDoorData(formData);
 
                 if (stepQueue.length) {
                     updateCurrentStepData(stepQueue[0]);
@@ -71,13 +102,25 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                         setStepQueue(nextStep, "add");
                     }
                 } else {
+                    if (
+                        nextStep === "end" ||
+                        (isArray(nextStep) && !nextStep.length)
+                    ) {
+                        if (resultDoorData) {
+                            setEndDoorData([...resultDoorData]);
+                        }
+                        setCurrentStepData(null);
+                        if (currentStepId) {
+                            setStepHistory(currentStepId, "add");
+                            setStepQueue(currentStepId, "remove");
+                        }
+                    }
                     if (isNumber(nextStep)) {
                         updateCurrentStepData(nextStep);
                         return;
                     }
                     if (isArray(nextStep) && nextStep.length) {
                         const uniqList = uniq(nextStep);
-                        console.log("uniqList", uniqList);
                         if (stepQueue.length) {
                             updateCurrentStepData(stepQueue[0]);
                         } else {
@@ -85,18 +128,6 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                         }
                         setStepQueue(uniqList.slice(1, uniqList.length), "add");
                         return;
-                    }
-                    if (
-                        nextStep === "end" ||
-                        (isArray(nextStep) && !nextStep.length)
-                    ) {
-                        console.log("123123");
-                        setEndDoorData(data);
-                        setCurrentStepData(null);
-                        if (currentStepId) {
-                            setStepHistory(currentStepId, "add");
-                            setStepQueue(currentStepId, "remove");
-                        }
                     }
                 }
             }
@@ -113,14 +144,14 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             }
         }, [errors]);
 
-        // useEffect(() => {
-        //     console.log("stepQueue_______________", toJS(stepQueue));
-        // }, [stepQueue]);
-        //
-        // useEffect(() => {
-        //     console.log("stepHistory_______________", toJS(stepHistory));
-        // }, [stepHistory]);
-        //
+        useEffect(() => {
+            console.log("stepQueue_______________", toJS(stepQueue));
+        }, [stepQueue]);
+
+        useEffect(() => {
+            console.log("stepHistory_______________", toJS(stepHistory));
+        }, [stepHistory]);
+
         // useEffect(() => {
         //     console.log("resultDoorData_______________", toJS(resultDoorData));
         // }, [resultDoorData]);

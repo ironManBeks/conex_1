@@ -1,5 +1,7 @@
 Hello, word!
 
+(node  v20.0.0)
+
 To start:
 1) npm install
 2) npm run dev

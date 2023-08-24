@@ -67,7 +67,17 @@ export type TStepHistoryActions = "add" | "remove" | "clear";
 
 export type TStepQueueActions = "add" | "remove" | "clear";
 
-export type TResultDoorData = Record<string, string | string[] | number> | null;
+export type TResultDoorData = {
+    stepId: number;
+    stepTitle: string;
+    stepType: EBuilderFieldTypes;
+    fields: {
+        fieldName: string | null;
+        fieldTitle: string | null;
+        fieldType: EBuilderFieldTypes;
+        elements: IBuilderElementDataDTO[];
+    }[];
+};
 
 export interface IBuilderStore {
     builderData: TNullable<TBuilderDTO>;
@@ -76,8 +86,8 @@ export interface IBuilderStore {
     currentStepId: TNullable<number>;
     stepHistory: number[];
     stepQueue: number[];
-    resultDoorData: TResultDoorData;
-    endDoorData: TResultDoorData;
+    resultDoorData: TNullable<TResultDoorData[]>;
+    endDoorData: TNullable<TResultDoorData[]>;
     // functions
     getBuilderData: () => Promise<void>;
     setBuilderData: (data: TBuilderDTO) => void;
@@ -93,6 +103,6 @@ export interface IBuilderStore {
         stepId: number | undefined | number[],
         action: TStepQueueActions | undefined,
     ) => void;
-    setResultDoorData: (data: TResultDoorData) => void;
-    setEndDoorData: (data: TResultDoorData) => void;
+    setResultDoorData: (data: TNullable<TResultDoorData[]>) => void;
+    setEndDoorData: (data: TNullable<TResultDoorData[]>) => void;
 }
