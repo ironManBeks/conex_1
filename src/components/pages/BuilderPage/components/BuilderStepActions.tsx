@@ -26,6 +26,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             handleSubmit,
             formState: { errors },
             resetField,
+            trigger,
         } = useFormContext();
         const {
             updateCurrentStepData,
@@ -135,6 +136,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         });
 
         useEffect(() => {
+            console.log("errors", errors);
             if (errorMessageList.length) {
                 showNotification({
                     message: "Validation",
@@ -164,6 +166,10 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         //     );
         // }, [currentStepData]);
 
+        useEffect(() => {
+            console.log("errors", errors);
+        }, [errors]);
+
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__inner-wrapper`}>
@@ -176,6 +182,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                         style={{
                             marginLeft: "auto",
                         }}
+                        // disabled={!!errorMessageList.length}
                     >
                         {isEmpty(endDoorData) ? "Next" : "Create order"}
                     </ButtonPrimary>

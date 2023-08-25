@@ -10,14 +10,16 @@ import BuilderStepLayout from "./BuilderStepLayout";
 import BuilderRightSide from "./BuilderRightSide";
 import BuilderFormActions from "./BuilderStepActions";
 
-import { TBuilderCompProps, TBuilderStepBase } from "../types";
-import { EBuilderFieldTypes, TBuilderStepDataDTO } from "@store/builder/types";
+import { TBuilderCompProps, TBuilderElementComp } from "../types";
+import {
+    EBuilderFieldTypes,
+    IBuilderFieldDataDTO,
+    TBuilderStepDataDTO,
+} from "@store/builder/types";
 import { IRoot } from "@store/store";
-import { toJS } from "mobx";
-import { TNullable } from "@globalTypes/commonTypes";
 import { convertBuilderFieldName } from "@helpers/builderHelper";
+import { Schema } from "yup";
 
-// // ToDo remove type any
 const getBuilderFiledValidation = ({
     fieldType,
     fieldTitle,
@@ -26,7 +28,7 @@ const getBuilderFiledValidation = ({
     fieldType: EBuilderFieldTypes;
     fieldTitle?: string;
     stepTitle?: string;
-}): any => {
+}): Schema => {
     const currentFieldName = fieldTitle ? fieldTitle : stepTitle ?? "";
     const requiredText = `Field "${currentFieldName}" is required`;
     const oneFieldRequiredText = `At least one value in field "${currentFieldName}" must be filled`;
@@ -44,7 +46,7 @@ const getBuilderFiledValidation = ({
                 .of(yup.string().required(requiredText))
                 .required(requiredText);
         default:
-            return null;
+            return yup.string();
     }
 };
 
@@ -53,16 +55,33 @@ const builderFormResolver = (
     attributes?: TBuilderStepDataDTO["attributes"],
 ): Resolver | undefined => {
     if (isEmpty(attributes) || !pageId) return undefined;
+    const isMulti = attributes?.fieldType === EBuilderFieldTypes.multiple;
 
-    // ToDo remove type any
-    const validation = {
-        [convertBuilderFieldName(pageId, attributes.fieldName)]:
+    const validation: Record<string, Schema> = {};
+
+    if (isMulti) {
+        for (let i = 0; i < attributes?.subQuestions.length; i++) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const field: IBuilderFieldDataDTO = attributes?.subQuestions[i];
+            if (field.required && field.subfieldName) {
+                validation[
+                    convertBuilderFieldName(pageId, field.subfieldName)
+                ] = getBuilderFiledValidation({
+                    fieldType: field.fieldType,
+                    fieldTitle: field.fieldTitle,
+                    stepTitle: "",
+                });
+            }
+        }
+    } else {
+        validation[convertBuilderFieldName(pageId, attributes.fieldName)] =
             getBuilderFiledValidation({
                 fieldType: attributes.fieldType,
                 fieldTitle: attributes.fieldTitle,
                 stepTitle: "",
-            }),
-    };
+            });
+    }
 
     return yupResolver(yup.object().shape(validation));
 };

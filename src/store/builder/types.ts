@@ -33,6 +33,7 @@ export interface IBuilderFieldDataDTO {
     fieldType: EBuilderFieldTypes;
     subfieldName: TNullable<string>;
     fieldWidth: number;
+    required: true;
     questions: IBuilderElementDataDTO[];
 }
 

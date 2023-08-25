@@ -26,6 +26,8 @@ const BuilderPage: FC<TStore> = inject("store")(
             setCurrentStepData,
             setBuilderSettings,
             setResultDoorData,
+            setBuilderDataFetching,
+            setBuilderSettingsFetching,
         } = builderStore;
 
         useEffect(() => {
@@ -38,6 +40,8 @@ const BuilderPage: FC<TStore> = inject("store")(
                 setEndDoorData(null);
                 setCurrentStepData(null);
                 setResultDoorData(null);
+                setBuilderDataFetching(true);
+                setBuilderSettingsFetching(true);
             };
         }, []);
 

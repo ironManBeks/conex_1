@@ -54,6 +54,7 @@ export class BuilderStore implements IBuilderStore {
     }
 
     getBuilderSettings = (): Promise<void> => {
+        this.setBuilderSettingsFetching(true);
         return axiosInstance
             .get("/setting")
             .then((data: AxiosResponse<TBuilderSettingsDTO>) => {
@@ -77,6 +78,7 @@ export class BuilderStore implements IBuilderStore {
     };
 
     getBuilderData = (): Promise<void> => {
+        this.setBuilderDataFetching(true);
         return axiosInstance
             .get("/quiz-questions")
             .then((data: AxiosResponse<TBuilderDTO>) => {

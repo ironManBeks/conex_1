@@ -29,6 +29,9 @@
       font-size: $font-size-md;
       line-height: $line-height-md;
       color: $color-grey-800;
+      min-width: 150px;
+      justify-content: center;
+      text-align: center;
       &:before{
         display: none;
       }
