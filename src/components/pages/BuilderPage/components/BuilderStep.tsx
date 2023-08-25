@@ -1,6 +1,6 @@
-import { FC, ReactNode, useEffect } from "react";
+import { CSSProperties, FC, ReactNode, useEffect } from "react";
 import cn from "classnames";
-import { isEmpty } from "lodash";
+import { isEmpty, merge } from "lodash";
 import { useFormContext } from "react-hook-form";
 
 import { H3, P } from "@components/Text";
@@ -13,6 +13,7 @@ import BuilderElementColorPicker from "@components/pages/BuilderPage/components/
 import {
     convertBuilderFieldName,
     getBuilderStepDefaultValues,
+    getDefaultValuesFromResultDoorData,
 } from "@helpers/builderHelper";
 import { TNullable } from "@globalTypes/commonTypes";
 import {
@@ -23,125 +24,140 @@ import {
 } from "@store/builder/types";
 import { TBuilderStepBase } from "../types";
 import { toJS } from "mobx";
+import { inject, observer } from "mobx-react";
+import { IRoot } from "@store/store";
 
-const BuilderStep: FC<TBuilderStepBase> = ({ id, attributes, className }) => {
-    const classPrefix = `builder-step`;
-    const {
-        fieldType,
-        fieldName,
-        fieldTitle,
-        fieldTitleSize,
-        subQuestions,
-        fieldRequired,
-    } = attributes;
-    const isMultiStep = fieldType === EBuilderFieldTypes.multiple;
-    const { setValue } = useFormContext();
+const BuilderStep: FC<TBuilderStepBase> = inject("store")(
+    observer(({ store, className }) => {
+        const { builderStore } = store as IRoot;
+        const { resultDoorData, currentStepData } = builderStore;
+        if (isEmpty(currentStepData)) return null;
+        const {
+            fieldType,
+            fieldName,
+            fieldTitle,
+            fieldTitleSize,
+            subQuestions,
+            fieldRequired,
+        } = currentStepData?.attributes;
 
-    useEffect(() => {
-        const builderDefaultValues = getBuilderStepDefaultValues(
-            id,
-            toJS(attributes),
-        );
+        const classPrefix = `builder-step`;
+        const isMultiStep = fieldType === EBuilderFieldTypes.multiple;
+        const { setValue } = useFormContext();
 
-        if (!isEmpty(builderDefaultValues)) {
-            for (const key in builderDefaultValues) {
-                setValue(key, builderDefaultValues[key]);
+        useEffect(() => {
+            const builderDefaultValues = getBuilderStepDefaultValues(
+                currentStepData.id,
+                currentStepData.attributes,
+            );
+
+            const resultDefaultValues = getDefaultValuesFromResultDoorData(
+                currentStepData?.id,
+                resultDoorData,
+            );
+
+            const newDefaultValues = resultDefaultValues
+                ? resultDefaultValues
+                : builderDefaultValues;
+
+            if (!isEmpty(newDefaultValues)) {
+                for (const key in newDefaultValues) {
+                    setValue(key, newDefaultValues[key]);
+                }
             }
-        }
-    }, [attributes]);
+        }, [currentStepData.attributes]);
 
-    return (
-        <div
-            className={cn(`${classPrefix}_wrapper`, className, {
-                _required: fieldRequired,
-            })}
-        >
-            <div>
-                {id && <div>id: {id}</div>}
-                {fieldType && <div>Type: {fieldType}</div>}
-                {fieldRequired && (
-                    <div>Required: {fieldRequired.toString()}</div>
+        return (
+            <div
+                className={cn(`${classPrefix}_wrapper`, className, {
+                    _required: fieldRequired,
+                })}
+            >
+                {fieldTitle && (
+                    <H3
+                        className={cn(`${classPrefix}_title`, {
+                            [`_${fieldTitleSize}`]: fieldTitleSize,
+                        })}
+                    >
+                        {fieldTitle}
+                    </H3>
                 )}
-            </div>
-            {fieldTitle && (
-                <H3
-                    className={cn(`${classPrefix}_title`, {
-                        [`_${fieldTitleSize}`]: fieldTitleSize,
-                    })}
-                >
-                    {fieldTitle}
-                </H3>
-            )}
-            <div className={`${classPrefix}_content`}>
-                {isMultiStep ? (
-                    <>
-                        {subQuestions.map(
-                            // ToDo Remove ts-ignore
-                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                            // @ts-ignore
-                            (item: IBuilderFieldDataDTO, index) => {
-                                return (
-                                    <div
-                                        key={index}
-                                        className={cn(
-                                            `${classPrefix}_field__wrapper`,
-                                            "_multi",
-                                        )}
-                                    >
-                                        {item.fieldTitle && (
-                                            <H3
-                                                className={cn(
-                                                    `${classPrefix}_title`,
-                                                    "_small",
-                                                )}
-                                            >
-                                                {item.fieldTitle}
-                                            </H3>
-                                        )}
-                                        <div
-                                            className={`${classPrefix}_elements__list`}
-                                        >
-                                            {getElementsListByType({
-                                                type: item.fieldType,
-                                                elements: item.questions,
-                                                fieldName:
-                                                    convertBuilderFieldName(
-                                                        id,
-                                                        item.subfieldName || "",
-                                                    ),
-                                            })}
-                                        </div>
-                                    </div>
-                                );
-                            },
-                        )}
-                    </>
-                ) : (
-                    <div className={`${classPrefix}_field__wrapper`}>
-                        <div className={`${classPrefix}_elements__list`}>
-                            {getElementsListByType({
-                                type: fieldType,
-                                // ToDo Remove ts-ignore
+                <div className={`${classPrefix}_content`}>
+                    {isMultiStep ? (
+                        <>
+                            {subQuestions.map(
                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                 // @ts-ignore
-                                elements: subQuestions,
-                                fieldName: convertBuilderFieldName(
-                                    id,
-                                    fieldName,
-                                ),
-                            })}
+                                (item: IBuilderFieldDataDTO, index) => {
+                                    return (
+                                        <div
+                                            key={index}
+                                            className={cn(
+                                                `${classPrefix}_field__wrapper`,
+                                                "_multi",
+                                            )}
+                                            style={{
+                                                width: item.fieldWidth
+                                                    ? `${item.fieldWidth}%`
+                                                    : "100%",
+                                            }}
+                                        >
+                                            {item.fieldTitle && (
+                                                <H3
+                                                    className={cn(
+                                                        `${classPrefix}_title`,
+                                                        "_small",
+                                                    )}
+                                                >
+                                                    {item.fieldTitle}
+                                                </H3>
+                                            )}
+                                            <div
+                                                className={`${classPrefix}_elements__list`}
+                                            >
+                                                {getElementsListByType({
+                                                    type: item.fieldType,
+                                                    elements: item.questions,
+                                                    fieldName:
+                                                        convertBuilderFieldName(
+                                                            currentStepData.id,
+                                                            item.subfieldName ||
+                                                                "",
+                                                        ),
+                                                })}
+                                            </div>
+                                        </div>
+                                    );
+                                },
+                            )}
+                        </>
+                    ) : (
+                        <div className={`${classPrefix}_field__wrapper`}>
+                            <div className={`${classPrefix}_elements__list`}>
+                                {getElementsListByType({
+                                    type: fieldType,
+                                    // ToDo Remove ts-ignore
+                                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                    // @ts-ignore
+                                    elements: subQuestions,
+                                    fieldName: convertBuilderFieldName(
+                                        currentStepData.id,
+                                        fieldName,
+                                    ),
+                                })}
+                            </div>
                         </div>
-                    </div>
-                )}
+                    )}
+                </div>
+                {/*{stepDescription && (*/}
+                {/*    <div className={`${classPrefix}__description`}>*/}
+                {/*        <P>{stepDescription}</P>*/}
+                {/*    </div>*/}
+                {/*)}*/}
             </div>
-            {/*{stepDescription && (*/}
-            {/*    <div className={`${classPrefix}__description`}>*/}
-            {/*        <P>{stepDescription}</P>*/}
-            {/*    </div>*/}
-            {/*)}*/}
-        </div>
-    );
-};
+        );
+    }),
+);
 
 export default BuilderStep;
 
@@ -225,10 +241,7 @@ const getElementsListByType = ({
                             />
                         ),
                         value: item.value,
-                        // disabled: item.default,
                     }))}
-                    // value={defaultValue ? defaultValue.value : undefined}
-                    // defaultValue={defaultValue ? defaultValue.value : undefined}
                     showError={false}
                 />
             );
@@ -245,7 +258,7 @@ const getElementsListByType = ({
                     priceCurrency={item.priceCurrency}
                     fieldName={fieldName}
                     nextQuestion={item.nextQuestion}
-                    color={null}
+                    color={item.color || undefined}
                     default={item.default}
                     subfieldName={item.subfieldName}
                 />

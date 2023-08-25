@@ -17,7 +17,6 @@ import {
     convertFormValuesToResultData,
     getNextStep,
 } from "@helpers/builderHelper";
-import { toJS } from "mobx";
 
 const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -94,6 +93,8 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             if (!errorMessageList.length) {
                 const nextStep = getNextStep(currentStepData, formData);
 
+                // console.log("formData", formData);
+
                 updateResultDoorData(formData);
 
                 if (stepQueue.length) {
@@ -144,18 +145,18 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             }
         }, [errors]);
 
-        useEffect(() => {
-            console.log("stepQueue_______________", toJS(stepQueue));
-        }, [stepQueue]);
+        // useEffect(() => {
+        //     console.log("stepQueue_______________", toJS(stepQueue));
+        // }, [stepQueue]);
 
-        useEffect(() => {
-            console.log("stepHistory_______________", toJS(stepHistory));
-        }, [stepHistory]);
+        // useEffect(() => {
+        //     console.log("stepHistory_______________", toJS(stepHistory));
+        // }, [stepHistory]);
 
         // useEffect(() => {
         //     console.log("resultDoorData_______________", toJS(resultDoorData));
         // }, [resultDoorData]);
-        //
+
         // useEffect(() => {
         //     console.log(
         //         "currentStepData_______________",

@@ -24,10 +24,6 @@ export interface IBuilderElementCardProps extends IBuilderElementBase {
     imgSrc?: TNullable<string>;
 }
 
-export interface IBuilderElementColorPickerProps extends IBuilderElementBase {
-    color: THEX | null;
-}
-
 export type TReferenceProps<
     T extends EBuilderFieldTypes,
     E extends IBuilderElementBase = IBuilderElementBase,
@@ -39,13 +35,10 @@ export type TReferenceProps<
 export type TBuilderElements =
     | TReferenceProps<EBuilderFieldTypes.card, IBuilderElementCardProps>
     | TReferenceProps<EBuilderFieldTypes.checkbox>
-    | TReferenceProps<
-          EBuilderFieldTypes.colorPicker,
-          IBuilderElementColorPickerProps
-      >
+    | TReferenceProps<EBuilderFieldTypes.colorPicker>
     | TReferenceProps<EBuilderFieldTypes.radio>
     | TReferenceProps<EBuilderFieldTypes.radioButton>;
 
 export type TBuilderStepBase = {
     className?: string;
-} & TBuilderStepDataDTO;
+} & TStore;

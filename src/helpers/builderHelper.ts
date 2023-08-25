@@ -142,7 +142,22 @@ export const getBuilderStepDefaultValues = (
             }
         }
     } else {
-        return undefined;
+        const defaultValues = [];
+        for (let i = 0; i < attributes.subQuestions.length; i++) {
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            // @ts-ignore
+            const element: IBuilderElementDataDTO = attributes.subQuestions[i];
+            if (element.default) {
+                defaultValues.push(element.value);
+            }
+        }
+
+        if (attributes.fieldType === EBuilderFieldTypes.checkbox) {
+            result[convertBuilderFieldName(stepId, attributes.fieldName)] =
+                defaultValues;
+        } else
+            result[convertBuilderFieldName(stepId, attributes.fieldName)] =
+                defaultValues[0];
     }
 
     return isEmpty(result) ? undefined : result;
@@ -320,4 +335,28 @@ export const convertFormValuesToResultData = (
 
         return newResult;
     } else return null;
+};
+
+export const getDefaultValuesFromResultDoorData = (
+    stepId: number,
+    resultDoorData: TNullable<TResultDoorData[]>,
+): TGetDefaultValuesResult => {
+    const result: TGetDefaultValuesResult = undefined;
+    if (!resultDoorData || !resultDoorData.length) return result;
+    const currentResult = resultDoorData.find((item) => item.stepId === stepId);
+    if (isEmpty(currentResult)) return result;
+    const convertedResult: TGetDefaultValuesResult = {};
+
+    for (let i = 0; i < currentResult.fields.length; i++) {
+        const field = currentResult.fields[i];
+        const elementValue = field.elements.map((item) => item.value);
+        if (field.fieldName) {
+            convertedResult[convertBuilderFieldName(stepId, field.fieldName)] =
+                field.fieldType === EBuilderFieldTypes.checkbox
+                    ? elementValue
+                    : elementValue[0];
+        }
+    }
+
+    return convertedResult;
 };

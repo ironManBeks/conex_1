@@ -11,6 +11,9 @@
     &_field-wrapper{
       .ant-radio-group{
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 20px;
       }
     }
     &_field{
@@ -26,9 +29,6 @@
       font-size: $font-size-md;
       line-height: $line-height-md;
       color: $color-grey-800;
-      &:not(:last-of-type){
-        margin-right: 25px;
-      }
       &:before{
         display: none;
       }

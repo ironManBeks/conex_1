@@ -1,4 +1,4 @@
-import { TNullable } from "@globalTypes/commonTypes";
+import { THEX, TNullable } from "@globalTypes/commonTypes";
 
 export enum EBuilderFieldTypes {
     card = "card",
@@ -23,6 +23,7 @@ export interface IBuilderElementDataDTO {
         alt: TNullable<string>;
         url: TNullable<string>;
     };
+    color?: THEX;
     nextQuestion: TNullable<number>;
 }
 
@@ -31,6 +32,7 @@ export interface IBuilderFieldDataDTO {
     fieldTitle: string;
     fieldType: EBuilderFieldTypes;
     subfieldName: TNullable<string>;
+    fieldWidth: number;
     questions: IBuilderElementDataDTO[];
 }
 
@@ -63,6 +65,13 @@ export type TBuilderDTO = {
     };
 };
 
+export type TBuilderSettingsDTO = {
+    data: {
+        quizStartId: number;
+    };
+    meta: Record<string, unknown>;
+};
+
 export type TStepHistoryActions = "add" | "remove" | "clear";
 
 export type TStepQueueActions = "add" | "remove" | "clear";
@@ -82,6 +91,9 @@ export type TResultDoorData = {
 export interface IBuilderStore {
     builderData: TNullable<TBuilderDTO>;
     builderDataFetching: boolean;
+    builderSettings: TNullable<TBuilderSettingsDTO>;
+    builderSettingsFetching: boolean;
+    // not request
     currentStepData: TNullable<TBuilderStepDataDTO>;
     currentStepId: TNullable<number>;
     stepHistory: number[];
@@ -90,8 +102,12 @@ export interface IBuilderStore {
     endDoorData: TNullable<TResultDoorData[]>;
     // functions
     getBuilderData: () => Promise<void>;
-    setBuilderData: (data: TBuilderDTO) => void;
+    setBuilderData: (data: TNullable<TBuilderDTO>) => void;
     setBuilderDataFetching: (value: boolean) => void;
+    getBuilderSettings: () => Promise<void>;
+    setBuilderSettings: (data: TNullable<TBuilderSettingsDTO>) => void;
+    setBuilderSettingsFetching: (value: boolean) => void;
+    // not request
     setCurrentStepData: (data: TNullable<TBuilderStepDataDTO>) => void;
     setCurrentStepId: (value: TNullable<number>) => void;
     updateCurrentStepData: (value: "start" | "prev" | number) => void;

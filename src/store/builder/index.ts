@@ -4,18 +4,22 @@ import { AxiosResponse } from "axios";
 import {
     IBuilderStore,
     TBuilderDTO,
+    TBuilderSettingsDTO,
     TBuilderStepDataDTO,
     TResultDoorData,
     TStepHistoryActions,
 } from "./types";
 import axiosInstance from "../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
-import { isArray, isEmpty, isNumber, uniq } from "lodash";
+import { isArray, isEmpty, isNil, isNumber, uniq } from "lodash";
 import { TNullable } from "@globalTypes/commonTypes";
 
 export class BuilderStore implements IBuilderStore {
     builderData: TNullable<TBuilderDTO> = null;
     builderDataFetching = true;
+    builderSettings: TNullable<TBuilderSettingsDTO> = null;
+    builderSettingsFetching = true;
+    // not request
     currentStepData: TBuilderStepDataDTO | null = null;
     currentStepId: TNullable<number> = null;
     stepHistory: number[] = [];
@@ -27,6 +31,8 @@ export class BuilderStore implements IBuilderStore {
         makeAutoObservable(this, {
             builderData: observable,
             builderDataFetching: observable,
+            builderSettings: observable,
+            builderSettingsFetching: observable,
             currentStepData: observable,
             currentStepId: observable,
             stepHistory: observable,
@@ -36,6 +42,8 @@ export class BuilderStore implements IBuilderStore {
             // functions
             setBuilderData: action,
             setBuilderDataFetching: action,
+            setBuilderSettings: action,
+            setBuilderSettingsFetching: action,
             setStepHistory: action,
             setCurrentStepData: action,
             setCurrentStepId: action,
@@ -44,6 +52,29 @@ export class BuilderStore implements IBuilderStore {
             setEndDoorData: action,
         });
     }
+
+    getBuilderSettings = (): Promise<void> => {
+        return axiosInstance
+            .get("/setting")
+            .then((data: AxiosResponse<TBuilderSettingsDTO>) => {
+                this.setBuilderSettings(data.data);
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setBuilderSettingsFetching(false);
+            });
+    };
+
+    setBuilderSettings = (data: TNullable<TBuilderSettingsDTO>): void => {
+        this.builderSettings = data;
+    };
+
+    setBuilderSettingsFetching = (value: boolean): void => {
+        this.builderSettingsFetching = value;
+    };
 
     getBuilderData = (): Promise<void> => {
         return axiosInstance
@@ -60,7 +91,7 @@ export class BuilderStore implements IBuilderStore {
             });
     };
 
-    setBuilderData = (data: TBuilderDTO): void => {
+    setBuilderData = (data: TNullable<TBuilderDTO>): void => {
         this.builderData = data;
     };
 
@@ -135,9 +166,17 @@ export class BuilderStore implements IBuilderStore {
 
     updateCurrentStepData = (way: "start" | "prev" | number): void => {
         if (!this.builderData) return;
+        const quizStartId = this.builderSettings?.data.quizStartId;
 
         if (way === "start") {
-            this.setCurrentStepData(this.builderData.data[0]);
+            if (quizStartId && isNumber(quizStartId)) {
+                const startStep = this.builderData.data.find(
+                    (item) => item.id === quizStartId,
+                );
+                if (startStep) {
+                    this.setCurrentStepData(startStep);
+                } else this.setCurrentStepData(this.builderData.data[0]);
+            } else this.setCurrentStepData(this.builderData.data[0]);
             return;
         }
 

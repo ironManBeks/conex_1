@@ -9,15 +9,15 @@
     &_field-wrapper{
       .ant-checkbox-group{
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 20px;
       }
     }
     &_field{
       display: flex;
       align-items: center;
       margin-bottom: var(--item-mb);
-      &:not(:last-of-type){
-        margin-right: 25px;
-      }
       &._checked{
         span{
           &:not(.ant-checkbox){
