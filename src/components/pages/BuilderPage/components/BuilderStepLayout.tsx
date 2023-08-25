@@ -20,17 +20,13 @@ const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_step`;
         const { builderStore } = store as IRoot;
-        const { builderData, currentStepData, resultDoorData, endDoorData } =
-            builderStore;
+        const { currentStepData, resultDoorData, endDoorData } = builderStore;
 
         return useMemo(() => {
             if (!isEmpty(currentStepData)) {
                 return (
                     <div className={cn(`${classPrefix}__wrapper`)}>
-                        <BuilderStep
-                            id={currentStepData?.id}
-                            attributes={currentStepData?.attributes}
-                        />
+                        <BuilderStep />
                     </div>
                 );
             }

@@ -114,15 +114,30 @@
       color: $color-grey-300;
     }
   }
+  &_content{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
   &_field__wrapper{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
     &._multi{
       &:not(:first-child){
         margin-top: 45px;
       }
     }
-    .form-field_sub-label{
-      display: flex;
-      flex-direction: column;
+    .form-field{
+      &_field{
+        min-width: 100px;
+      }
+      &_sub-label{
+        display: flex;
+        flex-direction: column;
+      }
     }
     .ant-radio-button-wrapper, .ant-radio-wrapper, .form-field_sub-label{
       .common-text{
@@ -150,6 +165,7 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    width: 100%;
   }
 }
 
@@ -236,10 +252,13 @@
   &-color-picker{
     &_wrapper {
       &._active {
+        .common-title._h4{
+          color: $color-primary !important;
+        }
         .builder-element-color-picker {
           &_field {
-            filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.45));
             border-color: $color-primary;
+            box-shadow: $box-shadow-bs-hover;
           }
         }
       }
@@ -247,6 +266,7 @@
         font-size: $font-size-md;
         line-height: $line-height-md;
         font-family: $font-family-primary;
+        transition: .2s;
         &._h4{
           margin-bottom: 10px;
           font-weight: 500;
@@ -276,9 +296,10 @@
       align-items: center;
       &:hover{
         .builder-element-color-picker{
-          &_field{
-            filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.45));
-          }
+          box-shadow: $box-shadow-bs-hover;
+        }
+        .common-title._h4{
+          color: $color-primary;
         }
       }
     }
@@ -286,9 +307,9 @@
       width: 70px;
       height: 70px;
       border-radius: 30px;
-      filter: drop-shadow(0 0 3px rgba(0, 0, 0, 0.15));
+      box-shadow: $box-shadow-bs;
       margin-bottom: 10px;
-      border: 2px solid transparent;
+      border: 2px solid $color-grey-100;
       transition: .2s;
     }
   }

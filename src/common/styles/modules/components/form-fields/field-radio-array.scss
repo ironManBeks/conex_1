@@ -11,11 +11,13 @@
     &_field-wrapper{
       .ant-radio-group{
         display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        column-gap: 20px;
       }
     }
     &_field{
       width: auto;
-      margin-right: 25px;
       margin-bottom: var(--item-mb);
       font-size: $font-size-bs;
       line-height: $line-height-bs;

@@ -14,15 +14,35 @@ const BuilderPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
         const classPrefix = "builder-page";
         const { builderStore } = store as IRoot;
-        const { getBuilderData, builderData, builderDataFetching } =
-            builderStore;
+        const {
+            getBuilderData,
+            getBuilderSettings,
+            builderData,
+            builderDataFetching,
+            builderSettings,
+            builderSettingsFetching,
+            setBuilderData,
+            setEndDoorData,
+            setCurrentStepData,
+            setBuilderSettings,
+            setResultDoorData,
+        } = builderStore;
 
         useEffect(() => {
-            getBuilderData();
+            getBuilderSettings().then(() => {
+                getBuilderData();
+            });
+            return () => {
+                setBuilderData(null);
+                setBuilderSettings(null);
+                setEndDoorData(null);
+                setCurrentStepData(null);
+                setResultDoorData(null);
+            };
         }, []);
 
         const builderContent = useMemo(() => {
-            if (builderDataFetching) {
+            if (builderDataFetching || builderSettingsFetching) {
                 return <BuilderLoader pageClassPrefix={classPrefix} />;
             }
 

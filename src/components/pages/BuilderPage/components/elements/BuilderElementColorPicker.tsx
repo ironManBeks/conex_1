@@ -1,26 +1,19 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import { isFunction } from "lodash";
-import {
-    Controller,
-    ControllerRenderProps,
-    FieldValues,
-    useFormContext,
-} from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { H4, H5, P } from "@components/Text";
-import ImgWrapper from "@components/globalComponents/ImgWrapper";
 
 import { BUILDER_ELEMENT_CLASSNAME } from "../../consts";
 import {
-    IBuilderElementCardProps,
-    IBuilderElementColorPickerProps,
+    IBuilderElementBase,
     TBuilderElementComp,
 } from "@components/pages/BuilderPage/types";
 import { isColorHex } from "@helpers/checkHelper";
 
 const BuilderElementColorPicker: FC<
-    IBuilderElementColorPickerProps & TBuilderElementComp
+    IBuilderElementBase & TBuilderElementComp
 > = ({
     className,
     mainTitle,
@@ -80,9 +73,9 @@ const BuilderElementColorPicker: FC<
                             <div
                                 className={`${classPrefix}_field`}
                                 style={{
-                                    background: isColorHex(value)
-                                        ? value
-                                        : subTitle || "none",
+                                    background: isColorHex(color)
+                                        ? color
+                                        : "none",
                                 }}
                             />
                             {mainTitle && (
