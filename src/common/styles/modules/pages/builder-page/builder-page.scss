@@ -207,6 +207,11 @@
           }
         }
       }
+      &._none{
+        .common-title._h4{
+          margin-bottom: 0;
+        }
+      }
       .img-custom_wrapper{
         margin-bottom: 10px;
         img{
@@ -234,6 +239,9 @@
     }
     &_inner-wrapper{
       position: relative;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
       width: 100%;
       padding: 20px;
       background-color: $color-white;

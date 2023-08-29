@@ -10,6 +10,7 @@ import { isArray, isEmpty, isNumber } from "lodash";
 import {
     BUILDER_FIELD_ID_DIVIDER,
     BUILDER_FIELD_ID_PREFIX,
+    BUILDER_VALUE_NONE,
 } from "@components/pages/BuilderPage/consts";
 import { TAddedOptionsListItem } from "@components/globalComponents/types";
 import { toJS } from "mobx";
@@ -35,10 +36,16 @@ export const getNextStep = (
         return null;
     }
 
+    console.log("currentStep", toJS(currentStep));
+    console.log("fieldsList", toJS(fieldsList));
+
     const stepType = currentStep?.attributes.fieldType;
+    // const selectedValues =
 
     for (const fieldKey in fieldsList) {
         const fieldValue = fieldsList[fieldKey];
+
+        console.log("fieldValue", fieldValue);
 
         if (stepType === EBuilderFieldTypes.multiple) {
             return currentStep.attributes.nextQuestion;
@@ -63,13 +70,19 @@ export const getNextStep = (
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     currentStep?.attributes.subQuestions.find(
-                        (item: IBuilderElementDataDTO) =>
-                            item.value === fieldValue,
+                        (item: IBuilderElementDataDTO) => {
+                            console.log("item", item);
+                            return item.value === fieldValue;
+                        },
                     );
                 if (!isEmpty(selectedElement)) {
                     if (isNumber(selectedElement.nextQuestion)) {
                         return selectedElement.nextQuestion;
-                    } else return "end";
+                    } else {
+                        if (isNumber(currentStep?.attributes.nextQuestion)) {
+                            return currentStep?.attributes.nextQuestion;
+                        } else return "end";
+                    }
                 }
             }
         }
@@ -218,12 +231,15 @@ export const renderResultDataToOptionsList = (
             const field = stepItem.fields[i];
             for (let j = 0; j < field.elements.length; j++) {
                 const element = field.elements[j];
-                list.push({
-                    label: element.mainTitle,
-                    value: element.price,
-                });
+                if (element.value.toLowerCase() !== BUILDER_VALUE_NONE) {
+                    list.push({
+                        label: element.mainTitle,
+                        value: element.price,
+                    });
+                }
             }
         }
+
         return {
             title: stepItem.stepTitle,
             list: list,

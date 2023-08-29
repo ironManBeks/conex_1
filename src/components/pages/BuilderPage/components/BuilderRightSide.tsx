@@ -45,7 +45,6 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
                     <AddedOptionsList optionsList={resultDataToOptionsList()} />
                     <AdditionalServices
                         options={[]}
-                        // options={additionalServicesOptions}
                         totalOption={additionalServicesTotalOption}
                     />
                 </div>

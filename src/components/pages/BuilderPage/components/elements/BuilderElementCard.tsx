@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useCallback, useEffect } from "react";
 import cn from "classnames";
 import { isFunction } from "lodash";
 import {
@@ -11,7 +11,7 @@ import {
 import { H4, H5, P } from "@components/Text";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 
-import { BUILDER_ELEMENT_CLASSNAME } from "../../consts";
+import { BUILDER_ELEMENT_CLASSNAME, BUILDER_VALUE_NONE } from "../../consts";
 import {
     IBuilderElementCardProps,
     TBuilderElementComp,
@@ -30,7 +30,6 @@ const BuilderElementCard: FC<
     popular,
     onClick,
     fieldName,
-    nextQuestion,
 }) => {
     const classPrefix = `builder-element-card`;
     const {
@@ -40,21 +39,23 @@ const BuilderElementCard: FC<
     } = useFormContext();
     const errorMessage = errors[fieldName]?.message;
 
-    const getIsActive = (
-        value: string | number | null | undefined,
-    ): boolean => {
-        const fieldValues = getValues();
-        if (fieldValues[fieldName]) {
-            return fieldValues[fieldName].includes(value);
-        }
-        return false;
-    };
+    const getIsActive = useCallback(
+        (value: string | number | null | undefined) => {
+            const fieldValues = getValues();
+            if (fieldValues[fieldName]) {
+                return fieldValues[fieldName] === value;
+            }
+            return false;
+        },
+        [getValues],
+    );
 
     return (
         <Controller
             name={fieldName}
             control={control}
             render={({ field }) => {
+                // console.log("field", field.name);
                 return (
                     <div
                         className={cn(
@@ -63,6 +64,7 @@ const BuilderElementCard: FC<
                             className,
                             { _active: getIsActive(value) },
                             { _popular: popular },
+                            { _none: value === BUILDER_VALUE_NONE },
                             // { _disabled: disabled },
                         )}
                     >
@@ -89,7 +91,7 @@ const BuilderElementCard: FC<
                                 />
                             )}
                             {subTitle && <H5>{subTitle}</H5>}
-                            {price && (
+                            {!!price && (
                                 <P>
                                     {price}
                                     {priceCurrency}

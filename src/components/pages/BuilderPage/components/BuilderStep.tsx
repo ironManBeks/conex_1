@@ -1,7 +1,8 @@
 import { CSSProperties, FC, ReactNode, useEffect } from "react";
 import cn from "classnames";
-import { isEmpty, merge } from "lodash";
+import { isEmpty } from "lodash";
 import { useFormContext } from "react-hook-form";
+import { inject, observer } from "mobx-react";
 
 import { H3, P } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
@@ -23,8 +24,6 @@ import {
     TBuilderStepDataDTO,
 } from "@store/builder/types";
 import { TBuilderStepBase } from "../types";
-import { toJS } from "mobx";
-import { inject, observer } from "mobx-react";
 import { IRoot } from "@store/store";
 
 const BuilderStep: FC<TBuilderStepBase> = inject("store")(
@@ -171,6 +170,9 @@ const getElementsListByType = ({
     fieldName: string;
 }): ReactNode => {
     // const {} = useFormContext();
+
+    // console.log("getElementsListByType", fieldName);
+    // console.log("elements", toJS(elements));
 
     switch (type) {
         case EBuilderFieldTypes.card:

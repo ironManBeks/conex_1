@@ -131,11 +131,9 @@ export class BuilderStore implements IBuilderStore {
     ): void => {
         if (!stepId || !action) return;
 
-        // console.log("stepId", stepId, action);
-
         if (isArray(stepId)) {
             const steps = uniq(stepId);
-            if (action === "add") {
+            if (action === "add" && steps.length) {
                 this.stepQueue = [...this.stepQueue, ...steps];
             }
             if (action === "remove") {
