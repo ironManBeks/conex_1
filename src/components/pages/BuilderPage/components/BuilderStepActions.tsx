@@ -17,6 +17,7 @@ import {
     convertFormValuesToResultData,
     getNextStep,
 } from "@helpers/builderHelper";
+import { toJS } from "mobx";
 
 const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -94,13 +95,16 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             if (!errorMessageList.length) {
                 const nextStep = getNextStep(currentStepData, formData);
 
-                // console.log("formData", formData);
+                console.log("nextStep", nextStep);
 
                 updateResultDoorData(formData);
 
                 if (stepQueue.length) {
                     updateCurrentStepData(stepQueue[0]);
-                    if (isNumber(nextStep)) {
+                    if (
+                        isNumber(nextStep) ||
+                        (isArray(nextStep) && !nextStep.some(isNaN))
+                    ) {
                         setStepQueue(nextStep, "add");
                     }
                 } else {
@@ -136,7 +140,6 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         });
 
         useEffect(() => {
-            console.log("errors", errors);
             if (errorMessageList.length) {
                 showNotification({
                     message: "Validation",
@@ -150,7 +153,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         // useEffect(() => {
         //     console.log("stepQueue_______________", toJS(stepQueue));
         // }, [stepQueue]);
-
+        //
         // useEffect(() => {
         //     console.log("stepHistory_______________", toJS(stepHistory));
         // }, [stepHistory]);
@@ -165,10 +168,6 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         //         toJS(currentStepData),
         //     );
         // }, [currentStepData]);
-
-        useEffect(() => {
-            console.log("errors", errors);
-        }, [errors]);
 
         return (
             <div className={`${classPrefix}__wrapper`}>
