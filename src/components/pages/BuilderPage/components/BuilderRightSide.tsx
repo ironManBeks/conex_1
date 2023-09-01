@@ -13,11 +13,15 @@ import { renderResultDataToOptionsList } from "@helpers/builderHelper";
 const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { resultDoorData } = builderStore;
+        const { resultDoorData, updateCurrentStepData } = builderStore;
         const classPrefix = `${pageClassPrefix}_right-side`;
 
         const resultDataToOptionsList = useCallback(
-            () => renderResultDataToOptionsList(resultDoorData),
+            () =>
+                renderResultDataToOptionsList(
+                    resultDoorData,
+                    updateCurrentStepData,
+                ),
             [resultDoorData],
         );
 

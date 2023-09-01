@@ -25,6 +25,7 @@ import {
 } from "@store/builder/types";
 import { TBuilderStepBase } from "../types";
 import { IRoot } from "@store/store";
+import { BUILDER_VALUE_NONE } from "@components/pages/BuilderPage/consts";
 
 const BuilderStep: FC<TBuilderStepBase> = inject("store")(
     observer(({ store, className }) => {
@@ -42,7 +43,7 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
 
         const classPrefix = `builder-step`;
         const isMultiStep = fieldType === EBuilderFieldTypes.multiple;
-        const { setValue } = useFormContext();
+        const { setValue, setFocus, trigger } = useFormContext();
 
         useEffect(() => {
             const builderDefaultValues = getBuilderStepDefaultValues(
@@ -62,6 +63,8 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             if (!isEmpty(newDefaultValues)) {
                 for (const key in newDefaultValues) {
                     setValue(key, newDefaultValues[key]);
+                    setFocus(key);
+                    trigger();
                 }
             }
         }, [currentStepData.attributes]);
@@ -240,6 +243,11 @@ const getElementsListByType = ({
                                 subTitle={item.subTitle}
                                 price={item.price}
                                 priceCurrency={item.priceCurrency}
+                                className={cn({
+                                    _none:
+                                        item.value.toLowerCase() ===
+                                        BUILDER_VALUE_NONE,
+                                })}
                             />
                         ),
                         value: item.value,
@@ -275,9 +283,10 @@ const LabelContent: FC<{
     subTitle: TNullable<string>;
     price: number;
     priceCurrency: string;
+    className?: string;
 }> = ({ title, subTitle, priceCurrency, price }) => {
     return (
-        <>
+        <div>
             {title && <P className="title">{title}</P>}
             {subTitle && <P className="sub-title">{subTitle}</P>}
             {!!price && (
@@ -288,6 +297,6 @@ const LabelContent: FC<{
                     </b>
                 </P>
             )}
-        </>
+        </div>
     );
 };

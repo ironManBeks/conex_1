@@ -63,6 +63,25 @@
     min-height: 50vh;
   }
 
+  &_error{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+    flex-direction: column;
+    .common-title{
+      margin-bottom: 20px;
+      &._h3{
+        font-size: $font-size-xl;
+        line-height: $line-height-xl;
+      }
+    }
+    &__actions{
+      margin-top: 50px;
+    }
+  }
+
   &_step{
     &__wrapper{
       height: 100%;

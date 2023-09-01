@@ -1,4 +1,5 @@
 import { THEX, TNullable } from "@globalTypes/commonTypes";
+import { AxiosResponse } from "axios";
 
 export enum EBuilderFieldTypes {
     card = "card",
@@ -73,9 +74,19 @@ export type TBuilderSettingsDTO = {
     meta: Record<string, unknown>;
 };
 
-export type TStepHistoryActions = "add" | "remove" | "clear";
+export type TStepHistoryActions =
+    | "add-to-end"
+    | "add-to-start"
+    | "remove"
+    | "clear";
 
-export type TStepQueueActions = "add" | "remove" | "clear";
+export type TStepQueueActions =
+    | "add-to-start"
+    | "add-to-end"
+    | "remove"
+    | "clear";
+
+export type TStepPath = number | number[] | null | undefined;
 
 export type TResultDoorData = {
     stepId: number;
@@ -102,24 +113,35 @@ export interface IBuilderStore {
     resultDoorData: TNullable<TResultDoorData[]>;
     endDoorData: TNullable<TResultDoorData[]>;
     // functions
-    getBuilderData: () => Promise<void>;
+    getBuilderData: () => Promise<AxiosResponse<TBuilderDTO>>;
     setBuilderData: (data: TNullable<TBuilderDTO>) => void;
     setBuilderDataFetching: (value: boolean) => void;
     getBuilderSettings: () => Promise<void>;
+    getBuilderDataByParent: () => Promise<void>;
     setBuilderSettings: (data: TNullable<TBuilderSettingsDTO>) => void;
     setBuilderSettingsFetching: (value: boolean) => void;
     // not request
     setCurrentStepData: (data: TNullable<TBuilderStepDataDTO>) => void;
     setCurrentStepId: (value: TNullable<number>) => void;
-    updateCurrentStepData: (value: "start" | "prev" | number) => void;
+    updateCurrentStepData: (
+        value: "start" | "prev" | number,
+        changeQueue?: boolean,
+    ) => void;
     setStepHistory: (
-        stepId: number | undefined,
+        stepId: TStepPath,
         action: TStepHistoryActions | undefined,
     ) => void;
     setStepQueue: (
-        stepId: number | undefined | number[],
+        stepId: TStepPath,
         action: TStepQueueActions | undefined,
     ) => void;
     setResultDoorData: (data: TNullable<TResultDoorData[]>) => void;
     setEndDoorData: (data: TNullable<TResultDoorData[]>) => void;
+    setDefaultValuesToBuilder: (
+        history: number[],
+        queue: number[],
+        result: TResultDoorData[],
+        stepId: number,
+    ) => void;
+    resetAllBuilderData: (withUpdateData?: boolean) => void;
 }

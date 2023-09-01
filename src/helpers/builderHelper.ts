@@ -6,7 +6,7 @@ import {
     TResultDoorData,
 } from "@store/builder/types";
 import { FieldValues } from "react-hook-form";
-import { isArray, isEmpty, isNumber } from "lodash";
+import { isArray, isEmpty, isFunction, isNumber, uniq } from "lodash";
 import {
     BUILDER_FIELD_ID_DIVIDER,
     BUILDER_FIELD_ID_PREFIX,
@@ -16,7 +16,7 @@ import { TAddedOptionsListItem } from "@components/globalComponents/types";
 import { toJS } from "mobx";
 import { TNullable } from "@globalTypes/commonTypes";
 
-export type TGetNextStepResult = number | number[] | "end" | null;
+export type TGetNextStepResult = number | number[] | null;
 export type TBuilderDefaultValue = string | string[] | number | number[] | null;
 export type TGetDefaultValuesResult =
     | Record<string, TBuilderDefaultValue>
@@ -28,67 +28,65 @@ export type TResultValuesParams = {
     fieldValue: any;
 };
 
-export const getNextStep = (
-    currentStep: TBuilderStepDataDTO | null,
+export const getNextStepByFormValues = (
+    currentStepData: TBuilderStepDataDTO | null,
     fieldsList: FieldValues,
 ): TGetNextStepResult => {
-    if (isEmpty(currentStep) || isEmpty(fieldsList)) {
+    if (isEmpty(currentStepData) || isEmpty(fieldsList)) {
         return null;
     }
+    const { attributes } = currentStepData;
 
-    console.log("currentStep", toJS(currentStep));
-    console.log("fieldsList", toJS(fieldsList));
+    const stepType = attributes.fieldType;
+    const currentStepSelectedValues = getResultFieldsParams(fieldsList);
+    const groupedSteps = groupedFieldsByStepId(currentStepSelectedValues);
 
-    const stepType = currentStep?.attributes.fieldType;
-    // const selectedValues =
+    if (isEmpty(groupedSteps)) return null;
 
-    for (const fieldKey in fieldsList) {
-        const fieldValue = fieldsList[fieldKey];
+    let result: TGetNextStepResult = null;
 
-        console.log("fieldValue", fieldValue);
+    if (stepType === EBuilderFieldTypes.multiple && attributes.nextQuestion) {
+        return attributes.nextQuestion;
+    }
 
-        if (stepType === EBuilderFieldTypes.multiple) {
-            return currentStep.attributes.nextQuestion;
-        } else {
-            if (isArray(fieldValue)) {
-                const steps: number[] = [];
-                for (let i = 0; i < fieldValue.length; i++) {
-                    const selectedElement =
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
-                        currentStep?.attributes.subQuestions.find(
+    for (const stepId in groupedSteps) {
+        if (parseInt(stepId, 10) === currentStepData.id) {
+            const newFormValues: TResultValuesParams[] = groupedSteps[stepId];
+            for (let i = 0; i < newFormValues.length; i++) {
+                const formValue = newFormValues[i];
+                if (isArray(formValue.fieldValue)) {
+                    const nextQuestions = [];
+                    for (let j = 0; j < formValue.fieldValue.length; j++) {
+                        const fieldValue = formValue.fieldValue[j];
+                        const selectedElement = attributes.subQuestions.find(
                             (item: IBuilderElementDataDTO) =>
-                                item.value === fieldValue[i],
+                                item.value === fieldValue,
                         );
-                    if (selectedElement?.nextQuestion) {
-                        steps.push(selectedElement.nextQuestion);
+                        if (
+                            selectedElement.nextQuestion ||
+                            attributes.nextQuestion
+                        ) {
+                            nextQuestions.push(
+                                selectedElement.nextQuestion ??
+                                    attributes.nextQuestion,
+                            );
+                        }
                     }
-                }
-                return steps;
-            } else {
-                const selectedElement =
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
-                    currentStep?.attributes.subQuestions.find(
-                        (item: IBuilderElementDataDTO) => {
-                            console.log("item", item);
-                            return item.value === fieldValue;
-                        },
+                    result = uniq(nextQuestions);
+                } else {
+                    const selectedElement = attributes.subQuestions.find(
+                        (item: IBuilderElementDataDTO) =>
+                            item.value === formValue.fieldValue,
                     );
-                if (!isEmpty(selectedElement)) {
-                    if (isNumber(selectedElement.nextQuestion)) {
-                        return selectedElement.nextQuestion;
-                    } else {
-                        if (isNumber(currentStep?.attributes.nextQuestion)) {
-                            return currentStep?.attributes.nextQuestion;
-                        } else return "end";
-                    }
+                    result =
+                        selectedElement.nextQuestion ?? attributes.nextQuestion;
                 }
             }
+            break;
         }
     }
 
-    return null;
+    return isArray(result) ? uniq(result) : result;
 };
 
 const convertBuilderDefaultValues = (
@@ -208,7 +206,9 @@ export const getResultFieldsParams = (
     return result;
 };
 
-export const groupedFieldsByStepId = (arr: TResultValuesParams[]) => {
+export const groupedFieldsByStepId = (
+    arr: TResultValuesParams[],
+): Record<number, TResultValuesParams[]> => {
     return arr.reduce((acc, cur) => {
         if (cur.fieldValue) {
             acc[cur.stepId] = acc[cur.stepId] || [];
@@ -220,6 +220,10 @@ export const groupedFieldsByStepId = (arr: TResultValuesParams[]) => {
 
 export const renderResultDataToOptionsList = (
     resultDoorData: TResultDoorData[] | null,
+    updateCurrentStepData?: (
+        value: "start" | "prev" | number,
+        changeQueue?: boolean,
+    ) => void,
 ): TAddedOptionsListItem[] => {
     const result: TAddedOptionsListItem[] = [];
     if (!resultDoorData?.length) return result;
@@ -242,6 +246,11 @@ export const renderResultDataToOptionsList = (
 
         return {
             title: stepItem.stepTitle,
+            onClick: () => {
+                if (isFunction(updateCurrentStepData)) {
+                    updateCurrentStepData(stepItem.stepId);
+                }
+            },
             list: list,
         };
     });
@@ -284,8 +293,6 @@ export const convertFormValuesToResultData = (
                 i < currentStepData.attributes.subQuestions.length;
                 i++
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 const field: IBuilderFieldDataDTO =
                     currentStepData.attributes.subQuestions[i];
                 const includedElements: IBuilderElementDataDTO[] = [];
@@ -323,13 +330,15 @@ export const convertFormValuesToResultData = (
                 i < currentStepData.attributes.subQuestions.length;
                 i++
             ) {
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                // @ts-ignore
                 const element: IBuilderElementDataDTO =
                     currentStepData.attributes.subQuestions[i];
-                const includedValue = newFormValues.find(
-                    (item) => item.fieldValue === element.value,
-                );
+                const includedValue = newFormValues.find((item) => {
+                    if (isArray(item.fieldValue)) {
+                        return item.fieldValue.find((subItem) => {
+                            return subItem === element.value;
+                        });
+                    } else return item.fieldValue === element.value;
+                });
                 if (includedValue) {
                     includedElements.push(element);
                 }

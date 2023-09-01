@@ -9,6 +9,15 @@ import BuilderForm from "./components/BuilderForm";
 import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoader";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
+import {
+    BUILDER_CURRENT_STEP_ID,
+    BUILDER_HISTORY,
+    BUILDER_QUEUE,
+    BUILDER_RESUlT_DATA,
+} from "@consts/storageNamesContsts";
+import { getStorage } from "@services/storage.service";
+import { TNullable } from "@globalTypes/commonTypes";
+import { TResultDoorData } from "@store/builder/types";
 
 const BuilderPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
@@ -19,29 +28,38 @@ const BuilderPage: FC<TStore> = inject("store")(
             getBuilderSettings,
             builderData,
             builderDataFetching,
-            builderSettings,
             builderSettingsFetching,
-            setBuilderData,
-            setEndDoorData,
-            setCurrentStepData,
-            setBuilderSettings,
-            setResultDoorData,
-            setBuilderDataFetching,
-            setBuilderSettingsFetching,
+            resetAllBuilderData,
+            updateCurrentStepData,
+            setDefaultValuesToBuilder,
+            getBuilderDataByParent,
         } = builderStore;
 
         useEffect(() => {
             getBuilderSettings().then(() => {
-                getBuilderData();
+                getBuilderData().then(() => {
+                    const history: TNullable<number[]> =
+                        getStorage(BUILDER_HISTORY);
+                    const queue: TNullable<number[]> =
+                        getStorage(BUILDER_QUEUE);
+                    const result: TNullable<TResultDoorData[]> =
+                        getStorage(BUILDER_RESUlT_DATA);
+                    const stepId = getStorage(BUILDER_CURRENT_STEP_ID);
+                    if (stepId && result && history && queue) {
+                        setDefaultValuesToBuilder(
+                            history,
+                            queue,
+                            result,
+                            stepId,
+                        );
+                    } else {
+                        updateCurrentStepData("start");
+                    }
+                });
             });
+            getBuilderDataByParent();
             return () => {
-                setBuilderData(null);
-                setBuilderSettings(null);
-                setEndDoorData(null);
-                setCurrentStepData(null);
-                setResultDoorData(null);
-                setBuilderDataFetching(true);
-                setBuilderSettingsFetching(true);
+                resetAllBuilderData();
             };
         }, []);
 

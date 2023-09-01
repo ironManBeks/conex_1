@@ -15,6 +15,8 @@ import {
     renderResultDataToOptionsList,
 } from "@helpers/builderHelper";
 import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
+import BuilderEndStep from "@components/pages/BuilderPage/components/BuilderEndStep";
+import BuilderError from "@components/pages/BuilderPage/components/BuilderError";
 
 const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -34,32 +36,14 @@ const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
             if (!isEmpty(resultDoorData) && !isEmpty(endDoorData)) {
                 return (
                     <div className={cn(`${classPrefix}__wrapper`)}>
-                        <H2>Selected values in form:</H2>
-                        <br />
-                        <br />
-                        {renderResultDataToOptionsList(resultDoorData).map(
-                            (item) => (
-                                <div>
-                                    <H4>{item.title}</H4>
-                                    <ul>
-                                        {item.list.map((value) => (
-                                            <li>
-                                                {value.label} _____{" "}
-                                                {value.value}
-                                            </li>
-                                        ))}
-                                    </ul>
-                                    <br />
-                                </div>
-                            ),
-                        )}
+                        <BuilderEndStep pageClassPrefix={pageClassPrefix} />
                     </div>
                 );
             }
 
             return (
-                <div style={{ textAlign: "center" }}>
-                    Something went wrong. <br /> Please try to reload the page
+                <div className={cn(`${classPrefix}__wrapper`)}>
+                    <BuilderError pageClassPrefix={pageClassPrefix} />
                 </div>
             );
         }, [currentStepData, resultDoorData, endDoorData]);

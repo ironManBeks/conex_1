@@ -74,6 +74,7 @@ export type TAddressSelection = {
 
 export type TAddedOptionsListItem = {
     title: string;
+    onClick?: () => void;
     list: { label: string; value: string | number }[];
 };
 

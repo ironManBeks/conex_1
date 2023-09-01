@@ -89,12 +89,7 @@ const builderFormResolver = (
 const BuilderForm: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const {
-            currentStepId,
-            currentStepData,
-            updateCurrentStepData,
-            stepHistory,
-        } = builderStore;
+        const { currentStepId, currentStepData } = builderStore;
 
         const methods = useForm({
             resolver: builderFormResolver(
@@ -102,11 +97,8 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
                 currentStepData?.attributes,
             ),
             defaultValues: undefined,
+            mode: "onTouched",
         });
-
-        useEffect(() => {
-            updateCurrentStepData("start");
-        }, []);
 
         return (
             <FormProvider {...methods}>
