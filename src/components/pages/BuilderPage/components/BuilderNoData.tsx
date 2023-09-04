@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { inject, observer } from "mobx-react";
+import { Empty } from "antd";
 
-import { H3, H4 } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { IRoot } from "@store/store";
+import { handleClearBuilderStorage } from "../utils";
 import { EButtonColor } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
-import { handleClearBuilderStorage } from "../utils";
 
-const BuilderError: FC<TBuilderCompProps> = inject("store")(
+const BuilderNoData: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
         const { resetAllBuilderData } = builderStore;
@@ -20,15 +20,25 @@ const BuilderError: FC<TBuilderCompProps> = inject("store")(
         };
 
         return (
-            <div className={`${pageClassPrefix}_error`}>
-                <H3>Oops, looks like something went wrong</H3>
-                <H4>Please try to reset data and cache</H4>
+            <div
+                style={{
+                    minHeight: "50vh",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
+                    textAlign: "center",
+                }}
+            >
+                <Empty />
+                <br />
+                <br />
+                <div>Please reload the page</div>
                 <div className={`${pageClassPrefix}_error__actions`}>
                     <ButtonPrimary
                         color={EButtonColor.primary}
                         onClick={handleReset}
                     >
-                        Reset
+                        Reset and reload
                     </ButtonPrimary>
                 </div>
             </div>
@@ -36,4 +46,4 @@ const BuilderError: FC<TBuilderCompProps> = inject("store")(
     }),
 );
 
-export default BuilderError;
+export default BuilderNoData;

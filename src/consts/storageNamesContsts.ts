@@ -5,3 +5,4 @@ export const BUILDER_HISTORY = "builderHistory";
 export const BUILDER_QUEUE = "builderQueue";
 export const BUILDER_RESUlT_DATA = "builderResultData";
 export const BUILDER_CURRENT_STEP_ID = "builderCurrentStepId";
+export const BUILDER_PARENT_ID = "builderParentId";

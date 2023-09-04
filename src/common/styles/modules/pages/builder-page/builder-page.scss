@@ -113,6 +113,15 @@
       }
     }
   }
+
+  &_step-loader{
+    height: 100%;
+    min-height: 50vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
 }
 
 .builder-step{

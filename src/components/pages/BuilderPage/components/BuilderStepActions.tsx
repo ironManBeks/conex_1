@@ -1,13 +1,10 @@
-import { FC, useCallback, useEffect, useMemo } from "react";
+import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { FieldValues, useFormContext } from "react-hook-form";
-import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { isArray, isEmpty, isNil, isNumber, uniq } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
-import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
-import { showNotification } from "@helpers/notificarionHelper";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
 import { TResultDoorData } from "@store/builder/types";
@@ -16,15 +13,18 @@ import { IRoot } from "@store/store";
 import {
     convertFormValuesToResultData,
     getNextStepByFormValues,
+    getSelectedElementByFormValues,
 } from "@helpers/builderHelper";
 import { removeStorage, setStorage } from "@services/storage.service";
 import {
     BUILDER_CURRENT_STEP_ID,
     BUILDER_HISTORY,
+    BUILDER_PARENT_ID,
     BUILDER_QUEUE,
     BUILDER_RESUlT_DATA,
 } from "@consts/storageNamesContsts";
 import { toJS } from "mobx";
+import { handleClearBuilderStorage } from "../utils";
 
 const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -32,7 +32,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         const { builderStore } = store as IRoot;
         const {
             handleSubmit,
-            formState: { errors, isValid },
+            formState: { isValid },
             resetField,
         } = useFormContext();
 
@@ -50,13 +50,8 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             currentStepId,
             resetAllBuilderData,
             setEndDoorData,
-            getBuilderSettings,
-            getBuilderData,
+            builderSettings,
         } = builderStore;
-
-        // const errorMessageList = useMemo(() => {
-        //     return pickOutFormErrorMessages<FieldErrors<any>, []>(errors, []);
-        // }, [errors]);
 
         const handleBack = () => {
             updateCurrentStepData("prev");
@@ -105,6 +100,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     currentStepData,
                     formData,
                 );
+
                 const updatedResultDoorData = updateResultDoorData(formData);
                 setResultDoorData(updatedResultDoorData);
 
@@ -121,28 +117,45 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
-                // First the whole first path, then the path from the queue
-                if (!isNil(nextStep)) {
-                    if (isNumber(nextStep)) {
-                        updateCurrentStepData(nextStep);
-                        console.log("nextStep", nextStep);
-                        return;
+                // If first (main) step
+                if (!stepHistory.length) {
+                    const selectedElement = getSelectedElementByFormValues(
+                        currentStepData,
+                        formData,
+                    );
+                    if (selectedElement) {
+                        updateCurrentStepData({
+                            action: "start-way",
+                            parentId: selectedElement.id,
+                            nextStep: nextStep,
+                        });
                     }
-                    if (isArray(nextStep) && nextStep.length) {
-                        const uniqList = uniq(nextStep);
-                        updateCurrentStepData(uniqList[0]);
-                        setStepQueue(
-                            uniqList.slice(1, uniqList.length),
-                            "add-to-start",
-                        );
-                        return;
-                    }
-                } else {
-                    // If she has steps in stepQueue
-                    if (stepQueue.length) {
-                        updateCurrentStepData(stepQueue[0], false);
-                        setStepQueue(stepQueue[0], "remove");
-                        return;
+                    return;
+                }
+
+                // first the way from the element, then from the queue
+                if (stepHistory.length) {
+                    if (!isNil(nextStep)) {
+                        if (isNumber(nextStep)) {
+                            updateCurrentStepData(nextStep);
+                            return;
+                        }
+                        if (isArray(nextStep) && nextStep.length) {
+                            const uniqList = uniq(nextStep);
+                            updateCurrentStepData(uniqList[0]);
+                            setStepQueue(
+                                uniqList.slice(1, uniqList.length),
+                                "add-to-start",
+                            );
+                            return;
+                        }
+                    } else {
+                        // If way has steps in queue
+                        if (stepQueue.length) {
+                            updateCurrentStepData(stepQueue[0], false);
+                            setStepQueue(stepQueue[0], "remove");
+                            return;
+                        }
                     }
                 }
             }
@@ -168,17 +181,13 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         }, [resultDoorData?.length]);
 
         useEffect(() => {
-            if (!isNil(currentStepId)) {
+            if (
+                !isNil(currentStepId) &&
+                builderSettings?.data.quizStartId !== currentStepId
+            ) {
                 setStorage(BUILDER_CURRENT_STEP_ID, currentStepId);
             }
         }, [currentStepId]);
-
-        const handleClearCache = () => {
-            removeStorage(BUILDER_HISTORY);
-            removeStorage(BUILDER_QUEUE);
-            removeStorage(BUILDER_RESUlT_DATA);
-            removeStorage(BUILDER_CURRENT_STEP_ID);
-        };
 
         return (
             <div className={`${classPrefix}__wrapper`}>
@@ -186,28 +195,29 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     {!!stepHistory.length && (
                         <ButtonPrimary onClick={handleBack}>Back</ButtonPrimary>
                     )}
-                    <ButtonPrimary
-                        onClick={handleClearCache}
-                        color={EButtonColor.orange}
-                        size={EButtonSize.sm}
-                        style={{
-                            marginLeft: 20,
-                        }}
-                    >
-                        Clear cache
-                    </ButtonPrimary>
+                    {/*<ButtonPrimary*/}
+                    {/*    onClick={handleClearBuilderStorage}*/}
+                    {/*    color={EButtonColor.orange}*/}
+                    {/*    size={EButtonSize.sm}*/}
+                    {/*    style={{*/}
+                    {/*        marginLeft: 20,*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    Clear cache*/}
+                    {/*</ButtonPrimary>*/}
                     <ButtonPrimary
                         onClick={() => {
+                            handleClearBuilderStorage();
                             resetAllBuilderData(true);
                         }}
-                        color={EButtonColor.primary}
+                        color={EButtonColor.transparent}
                         isOutline={true}
                         size={EButtonSize.sm}
                         style={{
-                            marginLeft: 20,
+                            marginLeft: stepHistory.length ? 20 : 0,
                         }}
                     >
-                        Reset form
+                        Reset form and cache
                     </ButtonPrimary>
                     <ButtonPrimary
                         color={EButtonColor.primary}

@@ -4,9 +4,10 @@ import {
     IBuilderFieldDataDTO,
     TBuilderStepDataDTO,
     TResultDoorData,
+    TUpdateCurrentStepWay,
 } from "@store/builder/types";
 import { FieldValues } from "react-hook-form";
-import { isArray, isEmpty, isFunction, isNumber, uniq } from "lodash";
+import { isArray, isEmpty, isFunction, uniq } from "lodash";
 import {
     BUILDER_FIELD_ID_DIVIDER,
     BUILDER_FIELD_ID_PREFIX,
@@ -26,6 +27,56 @@ export type TResultValuesParams = {
     stepId: number;
     fieldName: string;
     fieldValue: any;
+};
+
+export const getSelectedElementByFormValues = (
+    currentStepData: TBuilderStepDataDTO | null,
+    fieldsList: FieldValues,
+): IBuilderElementDataDTO | null => {
+    if (isEmpty(currentStepData) || isEmpty(fieldsList)) {
+        return null;
+    }
+    let result: IBuilderElementDataDTO | null = null;
+    const { attributes } = currentStepData;
+    const currentStepSelectedValues = getResultFieldsParams(fieldsList);
+    const groupedSteps = groupedFieldsByStepId(currentStepSelectedValues);
+    if (isEmpty(groupedSteps)) return null;
+
+    for (const stepId in groupedSteps) {
+        if (parseInt(stepId, 10) === currentStepData.id) {
+            const newFormValues: TResultValuesParams[] = groupedSteps[stepId];
+            for (let i = 0; i < newFormValues.length; i++) {
+                const formValue = newFormValues[i];
+                if (isArray(formValue.fieldValue)) {
+                    const elements: IBuilderElementDataDTO[] = [];
+                    for (let j = 0; j < formValue.fieldValue.length; j++) {
+                        const fieldValue = formValue.fieldValue[j];
+                        // ToDo Remove ts-ignore
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
+                        const selectedElement = attributes.subQuestions.find(
+                            (item: IBuilderElementDataDTO) =>
+                                item.value === fieldValue,
+                        );
+                        elements.push(selectedElement);
+                    }
+                    // ToDo here may be bugs
+                    result = elements[0];
+                } else {
+                    // ToDo Remove ts-ignore
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
+                    result = attributes.subQuestions.find(
+                        (item: IBuilderElementDataDTO) =>
+                            item.value === formValue.fieldValue,
+                    );
+                }
+            }
+            break;
+        }
+    }
+
+    return result;
 };
 
 export const getNextStepByFormValues = (
@@ -49,6 +100,7 @@ export const getNextStepByFormValues = (
         return attributes.nextQuestion;
     }
 
+    // ToDo replace with getSelectedElementByFormValues
     for (const stepId in groupedSteps) {
         if (parseInt(stepId, 10) === currentStepData.id) {
             const newFormValues: TResultValuesParams[] = groupedSteps[stepId];
@@ -58,6 +110,9 @@ export const getNextStepByFormValues = (
                     const nextQuestions = [];
                     for (let j = 0; j < formValue.fieldValue.length; j++) {
                         const fieldValue = formValue.fieldValue[j];
+                        // ToDo Remove ts-ignore
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         const selectedElement = attributes.subQuestions.find(
                             (item: IBuilderElementDataDTO) =>
                                 item.value === fieldValue,
@@ -74,12 +129,16 @@ export const getNextStepByFormValues = (
                     }
                     result = uniq(nextQuestions);
                 } else {
+                    // ToDo Remove ts-ignore
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    // @ts-ignore
                     const selectedElement = attributes.subQuestions.find(
                         (item: IBuilderElementDataDTO) =>
                             item.value === formValue.fieldValue,
                     );
                     result =
-                        selectedElement.nextQuestion ?? attributes.nextQuestion;
+                        selectedElement?.nextQuestion ??
+                        attributes.nextQuestion;
                 }
             }
             break;
@@ -221,7 +280,7 @@ export const groupedFieldsByStepId = (
 export const renderResultDataToOptionsList = (
     resultDoorData: TResultDoorData[] | null,
     updateCurrentStepData?: (
-        value: "start" | "prev" | number,
+        value: TUpdateCurrentStepWay,
         changeQueue?: boolean,
     ) => void,
 ): TAddedOptionsListItem[] => {
@@ -293,6 +352,9 @@ export const convertFormValuesToResultData = (
                 i < currentStepData.attributes.subQuestions.length;
                 i++
             ) {
+                // ToDo Remove ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 const field: IBuilderFieldDataDTO =
                     currentStepData.attributes.subQuestions[i];
                 const includedElements: IBuilderElementDataDTO[] = [];
@@ -330,6 +392,9 @@ export const convertFormValuesToResultData = (
                 i < currentStepData.attributes.subQuestions.length;
                 i++
             ) {
+                // ToDo Remove ts-ignore
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                // @ts-ignore
                 const element: IBuilderElementDataDTO =
                     currentStepData.attributes.subQuestions[i];
                 const includedValue = newFormValues.find((item) => {

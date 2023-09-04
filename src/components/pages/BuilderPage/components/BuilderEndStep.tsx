@@ -10,7 +10,7 @@ const BuilderEndStep: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_step`;
         const { builderStore } = store as IRoot;
-        const { currentStepData, resultDoorData, endDoorData } = builderStore;
+        const { resultDoorData } = builderStore;
 
         return (
             <div>
