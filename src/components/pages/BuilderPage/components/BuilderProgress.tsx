@@ -10,27 +10,23 @@ import { IRoot } from "@store/store";
 const BuilderProgress: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { builderData, currentStepId, endDoorData, stepHistory } =
-            builderStore;
+        const { builderParamsData, endDoorData, stepHistory } = builderStore;
         const [percent, setPercent] = useState<number>(0);
-        const totalSteps = builderData?.meta.pagination.total;
+        const totalSteps = builderParamsData?.filteredData?.length;
 
         const calculatePercent = () => {
             if (!isEmpty(endDoorData)) {
                 setPercent(100);
                 return;
             }
-            if (totalSteps && currentStepId && stepHistory.length) {
-                setPercent((prevState) => {
-                    const newStep = 100 / stepHistory.length;
-                    return prevState + newStep;
-                });
+            if (totalSteps && stepHistory.length) {
+                setPercent((stepHistory.length / totalSteps) * 100);
             } else setPercent(0);
         };
 
         useEffect(() => {
             calculatePercent();
-        }, [totalSteps, currentStepId, endDoorData]);
+        }, [totalSteps, stepHistory, endDoorData]);
 
         return (
             <ProgressWrapper

@@ -3,6 +3,7 @@ import cn from "classnames";
 
 import { TAddedOptionsList } from "./types";
 import { H4, P } from "@components/Text";
+import { isFunction } from "lodash";
 
 const AddedOptionsList: FC<TAddedOptionsList> = ({
     className,
@@ -16,7 +17,17 @@ const AddedOptionsList: FC<TAddedOptionsList> = ({
         <div className={cn(`${classPrefix}_wrapper`, className)}>
             {optionsList?.map((item, index) => {
                 return item.list.length ? (
-                    <div key={index} className={`${classPrefix}_item__wrapper`}>
+                    <div
+                        key={index}
+                        className={cn(`${classPrefix}_item__wrapper`, {
+                            _clickable: isFunction(item.onClick),
+                        })}
+                        onClick={() => {
+                            if (isFunction(item.onClick)) {
+                                item.onClick();
+                            }
+                        }}
+                    >
                         <H4 className={`${classPrefix}_item__title`}>
                             {item.title}
                         </H4>

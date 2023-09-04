@@ -1,23 +1,39 @@
-import { action, makeAutoObservable, observable, toJS } from "mobx";
+import {
+    action,
+    makeAutoObservable,
+    observable,
+    runInAction,
+    toJS,
+} from "mobx";
 import { AxiosResponse } from "axios";
 
 import {
     IBuilderStore,
-    TBuilderDTO,
-    TBuilderSettingsDTO,
     TBuilderStepDataDTO,
+    TGetBuilderAllDataResponse,
+    TGetBuilderParamsDataParams,
+    TGetBuilderParamsDataResponse,
+    TGetBuilderSettingsResponse,
     TResultDoorData,
     TStepHistoryActions,
+    TStepPath,
+    TStepQueueActions,
+    TUpdateCurrentStepWay,
 } from "./types";
 import axiosInstance from "../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
-import { isArray, isEmpty, isNil, isNumber, uniq } from "lodash";
+import { isArray, isEmpty, isNil, isNumber, isObject, uniq } from "lodash";
 import { TNullable } from "@globalTypes/commonTypes";
+import { showNotification } from "@helpers/notificarionHelper";
+import { setStorage } from "@services/storage.service";
+import { BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
 
 export class BuilderStore implements IBuilderStore {
-    builderData: TNullable<TBuilderDTO> = null;
-    builderDataFetching = true;
-    builderSettings: TNullable<TBuilderSettingsDTO> = null;
+    builderAllData: TNullable<TGetBuilderAllDataResponse> = null;
+    builderAllDataFetching = true;
+    builderParamsData: TNullable<TGetBuilderParamsDataResponse> = null;
+    builderParamsDataFetching = false;
+    builderSettings: TNullable<TGetBuilderSettingsResponse> = null;
     builderSettingsFetching = true;
     // not request
     currentStepData: TBuilderStepDataDTO | null = null;
@@ -29,10 +45,13 @@ export class BuilderStore implements IBuilderStore {
 
     constructor() {
         makeAutoObservable(this, {
-            builderData: observable,
-            builderDataFetching: observable,
+            builderAllData: observable,
+            builderAllDataFetching: observable,
+            builderParamsData: observable,
+            builderParamsDataFetching: observable,
             builderSettings: observable,
             builderSettingsFetching: observable,
+            //
             currentStepData: observable,
             currentStepId: observable,
             stepHistory: observable,
@@ -40,10 +59,13 @@ export class BuilderStore implements IBuilderStore {
             resultDoorData: observable,
             endDoorData: observable,
             // functions
-            setBuilderData: action,
-            setBuilderDataFetching: action,
+            setBuilderAllData: action,
+            setBuilderAllDataFetching: action,
+            setBuilderParamsData: action,
+            setBuilderParamsDataFetching: action,
             setBuilderSettings: action,
             setBuilderSettingsFetching: action,
+            //
             setStepHistory: action,
             setCurrentStepData: action,
             setCurrentStepId: action,
@@ -53,12 +75,15 @@ export class BuilderStore implements IBuilderStore {
         });
     }
 
-    getBuilderSettings = (): Promise<void> => {
+    getBuilderSettings = (): Promise<
+        AxiosResponse<TGetBuilderSettingsResponse>
+    > => {
         this.setBuilderSettingsFetching(true);
         return axiosInstance
             .get("/setting")
-            .then((data: AxiosResponse<TBuilderSettingsDTO>) => {
+            .then((data: AxiosResponse<TGetBuilderSettingsResponse>) => {
                 this.setBuilderSettings(data.data);
+                return data;
             })
             .catch((err) => {
                 showAxiosNotificationError(err);
@@ -69,7 +94,9 @@ export class BuilderStore implements IBuilderStore {
             });
     };
 
-    setBuilderSettings = (data: TNullable<TBuilderSettingsDTO>): void => {
+    setBuilderSettings = (
+        data: TNullable<TGetBuilderSettingsResponse>,
+    ): void => {
         this.builderSettings = data;
     };
 
@@ -77,80 +104,149 @@ export class BuilderStore implements IBuilderStore {
         this.builderSettingsFetching = value;
     };
 
-    getBuilderData = (): Promise<void> => {
-        this.setBuilderDataFetching(true);
+    getBuilderAllData = (): Promise<
+        AxiosResponse<TGetBuilderAllDataResponse>
+    > => {
+        this.setBuilderAllDataFetching(true);
         return axiosInstance
             .get("/quiz-questions")
-            .then((data: AxiosResponse<TBuilderDTO>) => {
-                this.setBuilderData(data.data);
+            .then((data: AxiosResponse<TGetBuilderAllDataResponse>) => {
+                this.setBuilderAllData(data.data);
+                return data;
             })
             .catch((err) => {
                 showAxiosNotificationError(err);
                 throw err;
             })
             .finally(() => {
-                this.setBuilderDataFetching(false);
+                this.setBuilderAllDataFetching(false);
             });
     };
 
-    setBuilderData = (data: TNullable<TBuilderDTO>): void => {
-        this.builderData = data;
+    setBuilderAllData = (data: TNullable<TGetBuilderAllDataResponse>): void => {
+        this.builderAllData = data;
     };
 
-    setBuilderDataFetching = (value: boolean): void => {
-        this.builderDataFetching = value;
+    setBuilderAllDataFetching = (value: boolean): void => {
+        this.builderAllDataFetching = value;
     };
+
+    getBuilderParamsData = (
+        params: TGetBuilderParamsDataParams,
+    ): Promise<AxiosResponse<TGetBuilderParamsDataResponse>> => {
+        this.setBuilderParamsDataFetching(true);
+        return axiosInstance
+            .get("/quiz-questions", { params })
+            .then((data: AxiosResponse<TGetBuilderParamsDataResponse>) => {
+                this.setBuilderParamsData(data.data);
+                return data;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setBuilderParamsDataFetching(false);
+            });
+    };
+
+    setBuilderParamsData = (
+        data: TNullable<TGetBuilderParamsDataResponse>,
+    ): void => {
+        this.builderParamsData = data;
+    };
+
+    setBuilderParamsDataFetching = (value: boolean): void => {
+        this.builderParamsDataFetching = value;
+    };
+
+    //______________________
+    //______________________
+    //______________________
+    // functions
+    //______________________
+    //______________________
+    //______________________
 
     setStepHistory = (
-        stepId: number | undefined | null,
+        stepId: TStepPath,
         action: TStepHistoryActions | undefined,
     ): void => {
-        if (!isNumber(stepId) && !action) {
-            const nerArr = this.stepHistory.splice(-1);
-            this.stepHistory = uniq([...nerArr]);
+        if (isNil(stepId)) {
+            if (action === "clear") {
+                this.stepHistory = [];
+            }
             return;
         }
-
-        if (action === "add") {
-            if (isNumber(stepId)) {
-                this.stepHistory = uniq([...this.stepHistory, stepId]);
+        if (isArray(stepId) && stepId.length) {
+            if (action === "add-to-end") {
+                this.stepHistory = [...this.stepHistory, ...stepId];
+            }
+            if (action === "add-to-start") {
+                this.stepHistory = [...stepId, ...this.stepHistory];
+            }
+            if (action === "remove") {
+                this.stepHistory = this.stepHistory.filter(
+                    (item) => !stepId.includes(item),
+                );
             }
             return;
         }
 
-        if (action === "remove") {
-            const newArr = this.stepHistory.filter((item) => item !== stepId);
-            this.stepHistory = uniq([...newArr]);
+        if (isNumber(stepId)) {
+            if (action === "add-to-end") {
+                this.stepHistory = [...this.stepHistory, stepId];
+            }
+            if (action === "add-to-start") {
+                this.stepHistory = [stepId, ...this.stepHistory];
+            }
+            if (action === "remove") {
+                this.stepHistory = this.stepHistory.filter(
+                    (item) => item !== stepId,
+                );
+            }
             return;
         }
     };
 
     setStepQueue = (
-        stepId: number | undefined | null | number[],
-        action: TStepHistoryActions | undefined,
+        stepId: TStepPath,
+        action: TStepQueueActions | undefined,
     ): void => {
-        if (!stepId || !action) return;
+        if (isNil(stepId)) {
+            if (action === "clear") {
+                this.stepQueue = [];
+            }
+            return;
+        }
 
-        if (isArray(stepId)) {
+        if (isArray(stepId) && stepId.length) {
             const steps = uniq(stepId);
-            if (action === "add" && steps.length) {
+            if (action === "add-to-end" && steps.length) {
                 this.stepQueue = [...this.stepQueue, ...steps];
             }
-            if (action === "remove") {
-                const newArr = this.stepQueue.filter(
-                    (item) => item !== stepId[0],
-                );
-                this.stepQueue = [...newArr];
+            if (action === "add-to-start" && steps.length) {
+                this.stepQueue = [...steps, ...this.stepQueue];
             }
+            if (action === "remove") {
+                this.stepQueue = this.stepQueue.filter(
+                    (item) => !stepId.includes(item),
+                );
+            }
+            return;
         }
-        if (action === "add") {
-            if (isNumber(stepId)) {
+        if (isNumber(stepId)) {
+            if (action === "add-to-end") {
                 this.stepQueue = [...this.stepQueue, stepId];
             }
-        }
-        if (action === "remove") {
-            const newArr = this.stepQueue.filter((item) => item !== stepId);
-            this.stepQueue = [...newArr];
+            if (action === "add-to-start") {
+                this.stepQueue = [stepId, ...this.stepQueue];
+            }
+            if (action === "remove") {
+                this.stepQueue = this.stepQueue.filter(
+                    (item) => item !== stepId,
+                );
+            }
             return;
         }
     };
@@ -164,20 +260,40 @@ export class BuilderStore implements IBuilderStore {
         this.setCurrentStepId(data?.id ?? null);
     };
 
-    updateCurrentStepData = (way: "start" | "prev" | number): void => {
-        if (!this.builderData) return;
-        const quizStartId = this.builderSettings?.data.quizStartId;
+    updateCurrentStepData = (
+        way: TUpdateCurrentStepWay,
+        changeQueue = true,
+    ): void => {
+        if (!this.builderAllData) return;
 
-        if (way === "start") {
+        if (!isEmpty(this.endDoorData)) {
+            this.setEndDoorData(null);
+        }
+
+        if (way === "main-step") {
+            const quizStartId = this.builderSettings?.data.quizStartId;
             if (quizStartId && isNumber(quizStartId)) {
-                const startStep = this.builderData.data.find(
+                const startStep = this.builderAllData.data.find(
                     (item) => item.id === quizStartId,
                 );
                 if (startStep) {
                     this.setCurrentStepData(startStep);
-                } else this.setCurrentStepData(this.builderData.data[0]);
-            } else this.setCurrentStepData(this.builderData.data[0]);
+                } else this.setCurrentStepData(this.builderAllData.data[0]);
+            } else this.setCurrentStepData(this.builderAllData.data[0]);
             return;
+        }
+
+        if (
+            isObject(way) &&
+            way.action === "start-way" &&
+            isNumber(way.parentId)
+        ) {
+            this.getBuilderParamsData({ parent: way.parentId }).then(() => {
+                setStorage(BUILDER_PARENT_ID, way.parentId);
+                if (isNumber(way.nextStep)) {
+                    this.updateCurrentStepData(way.nextStep);
+                }
+            });
         }
 
         if (way === "prev") {
@@ -187,8 +303,11 @@ export class BuilderStore implements IBuilderStore {
 
             const prevStepId = this.stepHistory[this.stepHistory.length - 1];
 
-            if (isNumber(prevStepId)) {
-                const prevStep = this.builderData.data.find(
+            if (
+                isNumber(prevStepId) &&
+                this.builderParamsData?.filteredData?.length
+            ) {
+                const prevStep = this.builderParamsData.filteredData.find(
                     (item) => item.id === prevStepId,
                 );
                 if (!isEmpty(prevStep)) {
@@ -200,23 +319,75 @@ export class BuilderStore implements IBuilderStore {
         }
 
         if (isNumber(way)) {
-            const nextStepData = this.builderData.data.find(
-                (item) => item.id === way,
-            );
-            if (!isEmpty(nextStepData)) {
-                this.setStepHistory(this.currentStepId, "add");
-                this.setStepQueue(this.currentStepId, "remove");
-                this.setCurrentStepData(nextStepData);
+            if (this.builderParamsData?.filteredData?.length) {
+                const nextStepData = this.builderParamsData.filteredData.find(
+                    (item) => item.id === way,
+                );
+
+                if (!isEmpty(nextStepData)) {
+                    this.setStepHistory(this.currentStepId, "add-to-end");
+                    if (changeQueue) {
+                        this.setStepQueue(this.currentStepId, "remove");
+                    }
+                    this.setCurrentStepData(nextStepData);
+                    return;
+                }
             }
+            showNotification({
+                type: "error",
+                message: "Step not found",
+                description: "Try to reload the page or select another option",
+            });
             return;
         }
     };
 
-    setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
-        this.resultDoorData = data;
+    setResultDoorData = (data: TNullable<TResultDoorData[]>) => {
+        runInAction(() => {
+            this.resultDoorData = data;
+        });
     };
 
     setEndDoorData = (data: TNullable<TResultDoorData[]>): void => {
         this.endDoorData = data;
+    };
+
+    setDefaultValuesToBuilder = (
+        history: number[],
+        queue: number[],
+        result: TResultDoorData[],
+        stepId: number,
+        parentId: number,
+    ): void => {
+        this.setStepQueue(queue, "add-to-end");
+        this.setStepHistory(history, "add-to-start");
+        this.setResultDoorData(result);
+        this.updateCurrentStepData({
+            action: "start-way",
+            parentId: parentId,
+            nextStep: stepId,
+        });
+    };
+
+    resetAllBuilderData = (withUpdateData = false): void => {
+        this.setBuilderAllData(null);
+        this.setBuilderParamsData(null);
+        this.setBuilderSettings(null);
+        this.setEndDoorData(null);
+        this.setCurrentStepData(null);
+        this.setCurrentStepId(null);
+        this.setResultDoorData(null);
+        this.setStepQueue(undefined, "clear");
+        this.setStepHistory(undefined, "clear");
+        this.setBuilderAllDataFetching(true);
+        this.setBuilderParamsDataFetching(false);
+        this.setBuilderSettingsFetching(true);
+        if (withUpdateData) {
+            this.getBuilderSettings().then(() => {
+                this.getBuilderAllData().then(() => {
+                    this.updateCurrentStepData("main-step");
+                });
+            });
+        }
     };
 }

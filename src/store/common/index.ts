@@ -23,6 +23,7 @@ export class CommonStore implements ICommonStore {
             modalAuthVisible: observable,
             modalCustomQuoteVisible: observable,
             headerDrawerVisible: observable,
+            // Functions
             setConfirmModalData: action,
             setModalConfirmVisible: action,
             setModalAuthVisible: action,

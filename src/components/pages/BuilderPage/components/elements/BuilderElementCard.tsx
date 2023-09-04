@@ -55,7 +55,6 @@ const BuilderElementCard: FC<
             name={fieldName}
             control={control}
             render={({ field }) => {
-                // console.log("field", field.name);
                 return (
                     <div
                         className={cn(
@@ -64,7 +63,10 @@ const BuilderElementCard: FC<
                             className,
                             { _active: getIsActive(value) },
                             { _popular: popular },
-                            { _none: value === BUILDER_VALUE_NONE },
+                            {
+                                _none:
+                                    value?.toLowerCase() === BUILDER_VALUE_NONE,
+                            },
                             // { _disabled: disabled },
                         )}
                     >

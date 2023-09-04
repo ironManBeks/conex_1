@@ -7,3 +7,15 @@ export type TResponseError = {
         details: any;
     };
 };
+
+export type TResponseMeta = {
+    meta: {
+        pagination: {
+            page: number;
+            pageSize: number;
+            pageCount: number;
+            total: number;
+        };
+        date: number;
+    };
+};

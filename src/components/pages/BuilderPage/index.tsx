@@ -9,68 +9,87 @@ import BuilderForm from "./components/BuilderForm";
 import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoader";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
+import {
+    BUILDER_CURRENT_STEP_ID,
+    BUILDER_HISTORY,
+    BUILDER_PARENT_ID,
+    BUILDER_QUEUE,
+    BUILDER_RESUlT_DATA,
+} from "@consts/storageNamesContsts";
+import { getStorage } from "@services/storage.service";
+import { TNullable } from "@globalTypes/commonTypes";
+import { TResultDoorData } from "@store/builder/types";
+import BuilderError from "@components/pages/BuilderPage/components/BuilderError";
+import { toJS } from "mobx";
+import BuilderNoData from "@components/pages/BuilderPage/components/BuilderNoData";
 
 const BuilderPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
         const classPrefix = "builder-page";
         const { builderStore } = store as IRoot;
         const {
-            getBuilderData,
+            getBuilderAllData,
             getBuilderSettings,
-            builderData,
-            builderDataFetching,
-            builderSettings,
+            builderAllData,
+            builderAllDataFetching,
             builderSettingsFetching,
-            setBuilderData,
-            setEndDoorData,
-            setCurrentStepData,
-            setBuilderSettings,
-            setResultDoorData,
-            setBuilderDataFetching,
-            setBuilderSettingsFetching,
+            resetAllBuilderData,
+            updateCurrentStepData,
+            setDefaultValuesToBuilder,
+            getBuilderParamsData,
+            builderSettings,
         } = builderStore;
 
         useEffect(() => {
             getBuilderSettings().then(() => {
-                getBuilderData();
+                getBuilderAllData().then(() => {
+                    const history: TNullable<number[]> =
+                        getStorage(BUILDER_HISTORY);
+                    const queue: TNullable<number[]> =
+                        getStorage(BUILDER_QUEUE);
+                    const result: TNullable<TResultDoorData[]> =
+                        getStorage(BUILDER_RESUlT_DATA);
+                    const stepId = getStorage(BUILDER_CURRENT_STEP_ID);
+                    const parentId = getStorage(BUILDER_PARENT_ID);
+                    if (stepId && result && history && queue && parentId) {
+                        setDefaultValuesToBuilder(
+                            history,
+                            queue,
+                            result,
+                            stepId,
+                            parentId,
+                        );
+                    } else {
+                        updateCurrentStepData("main-step");
+                    }
+                });
             });
             return () => {
-                setBuilderData(null);
-                setBuilderSettings(null);
-                setEndDoorData(null);
-                setCurrentStepData(null);
-                setResultDoorData(null);
-                setBuilderDataFetching(true);
-                setBuilderSettingsFetching(true);
+                resetAllBuilderData();
             };
         }, []);
 
         const builderContent = useMemo(() => {
-            if (builderDataFetching || builderSettingsFetching) {
+            if (builderAllDataFetching || builderSettingsFetching) {
                 return <BuilderLoader pageClassPrefix={classPrefix} />;
             }
 
-            if (isEmpty(builderData)) {
-                return (
-                    <div
-                        style={{
-                            minHeight: "50vh",
-                            display: "flex",
-                            flexDirection: "column",
-                            justifyContent: "center",
-                            textAlign: "center",
-                        }}
-                    >
-                        <Empty />
-                        <br />
-                        <br />
-                        <div>Please reload the page</div>
-                    </div>
-                );
+            if (isEmpty(builderAllData)) {
+                return <BuilderNoData pageClassPrefix={classPrefix} />;
             }
 
-            return <BuilderForm pageClassPrefix={classPrefix} />;
-        }, [builderDataFetching, builderData, classPrefix]);
+            if (!isEmpty(builderAllData) && !isEmpty(builderSettings)) {
+                return <BuilderForm pageClassPrefix={classPrefix} />;
+            }
+
+            return <BuilderError pageClassPrefix={classPrefix} />;
+        }, [
+            builderAllDataFetching,
+            builderSettingsFetching,
+            builderAllData,
+            builderSettings,
+            classPrefix,
+        ]);
 
         return (
             <Layout pageClassPrefix={classPrefix}>

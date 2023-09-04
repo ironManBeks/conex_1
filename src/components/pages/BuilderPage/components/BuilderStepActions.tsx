@@ -1,23 +1,30 @@
 import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { FieldValues, useFormContext } from "react-hook-form";
-import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { isArray, isEmpty, isNil, isNumber, uniq } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
-import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
-import { showNotification } from "@helpers/notificarionHelper";
-import { EButtonColor } from "@components/buttons/types";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
 import { TResultDoorData } from "@store/builder/types";
 import { notImplemented } from "@helpers/notImplemented";
 import { IRoot } from "@store/store";
 import {
     convertFormValuesToResultData,
-    getNextStep,
+    getNextStepByFormValues,
+    getSelectedElementByFormValues,
 } from "@helpers/builderHelper";
+import { removeStorage, setStorage } from "@services/storage.service";
+import {
+    BUILDER_CURRENT_STEP_ID,
+    BUILDER_HISTORY,
+    BUILDER_PARENT_ID,
+    BUILDER_QUEUE,
+    BUILDER_RESUlT_DATA,
+} from "@consts/storageNamesContsts";
 import { toJS } from "mobx";
+import { handleClearBuilderStorage } from "../utils";
 
 const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -25,10 +32,10 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
         const { builderStore } = store as IRoot;
         const {
             handleSubmit,
-            formState: { errors },
+            formState: { isValid },
             resetField,
-            trigger,
         } = useFormContext();
+
         const {
             updateCurrentStepData,
             currentStepData,
@@ -41,13 +48,10 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             resultDoorData,
             setStepHistory,
             currentStepId,
+            resetAllBuilderData,
             setEndDoorData,
+            builderSettings,
         } = builderStore;
-
-        const errorMessageList = pickOutFormErrorMessages<FieldErrors<any>, []>(
-            errors,
-            [],
-        );
 
         const handleBack = () => {
             updateCurrentStepData("prev");
@@ -78,13 +82,12 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     if (!isNil(oldResultIndex) && oldResultIndex !== -1) {
                         arr.splice(oldResultIndex, 1);
                     }
-
                     arr.push(newResult);
                 }
                 return arr;
             };
 
-            setResultDoorData(renderResult());
+            return renderResult();
         };
 
         const handleNext = handleSubmit((formData) => {
@@ -92,82 +95,99 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                 notImplemented();
                 return;
             }
-            if (!errorMessageList.length) {
-                const nextStep = getNextStep(currentStepData, formData);
+            if (isValid) {
+                const nextStep = getNextStepByFormValues(
+                    currentStepData,
+                    formData,
+                );
 
-                console.log("nextStep", nextStep);
+                const updatedResultDoorData = updateResultDoorData(formData);
+                setResultDoorData(updatedResultDoorData);
 
-                updateResultDoorData(formData);
-
-                if (stepQueue.length) {
-                    updateCurrentStepData(stepQueue[0]);
-                    if (
-                        isNumber(nextStep) ||
-                        (isArray(nextStep) && !nextStep.some(isNaN))
-                    ) {
-                        setStepQueue(nextStep, "add");
+                // If last step and no queue
+                if (
+                    !stepQueue.length &&
+                    ((isArray(nextStep) && !nextStep.length) || !nextStep)
+                ) {
+                    setEndDoorData(updatedResultDoorData);
+                    setCurrentStepData(null);
+                    if (currentStepId) {
+                        setStepHistory(currentStepId, "add-to-end");
                     }
-                } else {
-                    if (
-                        nextStep === "end" ||
-                        (isArray(nextStep) && !nextStep.length)
-                    ) {
-                        if (resultDoorData) {
-                            setEndDoorData([...resultDoorData]);
+                    return;
+                }
+
+                // If first (main) step
+                if (!stepHistory.length) {
+                    const selectedElement = getSelectedElementByFormValues(
+                        currentStepData,
+                        formData,
+                    );
+                    if (selectedElement) {
+                        updateCurrentStepData({
+                            action: "start-way",
+                            parentId: selectedElement.id,
+                            nextStep: nextStep,
+                        });
+                    }
+                    return;
+                }
+
+                // first the way from the element, then from the queue
+                if (stepHistory.length) {
+                    if (!isNil(nextStep)) {
+                        if (isNumber(nextStep)) {
+                            updateCurrentStepData(nextStep);
+                            return;
                         }
-                        setCurrentStepData(null);
-                        if (currentStepId) {
-                            setStepHistory(currentStepId, "add");
-                            setStepQueue(currentStepId, "remove");
-                        }
-                    }
-                    if (isNumber(nextStep)) {
-                        updateCurrentStepData(nextStep);
-                        return;
-                    }
-                    if (isArray(nextStep) && nextStep.length) {
-                        const uniqList = uniq(nextStep);
-                        if (stepQueue.length) {
-                            updateCurrentStepData(stepQueue[0]);
-                        } else {
+                        if (isArray(nextStep) && nextStep.length) {
+                            const uniqList = uniq(nextStep);
                             updateCurrentStepData(uniqList[0]);
+                            setStepQueue(
+                                uniqList.slice(1, uniqList.length),
+                                "add-to-start",
+                            );
+                            return;
                         }
-                        setStepQueue(uniqList.slice(1, uniqList.length), "add");
-                        return;
+                    } else {
+                        // If way has steps in queue
+                        if (stepQueue.length) {
+                            updateCurrentStepData(stepQueue[0], false);
+                            setStepQueue(stepQueue[0], "remove");
+                            return;
+                        }
                     }
                 }
             }
         });
 
         useEffect(() => {
-            if (errorMessageList.length) {
-                showNotification({
-                    message: "Validation",
-                    description: errorMessageList.map((errMessage, index) => (
-                        <div key={index}>{errMessage}</div>
-                    )),
-                });
+            if (!isNil(stepQueue)) {
+                setStorage(BUILDER_QUEUE, stepQueue);
             }
-        }, [errors]);
+        }, [stepQueue]);
 
-        // useEffect(() => {
-        //     console.log("stepQueue_______________", toJS(stepQueue));
-        // }, [stepQueue]);
-        //
-        // useEffect(() => {
-        //     console.log("stepHistory_______________", toJS(stepHistory));
-        // }, [stepHistory]);
+        useEffect(() => {
+            if (!isNil(stepHistory)) {
+                setStorage(BUILDER_HISTORY, stepHistory);
+            }
+        }, [stepHistory]);
 
-        // useEffect(() => {
-        //     console.log("resultDoorData_______________", toJS(resultDoorData));
-        // }, [resultDoorData]);
+        useEffect(() => {
+            if (!isNil(resultDoorData)) {
+                setStorage(BUILDER_RESUlT_DATA, resultDoorData);
+            }
+            // ToDo почему не работает просто с resultDoorData? исправить
+        }, [resultDoorData?.length]);
 
-        // useEffect(() => {
-        //     console.log(
-        //         "currentStepData_______________",
-        //         toJS(currentStepData),
-        //     );
-        // }, [currentStepData]);
+        useEffect(() => {
+            if (
+                !isNil(currentStepId) &&
+                builderSettings?.data.quizStartId !== currentStepId
+            ) {
+                setStorage(BUILDER_CURRENT_STEP_ID, currentStepId);
+            }
+        }, [currentStepId]);
 
         return (
             <div className={`${classPrefix}__wrapper`}>
@@ -175,13 +195,37 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     {!!stepHistory.length && (
                         <ButtonPrimary onClick={handleBack}>Back</ButtonPrimary>
                     )}
+                    {/*<ButtonPrimary*/}
+                    {/*    onClick={handleClearBuilderStorage}*/}
+                    {/*    color={EButtonColor.orange}*/}
+                    {/*    size={EButtonSize.sm}*/}
+                    {/*    style={{*/}
+                    {/*        marginLeft: 20,*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    Clear cache*/}
+                    {/*</ButtonPrimary>*/}
+                    <ButtonPrimary
+                        onClick={() => {
+                            handleClearBuilderStorage();
+                            resetAllBuilderData(true);
+                        }}
+                        color={EButtonColor.transparent}
+                        isOutline={true}
+                        size={EButtonSize.sm}
+                        style={{
+                            marginLeft: stepHistory.length ? 20 : 0,
+                        }}
+                    >
+                        Reset form and cache
+                    </ButtonPrimary>
                     <ButtonPrimary
                         color={EButtonColor.primary}
                         onClick={handleNext}
                         style={{
                             marginLeft: "auto",
                         }}
-                        // disabled={!!errorMessageList.length}
+                        disabled={!isValid}
                     >
                         {isEmpty(endDoorData) ? "Next" : "Create order"}
                     </ButtonPrimary>
