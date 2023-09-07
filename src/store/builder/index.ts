@@ -26,7 +26,10 @@ import { isArray, isEmpty, isNil, isNumber, isObject, uniq } from "lodash";
 import { TNullable } from "@globalTypes/commonTypes";
 import { showNotification } from "@helpers/notificarionHelper";
 import { setStorage } from "@services/storage.service";
-import { BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
+import {
+    BUILDER_PARENT_ID,
+    BUILDER_RESUlT_DATA,
+} from "@consts/storageNamesContsts";
 
 export class BuilderStore implements IBuilderStore {
     builderAllData: TNullable<TGetBuilderAllDataResponse> = null;
@@ -190,6 +193,9 @@ export class BuilderStore implements IBuilderStore {
                     (item) => !stepId.includes(item),
                 );
             }
+            if (action === "replace") {
+                this.stepHistory = [...stepId];
+            }
             return;
         }
 
@@ -204,6 +210,9 @@ export class BuilderStore implements IBuilderStore {
                 this.stepHistory = this.stepHistory.filter(
                     (item) => item !== stepId,
                 );
+            }
+            if (action === "replace") {
+                this.stepHistory = [stepId];
             }
             return;
         }
@@ -263,6 +272,7 @@ export class BuilderStore implements IBuilderStore {
     updateCurrentStepData = (
         way: TUpdateCurrentStepWay,
         changeQueue = true,
+        changeHistory = true,
     ): void => {
         if (!this.builderAllData) return;
 
@@ -325,7 +335,9 @@ export class BuilderStore implements IBuilderStore {
                 );
 
                 if (!isEmpty(nextStepData)) {
-                    this.setStepHistory(this.currentStepId, "add-to-end");
+                    if (changeHistory) {
+                        this.setStepHistory(this.currentStepId, "add-to-end");
+                    }
                     if (changeQueue) {
                         this.setStepQueue(this.currentStepId, "remove");
                     }
@@ -342,8 +354,9 @@ export class BuilderStore implements IBuilderStore {
         }
     };
 
-    setResultDoorData = (data: TNullable<TResultDoorData[]>) => {
+    setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
         runInAction(() => {
+            setStorage(BUILDER_RESUlT_DATA, data);
             this.resultDoorData = data;
         });
     };

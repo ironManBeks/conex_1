@@ -1,40 +1,38 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { inject, observer } from "mobx-react";
-import { FieldValues, useFormContext } from "react-hook-form";
-import { isArray, isEmpty, isNil, isNumber, uniq } from "lodash";
+import { useFormContext } from "react-hook-form";
+import { isArray, isEmpty, isEqual, isNil, isNumber, uniq } from "lodash";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import ModalConfirm from "@components/modals/components/ModalConfirm";
 
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { TBuilderCompProps } from "../types";
-import { TResultDoorData } from "@store/builder/types";
 import { notImplemented } from "@helpers/notImplemented";
 import { IRoot } from "@store/store";
 import {
     convertFormValuesToResultData,
+    getDefaultValuesFromResultDoorData,
     getNextStepByFormValues,
     getSelectedElementByFormValues,
+    getUpdatedResultDoorData,
 } from "@helpers/builderHelper";
-import { removeStorage, setStorage } from "@services/storage.service";
-import {
-    BUILDER_CURRENT_STEP_ID,
-    BUILDER_HISTORY,
-    BUILDER_PARENT_ID,
-    BUILDER_QUEUE,
-    BUILDER_RESUlT_DATA,
-} from "@consts/storageNamesContsts";
-import { toJS } from "mobx";
 import { handleClearBuilderStorage } from "../utils";
+import { TResultDoorData } from "@store/builder/types";
 
-const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
+const BuilderActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_actions`;
-        const { builderStore } = store as IRoot;
+        const { builderStore, commonStore } = store as IRoot;
         const {
             handleSubmit,
             formState: { isValid },
             resetField,
+            getValues,
+            reset,
         } = useFormContext();
+
+        const { setModalConfirmVisible } = commonStore;
 
         const {
             updateCurrentStepData,
@@ -50,7 +48,6 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             currentStepId,
             resetAllBuilderData,
             setEndDoorData,
-            builderSettings,
         } = builderStore;
 
         const handleBack = () => {
@@ -65,43 +62,61 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
             setResultDoorData(isArray(newResult) ? newResult : []);
         };
 
-        const updateResultDoorData = (formData: FieldValues) => {
-            const newResult = convertFormValuesToResultData(
-                formData,
-                currentStepData,
-            );
+        const handleNext = (
+            checkToResetDataAfter = true,
+            newResultDoorData?: TResultDoorData[],
+        ) =>
+            handleSubmit(() => {
+                if (!isEmpty(endDoorData)) {
+                    notImplemented();
+                    return;
+                }
 
-            const renderResult = (): TResultDoorData[] => {
-                const oldResultIndex = resultDoorData?.findIndex(
+                const formData = getValues();
+                const currentStepHistoryIndex = stepHistory.findIndex(
+                    (item) => item === currentStepId,
+                );
+                const currentStepResultIndex = resultDoorData?.findIndex(
                     (item) => item.stepId === currentStepId,
                 );
-                const arr: TResultDoorData[] = resultDoorData?.length
-                    ? resultDoorData
-                    : [];
-                if (newResult) {
-                    if (!isNil(oldResultIndex) && oldResultIndex !== -1) {
-                        arr.splice(oldResultIndex, 1);
+                const newResult = convertFormValuesToResultData(
+                    formData,
+                    currentStepData,
+                );
+
+                // If user stepped back and changed the selected values
+                if (
+                    checkToResetDataAfter &&
+                    currentStepHistoryIndex !== -1 &&
+                    resultDoorData &&
+                    !isNil(currentStepResultIndex) &&
+                    currentStepResultIndex !== -1 &&
+                    resultDoorData[currentStepResultIndex + 1]
+                ) {
+                    const currentStepInResultDoor = resultDoorData?.find(
+                        (item) => item.stepId === currentStepId,
+                    );
+
+                    if (!isEqual(newResult, currentStepInResultDoor)) {
+                        setModalConfirmVisible(true);
+                        return;
                     }
-                    arr.push(newResult);
                 }
-                return arr;
-            };
 
-            return renderResult();
-        };
+                const updatedResultDoorData =
+                    newResultDoorData?.length && !isEmpty(newResult)
+                        ? [...newResultDoorData, newResult]
+                        : getUpdatedResultDoorData(
+                              formData,
+                              currentStepData,
+                              resultDoorData,
+                          );
 
-        const handleNext = handleSubmit((formData) => {
-            if (!isEmpty(endDoorData)) {
-                notImplemented();
-                return;
-            }
-            if (isValid) {
                 const nextStep = getNextStepByFormValues(
                     currentStepData,
                     formData,
                 );
 
-                const updatedResultDoorData = updateResultDoorData(formData);
                 setResultDoorData(updatedResultDoorData);
 
                 // If last step and no queue
@@ -133,7 +148,7 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
-                // first the way from the element, then from the queue
+                // In first, way from the element, then from the queue
                 if (stepHistory.length) {
                     if (!isNil(nextStep)) {
                         if (isNumber(nextStep)) {
@@ -158,36 +173,38 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                         }
                     }
                 }
-            }
-        });
+            });
 
-        useEffect(() => {
-            if (!isNil(stepQueue)) {
-                setStorage(BUILDER_QUEUE, stepQueue);
+        const resetDataAfterCurrentStep = () => {
+            if (currentStepId && resultDoorData) {
+                const indexInHistory = stepHistory.findIndex(
+                    (item) => item === currentStepId,
+                );
+                const indexInResultDoor = resultDoorData?.findIndex(
+                    (item) => item.stepId === currentStepId,
+                );
+                if (indexInHistory !== -1 && indexInResultDoor !== -1) {
+                    const slicedHistory = stepHistory.slice(0, indexInHistory);
+                    const slicedResultDoor = resultDoorData.slice(
+                        0,
+                        indexInResultDoor,
+                    );
+                    const resetData = slicedResultDoor
+                        .map((item) =>
+                            getDefaultValuesFromResultDoorData(item.stepId, [
+                                item,
+                            ]),
+                        )
+                        .reduce(
+                            (memo, current) => ({ ...memo, ...current }),
+                            {},
+                        );
+                    reset(resetData);
+                    setStepHistory(slicedHistory, "replace");
+                    handleNext(false, slicedResultDoor)();
+                }
             }
-        }, [stepQueue]);
-
-        useEffect(() => {
-            if (!isNil(stepHistory)) {
-                setStorage(BUILDER_HISTORY, stepHistory);
-            }
-        }, [stepHistory]);
-
-        useEffect(() => {
-            if (!isNil(resultDoorData)) {
-                setStorage(BUILDER_RESUlT_DATA, resultDoorData);
-            }
-            // ToDo почему не работает просто с resultDoorData? исправить
-        }, [resultDoorData?.length]);
-
-        useEffect(() => {
-            if (
-                !isNil(currentStepId) &&
-                builderSettings?.data.quizStartId !== currentStepId
-            ) {
-                setStorage(BUILDER_CURRENT_STEP_ID, currentStepId);
-            }
-        }, [currentStepId]);
+        };
 
         return (
             <div className={`${classPrefix}__wrapper`}>
@@ -195,16 +212,6 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                     {!!stepHistory.length && (
                         <ButtonPrimary onClick={handleBack}>Back</ButtonPrimary>
                     )}
-                    {/*<ButtonPrimary*/}
-                    {/*    onClick={handleClearBuilderStorage}*/}
-                    {/*    color={EButtonColor.orange}*/}
-                    {/*    size={EButtonSize.sm}*/}
-                    {/*    style={{*/}
-                    {/*        marginLeft: 20,*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    Clear cache*/}
-                    {/*</ButtonPrimary>*/}
                     <ButtonPrimary
                         onClick={() => {
                             handleClearBuilderStorage();
@@ -217,11 +224,19 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                             marginLeft: stepHistory.length ? 20 : 0,
                         }}
                     >
-                        Reset form and cache
+                        Reset state and cache
                     </ButtonPrimary>
+                    {/*<button*/}
+                    {/*    type={"button"}*/}
+                    {/*    onClick={() => {*/}
+                    {/*        console.log("getValues", getValues());*/}
+                    {/*    }}*/}
+                    {/*>*/}
+                    {/*    get values*/}
+                    {/*</button>*/}
                     <ButtonPrimary
                         color={EButtonColor.primary}
-                        onClick={handleNext}
+                        onClick={handleNext()}
                         style={{
                             marginLeft: "auto",
                         }}
@@ -230,9 +245,14 @@ const BuilderStepActions: FC<TBuilderCompProps> = inject("store")(
                         {isEmpty(endDoorData) ? "Next" : "Create order"}
                     </ButtonPrimary>
                 </div>
+                <ModalConfirm
+                    text="Are you sure you want to change this option? Doing so will clear any options you have selected past this section."
+                    confirmColor={EButtonColor.danger}
+                    onConfirm={() => resetDataAfterCurrentStep()}
+                />
             </div>
         );
     }),
 );
 
-export default BuilderStepActions;
+export default BuilderActions;

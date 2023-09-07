@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useMemo } from "react";
 import cn from "classnames";
 import { inject, observer } from "mobx-react";
 
@@ -13,7 +13,12 @@ import { renderResultDataToOptionsList } from "@helpers/builderHelper";
 const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { resultDoorData, updateCurrentStepData } = builderStore;
+        const {
+            resultDoorData,
+            stepHistory,
+            updateCurrentStepData,
+            currentStepData,
+        } = builderStore;
         const classPrefix = `${pageClassPrefix}_right-side`;
 
         const resultDataToOptionsList = useCallback(
@@ -21,8 +26,10 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
                 renderResultDataToOptionsList(
                     resultDoorData,
                     updateCurrentStepData,
+                    stepHistory,
+                    currentStepData,
                 ),
-            [resultDoorData],
+            [resultDoorData, stepHistory, currentStepData],
         );
 
         const getTotal = (): number => {
@@ -43,10 +50,15 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
             value: `$${getTotal()}`,
         };
 
+        const optionsList = useMemo(
+            () => <AddedOptionsList optionsList={resultDataToOptionsList()} />,
+            [resultDoorData, stepHistory, currentStepData],
+        );
+
         return (
             <div className={cn(`${classPrefix}__wrapper`)}>
                 <div className={cn(`${classPrefix}__inner-wrapper`)}>
-                    <AddedOptionsList optionsList={resultDataToOptionsList()} />
+                    {optionsList}
                     <AdditionalServices
                         options={[]}
                         totalOption={additionalServicesTotalOption}

@@ -39,7 +39,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const isError = !!errorMessage && !!touchedFields;
-    const fieldRef = useRef<InputRef | null>(null);
+    // const fieldRef = useRef<InputRef | null>(null);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
@@ -66,7 +66,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                         <AntInput
                             {...field}
                             {...rest}
-                            ref={fieldRef}
+                            // ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                             )}
