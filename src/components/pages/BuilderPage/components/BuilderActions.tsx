@@ -218,7 +218,6 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             resetAllBuilderData(true);
                         }}
                         color={EButtonColor.transparent}
-                        isOutline={true}
                         size={EButtonSize.sm}
                         style={{
                             marginLeft: stepHistory.length ? 20 : 0,

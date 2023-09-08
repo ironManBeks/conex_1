@@ -17,3 +17,11 @@
     }
   }
 }
+
+@function space($value){
+  @return calc(#{$spase} * #{$value});
+}
+
+@function borderRadius($value){
+  @return calc(#{$spase} * #{$value});
+}

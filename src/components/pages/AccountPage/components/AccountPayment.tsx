@@ -24,6 +24,7 @@ import { notImplemented } from "@helpers/notImplemented";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { DEFAULT_ICON_COLOR } from "@components/Icons/consts";
 import { IRoot } from "@store/store";
+import AccountSectionWrapper from "@components/pages/AccountPage/components/AccountSectionWrapper";
 
 const AccountPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -43,9 +44,10 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
         });
 
         return (
-            <Fragment>
-                <H2 className={`${classPrefix}__title`}>Saved Payment</H2>
-                <div className={`${classPrefix}__wrapper`}>
+            <div className={`${classPrefix}__wrapper`}>
+                <H2>Payment methods</H2>
+                <AccountSectionWrapper pageClassPrefix={pageClassPrefix}>
+                    list
                     {accountData?.cards.map((item) => (
                         <AccountPaymentItem
                             key={item.id}
@@ -61,48 +63,50 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
                             }}
                         />
                     ))}
-                    <div className={`${classPrefix}__add _wrapper`}>
-                        {formVisible ? (
-                            <PaymentCardForm
-                                className={`${classPrefix}__form`}
-                                submitText="Add card"
-                                actionsContent={
-                                    <ButtonPrimary
-                                        onClick={() => handleFormVisible(false)}
-                                        size={EButtonSize.sm}
-                                    >
-                                        Close
-                                    </ButtonPrimary>
-                                }
-                            />
-                        ) : (
-                            <div
-                                className={`${classPrefix}__add _inner-wrapper`}
-                                onClick={() => handleFormVisible(!formVisible)}
-                            >
-                                {isMobile ? (
-                                    "Add a new card"
-                                ) : (
-                                    <IconPlusCircle
-                                        width={24}
-                                        height={24}
-                                        color="#F79225"
-                                    />
-                                )}
-                            </div>
-                        )}
-                    </div>
-                </div>
-                <ModalConfirm
-                    text="Do you want to remove the card?"
-                    confirmColor={EButtonColor.danger}
-                    onConfirm={(confirmModalData) => {
-                        notImplemented(
-                            `value: ${JSON.stringify(confirmModalData)}`,
-                        );
-                    }}
-                />
-            </Fragment>
+                </AccountSectionWrapper>
+                {/*<div className={`${classPrefix}__wrapper`}>*/}
+                {/*    <div className={`${classPrefix}__add _wrapper`}>*/}
+                {/*        {formVisible ? (*/}
+                {/*            <PaymentCardForm*/}
+                {/*                className={`${classPrefix}__form`}*/}
+                {/*                submitText="Add card"*/}
+                {/*                actionsContent={*/}
+                {/*                    <ButtonPrimary*/}
+                {/*                        onClick={() => handleFormVisible(false)}*/}
+                {/*                        size={EButtonSize.sm}*/}
+                {/*                    >*/}
+                {/*                        Close*/}
+                {/*                    </ButtonPrimary>*/}
+                {/*                }*/}
+                {/*            />*/}
+                {/*        ) : (*/}
+                {/*            <div*/}
+                {/*                className={`${classPrefix}__add _inner-wrapper`}*/}
+                {/*                onClick={() => handleFormVisible(!formVisible)}*/}
+                {/*            >*/}
+                {/*                {isMobile ? (*/}
+                {/*                    "Add a new card"*/}
+                {/*                ) : (*/}
+                {/*                    <IconPlusCircle*/}
+                {/*                        width={24}*/}
+                {/*                        height={24}*/}
+                {/*                        color="#F79225"*/}
+                {/*                    />*/}
+                {/*                )}*/}
+                {/*            </div>*/}
+                {/*        )}*/}
+                {/*    </div>*/}
+                {/*</div>*/}
+                {/*<ModalConfirm*/}
+                {/*    text="Do you want to remove the card?"*/}
+                {/*    confirmColor={EButtonColor.danger}*/}
+                {/*    onConfirm={(confirmModalData) => {*/}
+                {/*        notImplemented(*/}
+                {/*            `value: ${JSON.stringify(confirmModalData)}`,*/}
+                {/*        );*/}
+                {/*    }}*/}
+                {/*/>*/}
+            </div>
         );
     }),
 );

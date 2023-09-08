@@ -13,8 +13,6 @@ const ButtonLink: React.FC<TButtonLink> = ({
     className,
     color = EButtonColor.default,
     size = EButtonSize.md,
-    withShadow = true,
-    isOutline = false,
     icon,
     iconPosition = "left",
     disabled = false,
@@ -34,9 +32,7 @@ const ButtonLink: React.FC<TButtonLink> = ({
                 `__${color}`,
                 `__${size}`,
                 {
-                    __shadow: withShadow,
                     __disabled: disabled,
-                    __outline: isOutline,
                     __notText: !children || children === "",
                     __icon: icon,
                 },

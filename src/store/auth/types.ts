@@ -15,8 +15,13 @@ export type TAuthPaymentCard = {
 
 export type TAccountData = {
     name: string;
+    surname: string;
     email: string;
     phone: string;
+    country: string;
+    city: string;
+    address: string;
+    index: string;
     cards: TAuthPaymentCard[];
 } | null;
 

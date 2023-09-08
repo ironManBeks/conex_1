@@ -1,9 +1,4 @@
 .form-field_wrapper._input{
-  --x-p: 10px;
-  --y-p: 8px;
-  --icon-width: 16px;
-
-  --bg-color: transparent;
   &._icon{
     .common-icon{
       position: absolute;
@@ -19,8 +14,8 @@
       }
       .form-field{
         &_field{
-          padding-left: var(--x-p);
-          padding-right: calc(var(--icon-width) + 30px);
+          padding-left: space(2);
+          padding-right: space(3);
         }
       }
     }
@@ -35,23 +30,23 @@
     &_field{
       width: 100%;
       height: 100%;
-      background-color: var(--bg-color);
-      border: 1px solid $color-grey-250;
-      padding: var(--y-p) var(--x-p);
-      font-size: $font-size-md;
-      line-height: $line-height-md;
-      color: $color-grey-800;
+      background-color: transparent;
+      border: 1px solid $border-color-secondary;
+      padding: space(4);
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-primary;
+      font-weight: 500;
+      font-family: $font-family-secondary;
       outline: none !important;
-      border-radius: $border-radius-bs;
+      border-radius: borderRadius(2);
       &[disabled]{
-        background-color: $color-disabled-bg;
-        border-color: $color-disabled-border;
-        color: $color-disabled-text;
+        background-color: $color-secondary-40;
       }
       &:hover, &:focus{
         box-shadow: none;
         &:not([disabled]){
-          border-color: $color-primary;
+          border-color: $border-color-secondary;
         }
       }
     }
@@ -59,10 +54,10 @@
 
   &._error{
     .form-field_field{
-      border-color: $color-red-250 !important;
+      border-color: $color-critical-strong !important;
       &:hover, &:focus{
         &:not([disabled]){
-          border-color: $color-primary !important;
+          border-color: $color-critical-strong !important;
         }
       }
     }

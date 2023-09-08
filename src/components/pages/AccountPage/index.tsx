@@ -1,15 +1,14 @@
 import { FC, useEffect, useMemo } from "react";
-import cn from "classnames";
 import { inject, observer } from "mobx-react";
 import { isEmpty } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
-import AccountInfo from "./components/AccountInfo";
-import AccountOrder from "./components/AccountOrder";
 import AccountInfoSkeleton from "@components/skeletons/AccountInfoSkeleton";
 import AccountOrderSkeleton from "@components/skeletons/AccountOrderSkeleton";
 import AuthForm from "@components/globalComponents/AuthForm";
+import AccountMenu from "./components/AccountMenu";
+import AccountContent from "./components/AccountContent";
 
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
@@ -52,8 +51,8 @@ const AccountPage: FC<TStore> = inject("store")(
             if (!isEmpty(authData)) {
                 return (
                     <>
-                        <AccountInfo pageClassPrefix={classPrefix} />
-                        <AccountOrder pageClassPrefix={classPrefix} />
+                        <AccountMenu pageClassPrefix={classPrefix} />
+                        <AccountContent pageClassPrefix={classPrefix} />
                     </>
                 );
             }
@@ -67,11 +66,7 @@ const AccountPage: FC<TStore> = inject("store")(
 
         return (
             <Layout pageClassPrefix={classPrefix}>
-                <Container>
-                    <div className={cn(`${classPrefix}_content__wrapper`)}>
-                        {accountContent}
-                    </div>
-                </Container>
+                <Container>{accountContent}</Container>
             </Layout>
         );
     }),

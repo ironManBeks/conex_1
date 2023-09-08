@@ -22,7 +22,6 @@ const ChoiceMode: FC<TChoiceMode> = ({ options, className }) => {
                             item.onClick();
                         }
                     }}
-                    withShadow={false}
                 >
                     {item.label}
                 </ButtonPrimary>

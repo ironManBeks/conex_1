@@ -1,135 +1,25 @@
-@font-face {
-  font-family: 'Lato';
-  src: url('../../fonts/Lato-Light/Lato-Light.eot');
-  src: url('../../fonts/Lato-Light/Lato-Light.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Lato-Light/Lato-Light.woff2') format('woff2'),
-  url('../../fonts/Lato-Light/Lato-Light.woff') format('woff'),
-  url('../../fonts/Lato-Light/Lato-Light.ttf') format('truetype'),
-  url('../../fonts/Lato-Light/Lato-Light.svg#Lato-Light') format('svg');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
+@mixin font($font_name, $file_name, $weight, $style) {
+  @font-face {
+    font-family: $font_name;
+    src: url('../../fonts/#{$file_name}/#{$file_name}.eot');
+    src: url('../../fonts/#{$file_name}/#{$file_name}.eot?#iefix') format('embedded-opentype'),
+    url('../../fonts/#{$file_name}/#{$file_name}.woff2') format('woff2'),
+    url('../../fonts/#{$file_name}/#{$file_name}.woff') format('woff'),
+    url('../../fonts/#{$file_name}/#{$file_name}.ttf') format('truetype'),
+    url('../../fonts/#{$file_name}/#{$file_name}.svg##{$file_name}') format('svg');
+    font-weight: $weight;
+    font-style: $style;
+    font-display: swap;
+  }
 }
 
-@font-face {
-  font-family: 'Lato';
-  src: url('../../fonts/Lato-Regular/Lato-Regular.eot');
-  src: url('../../fonts/Lato-Regular/Lato-Regular.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Lato-Regular/Lato-Regular.woff2') format('woff2'),
-  url('../../fonts/Lato-Regular/Lato-Regular.woff') format('woff'),
-  url('../../fonts/Lato-Regular/Lato-Regular.ttf') format('truetype'),
-  url('../../fonts/Lato-Regular/Lato-Regular.svg#Lato-Regular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
+@include font("HelveticaNeue", "HelveticaNeue-Bold", 700, "normal");
+@include font("HelveticaNeue", "HelveticaNeue-Medium", 500, "normal");
+@include font("HelveticaNeue", "HelveticaNeue-Regular", 400, "normal");
+@include font("HelveticaNeue", "HelveticaNeue-Light", 300, "normal");
 
-@font-face {
-  font-family: 'Lato';
-  src: url('../../fonts/Lato-Medium/Lato-Medium.eot');
-  src: url('../../fonts/Lato-Medium/Lato-Medium.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Lato-Medium/Lato-Medium.woff2') format('woff2'),
-  url('../../fonts/Lato-Medium/Lato-Medium.woff') format('woff'),
-  url('../../fonts/Lato-Medium/Lato-Medium.ttf') format('truetype'),
-  url('../../fonts/Lato-Medium/Lato-Medium.svg#Lato-Medium') format('svg');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../../fonts/Lato-Semibold/Lato-Semibold.eot');
-  src: url('../../fonts/Lato-Semibold/Lato-Semibold.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Lato-Semibold/Lato-Semibold.woff2') format('woff2'),
-  url('../../fonts/Lato-Semibold/Lato-Semibold.woff') format('woff'),
-  url('../../fonts/Lato-Semibold/Lato-Semibold.ttf') format('truetype'),
-  url('../../fonts/Lato-Semibold/Lato-Semibold.svg#Lato-Semibold') format('svg');
-  font-weight: 600;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Lato';
-  src: url('../../fonts/Lato-Bold/Lato-Bold.eot');
-  src: url('../../fonts/Lato-Bold/Lato-Bold.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Lato-Bold/Lato-Bold.woff2') format('woff2'),
-  url('../../fonts/Lato-Bold/Lato-Bold.woff') format('woff'),
-  url('../../fonts/Lato-Bold/Lato-Bold.ttf') format('truetype'),
-  url('../../fonts/Lato-Bold/Lato-Bold.svg#Lato-Bold') format('svg');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
-
-
-// _________________________________
-// _________________________________
-// _________________________________
-
-@font-face {
-  font-family: 'Raleway';
-  src: url('../../fonts/Raleway-Light/Raleway-Light.eot');
-  src: url('../../fonts/Raleway-Light/Raleway-Light.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Raleway-Light/Raleway-Light.woff2') format('woff2'),
-  url('../../fonts/Raleway-Light/Raleway-Light.woff') format('woff'),
-  url('../../fonts/Raleway-Light/Raleway-Light.ttf') format('truetype'),
-  url('../../fonts/Raleway-Light/Raleway-Light.svg#Raleway-Light') format('svg');
-  font-weight: 300;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src: url('../../fonts/Raleway-Regular/Raleway-Regular.eot');
-  src: url('../../fonts/Raleway-Regular/Raleway-Regular.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Raleway-Regular/Raleway-Regular.woff2') format('woff2'),
-  url('../../fonts/Raleway-Regular/Raleway-Regular.woff') format('woff'),
-  url('../../fonts/Raleway-Regular/Raleway-Regular.ttf') format('truetype'),
-  url('../../fonts/Raleway-Regular/Raleway-Regular.svg#Raleway-Regular') format('svg');
-  font-weight: normal;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: 'Raleway';
-  src: url('../../fonts/Raleway-Medium/Raleway-Medium.eot');
-  src: url('../../fonts/Raleway-Medium/Raleway-Medium.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Raleway-Medium/Raleway-Medium.woff2') format('woff2'),
-  url('../../fonts/Raleway-Medium/Raleway-Medium.woff') format('woff'),
-  url('../../fonts/Raleway-Medium/Raleway-Medium.ttf') format('truetype'),
-  url('../../fonts/Raleway-Medium/Raleway-Medium.svg#Raleway-Medium') format('svg');
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
-}
-
-//@font-face {
-//  font-family: 'Raleway';
-//  src: url('../../fonts/Raleway-Semibold/Raleway-Semibold.eot');
-//  src: url('../../fonts/Raleway-Semibold/Raleway-Semibold.eot?#iefix') format('embedded-opentype'),
-//  url('../../fonts/Raleway-Semibold/Raleway-Semibold.woff2') format('woff2'),
-//  url('../../fonts/Raleway-Semibold/Raleway-Semibold.woff') format('woff'),
-//  url('../../fonts/Raleway-Semibold/Raleway-Semibold.ttf') format('truetype'),
-//  url('../../fonts/Raleway-Semibold/Raleway-Semibold.svg#Raleway-Semibold') format('svg');
-//  font-weight: 600;
-//  font-style: normal;
-//  font-display: swap;
-//}
-
-@font-face {
-  font-family: 'Raleway';
-  src: url('../../fonts/Raleway-Bold/Raleway-Bold.eot');
-  src: url('../../fonts/Raleway-Bold/Raleway-Bold.eot?#iefix') format('embedded-opentype'),
-  url('../../fonts/Raleway-Bold/Raleway-Bold.woff2') format('woff2'),
-  url('../../fonts/Raleway-Bold/Raleway-Bold.woff') format('woff'),
-  url('../../fonts/Raleway-Bold/Raleway-Bold.ttf') format('truetype'),
-  url('../../fonts/Raleway-Bold/Raleway-Bold.svg#Raleway-Bold') format('svg');
-  font-weight: bold;
-  font-style: normal;
-  font-display: swap;
-}
+@include font("Manrope", "Manrope-Bold", 700, "normal");
+@include font("Manrope", "Manrope-SemiBold", 600, "normal");
+@include font("Manrope", "Manrope-Medium", 500, "normal");
+@include font("Manrope", "Manrope-Regular", 400, "normal");
+@include font("Manrope", "Manrope-Light", 300, "normal");

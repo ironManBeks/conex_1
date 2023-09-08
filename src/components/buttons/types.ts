@@ -6,13 +6,11 @@ export type TButtonCommon = {
     disabled?: boolean;
     color?: EButtonColor;
     size?: EButtonSize;
-    icon?: ReactNode;
-    iconPosition?: "left" | "right";
-    isOutline?: boolean;
+    leftIcon?: ReactNode;
+    rightIcon?: ReactNode;
     isLoading?: boolean;
     tooltipText?: string;
     tooltipClassName?: string;
-    withShadow?: boolean;
     value?: string;
     style?: CSSProperties;
 };
@@ -23,12 +21,13 @@ export type TButtonTypes = {
 };
 
 export enum EButtonColor {
+    default = "default",
     primary = "primary",
     secondary = "secondary",
-    default = "default",
+    success = "success",
     danger = "danger",
-    orange = "orange",
     transparent = "transparent",
+    orange = "orange",
 }
 
 export enum EButtonSize {

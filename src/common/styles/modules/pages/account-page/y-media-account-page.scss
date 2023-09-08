@@ -3,15 +3,6 @@
 
   .account-page{
 
-    &_content{
-    }
-
-    &_info{
-      &__wrapper{
-        width: calc(50% - 40px);
-      }
-    }
-
     &_form{
       &__wrapper{
         & > div{
@@ -42,27 +33,6 @@
       }
     }
 
-    &_tracker{
-      &__wrapper{
-        margin-top: 50px;
-        padding: 10px;
-        .common-title{
-          font-size: $font-size-lg;
-          line-height: $line-height-lg;
-        }
-      }
-      &__form{
-        height: 42px;
-        .common-btn{
-          font-size: $font-size-bs;
-          line-height: $line-height-bs;
-          padding: 0;
-          min-width: 120px;
-        }
-      }
-    }
-
-
     &_order{
       &__wrapper{
         width: 50%;
@@ -81,16 +51,6 @@
       &__wrapper{
         flex-direction: column;
       }
-    }
-
-    &_info{
-      &__wrapper{
-        width: 100%;
-      }
-    }
-
-    &_tracker__wrapper{
-      margin-top: 50px;
     }
 
     &_order{
@@ -116,12 +76,6 @@
         font-size: 1.375rem;
         line-height: calc(1.375rem + 2px);
         color: $color-grey-800;
-      }
-    }
-
-    &_info{
-      &__wrapper{
-        width: 100%;
       }
     }
 
@@ -182,28 +136,6 @@
         margin-top: 20px;
         .common-btn{
           min-width: 100px;
-        }
-      }
-    }
-
-    &_tracker{
-      &__wrapper{
-        margin-top: 25px;
-        margin-bottom: 30px;
-        padding: 10px;
-        .common-title{
-          font-size: $font-size-bs;
-          line-height: $line-height-bs;
-          font-weight: 300;
-        }
-      }
-      &__form{
-        height: 42px;
-        .common-btn{
-          font-size: $font-size-bs;
-          line-height: $line-height-bs;
-          padding: 0;
-          min-width: 120px;
         }
       }
     }

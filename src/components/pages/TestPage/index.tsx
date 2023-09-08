@@ -18,13 +18,14 @@ import { H1 } from "@components/Text";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import {
     EFieldNames,
-    formResolver,
     formDefaultValues,
+    formResolver,
     optionsMockup,
     TFormFields,
 } from "./formAttrs";
 import { EDirection } from "@globalTypes/commonTypes";
 import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
+import { IconPoint } from "@components/Icons";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
@@ -57,6 +58,20 @@ const TestPage: FC = () => {
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            <FieldInputController
+                                name={EFieldNames.input}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                            />
+                            <FieldInputController
+                                name={EFieldNames.input + "123"}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                                disabled={true}
+                            />
+                            <br />
+                            <br />
+                            <br />
                             <FieldSelectController
                                 name={EFieldNames.select}
                                 placeholder={EFieldNames.select}
@@ -128,20 +143,6 @@ const TestPage: FC = () => {
                             <br />
                             <br />
                             <br />
-                            <FieldInputController
-                                name={EFieldNames.input}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                            />
-                            <FieldInputController
-                                name={EFieldNames.input + "123"}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                                disabled={true}
-                            />
-                            <br />
-                            <br />
-                            <br />
                             <FieldInputNumberController
                                 name={EFieldNames.inputNumber}
                                 placeholder={EFieldNames.inputNumber}
@@ -172,117 +173,206 @@ const TestPage: FC = () => {
                             <br />
                             <br />
                             <div>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.primary}
-                                    size={EButtonSize.sm}
-                                >
-                                    primary
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.secondary}
-                                    size={EButtonSize.sm}
-                                >
-                                    secondary
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.danger}
-                                    size={EButtonSize.sm}
-                                >
-                                    danger
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.transparent}
-                                    size={EButtonSize.sm}
-                                >
-                                    transparent
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.default}
-                                    size={EButtonSize.sm}
-                                >
-                                    default
-                                </ButtonPrimary>
-                            </div>
-                            <br />
-                            <div>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.primary}
-                                    size={EButtonSize.md}
-                                >
-                                    primary
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.secondary}
-                                    size={EButtonSize.md}
-                                >
-                                    secondary
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.danger}
-                                    size={EButtonSize.md}
-                                >
-                                    danger
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.transparent}
-                                    size={EButtonSize.md}
-                                >
-                                    transparent
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.default}
-                                    size={EButtonSize.md}
-                                >
-                                    default
-                                </ButtonPrimary>
-                            </div>
-                            <br />
-                            <div>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.primary}
-                                    size={EButtonSize.lg}
-                                >
-                                    primary
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.secondary}
-                                    size={EButtonSize.lg}
-                                >
-                                    secondary
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.danger}
-                                    size={EButtonSize.lg}
-                                >
-                                    danger
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.transparent}
-                                    size={EButtonSize.lg}
-                                >
-                                    transparent
-                                </ButtonPrimary>
-                                <ButtonPrimary
-                                    type="submit"
-                                    color={EButtonColor.default}
-                                    size={EButtonSize.lg}
-                                >
-                                    default
-                                </ButtonPrimary>
+                                <div>
+                                    <div>
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.primary}
+                                            leftIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            primary
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.primary}
+                                            disabled={true}
+                                            leftIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            primary
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.primary}
+                                            leftIcon={
+                                                <IconPoint
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            }
+                                            type="submit"
+                                        ></ButtonPrimary>
+                                        {/*________________________________________________*/}
+                                        <br />
+                                        {/*________________________________________________*/}
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.secondary}
+                                            leftIcon={<IconPoint />}
+                                            rightIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            secondary
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.secondary}
+                                            disabled={true}
+                                            leftIcon={<IconPoint />}
+                                            rightIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            secondary
+                                        </ButtonPrimary>
+                                        {/*________________________________________________*/}
+                                        <br />
+                                        {/*________________________________________________*/}
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.transparent}
+                                            leftIcon={<IconPoint />}
+                                            rightIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            transparent
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.md}
+                                            color={EButtonColor.transparent}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            transparent
+                                        </ButtonPrimary>
+                                        <br />
+                                    </div>
+                                    <br />
+                                    <br />
+                                    <div>
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.primary}
+                                            type="submit"
+                                            rightIcon={
+                                                <IconPoint
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            }
+                                        >
+                                            primary
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.primary}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            primary
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.primary}
+                                            rightIcon={
+                                                <IconPoint
+                                                    width={24}
+                                                    height={24}
+                                                />
+                                            }
+                                            type="submit"
+                                        ></ButtonPrimary>
+                                        {/*________________________________________________*/}
+                                        <br />
+                                        {/*________________________________________________*/}
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.secondary}
+                                            type="submit"
+                                        >
+                                            secondary
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.secondary}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            secondary
+                                        </ButtonPrimary>
+                                        {/*________________________________________________*/}
+                                        <br />
+                                        {/*________________________________________________*/}
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.transparent}
+                                            type="submit"
+                                        >
+                                            transparent
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            size={EButtonSize.lg}
+                                            color={EButtonColor.transparent}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            transparent
+                                        </ButtonPrimary>
+                                        <br />
+                                    </div>
+                                    <div>
+                                        <ButtonPrimary
+                                            color={EButtonColor.success}
+                                            leftIcon={<IconPoint />}
+                                            rightIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            success
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            color={EButtonColor.success}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            success
+                                        </ButtonPrimary>
+                                        {/*________________________________________________*/}
+                                        <br />
+                                        {/*________________________________________________*/}
+                                        <ButtonPrimary
+                                            color={EButtonColor.danger}
+                                            leftIcon={<IconPoint />}
+                                            rightIcon={<IconPoint />}
+                                            type="submit"
+                                        >
+                                            danger
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            color={EButtonColor.danger}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            danger
+                                        </ButtonPrimary>
+                                        {/*________________________________________________*/}
+                                        <br />
+                                        {/*________________________________________________*/}
+                                        <ButtonPrimary
+                                            color={EButtonColor.default}
+                                            type="submit"
+                                        >
+                                            default
+                                        </ButtonPrimary>
+                                        <ButtonPrimary
+                                            color={EButtonColor.default}
+                                            disabled={true}
+                                            type="submit"
+                                        >
+                                            default
+                                        </ButtonPrimary>
+                                        <br />
+                                    </div>
+                                </div>
                             </div>
                             <br />
                             <br />

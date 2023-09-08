@@ -1,18 +1,15 @@
 import { FC, useEffect, useRef, useState } from "react";
-import { Input as AntInput, InputRef } from "antd";
+import { Input as AntInput } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 import { isFunction } from "lodash";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import { IconEdit } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputController } from "./types";
-import { EButtonColor } from "@components/buttons/types";
 
 const FieldInputController: FC<TFieldInputController> = (props) => {
     const {
@@ -27,8 +24,6 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
         floatingLabel,
         showError = true,
         readOnly: propsReadOnly = false,
-        editIcon,
-        onEditIconClick,
         ...rest
     } = props;
     const addonAfterRef = useRef<HTMLDivElement>(null);
@@ -98,21 +93,6 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             >
                                 {addonAfter}
                             </div>
-                        )}
-                        {editIcon && (
-                            <ButtonPrimary
-                                onClick={() => {
-                                    if (isFunction(onEditIconClick)) {
-                                        onEditIconClick();
-                                    }
-                                }}
-                                color={EButtonColor.transparent}
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_edit`,
-                                )}
-                            >
-                                <IconEdit color="#757474" />
-                            </ButtonPrimary>
                         )}
                     </FormItemWrapper>
                 );

@@ -14,8 +14,6 @@ export type TFieldInputController = {
     minAddonWidth?: number;
     floatingLabel?: boolean;
     floatingBgColor?: THEX;
-    editIcon?: boolean;
-    onEditIconClick?: () => void;
 } & InputProps &
     TFormItemLabel &
     TFormWrapperClassName &

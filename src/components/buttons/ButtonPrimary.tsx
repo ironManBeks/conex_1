@@ -12,12 +12,10 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     color = EButtonColor.default,
     size = EButtonSize.md,
     type = "button",
-    withShadow = true,
-    isOutline = false,
     isLoading = false,
     disabled = false,
-    icon,
-    iconPosition = "left",
+    leftIcon,
+    rightIcon,
     tooltipText,
     tooltipClassName,
     onClick,
@@ -35,12 +33,10 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
                 `__${color}`,
                 `__${size}`,
                 {
-                    __shadow: withShadow,
                     __disabled: disabled,
-                    __outline: isOutline,
                     __loading: isLoading,
                     __notText: !children || children === "",
-                    __icon: icon,
+                    __icon: leftIcon || rightIcon,
                 },
             )}
             disabled={disabled}
@@ -48,25 +44,25 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
             value={value}
         >
             <>
-                {icon && iconPosition === "left" && (
+                {leftIcon && (
                     <span
                         className={cn(
                             `${commonButtonClassPrefix}_icon`,
                             "_left",
                         )}
                     >
-                        {icon}
+                        {leftIcon}
                     </span>
                 )}
                 {isLoading ? <Spin /> : children}
-                {icon && iconPosition === "right" && (
+                {rightIcon && (
                     <span
                         className={cn(
                             `${commonButtonClassPrefix}_icon`,
                             "_right",
                         )}
                     >
-                        {icon}
+                        {rightIcon}
                     </span>
                 )}
             </>

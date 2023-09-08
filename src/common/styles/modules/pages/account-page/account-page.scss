@@ -1,59 +1,123 @@
 .account-page{
+
   &_layout__inner-wrapper{
-    padding: 15px 0 50px;
+    .container{
+      padding-top: space(10);
+      padding-bottom: space(10);
+    }
   }
 
   &_content__wrapper{
     width: 100%;
     display: flex;
     justify-content: space-between;
-    background-color: #fff;
-    padding: 25px 30px;
-    box-shadow: $box-shadow-bs;
-    border-radius: $border-radius-lg;
+    & > * {
+      width: 100%;
+    }
     .common-title._h2{
-      margin-bottom: 32px;
-      font-size: $font-size-xxl;
-      line-height: $line-height-xxl;
-      font-family: $font-family-primary;
+      margin-bottom: space(6);
+      font-size: $font-size-xl;
+      line-height: $line-height-xl;
       display: flex;
       align-items: center;
       justify-content: space-between;
     }
   }
 
-  &_info{
+  &_menu{
     &__wrapper{
-      position: relative;
-      width: calc(60% - 40px);
+      padding: space(6) space(8);
+      display: flex;
+      flex-direction: column;
+      gap: space(2);
+      flex: 0 0 auto;
+    }
+    &__item{
+      a{
+        display: flex;
+        align-items: center;
+        color: $text-color-secondary;
+        transition: .2s;
+        font-weight: 700;
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        padding-top: space(2);
+        padding-bottom: space(2);
+        svg {
+          margin-right: space(2);
+          transition: .2s;
+          path {
+            fill: $icon-color-secondary;
+            transition: .2s;
+          }
+        }
+        &:hover{
+          color: $text-color-primary;
+          svg path {
+            fill: $icon-color-primary;
+          }
+        }
+      }
+      &._active{
+        a{
+          color: $text-color-primary;
+        }
+        svg path {
+          fill: $icon-color-primary;
+        }
+      }
+      &._logout{
+        a{
+          &:hover{
+            color: $color-critical-800;
+            svg path {
+              fill: $color-critical-800;
+            }
+          }
+        }
+      }
     }
   }
 
-  &_form{
+  &_section-wrapper{
+    width: 100%;
+    padding: space(8);
+    border-radius: borderRadius(5);
+    background: $color-primary-strong;
+  }
+
+  &_my-form{
     &__wrapper{
-      margin-bottom: 50px;
+      .account-page_section-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: space(6);
+      }
+    }
+    &__form{
+      display: flex;
+      flex-direction: column;
+      gap: space(6);
+    }
+    &__fields{
+      display: flex;
+      flex-wrap: wrap;
+      gap: space(8);
       .form-field_wrapper{
-        width: calc(50% - 15px);
+        width: 50%;
+        max-width: 308px;
+        flex: 1;
+        margin-bottom: 0;
       }
     }
     &__actions{
-      margin-top: 30px;
-      .common-btn{
-        min-width: 200px;
-        margin-right: 20px;
-      }
+      display: flex;
+      gap: space(5);
     }
   }
 
+
   &_payment{
-    &__wrapper{
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: space-between;
-    }
-    &__title{
-      color: $color-grey-800;
-    }
     &__item{
       &._wrapper{
         position: relative;
@@ -147,47 +211,6 @@
     }
   }
 
-  &_tracker{
-    &__wrapper{
-      margin-top: 150px;
-      padding: 22px 30px;
-      background-color: #F9F4EB;
-      border: 1px solid rgba(250, 187, 30, 0.24);
-      box-shadow: 0 1px 4px 0 rgba(250, 187, 30, 0.18);
-      border-radius: $border-radius-lg;
-      .common-title{
-        font-size: 27px;
-        line-height: 29px;
-        margin-bottom: 8px;
-        font-family: $font-family-primary;
-      }
-    }
-    &__form{
-      display: flex;
-      height: 60px;
-      .form-field_wrapper{
-        width: 100%;
-        margin-bottom: 0;
-        .form-field{
-          &_inner-wrapper, &_content-wrapper, &_field-wrapper {
-            height: 100%;
-          }
-          &_field{
-            background-color: $color-white;
-          }
-        }
-      }
-      .common-btn{
-        flex: 0 0 auto;
-        min-width: 160px;
-        height: 100%;
-        font-size: 27px;
-        line-height: 29px;
-        margin-left: 20px;
-      }
-    }
-  }
-
   &_order{
     &__wrapper{
       width: 40%;
@@ -229,8 +252,8 @@
           &._h4{
             display: flex;
             align-items: center;
-            font-size: $font-size-xl;
-            line-height: $line-height-xl;
+            font-size: $font-size-xlllll;
+            line-height: $line-height-lg;
             font-weight: 500;
             margin-bottom: 20px;
             .common-copy-text{

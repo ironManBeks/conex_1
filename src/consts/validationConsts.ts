@@ -25,14 +25,19 @@ export const yupPasswordRequired = (
 };
 
 export const yupNameRequired = (
+    surName?: boolean,
     requiredText?: string,
 ): yup.StringSchema<string, yup.AnyObject> => {
-    const minText = "Name cannot contain less than 3 symbols";
-    const maxText = "Name cannot contain more than 30 symbols";
+    const minText = `${
+        surName ? "Surname" : "Name"
+    } cannot contain less than 2 symbols`;
+    const maxText = `${
+        surName ? "Surname" : "Name"
+    } cannot contain more than 30 symbols`;
     return yup
         .string()
         .required(requiredText || "This field is required")
-        .min(3, minText)
+        .min(2, minText)
         .max(30, maxText)
         .trim();
 };

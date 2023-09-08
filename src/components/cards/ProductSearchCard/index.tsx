@@ -64,7 +64,6 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
                             color={EButtonColor.secondary}
                             size={EButtonSize.sm}
                             onClick={() => notImplemented()}
-                            isOutline={true}
                         >
                             Buy Now
                         </ButtonPrimary>
