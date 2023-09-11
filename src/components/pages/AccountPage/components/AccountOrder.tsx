@@ -8,6 +8,7 @@ import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { TAccountOrderItem } from "@components/pages/AccountPage/types";
 import AccountOrderItem from "./AccountOrderItem";
 import { Empty } from "antd";
+import AccountSectionWrapper from "./AccountSectionWrapper";
 
 enum ESegmentedOptionsNames {
     transit = "transit",
@@ -128,34 +129,41 @@ const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     return (
         <div className={`${classPrefix}__wrapper`}>
             <H2>Your Orders</H2>
-            <Segmented
-                options={orderSegmentedOptions}
-                className={`${classPrefix}__segmented`}
-                onChange={(value) => {
-                    setSelectedSegment(value as ESegmentedOptionsNames);
-                }}
-            />
-            <div className={`${classPrefix}__list`}>
-                {accountOrderList().length ? (
-                    accountOrderList().map((item) => (
-                        <AccountOrderItem
-                            key={item.id}
-                            classPrefix={classPrefix}
-                            id={item.id}
-                            orderNumber={item.orderNumber}
-                            orderPlaced={item.orderPlaced}
-                            orderProcessed={item.orderProcessed}
-                            manufacturing={item.manufacturing}
-                            shipped={item.shipped}
-                            deliveryWillCompleted={item.deliveryWillCompleted}
-                            address={item.address}
-                            status={item.status}
-                        />
-                    ))
-                ) : (
-                    <Empty />
-                )}
-            </div>
+            <AccountSectionWrapper
+                pageClassPrefix={pageClassPrefix}
+                className={`${classPrefix}__section-wrapper`}
+            >
+                <Segmented
+                    options={orderSegmentedOptions}
+                    className={`${classPrefix}__segmented`}
+                    onChange={(value) => {
+                        setSelectedSegment(value as ESegmentedOptionsNames);
+                    }}
+                />
+                <div className={`${classPrefix}__list`}>
+                    {accountOrderList().length ? (
+                        accountOrderList().map((item) => (
+                            <AccountOrderItem
+                                key={item.id}
+                                classPrefix={classPrefix}
+                                id={item.id}
+                                orderNumber={item.orderNumber}
+                                orderPlaced={item.orderPlaced}
+                                orderProcessed={item.orderProcessed}
+                                manufacturing={item.manufacturing}
+                                shipped={item.shipped}
+                                deliveryWillCompleted={
+                                    item.deliveryWillCompleted
+                                }
+                                address={item.address}
+                                status={item.status}
+                            />
+                        ))
+                    ) : (
+                        <Empty />
+                    )}
+                </div>
+            </AccountSectionWrapper>
         </div>
     );
 };

@@ -1,9 +1,14 @@
 import { TAccountData } from "@store/auth/types";
 
 export const AuthDataMockup: TAccountData = {
-    name: "John Wick",
+    name: "John",
+    surname: "Wick",
     email: "john.wick1@gmail.com",
     phone: "18881234567",
+    country: "string",
+    city: "string",
+    address: "string",
+    index: "string",
     cards: [
         {
             id: "id1",

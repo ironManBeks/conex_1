@@ -1,6 +1,5 @@
 import { FC, useEffect, useMemo } from "react";
 import { inject, observer } from "mobx-react";
-import { Empty } from "antd";
 import { isEmpty } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
@@ -20,7 +19,6 @@ import { getStorage } from "@services/storage.service";
 import { TNullable } from "@globalTypes/commonTypes";
 import { TResultDoorData } from "@store/builder/types";
 import BuilderError from "@components/pages/BuilderPage/components/BuilderError";
-import { toJS } from "mobx";
 import BuilderNoData from "@components/pages/BuilderPage/components/BuilderNoData";
 
 const BuilderPage: FC<TStore> = inject("store")(
@@ -36,7 +34,6 @@ const BuilderPage: FC<TStore> = inject("store")(
             resetAllBuilderData,
             updateCurrentStepData,
             setDefaultValuesToBuilder,
-            getBuilderParamsData,
             builderSettings,
         } = builderStore;
 

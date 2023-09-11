@@ -15,6 +15,9 @@ import IconCreditCard from "./common/IconCreditCard";
 import IconBurger from "./common/IconBurger";
 import IconEyeOpen from "./common/IconEyeOpen";
 import IconEyeClose from "./common/IconEyeClose";
+import IconList from "./common/IconList";
+import IconCard from "./common/IconCard";
+import IconLogout from "./common/IconLogout";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
@@ -46,4 +49,7 @@ export {
     IconBurger,
     IconEyeOpen,
     IconEyeClose,
+    IconList,
+    IconCard,
+    IconLogout,
 };

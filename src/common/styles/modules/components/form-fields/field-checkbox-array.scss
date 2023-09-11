@@ -21,11 +21,14 @@
       &._checked{
         span{
           &:not(.ant-checkbox){
-            background-color: $color-primary;
-            border-color: $color-primary;
+            background-color: $color-accent-strong;
+            border-color: $color-accent-strong;
             svg{
               transform: translate(-50%, -50%) scale(1);
               opacity: 1;
+              path {
+                fill: $icon-color-primary;
+              }
             }
           }
         }
@@ -33,10 +36,14 @@
       &._disabled{
         span{
           &:not(.ant-checkbox){
-            background-color: $color-disabled-bg;
+            background-color: $color-secondary-40;
             border-color: $color-disabled-border;
+            svg{
+              display: none;
+            }
             &:hover{
-              border-color: $color-disabled-bg;
+              background-color: $color-secondary-40;
+              border-color: $color-disabled-border;
             }
           }
         }

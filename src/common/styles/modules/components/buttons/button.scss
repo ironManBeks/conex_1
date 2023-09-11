@@ -2,254 +2,163 @@
   display: inline-flex;
   justify-content: center;
   align-items: center;
-  font-family: $font-family-primary;
+  box-sizing: border-box;
   font-size: $font-size-lg;
+  line-height: $line-height-lg;
+  color: $text-color-primary;
+  font-family: $font-family-primary;
+  font-weight: 500;
   text-decoration: none;
   text-align: center;
-  border-radius: $border-radius-bs;
-  box-sizing: border-box;
-  font-weight: 400;
-  border: 1px solid;
-  transition: 0.2s;
+  border-radius: borderRadius(2);
+  box-shadow: none;
+  border: 0;
   cursor: pointer;
-
-  &:hover{
-    box-shadow: $box-shadow-bs-hover;
+  transition: 0.2s;
+  svg{
+    transition: 0.2s;
+    path{
+      transition: 0.2s;
+    }
   }
 
   &.__small{
-    padding: 6px 18px;
-    font-size: $font-size-bs;
-    line-height: $line-height-bs;
-    min-width: 150px;
+    padding: space(2) space(4);
+    font-size: $font-size-sm;
   }
 
   &.__medium{
-    padding: 14px 36px;
-    font-size: $font-size-lg;
-    line-height: $line-height-lg;
-    min-width: 186px;
+    padding: space(3) space(7);
+    font-size: $font-size-bs;
   }
 
   &.__large{
-    padding: 14px 44px;
-    font-size: $font-size-xl;
-    line-height: $line-height-xl;
-    min-width: 210px;
+    padding: space(4) space(10);
+    font-size: $font-size-md;
+  }
+
+  &.__disabled{
+    color: $text-color-disabled;
+    background: $color-secondary-40;
+    svg path {
+      fill: $icon-color-disabled !important;
+    }
+    &:hover{
+      background-color: $color-secondary-40;
+    }
   }
 
   &.__default{
-    color: $color-grey-800;
-    background-color: $color-grey-30;
-    border-color: $color-primary;
+    background-color: $color-accent-400;
     &:hover{
-      background-color: $color-grey-50;
+      background-color: $color-accent-200;
     }
     &:active{
-      background-color: $color-grey-50;
-    }
-    &.__shadow{
-      box-shadow: $box-shadow-bs;
-      &:hover {
-        box-shadow: $box-shadow-bs-hover;
-      }
-    }
-    &.__disabled{
-      &:hover{
-        color: $color-grey-400;
-        background-color: $color-white !important;
-      }
+      background-color: $color-accent-80;
     }
   }
 
   &.__transparent{
-    color: $color-grey-500;
     background-color: transparent;
-    border-color: transparent;
-  }
-
-  &.__primary{
-    color: $color-text-default;
-    background-color: $color-primary;
-    border-color: $color-primary;
-    &:hover{
-      background-color: $color-primary-hover;
-      border-color: $color-primary-hover;
+    &:hover {
+      color: $color-accent-strong;
+      svg path {
+        fill: $color-accent-strong
+      }
     }
     &:active{
-      background-color: $color-primary;
-      border-color: $color-primary;
-    }
-    svg path {
-      fill: $color-white;
-    }
-    &.__shadow{
-      box-shadow: $box-shadow-bs;
-      &:hover {
-        box-shadow: $box-shadow-bs-hover;
-      }
-    }
-    &.__outline{
-      color: $color-grey-500;
-      background-color: $color-white;
-      &:hover{
-        color: $color-white;
-        background-color: $color-primary-hover;
-        border-color: $color-primary-hover;
-        svg path {
-          fill: $color-white;
-        }
-      }
-      &:active{
-        color: $color-white;
-        background-color: $color-primary;
-        border-color: $color-primary;
-        svg path {
-          fill: $color-white;
-        }
-      }
+      color: $color-accent-800;
       svg path {
-        fill: $color-primary;
+        fill: $color-accent-800
       }
     }
     &.__disabled{
+      background: transparent;
       &:hover{
-        background-color: $color-primary !important;
+        color: $text-color-disabled;
       }
-      &.__outline{
-        &:hover,
-        &:active{
-          color: $color-grey-500;
-          background-color: $color-white !important;
+      &:active{
+        color: $text-color-disabled;
+        svg path {
+          fill: $icon-color-disabled
         }
       }
+    }
+    svg path {
+      fill: $icon-color-primary;
+    }
+  }
+
+  &.__primary{
+    background-color: $color-accent-strong;
+    &:hover{
+      background-color: $color-accent-400;
+    }
+    &:active{
+      background-color: $color-accent-600;
+    }
+    svg path {
+      fill: $icon-color-primary;
+    }
+    &.__disabled{
+      background: $color-secondary-40;
     }
   }
 
   &.__secondary{
-    color: $color-white;
-    background-color: $color-secondary;
-    border-color: $color-secondary;
+    background-color: $color-secondary-40;
     &:hover{
-      background-color: $color-secondary-hover;
-      border-color: $color-secondary-hover;
+      background-color: $color-accent-strong;
     }
     &:active{
-      background-color: $color-secondary;
-      border-color: $color-secondary;
+      background-color: $color-accent-800;
     }
     svg path {
-      fill: $color-white;
-    }
-    &.__shadow{
-      box-shadow: $box-shadow-bs;
-      &:hover {
-        box-shadow: $box-shadow-bs-hover;
-      }
-    }
-    &.__outline{
-      color: $color-orange-600;
-      background-color: $color-white;
-      border-color: #FFD700;
-      &:hover, &:active{
-        background-color: $color-yellow-100;
-        border-color: $color-secondary-hover;
-        svg path {
-          fill: $color-white;
-        }
-      }
-      svg path {
-        fill: $color-secondary;
-      }
+      fill: $icon-color-primary;
     }
     &.__disabled{
-      &:hover{
-        background-color: $color-secondary !important;
-      }
-      &.__outline{
-        &:hover,
-        &:active{
-          color: $color-grey-500;
-          background-color: $color-white !important;
-        }
-      }
-    }
-  }
-
-  &.__orange{
-    color: $color-white;
-    background-color: $color-orange-500;
-    border-color: $color-orange-500;
-    &:hover, &:active{
-      background-color: $color-orange-400;
-      border-color: $color-orange-400;
+      background: $color-secondary-40;
     }
   }
 
   &.__danger{
     color: $color-white;
-    background-color: $color-danger;
-    border-color: $color-danger;
+    background-color: $color-critical-800;
     &:hover{
-      background-color: $color-danger-hover;
-      border-color: $color-danger-hover;
+      background-color: $color-critical-600;
     }
     &:active{
-      background-color: $color-danger;
-      border-color: $color-danger;
+      background-color: $color-critical-400;
     }
     svg path {
       fill: $color-white;
     }
-    &.__shadow{
-      box-shadow: $box-shadow-bs;
-      &:hover {
-        box-shadow: $box-shadow-bs-hover;
-      }
-    }
-    &.__outline{
-      color: $color-grey-800;
-      background-color: $color-white;
-      &:hover{
-        color: $color-white;
-        background-color: $color-danger;
-        border-color: $color-danger;
-        svg path {
-          fill: $color-white;
-        }
-      }
-      &:active{
-        color: $color-white;
-        background-color: $color-danger;
-        border-color: $color-danger;
-        svg path {
-          fill: $color-white;
-        }
-        &:hover{
-          background-color: $color-danger-hover;
-          border-color: $color-danger-hover;
-          svg path {
-            fill: $color-white;
-          }
-        }
-      }
-      svg path {
-        fill: $color-danger;
-      }
-    }
     &.__disabled{
       &:hover{
-        background-color: $color-danger !important;
-      }
-      &.__outline{
-        &:hover,
-        &:active{
-          color: $color-grey-500;
-          background-color: $color-white !important;
-        }
+        background-color: $color-critical-800;
       }
     }
   }
+
+  &.__success{
+    color: $color-white;
+    background-color: $color-success-800;
+    &:hover{
+      background-color: $color-success-600;
+    }
+    &:active{
+      background-color: $color-success-400;
+    }
+    svg path {
+      fill: $color-white;
+    }
+    &.__disabled{
+      &:hover{
+        background-color: $color-success-800;
+      }
+    }
+  }
+
 
   &.__disabled{
     cursor: not-allowed !important;
@@ -258,22 +167,20 @@
     &:active{
       pointer-events: none !important;
     }
-    &.__shadow{
-      box-shadow: none !important;
-      &:hover {
-        box-shadow: none !important;
-      }
-    }
   }
 
   &.__notText{
-    svg{
-      margin: 0 !important;
+    &.__small{
+      padding: space(2);
     }
-    .btn-custom_icon{
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
+    &.__medium{
+      padding: space(3);
+    }
+    &.__large{
+      padding: space(4);
+    }
+    .common-btn_icon{
+      margin: 0 !important;
     }
   }
 
@@ -281,10 +188,10 @@
     display: inline-flex;
     align-items: center;
     &._left{
-      margin-right: 6px;
+      margin-right: space(2);
     }
     &._right{
-      margin-left: 6px;
+      margin-left: space(2);
     }
   }
 

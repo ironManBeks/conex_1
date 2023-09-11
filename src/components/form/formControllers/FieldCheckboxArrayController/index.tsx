@@ -93,11 +93,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                             value={item.value}
                                             disabled={disabled || item.disabled}
                                         >
-                                            <IconCheck
-                                                color={COLOR_WHITE}
-                                                width={16}
-                                                height={16}
-                                            />
+                                            <IconCheck width={16} height={16} />
                                         </AntCheckbox>
                                         <div
                                             className={cn(

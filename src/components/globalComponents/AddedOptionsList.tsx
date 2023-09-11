@@ -21,6 +21,7 @@ const AddedOptionsList: FC<TAddedOptionsList> = ({
                         key={index}
                         className={cn(`${classPrefix}_item__wrapper`, {
                             _clickable: isFunction(item.onClick),
+                            _active: item.isActive,
                         })}
                         onClick={() => {
                             if (isFunction(item.onClick)) {

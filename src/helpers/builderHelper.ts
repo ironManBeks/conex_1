@@ -7,7 +7,7 @@ import {
     TUpdateCurrentStepWay,
 } from "@store/builder/types";
 import { FieldValues } from "react-hook-form";
-import { isArray, isEmpty, isFunction, uniq } from "lodash";
+import { isArray, isEmpty, isFunction, isNil, uniq } from "lodash";
 import {
     BUILDER_FIELD_ID_DIVIDER,
     BUILDER_FIELD_ID_PREFIX,
@@ -280,9 +280,12 @@ export const groupedFieldsByStepId = (
 export const renderResultDataToOptionsList = (
     resultDoorData: TResultDoorData[] | null,
     updateCurrentStepData?: (
-        value: TUpdateCurrentStepWay,
-        changeQueue?: boolean,
+        way: TUpdateCurrentStepWay,
+        changeQueue?: true,
+        changeHistory?: true,
     ) => void,
+    stepHistory?: number[],
+    currentStepData?: TNullable<TBuilderStepDataDTO>,
 ): TAddedOptionsListItem[] => {
     const result: TAddedOptionsListItem[] = [];
     if (!resultDoorData?.length) return result;
@@ -306,11 +309,19 @@ export const renderResultDataToOptionsList = (
         return {
             title: stepItem.stepTitle,
             onClick: () => {
-                if (isFunction(updateCurrentStepData)) {
-                    updateCurrentStepData(stepItem.stepId);
+                if (isFunction(updateCurrentStepData) && stepHistory?.length) {
+                    const mainStep = stepHistory[0];
+                    updateCurrentStepData(
+                        stepItem.stepId === mainStep
+                            ? "main-step"
+                            : stepItem.stepId,
+                        false,
+                        false,
+                    );
                 }
             },
             list: list,
+            isActive: currentStepData?.id === stepItem.stepId,
         };
     });
 };
@@ -449,4 +460,26 @@ export const getDefaultValuesFromResultDoorData = (
     }
 
     return convertedResult;
+};
+
+export const getUpdatedResultDoorData = (
+    formData: FieldValues,
+    currentStepData: TNullable<TBuilderStepDataDTO>,
+    resultDoorData: TNullable<TResultDoorData[]>,
+): TResultDoorData[] => {
+    const newResult = convertFormValuesToResultData(formData, currentStepData);
+    const oldResultIndex = resultDoorData?.findIndex(
+        (item) => item.stepId === currentStepData?.id,
+    );
+    const arr: TResultDoorData[] = resultDoorData?.length
+        ? [...resultDoorData]
+        : [];
+    if (newResult) {
+        if (!isNil(oldResultIndex) && oldResultIndex !== -1) {
+            arr.splice(oldResultIndex, 1, newResult);
+        } else {
+            arr.push(newResult);
+        }
+    }
+    return arr;
 };

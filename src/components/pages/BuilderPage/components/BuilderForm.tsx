@@ -1,20 +1,35 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
 import BuilderProgress from "./BuilderProgress";
 import BuilderStepLayout from "./BuilderStepLayout";
 import BuilderRightSide from "./BuilderRightSide";
-import BuilderFormActions from "./BuilderStepActions";
+import BuilderActions from "./BuilderActions";
 
 import { TBuilderCompProps } from "../types";
 import { IRoot } from "@store/store";
 import { builderFormResolver } from "../utils";
+import { isNil } from "lodash";
+import { setStorage } from "@services/storage.service";
+import {
+    BUILDER_CURRENT_STEP_ID,
+    BUILDER_HISTORY,
+    BUILDER_QUEUE,
+} from "@consts/storageNamesContsts";
+import { toJS } from "mobx";
 
 const BuilderForm: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { currentStepId, currentStepData } = builderStore;
+        const {
+            currentStepId,
+            currentStepData,
+            stepQueue,
+            stepHistory,
+            resultDoorData,
+            builderSettings,
+        } = builderStore;
 
         const methods = useForm({
             resolver: builderFormResolver(
@@ -23,6 +38,31 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             ),
             defaultValues: undefined,
         });
+
+        useEffect(() => {
+            if (!isNil(stepQueue)) {
+                setStorage(BUILDER_QUEUE, stepQueue);
+            }
+        }, [stepQueue]);
+
+        useEffect(() => {
+            if (!isNil(stepHistory)) {
+                setStorage(BUILDER_HISTORY, stepHistory);
+            }
+        }, [stepHistory]);
+
+        useEffect(() => {
+            console.log("resultDoorData", toJS(resultDoorData));
+        }, [resultDoorData?.length, resultDoorData]);
+
+        useEffect(() => {
+            if (
+                !isNil(currentStepId) &&
+                builderSettings?.data.quizStartId !== currentStepId
+            ) {
+                setStorage(BUILDER_CURRENT_STEP_ID, currentStepId);
+            }
+        }, [currentStepId]);
 
         return (
             <FormProvider {...methods}>
@@ -38,7 +78,7 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
                         </div>
                         <BuilderRightSide pageClassPrefix={pageClassPrefix} />
                     </div>
-                    <BuilderFormActions pageClassPrefix={pageClassPrefix} />
+                    <BuilderActions pageClassPrefix={pageClassPrefix} />
                 </form>
             </FormProvider>
         );

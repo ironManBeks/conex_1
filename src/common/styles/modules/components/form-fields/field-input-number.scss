@@ -52,5 +52,32 @@
         }
       }
     }
+    &_label{
+      position: absolute;
+      left: 0;
+      top: 50%;
+      width: auto;
+      margin: 0;
+      background: transparent;
+      transform: translate(space(4), -50%);
+      transform-origin: 0 0;
+      transition-property: transform;
+      transition: $transition;
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-secondary;
+      font-weight: 500;
+      cursor: text;
+      z-index: 3;
+      &._activeLabel {
+        transform: translate(space(4), space(-4.5));
+        font-size: $font-size-xs;
+        line-height: $line-height-bs;
+      }
+      &._disabled{
+        cursor: not-allowed;
+        color: $text-color-disabled;
+      }
+    }
   }
 }

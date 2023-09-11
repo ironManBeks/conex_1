@@ -11,6 +11,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
     errorMessage,
     label,
     wrapperClassName,
+    isFloatingLabel = false,
     showError = true,
 }) => {
     return (
@@ -20,10 +21,11 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                 fieldType && `_${fieldType}`,
                 wrapperClassName,
                 { _error: errorMessage },
+                { _floatingLabel: isFloatingLabel && label },
             )}
         >
             <div className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_inner-wrapper`)}>
-                {label && (
+                {label && !isFloatingLabel && (
                     <div
                         className={cn(
                             `${FORM_FIELD_CLASSNAME_PREFIX}_label-wrapper`,

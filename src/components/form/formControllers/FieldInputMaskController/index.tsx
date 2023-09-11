@@ -24,13 +24,12 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
         addonAfter,
         onAddonClick,
         minAddonWidth,
-        floatingLabel,
         style,
         showError = true,
         saveOnlyNumber = true,
         readOnly: propsReadOnly = false,
-        editIcon,
-        onEditIconClick,
+        isFloatingLabel = true,
+        placeholder,
         ...rest
     } = props;
     const addonAfterRef = useRef<HTMLDivElement>(null);
@@ -42,12 +41,19 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const errorMessage = errors[name]?.message;
     const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<MaskedInput>(null);
+    const [isLabelActive, setIsLabelActive] = useState(false);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
             setAddonAfterWidth(addonAfterRef.current.clientHeight);
         }
     }, [addonAfterRef?.current?.clientHeight]);
+
+    const focusOnField = () => {
+        if (fieldRef.current) {
+            fieldRef?.current?.inputElement.focus();
+        }
+    };
 
     return (
         <Controller
@@ -60,11 +66,23 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                         errorMessage={errorMessage}
                         showError={showError}
                         label={label}
+                        isFloatingLabel={isFloatingLabel}
                         wrapperClassName={cn(wrapperClassName, {
                             _addonAfter: addonAfter,
-                            _floating: floatingLabel,
                         })}
                     >
+                        {isFloatingLabel && label && (
+                            <label
+                                className={cn(
+                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
+                                    { _activeLabel: isLabelActive },
+                                    { _disabled: disabled },
+                                )}
+                                onClick={focusOnField}
+                            >
+                                {label}
+                            </label>
+                        )}
                         <MaskedInput
                             {...field}
                             {...rest}
@@ -78,7 +96,16 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                                     ? e.target.value.replace(/[^0-9]/g, "")
                                     : e.target.value;
                                 field.onChange(val);
+                                if (val) setIsLabelActive(true);
                                 if (onChangeValue) onChangeValue(val);
+                            }}
+                            onFocus={() => {
+                                setIsLabelActive(true);
+                            }}
+                            onBlur={(e) => {
+                                if (!e.target.value) {
+                                    setIsLabelActive(false);
+                                }
                             }}
                             disabled={disabled}
                             style={{
@@ -87,6 +114,11 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                                     ? `${addonAfterWidth + 10}px`
                                     : undefined,
                             }}
+                            placeholder={
+                                isFloatingLabel && label
+                                    ? undefined
+                                    : placeholder
+                            }
                             readOnly={propsReadOnly}
                         />
                         {addonAfter && (
@@ -103,21 +135,6 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                             >
                                 {addonAfter}
                             </div>
-                        )}
-                        {editIcon && (
-                            <ButtonPrimary
-                                onClick={() => {
-                                    if (isFunction(onEditIconClick)) {
-                                        onEditIconClick();
-                                    }
-                                }}
-                                color={EButtonColor.transparent}
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_edit`,
-                                )}
-                            >
-                                <IconEdit color="#757474" />
-                            </ButtonPrimary>
                         )}
                     </FormItemWrapper>
                 );

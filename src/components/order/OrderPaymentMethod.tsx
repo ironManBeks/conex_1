@@ -64,7 +64,7 @@ const OrderPaymentMethod: FC<TOrderPaymentMethod> = ({
                     </ButtonPrimary>
                 </div>
                 <ButtonPrimary
-                    icon={<IconBankDollar color="#868582" />}
+                    leftIcon={<IconBankDollar color="#868582" />}
                     onClick={() =>
                         changeMethodHandle(EPaymentMethodsNames.bankTransfer)
                     }
@@ -81,7 +81,7 @@ const OrderPaymentMethod: FC<TOrderPaymentMethod> = ({
                             changeMethodHandle(EPaymentMethodsNames.card);
                         }}
                         className={cn(isActiveBtn(EPaymentMethodsNames.card))}
-                        icon={<IconCreditCard color="#868582" />}
+                        leftIcon={<IconCreditCard color="#868582" />}
                         size={EButtonSize.sm}
                     >
                         Credit/Debit Card

@@ -111,7 +111,6 @@ const ModalCustomQuote: FC<TStore> = inject("store")(
                                     <ButtonPrimary
                                         type="submit"
                                         color={EButtonColor.primary}
-                                        withShadow={false}
                                     >
                                         Send request
                                     </ButtonPrimary>

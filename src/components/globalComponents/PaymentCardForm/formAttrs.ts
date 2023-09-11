@@ -3,14 +3,14 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 
 export enum EPaymentCardFromFieldsNames {
-    nameOnCard = "nameOnCard",
+    // nameOnCard = "nameOnCard",
     cardNumber = "cardNumber",
     cvv = "cvv",
     expDate = "expDate",
 }
 
 export type TPaymentCardFrom = {
-    [EPaymentCardFromFieldsNames.nameOnCard]: string;
+    // [EPaymentCardFromFieldsNames.nameOnCard]: string;
     [EPaymentCardFromFieldsNames.cardNumber]: string;
     [EPaymentCardFromFieldsNames.cvv]: string;
     [EPaymentCardFromFieldsNames.expDate]: string;
@@ -20,7 +20,7 @@ export const paymentCardFromDefaultValues: Record<
     EPaymentCardFromFieldsNames,
     string | number | null
 > = {
-    [EPaymentCardFromFieldsNames.nameOnCard]: "",
+    // [EPaymentCardFromFieldsNames.nameOnCard]: "",
     [EPaymentCardFromFieldsNames.cardNumber]: "",
     [EPaymentCardFromFieldsNames.cvv]: "",
     [EPaymentCardFromFieldsNames.expDate]: "",
@@ -37,9 +37,9 @@ export const paymentCardFromResolver = (): Resolver<TPaymentCardFrom> => {
 
     return yupResolver(
         yup.object().shape({
-            [EPaymentCardFromFieldsNames.nameOnCard]: yup
-                .string()
-                .required(requiredText("Name on the card")),
+            // [EPaymentCardFromFieldsNames.nameOnCard]: yup
+            //     .string()
+            //     .required(requiredText("Name on the card")),
             [EPaymentCardFromFieldsNames.cardNumber]: yup
                 .string()
                 .required(requiredText("Card number"))

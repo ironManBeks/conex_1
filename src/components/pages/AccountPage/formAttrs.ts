@@ -7,72 +7,65 @@ import {
     yupNameRequired,
     yupPhoneRequired,
 } from "@consts/validationConsts";
-import { isEmpty } from "lodash";
 
-export enum EAccountInfoFieldsNames {
+export enum EAccountMyFormFieldsNames {
     name = "name",
+    surname = "surname",
     email = "email",
     phone = "phone",
+    country = "country",
+    city = "city",
+    address = "address",
+    index = "index",
 }
 
-export enum EAccountTrackerFieldsNames {
-    tracker = "tracker",
-}
-
-export type TAccountInfoForm = {
-    [EAccountInfoFieldsNames.name]?: string;
-    [EAccountInfoFieldsNames.email]?: string;
-    [EAccountInfoFieldsNames.phone]?: string;
+export type TAccountMyForm = {
+    [EAccountMyFormFieldsNames.name]: string;
+    [EAccountMyFormFieldsNames.surname]: string;
+    [EAccountMyFormFieldsNames.email]: string;
+    [EAccountMyFormFieldsNames.phone]: string;
+    [EAccountMyFormFieldsNames.country]: string;
+    [EAccountMyFormFieldsNames.city]: string;
+    [EAccountMyFormFieldsNames.address]: string;
+    [EAccountMyFormFieldsNames.index]: string;
 };
 
-export type TAccountTrackerForm = {
-    [EAccountTrackerFieldsNames.tracker]: string;
-};
-
-export const accountInfoDefaultValues = (
-    data?: TAccountInfoForm,
-): TAccountInfoForm => {
+export const accountMyFormDefaultValues = (
+    data?: TAccountData,
+): TAccountMyForm => {
     return {
-        [EAccountInfoFieldsNames.name]: data?.name ?? "",
-        [EAccountInfoFieldsNames.email]: data?.email ?? "",
-        [EAccountInfoFieldsNames.phone]: data?.phone ?? "",
+        [EAccountMyFormFieldsNames.name]: data?.name ?? "",
+        [EAccountMyFormFieldsNames.surname]: data?.surname ?? "",
+        [EAccountMyFormFieldsNames.email]: data?.email ?? "",
+        [EAccountMyFormFieldsNames.phone]: data?.phone ?? "",
+        [EAccountMyFormFieldsNames.country]: data?.country ?? "",
+        [EAccountMyFormFieldsNames.city]: data?.city ?? "",
+        [EAccountMyFormFieldsNames.address]: data?.address ?? "",
+        [EAccountMyFormFieldsNames.index]: data?.index ?? "",
     };
 };
 
-export const accountTrackerDefaultValues: TAccountTrackerForm = {
-    [EAccountTrackerFieldsNames.tracker]: "",
-};
+export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
+    const requiredText = "This field is required";
 
-export const accountInfoFormResolver = (
-    editableField: EAccountInfoFieldsNames | undefined,
-): Resolver<TAccountInfoForm> | undefined => {
-    if (!editableField) return undefined;
-    let result: yup.ObjectSchema<
-        { [editableField: string]: string },
-        yup.AnyObject,
-        { [editableField: string]: undefined },
-        ""
-    > | null = null;
-
-    switch (editableField) {
-        case EAccountInfoFieldsNames.name:
-            result = yup.object().shape({
-                [EAccountInfoFieldsNames.name]: yupNameRequired(),
-            });
-            break;
-        case EAccountInfoFieldsNames.email:
-            result = yup.object().shape({
-                [EAccountInfoFieldsNames.email]: yupEmailRequired(),
-            });
-            break;
-        case EAccountInfoFieldsNames.phone:
-            result = yup
-                .object()
-                .shape({ [EAccountInfoFieldsNames.phone]: yupPhoneRequired() });
-            break;
-    }
-
-    if (isEmpty(result)) return undefined;
-
-    return yupResolver(result);
+    return yupResolver(
+        yup.object().shape({
+            [EAccountMyFormFieldsNames.name]: yupNameRequired(),
+            [EAccountMyFormFieldsNames.surname]: yupNameRequired(true),
+            [EAccountMyFormFieldsNames.email]: yupEmailRequired(),
+            [EAccountMyFormFieldsNames.phone]: yupPhoneRequired(),
+            [EAccountMyFormFieldsNames.country]: yup
+                .string()
+                .required(requiredText),
+            [EAccountMyFormFieldsNames.city]: yup
+                .string()
+                .required(requiredText),
+            [EAccountMyFormFieldsNames.address]: yup
+                .string()
+                .required(requiredText),
+            [EAccountMyFormFieldsNames.index]: yup
+                .string()
+                .required(requiredText),
+        }),
+    );
 };

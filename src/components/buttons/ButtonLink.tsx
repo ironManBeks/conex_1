@@ -13,12 +13,10 @@ const ButtonLink: React.FC<TButtonLink> = ({
     className,
     color = EButtonColor.default,
     size = EButtonSize.md,
-    withShadow = true,
-    isOutline = false,
-    icon,
-    iconPosition = "left",
     disabled = false,
     href,
+    leftIcon,
+    rightIcon,
     target,
     tooltipText,
     tooltipClassName,
@@ -34,11 +32,9 @@ const ButtonLink: React.FC<TButtonLink> = ({
                 `__${color}`,
                 `__${size}`,
                 {
-                    __shadow: withShadow,
                     __disabled: disabled,
-                    __outline: isOutline,
                     __notText: !children || children === "",
-                    __icon: icon,
+                    __icon: leftIcon || rightIcon,
                 },
             )}
             target={target || "_self"}
@@ -47,25 +43,25 @@ const ButtonLink: React.FC<TButtonLink> = ({
             href={isLinkSimple ? href : undefined}
         >
             <>
-                {icon && iconPosition === "left" && (
+                {leftIcon && (
                     <span
                         className={cn(
                             `${commonButtonClassPrefix}_icon`,
                             "_left",
                         )}
                     >
-                        {icon}
+                        {leftIcon}
                     </span>
                 )}
                 {children}
-                {icon && iconPosition === "right" && (
+                {rightIcon && (
                     <span
                         className={cn(
                             `${commonButtonClassPrefix}_icon`,
                             "_right",
                         )}
                     >
-                        {icon}
+                        {rightIcon}
                     </span>
                 )}
             </>

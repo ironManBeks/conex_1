@@ -1,8 +1,4 @@
 .form-field_wrapper._checkbox, .form-field_wrapper._checkboxarray{
-  --x-p: 10px;
-  --y-p: 10px;
-  --bg-color: transparent;
-
   .form-field{
     &_field-wrapper{
       display: flex;
@@ -18,12 +14,18 @@
       span{
         &:not(.ant-checkbox){
           position: relative;
-          width: 32px;
-          height: 32px;
-          background-color: var(--bg-color);
-          border: 1px solid $color-grey-250;
-          border-radius: $border-radius-md;
+          width: 24px;
+          height: 24px;
+          background-color: $color-primary-strong;
+          border: 1px solid $border-color-primary;
+          border-radius: borderRadius(1);
           transition: .2s;
+          &:hover{
+            svg{
+              transform: translate(-50%, -50%) scale(1);
+              opacity: 1;
+            }
+          }
           svg{
             position: absolute;
             top: 50%;
@@ -31,9 +33,9 @@
             transform: translate(-50%, -50%) scale(0);
             opacity: 0;
             transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
-          }
-          &:hover{
-            border-color: $color-primary;
+            path{
+              fill: $icon-color-secondary;
+            }
           }
         }
       }
@@ -45,7 +47,7 @@
       font-size: $line-height-md;
       line-height: $line-height-md;
       color: $color-grey-800;
-      padding-left: var(--x-p);
+      padding-left: space(3);
     }
 
   }
@@ -55,10 +57,14 @@
       &_field{
         span{
           &:not(.ant-checkbox){
-            background-color: $color-disabled-bg;
+            background-color: $color-secondary-40;
             border-color: $color-disabled-border;
+            svg{
+              display: none;
+            }
             &:hover{
-              border-color: $color-disabled-bg;
+              background-color: $color-secondary-40;
+              border-color: $color-disabled-border;
             }
           }
         }
@@ -75,11 +81,21 @@
       &_field{
         span{
           &:not(.ant-checkbox){
-            background-color: $color-primary;
-            border-color: $color-primary;
+            background-color: $color-accent-strong;
+            border-color: $color-accent-strong;
             svg{
               transform: translate(-50%, -50%) scale(1);
               opacity: 1;
+              path {
+                fill: $icon-color-primary;
+              }
+            }
+            &:hover{
+              svg{
+                path{
+                  fill: $icon-color-primary;
+                }
+              }
             }
           }
         }

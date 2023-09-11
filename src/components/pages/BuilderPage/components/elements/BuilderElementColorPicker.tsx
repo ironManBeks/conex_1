@@ -84,7 +84,7 @@ const BuilderElementColorPicker: FC<
                                 </H4>
                             )}
                             {subTitle && <H5>{subTitle}</H5>}
-                            {price && (
+                            {!!price && (
                                 <P>
                                     {price}
                                     {priceCurrency}

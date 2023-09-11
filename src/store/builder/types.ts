@@ -60,6 +60,7 @@ export type TStepHistoryActions =
     | "add-to-end"
     | "add-to-start"
     | "remove"
+    | "replace"
     | "clear";
 
 export type TStepQueueActions =
@@ -149,6 +150,7 @@ export interface IBuilderStore {
     updateCurrentStepData: (
         value: TUpdateCurrentStepWay,
         changeQueue?: boolean,
+        changeHistory?: boolean,
     ) => void;
     setStepHistory: (
         stepId: TStepPath,
