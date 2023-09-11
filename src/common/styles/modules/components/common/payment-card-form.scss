@@ -1,5 +1,4 @@
 .payment-card-form {
-
   &_form{
     margin-top: 20px;
     padding: 20px 15px 5px;
@@ -16,23 +15,8 @@
       justify-content: space-between;
       margin-top: 25px;
       .form-field_wrapper{
-        &._input .form-field_field {
-          padding-top: 6px !important;
-          padding-bottom: 6px !important;
-          text-align: center;
-        }
-        &._cvv{
-          max-width: 70px;
-        }
-        &._exp{
-          max-width: 110px;
-        }
+        width: calc(50% - 2 * $spase);
       }
-    }
-
-    .form-field_wrapper._input .form-field_field{
-      padding-top: 14px;
-      padding-bottom: 14px;
     }
 
     .form-field_label-wrapper{
@@ -44,11 +28,11 @@
 
   &_errors{
     .common-text{
-      color: $color-red-200;
-      font-weight: 300;
-      font-size: $font-size-bs;
-      line-height: $line-height-bs;
-      margin-bottom: 5px;
+      font-size: $font-size-sm;
+      line-height: $line-height-md;
+      color: $color-critical-strong;
+      font-weight: 500;
+      margin-bottom: 0;
     }
   }
 

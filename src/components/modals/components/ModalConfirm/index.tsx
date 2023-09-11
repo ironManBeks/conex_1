@@ -7,7 +7,7 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { EModalSize } from "../../types";
 import { TModalConfirm } from "./types";
-import { EButtonSize } from "@components/buttons/types";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { isFunction } from "lodash";
 import { IRoot } from "@store/store";
 
@@ -36,13 +36,14 @@ const ModalConfirm: FC<TModalConfirm> = inject("store")(
                     wrapperClassName={classPrefix}
                     modalVisible={modalConfirmVisible}
                     handleCancel={handleCloseModal}
-                    modalSize={EModalSize.md}
+                    modalSize={EModalSize.sm}
                     bodyContent={<H3>{text}</H3>}
                     footerContent={
                         <>
                             <ButtonPrimary
                                 onClick={handleCloseModal}
                                 size={EButtonSize.sm}
+                                color={EButtonColor.secondary}
                             >
                                 Close
                             </ButtonPrimary>

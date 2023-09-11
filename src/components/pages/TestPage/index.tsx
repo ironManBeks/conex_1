@@ -62,12 +62,14 @@ const TestPage: FC = () => {
                                 name={EFieldNames.input}
                                 placeholder={EFieldNames.input}
                                 label={EFieldNames.input}
+                                isFloatingLabel={true}
                             />
                             <FieldInputController
                                 name={EFieldNames.input + "123"}
                                 placeholder={EFieldNames.input}
                                 label={EFieldNames.input}
                                 disabled={true}
+                                isFloatingLabel={true}
                             />
                             <br />
                             <br />

@@ -4,6 +4,7 @@ import { TFormItemError } from "@components/form/FormItemError/types";
 
 export type TFormItemLabel = {
     label?: ReactNode;
+    isFloatingLabel?: boolean;
 };
 
 export type TFormWrapperClassName = {

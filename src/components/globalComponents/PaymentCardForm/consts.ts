@@ -79,3 +79,12 @@ export const CARD_ICON: Record<EPaymentCardNames, string> = {
         "/images/paymentCardIcons/payment-diners-club-icon.svg",
     [EPaymentCardNames.jcb]: "/images/paymentCardIcons/payment-jcb-icon.svg",
 };
+
+export const CARD_NAME: Record<EPaymentCardNames, string> = {
+    [EPaymentCardNames.visa]: "Visa",
+    [EPaymentCardNames.mastercard]: "Mastercard",
+    [EPaymentCardNames.amex]: "AmEx",
+    [EPaymentCardNames.discover]: "Discover",
+    [EPaymentCardNames.dinersClub]: "Diners Club",
+    [EPaymentCardNames.jcb]: "JCB",
+};

@@ -79,50 +79,6 @@
       }
     }
 
-    &_payment{
-      &__item{
-        &._wrapper{
-          width: 100%;
-          color: rgba(250, 188, 30, 0.81);
-          margin-bottom: 10px;
-          .img-custom_wrapper{
-            position: relative;
-            top: unset;
-            right: unset;
-            transform: translate(0, 0);
-            margin-right: 10px;
-          }
-        }
-        &._inner-wrapper{
-          background: #F9F4EB;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          padding: 12px;
-          border: 1px solid rgba(250, 187, 30, 0.24);
-        }
-        &._delete.common-btn{
-          right: 10px;
-          top: 50%;
-          width: 24px;
-          height: 24px;
-          left: unset;
-          transform: translateY(-50%);
-        }
-      }
-      &__add{
-        &._wrapper{
-          width: 100%;
-          min-height: 36px;
-          background: rgba(255, 242, 209, 0.09);
-          box-shadow: none;
-        }
-        &._inner-wrapper{
-          padding: 12px;
-        }
-      }
-    }
-
     &_form{
       &__wrapper{
         & > div{

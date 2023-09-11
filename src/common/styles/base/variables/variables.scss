@@ -1,6 +1,7 @@
 @import "variables-media";
 
 $spase: 4px;
+$transition: .2s;
 
 $color-white: #FFFFFF;
 $color-black: #000000;
@@ -23,6 +24,7 @@ $color-secondary-600: rgba($color-secondary-strong, 0.6);
 $color-secondary-800: rgba($color-secondary-strong, 0.8);
 
 $color-accent-strong: rgba(255, 215, 0, 1);
+$color-accent-40: rgba($color-accent-strong, 0.04);
 $color-accent-80: rgba($color-accent-strong, 0.08);
 $color-accent-100: rgba($color-accent-strong, 0.1);
 $color-accent-200: rgba($color-accent-strong, 0.2);
@@ -50,11 +52,13 @@ $text-color-disabled: $color-secondary-200;
 // Icon-color
 $icon-color-primary: $color-secondary-strong;
 $icon-color-secondary: $color-secondary-400;
+$icon-color-secondary-active: $color-secondary-strong;
 $icon-color-disabled: $color-secondary-200;
 
 // Border-color
 $border-color-primary: $color-secondary-200;
 $border-color-secondary: $color-secondary-120;
+$border-color-critical: $color-critical-strong;
 
 
 // Fonts
@@ -91,6 +95,7 @@ $line-height-sm: 0.875rem;
 $line-height-bs: 1rem;
 $line-height-md: 1.25rem;
 $line-height-lg: 1.5rem;
+$line-height-lg-plus: 2rem;
 $line-height-xl: 2.5rem;
 $line-height-xxl: 3.5rem;
 

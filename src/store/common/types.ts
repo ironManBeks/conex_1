@@ -20,6 +20,8 @@ export interface ICommonStore {
     setModalAuthVisible: TSetElementVisible;
     modalCustomQuoteVisible: boolean;
     setModalCustomQuoteVisible: TSetElementVisible;
+    modalCardBindingVisible: boolean;
+    setModalCardBindingVisible: TSetElementVisible;
     headerDrawerVisible: boolean;
     setHeaderDrawerVisible: TSetElementVisible;
 }
