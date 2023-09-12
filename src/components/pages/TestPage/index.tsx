@@ -25,7 +25,7 @@ import {
 } from "./formAttrs";
 import { EDirection } from "@globalTypes/commonTypes";
 import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
-import { IconPoint } from "@components/Icons";
+import { IconMapPoint } from "@components/Icons";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
@@ -180,7 +180,7 @@ const TestPage: FC = () => {
                                         <ButtonPrimary
                                             size={EButtonSize.md}
                                             color={EButtonColor.primary}
-                                            leftIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             primary
@@ -189,7 +189,7 @@ const TestPage: FC = () => {
                                             size={EButtonSize.md}
                                             color={EButtonColor.primary}
                                             disabled={true}
-                                            leftIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             primary
@@ -198,7 +198,7 @@ const TestPage: FC = () => {
                                             size={EButtonSize.md}
                                             color={EButtonColor.primary}
                                             leftIcon={
-                                                <IconPoint
+                                                <IconMapPoint
                                                     width={24}
                                                     height={24}
                                                 />
@@ -211,8 +211,8 @@ const TestPage: FC = () => {
                                         <ButtonPrimary
                                             size={EButtonSize.md}
                                             color={EButtonColor.secondary}
-                                            leftIcon={<IconPoint />}
-                                            rightIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
+                                            rightIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             secondary
@@ -221,8 +221,8 @@ const TestPage: FC = () => {
                                             size={EButtonSize.md}
                                             color={EButtonColor.secondary}
                                             disabled={true}
-                                            leftIcon={<IconPoint />}
-                                            rightIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
+                                            rightIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             secondary
@@ -233,8 +233,8 @@ const TestPage: FC = () => {
                                         <ButtonPrimary
                                             size={EButtonSize.md}
                                             color={EButtonColor.transparent}
-                                            leftIcon={<IconPoint />}
-                                            rightIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
+                                            rightIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             transparent
@@ -257,7 +257,7 @@ const TestPage: FC = () => {
                                             color={EButtonColor.primary}
                                             type="submit"
                                             rightIcon={
-                                                <IconPoint
+                                                <IconMapPoint
                                                     width={24}
                                                     height={24}
                                                 />
@@ -277,7 +277,7 @@ const TestPage: FC = () => {
                                             size={EButtonSize.lg}
                                             color={EButtonColor.primary}
                                             rightIcon={
-                                                <IconPoint
+                                                <IconMapPoint
                                                     width={24}
                                                     height={24}
                                                 />
@@ -325,8 +325,8 @@ const TestPage: FC = () => {
                                     <div>
                                         <ButtonPrimary
                                             color={EButtonColor.success}
-                                            leftIcon={<IconPoint />}
-                                            rightIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
+                                            rightIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             success
@@ -343,8 +343,8 @@ const TestPage: FC = () => {
                                         {/*________________________________________________*/}
                                         <ButtonPrimary
                                             color={EButtonColor.danger}
-                                            leftIcon={<IconPoint />}
-                                            rightIcon={<IconPoint />}
+                                            leftIcon={<IconMapPoint />}
+                                            rightIcon={<IconMapPoint />}
                                             type="submit"
                                         >
                                             danger

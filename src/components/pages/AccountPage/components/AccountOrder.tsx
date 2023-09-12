@@ -5,7 +5,12 @@ import { H2 } from "@components/Text";
 import Segmented from "@components/globalComponents/Segmented";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { TAccountOrderItem } from "@components/pages/AccountPage/types";
+import {
+    EAccountOrderMoneyStatus,
+    EAccountOrderStatus,
+    EAccountOrderStatusTimelapse,
+    TAccountOrderItem,
+} from "@components/pages/AccountPage/types";
 import AccountOrderItem from "./AccountOrderItem";
 import { Empty } from "antd";
 import AccountSectionWrapper from "./AccountSectionWrapper";
@@ -24,59 +29,153 @@ const segmentAccountOrderMockup: Record<
         {
             id: "1",
             orderNumber: "XR-685069050596",
-            orderPlaced: "04.06.2023 4:34 pm Est",
-            orderProcessed: "04.06.2023 4:34 pm Est",
-            manufacturing: "04.06.2023 4:34 pm Est",
-            shipped: "04.06.2023 4:34 pm Est",
-            deliveryWillCompleted: "04.06.2023 4:34 pm Est",
-            address: "Brooklyn, NY 23409",
-            status: "In transit",
+            dateOfOrder: "8 august",
+            orderAddress: "Brooklyn, NY 23409",
+            orderStatus: EAccountOrderStatus.processed,
+            moneyStatus: EAccountOrderMoneyStatus.delivered,
+            statusTimelapse: [
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You set up your transfer",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Your money’s being processed",
+                    status: EAccountOrderStatusTimelapse.processed,
+                },
+                {
+                    time: "Error message",
+                    status: EAccountOrderStatusTimelapse.failure,
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+            ],
         },
         {
             id: "12",
             orderNumber: "XR-685069051230596123",
-            orderPlaced: "04.06.2023 4:34 pm Est",
-            orderProcessed: "04.06.2023 4:34 pm Est",
-            manufacturing: "04.06.2023 4:34 pm Est",
-            shipped: "04.06.2023 4:34 pm Est",
-            deliveryWillCompleted: "04.06.2023 4:34 pm Est",
-            address: "Brookly1123123123, NY123123 23409123123",
-            status: "Intransit123",
+            dateOfOrder: "8 august",
+            orderAddress: "Brooklyn, NY 23409",
+            orderStatus: EAccountOrderStatus.delivered,
+            moneyStatus: EAccountOrderMoneyStatus.processed,
+            statusTimelapse: [
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.processed,
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+            ],
         },
         {
             id: "13",
             orderNumber: "XR-123",
-            orderPlaced: "04.06.2023 4:34 pm Est",
-            orderProcessed: "04.06.2023 4:34 pm Est",
-            manufacturing: "04.06.2023 4:34 pm Est",
-            shipped: "04.06.2023 4:34 pm Est",
-            deliveryWillCompleted: "04.06.2023 4:34 pm Est",
-            address: "123, 123 123",
-            status: "123",
+            dateOfOrder: "8 august",
+            orderAddress: "Brooklyn, NY 23409",
+            orderStatus: EAccountOrderStatus.delivered,
+            moneyStatus: EAccountOrderMoneyStatus.processed,
+            statusTimelapse: [
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.processed,
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+            ],
         },
     ],
     [ESegmentedOptionsNames.inProgress]: [
         {
             id: "21",
             orderNumber: "XR-11111111",
-            orderPlaced: "04.06.2023 4:34 pm Est",
-            orderProcessed: "04.06.2023 4:34 pm Est",
-            manufacturing: "04.06.2023 4:34 pm Est",
-            shipped: "04.06.2023 4:34 pm Est",
-            deliveryWillCompleted: "04.06.2023 4:34 pm Est",
-            address: "Brooklyn, NY 11111",
-            status: "stop",
+            dateOfOrder: "8 august",
+            orderAddress: "Brooklyn, NY 23409",
+            orderStatus: EAccountOrderStatus.delivered,
+            moneyStatus: EAccountOrderMoneyStatus.processed,
+            statusTimelapse: [
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.processed,
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+            ],
         },
         {
             id: "212",
             orderNumber: "XR-22222qwdwqeq",
-            orderPlaced: "04.06.2023 4:34 pm Est",
-            orderProcessed: "04.06.2023 4:34 pm Est",
-            manufacturing: "04.06.2023 4:34 pm Est",
-            shipped: "04.06.2023 4:34 pm Est",
-            deliveryWillCompleted: "04.06.2023 4:34 pm Est",
-            address: "Brookly1123123123, NY123123 23409123123",
-            status: "Intransit123",
+            dateOfOrder: "8 august",
+            orderAddress: "Brooklyn, NY 23409",
+            orderStatus: EAccountOrderStatus.delivered,
+            moneyStatus: EAccountOrderMoneyStatus.processed,
+            statusTimelapse: [
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.done,
+                    description: "You used your EUR balance",
+                },
+                {
+                    time: "Today at 4:34 pm",
+                    status: EAccountOrderStatusTimelapse.processed,
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+                {
+                    time: "Tomorrow at 9:12 am",
+                    status: EAccountOrderStatusTimelapse.feature,
+                    description: "Adam Smith receives your EUR",
+                },
+            ],
         },
     ],
     [ESegmentedOptionsNames.completed]: [],
@@ -145,18 +244,14 @@ const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         accountOrderList().map((item) => (
                             <AccountOrderItem
                                 key={item.id}
-                                classPrefix={classPrefix}
+                                wrapperClassPrefix={classPrefix}
                                 id={item.id}
                                 orderNumber={item.orderNumber}
-                                orderPlaced={item.orderPlaced}
-                                orderProcessed={item.orderProcessed}
-                                manufacturing={item.manufacturing}
-                                shipped={item.shipped}
-                                deliveryWillCompleted={
-                                    item.deliveryWillCompleted
-                                }
-                                address={item.address}
-                                status={item.status}
+                                dateOfOrder={item.dateOfOrder}
+                                orderAddress={item.orderAddress}
+                                orderStatus={item.orderStatus}
+                                moneyStatus={item.moneyStatus}
+                                statusTimelapse={item.statusTimelapse}
                             />
                         ))
                     ) : (

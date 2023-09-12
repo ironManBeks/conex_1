@@ -1,16 +1,16 @@
 .common-icon{
   &.icon-arrow{
     &.top{
-      transform: rotate(0);
+      transform: rotate(180deg);
     }
     &.right{
-      transform: rotate(90deg);
-    }
-    &.left{
       transform: rotate(-90deg);
     }
+    &.left{
+      transform: rotate(90deg);
+    }
     &.bottom{
-      transform: rotate(-180deg);
+      transform: rotate(0);
     }
   }
 }

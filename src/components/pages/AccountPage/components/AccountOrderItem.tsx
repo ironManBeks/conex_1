@@ -1,201 +1,239 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, ReactNode, useEffect, useRef, useState } from "react";
 import cn from "classnames";
 import { Transition, TransitionStatus } from "react-transition-group";
 import CSS from "csstype";
+import { Steps } from "antd";
 
-import { H4, H5, P } from "@components/Text";
-import { IconPoint } from "@components/Icons";
+import { H4, P } from "@components/Text";
+import {
+    IconArrowSingle,
+    IconCalendar,
+    IconCheck,
+    IconCross,
+    IconLinePoint,
+    IconMapPoint,
+    IconPoint,
+} from "@components/Icons";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import CopyText from "@components/globalComponents/CopyText";
 
 import { notImplemented } from "@helpers/notImplemented";
-import { TAccountOrderItem } from "@components/pages/AccountPage/types";
+import {
+    EAccountOrderStatusTimelapse,
+    TAccountOrderItem,
+    TOrderStatusTimelapse,
+} from "@components/pages/AccountPage/types";
 import { EButtonColor } from "@components/buttons/types";
-import { ColorTheme } from "@common/theme/colorTheme";
+import { EArrowDirection } from "@components/Icons/types";
+import { StepProps } from "antd/lib/steps";
 
-const AccountOrderItem: FC<TAccountOrderItem & { classPrefix: string }> = ({
-    classPrefix,
+const AccountOrderItem: FC<
+    TAccountOrderItem & { wrapperClassPrefix: string }
+> = ({
+    wrapperClassPrefix,
     orderNumber,
-    orderPlaced,
-    orderProcessed,
-    manufacturing,
-    shipped,
-    deliveryWillCompleted,
-    address,
-    status,
+    dateOfOrder,
+    orderAddress,
+    orderStatus,
+    moneyStatus,
+    statusTimelapse,
 }) => {
-    const listRef = useRef<HTMLUListElement>(null);
-    const [isOpen, setIsOpen] = useState(false);
-    const [listHeight, setListHeight] = useState<number>(0);
+    const statusRef = useRef<HTMLDivElement>(null);
+    const classPrefix = `${wrapperClassPrefix}__item`;
+    const [isStatusOpen, setIsStatusOpen] = useState(false);
+    const [statusHeight, setStatusHeight] = useState<number>(0);
 
-    const handleOpen = (val: boolean) => {
-        setIsOpen(val);
+    const handleStatusOpen = (val: boolean) => {
+        setIsStatusOpen(val);
     };
 
     const listTransitionStyles: Partial<
         Record<TransitionStatus, CSS.Properties>
     > = {
-        entering: { height: `${listHeight}px` },
-        entered: { height: `${listHeight}px` },
+        entering: { height: `${statusHeight}px` },
+        entered: { height: `${statusHeight}px` },
         exiting: { height: 0 },
         exited: { height: 0 },
     };
 
     useEffect(() => {
         setTimeout(() => {
-            if (listRef?.current) {
-                setListHeight(listRef?.current?.getBoundingClientRect().height);
+            if (statusRef?.current) {
+                setStatusHeight(
+                    statusRef?.current?.getBoundingClientRect().height,
+                );
             }
         }, 300);
-    }, [listRef, listRef?.current?.getBoundingClientRect().height]);
+    }, [statusRef, statusRef?.current?.getBoundingClientRect().height]);
 
     return (
-        <div
-            className={cn(`${classPrefix}__item _wrapper`, {
-                _open: isOpen,
-            })}
-            onClick={() => {
-                if (!isOpen) handleOpen(true);
-            }}
-        >
+        <div className={cn(`${classPrefix} _wrapper`)}>
             <div
-                className={cn(`${classPrefix}__item _inner-wrapper`, {
-                    _open: isOpen,
+                className={cn(`${classPrefix} _inner-wrapper`, {
+                    _open: isStatusOpen,
                 })}
-                onClick={() => {
-                    if (isOpen) handleOpen(false);
-                }}
             >
-                <H5>Order number</H5>
-                <H4>
-                    {orderNumber}
-                    <CopyText text={orderNumber} />
-                </H4>
-                <Transition in={isOpen} timeout={0}>
-                    {(state) => (
-                        <div
-                            style={{
-                                transition: "all 0.3s",
-                                transitionProperty: "height",
-                                overflow: "hidden",
-                                marginBottom: isOpen ? "20px" : 0,
-                                ...listTransitionStyles[state],
-                            }}
-                        >
-                            <ul ref={listRef}>
-                                <OrderInfoListItem
-                                    label="Order is placed"
-                                    value={orderPlaced}
-                                />
-                                <OrderInfoListItem
-                                    label="Order processed"
-                                    value={orderProcessed}
-                                />
-                                <OrderInfoListItem
-                                    label="Manufacturing"
-                                    value={manufacturing}
-                                />
-                                <OrderInfoListItem
-                                    label="Shipped"
-                                    value={shipped}
-                                />
-                            </ul>
-                        </div>
-                    )}
-                </Transition>
-                <P className="item_address">
-                    <IconPoint
-                        color={isOpen ? ColorTheme.green._500 : "#8D8D8D"}
+                <div className={cn(`${classPrefix} _title`)}>
+                    <b>Order №</b>
+                    <H4>
+                        {orderNumber}
+                        <CopyText text={orderNumber} />
+                    </H4>
+                </div>
+                <div className={cn(`${classPrefix} _info`)}>
+                    <OrderInfoItem
+                        title={`Order ${dateOfOrder}`}
+                        description={"Date of order"}
+                        icon={<IconCalendar />}
                     />
-                    {address}
-                    <span className="item_status">{status}</span>
-                </P>
-                <P className="item_delivery">
-                    <span className="label">Delivery will be completed by</span>
-                    <span className="value">{deliveryWillCompleted}</span>
-                </P>
+                    <OrderInfoItem
+                        title={orderAddress}
+                        description={"Order adress"}
+                        icon={<IconMapPoint />}
+                    />
+                </div>
+                <div className={cn(`${classPrefix} _status`)}>
+                    <H4
+                        onClick={() => {
+                            handleStatusOpen(!isStatusOpen);
+                        }}
+                    >
+                        Status
+                        <IconArrowSingle
+                            direction={
+                                isStatusOpen
+                                    ? EArrowDirection.top
+                                    : EArrowDirection.bottom
+                            }
+                        />
+                    </H4>
+                    <Transition in={isStatusOpen} timeout={0}>
+                        {(state) => (
+                            <div
+                                style={{
+                                    transition: "all 0.2s",
+                                    transitionProperty: "height",
+                                    overflow: "hidden",
+                                    ...listTransitionStyles[state],
+                                }}
+                            >
+                                <div ref={statusRef}>
+                                    <OrderStatusTimeLapse
+                                        statusTimelapse={statusTimelapse}
+                                    />
+                                </div>
+                            </div>
+                        )}
+                    </Transition>
+                </div>
+                <div className={cn(`${classPrefix} _actions`)}>
+                    <ButtonPrimary
+                        onClick={() => notImplemented()}
+                        color={EButtonColor.secondary}
+                    >
+                        Read more
+                    </ButtonPrimary>
+                </div>
             </div>
-            <OrderLiveTracking classPrefix={classPrefix} isVisible={isOpen} />
         </div>
     );
 };
 
 export default AccountOrderItem;
 
-const OrderInfoListItem = ({
-    label,
-    value,
+const OrderInfoItem = ({
+    title,
+    description,
+    icon,
 }: {
-    label: string;
-    value: string;
+    title: string;
+    description: string;
+    icon?: ReactNode;
 }) => {
+    const classPrefix = "order-info-item";
     return (
-        <li>
-            <span className="label">{label}</span>
-            <span className="value">{value}</span>
-        </li>
+        <div className={`${classPrefix}_wrapper`}>
+            {icon && <div className={`${classPrefix}_icon`}>{icon}</div>}
+            <div className={`${classPrefix}_text`}>
+                <H4>{title}</H4>
+                <P>{description}</P>
+            </div>
+        </div>
     );
 };
 
-const OrderLiveTracking = ({
-    classPrefix,
-    isVisible,
+const OrderStatusTimeLapse = ({
+    statusTimelapse,
 }: {
-    classPrefix: string;
-    isVisible: boolean;
+    statusTimelapse: TOrderStatusTimelapse[];
 }) => {
-    const mapRef = useRef<HTMLDivElement>(null);
-    const [mapHeight, setMapHeight] = useState<number>(0);
+    const classPrefix = "order-status-timelapse";
+    const description = "This is a description.";
 
-    useEffect(() => {
-        setTimeout(() => {
-            if (mapRef?.current) {
-                setMapHeight(mapRef?.current?.getBoundingClientRect().height);
-            }
-        }, 300);
-    }, [mapRef, mapRef?.current?.getBoundingClientRect().height]);
+    const currentStep: number | undefined = undefined;
 
-    const transitionStyles: Partial<Record<TransitionStatus, CSS.Properties>> =
-        {
-            entering: { height: `${mapHeight}px` },
-            entered: { height: `${mapHeight}px` },
-            exiting: { height: 0 },
-            exited: { height: 0 },
-        };
+    const iconProps = {
+        width: 24,
+        height: 24,
+    };
+
+    const getIconByStatus = (
+        status: EAccountOrderStatusTimelapse,
+    ): ReactNode => {
+        switch (status) {
+            case EAccountOrderStatusTimelapse.done:
+                return <IconCheck {...iconProps} color="#108700" />;
+            case EAccountOrderStatusTimelapse.processed:
+                return <IconPoint {...iconProps} />;
+            case EAccountOrderStatusTimelapse.feature:
+                return <IconLinePoint {...iconProps} />;
+            case EAccountOrderStatusTimelapse.failure:
+                return <IconCross {...iconProps} color="#FF0404" />;
+            default:
+                return <IconPoint {...iconProps} color="#108700" />;
+        }
+    };
+
+    const getStatus = (
+        status: EAccountOrderStatusTimelapse,
+    ): "wait" | "process" | "finish" | "error" => {
+        switch (status) {
+            case EAccountOrderStatusTimelapse.done:
+                return "finish";
+            case EAccountOrderStatusTimelapse.processed:
+                return "process";
+            case EAccountOrderStatusTimelapse.feature:
+                return "wait";
+            case EAccountOrderStatusTimelapse.failure:
+                return "error";
+            default:
+                return "wait";
+        }
+    };
+
+    const generateTimelapse = (): StepProps[] => {
+        const result: StepProps[] = [];
+        if (!statusTimelapse.length) return result;
+
+        for (let i = 0; i < statusTimelapse.length; i++) {
+            const item = statusTimelapse[i];
+            result.push({
+                title: item.time,
+                description: item.description,
+                icon: getIconByStatus(item.status),
+                status: getStatus(item.status),
+            });
+        }
+
+        return result;
+    };
 
     return (
-        <Transition in={isVisible} timeout={0}>
-            {(state) => (
-                <div
-                    style={{
-                        transition: "all 0.3s",
-                        transitionProperty: "height",
-                        overflow: "hidden",
-                        ...transitionStyles[state],
-                    }}
-                >
-                    <div
-                        className={cn("item_map__wrapper", classPrefix)}
-                        ref={mapRef}
-                    >
-                        <H5>Live Tracking</H5>
-                        <iframe
-                            width="100%"
-                            height="210"
-                            className="gmap_iframe"
-                            src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=University of Oxford&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                        />
-                        <div className="item_map__actions">
-                            <ButtonPrimary
-                                onClick={() => notImplemented()}
-                                color={EButtonColor.primary}
-                            >
-                                Manage order
-                            </ButtonPrimary>
-                        </div>
-                    </div>
-                </div>
-            )}
-        </Transition>
+        <Steps
+            className={classPrefix}
+            direction="vertical"
+            current={currentStep}
+            items={generateTimelapse()}
+        />
     );
 };

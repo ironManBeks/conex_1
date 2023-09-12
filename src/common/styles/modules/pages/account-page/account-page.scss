@@ -223,134 +223,181 @@
     &__item{
       &._wrapper{
         width: calc(50% - 6 * $spase);
-        border: 1px solid #A4A3A3;
-        border-radius: $border-radius-lg;
+      }
+      &._inner-wrapper{
+        display: flex;
+        flex-direction: column;
+        gap: space(5);
+        padding: space(6);
+        border: 1px solid $border-color-secondary;
+        border-radius: borderRadius(3);
+        background: $color-primary-strong;
         transition: $transition;
         &._open{
-          padding-bottom: 5px;
-          border-color: $color-primary;
-          .common-title._h4{
-            margin-bottom: 15px;
-          }
-          .item_address{
-            color: $color-green-500;
-            margin-bottom: 25px;
-          }
-        }
-        &:hover{
-          box-shadow: $box-shadow-bs;
-        }
-        .common-title{
-          font-family: $font-family-primary;
-          color: rgba(94, 94, 94, 0.66);
-          transition: $transition;
-          &._h5{
-            margin-bottom: 10px;
-            font-size: $font-size-bs;
-            line-height: $line-height-bs;
-          }
-          &._h4{
-            display: flex;
-            align-items: center;
-            font-size: $font-size-xlllll;
-            line-height: $line-height-lg;
-            font-weight: 500;
-            margin-bottom: 20px;
-            .common-copy-text{
-              margin-left: 10px;
-            }
-          }
-        }
-        ul{
-          padding-left: 50px;
-          margin-bottom: 20px;
-          transition: .4s;
-          transition-property: height;
-          li{
-            list-style-type: none;
-            display: flex;
-            justify-content: space-between;
-            font-weight: 300;
-            &:not(:last-of-type){
-              margin-bottom: 20px;
-            }
-            .label{
-              padding-right: 10px;
-              font-size: $font-size-md;
-              line-height: $line-height-md;
-              color: $color-green-200;
-            }
-            .value{
-              font-size: $font-size-bs;
-              line-height: $line-height-bs;
-              color: #A4A3A3;
-            }
-          }
-        }
-        .item{
-          &_address{
-            display: flex;
-            align-items: center;
-            margin-bottom: 15px;
-            font-size: $font-size-md;
-            line-height: $line-height-md;
-            color: $color-grey-500;
-            font-weight: 500;
-            transition: $transition;
-            .common-icon{
-              flex: 0 0 auto;
-              margin-right: 5px;
-            }
-          }
-          &_status{
-            margin-left: 20px;
-            color: $color-green-200;
-            font-weight: 300;
-          }
-          &_delivery{
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0;
-            padding-left: 50px;
-            font-weight: 300;
-            font-size: $font-size-bs;
-            line-height: $line-height-bs;
-            .label{
-              color: $color-grey-800;
-            }
-            .value{
-              color: #A4A3A3;
-              white-space: nowrap;
-            }
-          }
-          &_map{
-            &__wrapper{
-              padding: 20px 35px 25px;
-              .common-title{
-                font-size: $font-size-md;
-                line-height: $line-height-md;
-                color: $color-grey-500;
-              }
-              iframe{
-                border: 0;
-              }
-            }
-            &__actions{
-              display: flex;
-              justify-content: center;
-              margin-top: 35px;
-              .common-btn{
-                font-size: $font-size-md;
-                line-height: $line-height-md;
-                padding: 10px 15px;
+          border-color: $color-accent-strong;
+          ._status{
+            .common-title{
+              color: $text-color-secondary;
+              .common-icon path{
+                fill: $icon-color-secondary;
               }
             }
           }
         }
       }
-      &._inner-wrapper{
-        cursor: pointer;
-        padding: 8px 25px;
+      &._title{
+        display: flex;
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+        font-weight: 700;
+        b{
+         flex: 0 0 auto;
+          margin-right: space(1);
+        }
+        .common-title{
+          display: flex;
+          align-items: center;
+        }
+      }
+      &._info{
+        display: flex;
+        flex-direction: column;
+        gap: space(5);
+        .order-info-item{
+          &_wrapper{
+            display: flex;
+          }
+          &_icon{
+            margin-right: space(3);
+            flex: 0 0 auto;
+          }
+          &_text{
+            display: flex;
+            flex-direction: column;
+            gap: space(1);
+            .common-title{
+              font-size: $font-size-bs;
+              line-height: $line-height-lg;
+              font-weight: 500;
+            }
+            .common-text{
+              margin-bottom: 0;
+              font-size: $line-height-sm;
+              line-height: $line-height-md;
+              font-weight: 500;
+              color: $text-color-secondary;
+            }
+          }
+        }
+      }
+      &._status{
+        .common-title._h4{
+          display: flex;
+          align-items: center;
+          font-size: $font-size-bs;
+          line-height: $line-height-lg;
+          font-weight: 700;
+          transition: $transition;
+          cursor: pointer;
+          .common-icon{
+            margin-left: space(2);
+            transition: $transition;
+            path{
+              transition: $transition;
+            }
+          }
+          &:hover{
+            color: $text-color-secondary;
+            .common-icon path{
+              fill: $icon-color-secondary;
+            }
+          }
+        }
+        .order-status-timelapse{
+          padding: space(2) 0;
+          gap: space(10);
+          .ant-steps-item{
+            &-content{
+              min-height: auto;
+            }
+            &-container{
+              display: flex;
+              align-items: center;
+            }
+            &-content{
+              display: flex;
+              flex-direction: column;
+              gap: space(1);
+            }
+            &-tail{
+              width: 2px;
+              height: 24px;
+              padding: 0;
+              top: calc(100% + 2 * $spase);
+              left: 12px;
+              background: $color-secondary-120;
+              &:after{
+                width: 2px;
+                background: $color-secondary-120;
+                display: none;
+              }
+            }
+            &-icon{
+              display: flex;
+              align-items: center;
+              float: none;
+              .ant-steps-icon{
+                display: flex;
+                align-items: center;
+              }
+            }
+            &-title, &-description{
+              padding: 0;
+              font-size: $font-size-sm;
+              line-height: $line-height-md;
+              font-weight: 500;
+            }
+            &-finish{
+              .ant-steps-item{
+                &-title{
+                  color: $text-color-success;
+                }
+                &-description{
+                  color: $text-color-secondary;
+                }
+              }
+            }
+            &-process{
+              .ant-steps-item{
+                &-title{
+                  font-weight: 700;
+                }
+              }
+            }
+            &-error{
+              .ant-steps-item{
+                &-title{
+                  color: $text-color-critical;
+                }
+              }
+            }
+            &-wait{
+              .ant-steps-item{
+                &-icon{
+                  .common-icon path{
+                    fill: $icon-color-secondary;
+                  }
+                }
+                &-title{
+                  color: $text-color-secondary;
+                }
+                &-description{
+                  color: $text-color-disabled;
+                }
+              }
+            }
+          }
+        }
       }
     }
   }
