@@ -3,7 +3,7 @@ import IconCart from "./common/IconCart";
 import IconSearch from "./common/IconSearch";
 import IconCheck from "./common/IconCheck";
 import IconPlusCircle from "./common/IconPlusCircle";
-import IconPoint from "./common/IconPoint";
+import IconMapPoint from "./common/IconMapPoint";
 import IconCopy from "./common/IconCopy";
 import IconOpenFilter from "./common/IconOpenFilter";
 import IconEdit from "./common/IconEdit";
@@ -18,6 +18,9 @@ import IconEyeClose from "./common/IconEyeClose";
 import IconList from "./common/IconList";
 import IconCard from "./common/IconCard";
 import IconLogout from "./common/IconLogout";
+import IconCalendar from "./common/IconCalendar";
+import IconPoint from "./common/IconPoint";
+import IconLinePoint from "./common/IconLinePoint";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
@@ -34,7 +37,7 @@ export {
     IconSearch,
     IconCheck,
     IconPlusCircle,
-    IconPoint,
+    IconMapPoint,
     IconCopy,
     IconOpenFilter,
     IconEdit,
@@ -52,4 +55,7 @@ export {
     IconList,
     IconCard,
     IconLogout,
+    IconCalendar,
+    IconPoint,
+    IconLinePoint,
 };

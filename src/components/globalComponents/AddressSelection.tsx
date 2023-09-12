@@ -2,7 +2,7 @@ import { FC } from "react";
 import cn from "classnames";
 
 import FormFieldInput from "@components/form/formFields/FormFieldInput";
-import { IconPoint } from "@components/Icons";
+import { IconMapPoint } from "@components/Icons";
 import { P } from "@components/Text";
 
 import { isFunction } from "lodash";
@@ -31,7 +31,7 @@ const AddressSelection: FC<TAddressSelection> = ({
                 label={label}
                 placeholder="Address"
                 errorMessage={errorMessage}
-                icon={<IconPoint color="#8D8D8D" />}
+                icon={<IconMapPoint color="#8D8D8D" />}
                 iconPosition="left"
                 onChange={(e) => {
                     const value = e.target.value;

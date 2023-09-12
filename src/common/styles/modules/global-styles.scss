@@ -17,7 +17,7 @@ body {
   font-style: normal;
   font-size: $font-size-bs;
   line-height: $line-height-static;
-  color: $color-black !important;
+  color: $color-secondary-strong !important;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: $letter-spacing-bs;
@@ -29,7 +29,7 @@ body {
 
 div.__next,
 div#__next{
-  height: 100%;
+  min-height: 100%;
 }
 
 .container {

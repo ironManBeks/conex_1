@@ -1,9 +1,14 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
 
-import { IconCard, IconList, IconLogout, IconPoint } from "@components/Icons";
+import {
+    IconCard,
+    IconList,
+    IconLogout,
+    IconMapPoint,
+} from "@components/Icons";
 import Logout from "@components/globalComponents/Logout";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
@@ -22,9 +27,12 @@ const AccountMenu: FC<TSectionTypes> = ({ pageClassPrefix }) => {
         <div className={`${pageClassPrefix}_menu__wrapper`}>
             <AccountMenuItem
                 title="Account"
-                icon={<IconPoint />}
+                icon={<IconMapPoint />}
                 tabName={EAccountTabsPaths.account}
-                isActive={tabValue === EAccountTabsPaths.account}
+                isActive={
+                    tabValue === EAccountTabsPaths.account ||
+                    (!tabValue && router.pathname === PATH_MY_ACCOUNT_PAGE)
+                }
                 pageClassPrefix={pageClassPrefix}
             />
             <AccountMenuItem
