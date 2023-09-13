@@ -22,42 +22,28 @@ const BuilderStepLayout: FC<TBuilderCompProps> = inject("store")(
             builderParamsDataFetching,
         } = builderStore;
 
-        return useMemo(() => {
+        const content = useMemo(() => {
             if (builderParamsDataFetching) {
-                return (
-                    <div className={cn(`${classPrefix}__wrapper`)}>
-                        <BuilderStepLoader pageClassPrefix={pageClassPrefix} />
-                    </div>
-                );
+                return <BuilderStepLoader pageClassPrefix={pageClassPrefix} />;
             }
 
             if (!isEmpty(currentStepData)) {
-                return (
-                    <div className={cn(`${classPrefix}__wrapper`)}>
-                        <BuilderStep />
-                    </div>
-                );
+                return <BuilderStep />;
             }
 
             if (!isEmpty(resultDoorData) && !isEmpty(endDoorData)) {
-                return (
-                    <div className={cn(`${classPrefix}__wrapper`)}>
-                        <BuilderEndStep pageClassPrefix={pageClassPrefix} />
-                    </div>
-                );
+                return <BuilderEndStep pageClassPrefix={pageClassPrefix} />;
             }
 
-            return (
-                <div className={cn(`${classPrefix}__wrapper`)}>
-                    <BuilderError pageClassPrefix={pageClassPrefix} />
-                </div>
-            );
+            return <BuilderError pageClassPrefix={pageClassPrefix} />;
         }, [
             builderParamsDataFetching,
             currentStepData,
             resultDoorData,
             endDoorData,
         ]);
+
+        return <div className={cn(`${classPrefix}__wrapper`)}>{content}</div>;
     }),
 );
 

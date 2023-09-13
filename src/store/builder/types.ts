@@ -40,9 +40,15 @@ export interface IBuilderFieldDataDTO {
     questions: IBuilderElementDataDTO[];
 }
 
+export type TBuilderBranch = {
+    doorType: number;
+    next: number;
+};
+
 export type TBuilderStepDataDTO = {
     id: number;
     attributes: {
+        branching: TBuilderBranch[];
         fieldType: EBuilderFieldTypes;
         fieldName: string;
         fieldTitle: string;

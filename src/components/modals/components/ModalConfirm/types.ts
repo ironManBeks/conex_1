@@ -5,6 +5,7 @@ export type TModalConfirm = {
     onConfirm: (confirmModalData: any) => void;
     onClose?: () => void;
     confirmColor: EButtonColor.primary | EButtonColor.danger;
-    text: string;
+    title: string;
+    description?: string;
     confirmText?: string;
 } & TStore;

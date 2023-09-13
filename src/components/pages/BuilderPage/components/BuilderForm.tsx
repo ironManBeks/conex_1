@@ -51,9 +51,9 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             }
         }, [stepHistory]);
 
-        useEffect(() => {
-            console.log("resultDoorData", toJS(resultDoorData));
-        }, [resultDoorData?.length, resultDoorData]);
+        // useEffect(() => {
+        //     console.log("resultDoorData", toJS(resultDoorData));
+        // }, [resultDoorData?.length, resultDoorData]);
 
         useEffect(() => {
             if (
