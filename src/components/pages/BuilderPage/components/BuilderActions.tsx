@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { isArray, isEmpty, isEqual, isNil, isNumber, uniq } from "lodash";
@@ -13,12 +13,16 @@ import { IRoot } from "@store/store";
 import {
     convertFormValuesToResultData,
     getDefaultValuesFromResultDoorData,
+    getFormValuesByStepId,
     getNextStepByFormValues,
     getSelectedElementByFormValues,
     getUpdatedResultDoorData,
 } from "@helpers/builderHelper";
 import { handleClearBuilderStorage } from "../utils";
 import { TResultDoorData } from "@store/builder/types";
+import { getStorage } from "@services/storage.service";
+import { BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
+import { toJS } from "mobx";
 
 const BuilderActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -73,12 +77,14 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                 }
 
                 const formData = getValues();
+
                 const currentStepHistoryIndex = stepHistory.findIndex(
                     (item) => item === currentStepId,
                 );
                 const currentStepResultIndex = resultDoorData?.findIndex(
                     (item) => item.stepId === currentStepId,
                 );
+
                 const newResult = convertFormValuesToResultData(
                     formData,
                     currentStepData,
@@ -96,7 +102,6 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     const currentStepInResultDoor = resultDoorData?.find(
                         (item) => item.stepId === currentStepId,
                     );
-
                     if (!isEqual(newResult, currentStepInResultDoor)) {
                         setModalConfirmVisible(true);
                         return;
@@ -112,9 +117,12 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                               resultDoorData,
                           );
 
+                const parentId = getStorage(BUILDER_PARENT_ID);
+
                 const nextStep = getNextStepByFormValues(
                     currentStepData,
                     formData,
+                    parentId,
                 );
 
                 setResultDoorData(updatedResultDoorData);
@@ -138,6 +146,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                         currentStepData,
                         formData,
                     );
+
                     if (selectedElement) {
                         updateCurrentStepData({
                             action: "start-way",
@@ -148,7 +157,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
-                // In first, way from the element, then from the queue
+                // In first way from the element, then from the queue
                 if (stepHistory.length) {
                     if (!isNil(nextStep)) {
                         if (isNumber(nextStep)) {
@@ -189,7 +198,12 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                         0,
                         indexInResultDoor,
                     );
-                    const resetData = slicedResultDoor
+                    const formValues = getValues();
+                    const currentStepValues = getFormValuesByStepId(
+                        formValues,
+                        currentStepId,
+                    );
+                    const newFormValues = slicedResultDoor
                         .map((item) =>
                             getDefaultValuesFromResultDoorData(item.stepId, [
                                 item,
@@ -199,7 +213,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             (memo, current) => ({ ...memo, ...current }),
                             {},
                         );
-                    reset(resetData);
+                    reset({ ...newFormValues, ...currentStepValues });
                     setStepHistory(slicedHistory, "replace");
                     handleNext(false, slicedResultDoor)();
                 }
@@ -223,16 +237,8 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             marginLeft: stepHistory.length ? 20 : 0,
                         }}
                     >
-                        Reset state and cache
+                        Reset form
                     </ButtonPrimary>
-                    {/*<button*/}
-                    {/*    type={"button"}*/}
-                    {/*    onClick={() => {*/}
-                    {/*        console.log("getValues", getValues());*/}
-                    {/*    }}*/}
-                    {/*>*/}
-                    {/*    get values*/}
-                    {/*</button>*/}
                     <ButtonPrimary
                         color={EButtonColor.primary}
                         onClick={handleNext()}
@@ -245,8 +251,9 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     </ButtonPrimary>
                 </div>
                 <ModalConfirm
-                    text="Are you sure you want to change this option? Doing so will clear any options you have selected past this section."
-                    confirmColor={EButtonColor.danger}
+                    title="Are you sure you want to change this option?"
+                    description="Doing so will clear any options you have selected past this section."
+                    confirmColor={EButtonColor.primary}
                     onConfirm={() => resetDataAfterCurrentStep()}
                 />
             </div>

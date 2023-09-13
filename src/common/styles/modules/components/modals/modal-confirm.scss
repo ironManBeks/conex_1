@@ -1,11 +1,17 @@
 .modal-confirm{
   .common-modal{
     &_body__wrapper{
-      text-align: center;
       padding: space(14) 0 space(10);
+      text-align: center;
       .common-title{
         font-size: $font-size-lg;
-        line-height: $line-height-xl;
+        line-height: $line-height-lg;
+        margin-bottom: 0;
+      }
+      .common-text{
+        font-size: $font-size-bs;
+        line-height: $line-height-md;
+        margin-top: 20px;
         margin-bottom: 0;
       }
     }

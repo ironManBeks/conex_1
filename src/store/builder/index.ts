@@ -313,11 +313,8 @@ export class BuilderStore implements IBuilderStore {
 
             const prevStepId = this.stepHistory[this.stepHistory.length - 1];
 
-            if (
-                isNumber(prevStepId) &&
-                this.builderParamsData?.filteredData?.length
-            ) {
-                const prevStep = this.builderParamsData.filteredData.find(
+            if (isNumber(prevStepId) && this.builderParamsData?.data?.length) {
+                const prevStep = this.builderParamsData.data.find(
                     (item) => item.id === prevStepId,
                 );
                 if (!isEmpty(prevStep)) {
@@ -329,8 +326,8 @@ export class BuilderStore implements IBuilderStore {
         }
 
         if (isNumber(way)) {
-            if (this.builderParamsData?.filteredData?.length) {
-                const nextStepData = this.builderParamsData.filteredData.find(
+            if (this.builderParamsData?.data?.length) {
+                const nextStepData = this.builderParamsData.data.find(
                     (item) => item.id === way,
                 );
 

@@ -82,10 +82,12 @@ export const getSelectedElementByFormValues = (
 export const getNextStepByFormValues = (
     currentStepData: TBuilderStepDataDTO | null,
     fieldsList: FieldValues,
+    parentId: number,
 ): TGetNextStepResult => {
     if (isEmpty(currentStepData) || isEmpty(fieldsList)) {
         return null;
     }
+
     const { attributes } = currentStepData;
 
     const stepType = attributes.fieldType;
@@ -96,8 +98,20 @@ export const getNextStepByFormValues = (
 
     let result: TGetNextStepResult = null;
 
-    if (stepType === EBuilderFieldTypes.multiple && attributes.nextQuestion) {
-        return attributes.nextQuestion;
+    const getBranchingId = () => {
+        if (attributes.branching.length) {
+            const element = attributes.branching.find(
+                (item) => item.doorType === parentId,
+            );
+            if (element) {
+                return element.next;
+            }
+        }
+        return null;
+    };
+
+    if (stepType === EBuilderFieldTypes.multiple) {
+        return getBranchingId() ?? attributes.nextQuestion;
     }
 
     // ToDo replace with getSelectedElementByFormValues
@@ -136,7 +150,9 @@ export const getNextStepByFormValues = (
                         (item: IBuilderElementDataDTO) =>
                             item.value === formValue.fieldValue,
                     );
+
                     result =
+                        getBranchingId() ??
                         selectedElement?.nextQuestion ??
                         attributes.nextQuestion;
                 }
@@ -482,4 +498,21 @@ export const getUpdatedResultDoorData = (
         }
     }
     return arr;
+};
+
+export const getFormValuesByStepId = (
+    formData: FieldValues,
+    stepId: number,
+): FieldValues => {
+    const convertedValues = getResultFieldsParams(formData);
+    const groupedSteps = groupedFieldsByStepId(convertedValues);
+    const currentStepValues = groupedSteps[stepId];
+    const result: FieldValues = {};
+    for (let i = 0; i < currentStepValues.length; i++) {
+        const params = currentStepValues[i];
+        result[convertBuilderFieldName(params.stepId, params.fieldName)] =
+            params.fieldValue;
+    }
+
+    return result;
 };

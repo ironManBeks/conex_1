@@ -2,7 +2,7 @@ import { FC } from "react";
 import { inject, observer } from "mobx-react";
 
 import ModalLayout from "../../ModalLayout";
-import { H3 } from "@components/Text";
+import { H3, P } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { EModalSize } from "../../types";
@@ -13,7 +13,15 @@ import { IRoot } from "@store/store";
 
 const ModalConfirm: FC<TModalConfirm> = inject("store")(
     observer(
-        ({ store, text, onConfirm, confirmColor, confirmText, onClose }) => {
+        ({
+            store,
+            title,
+            description,
+            onConfirm,
+            confirmColor,
+            confirmText,
+            onClose,
+        }) => {
             const classPrefix = "modal-confirm";
             const { commonStore } = store as IRoot;
             const {
@@ -37,7 +45,12 @@ const ModalConfirm: FC<TModalConfirm> = inject("store")(
                     modalVisible={modalConfirmVisible}
                     handleCancel={handleCloseModal}
                     modalSize={EModalSize.sm}
-                    bodyContent={<H3>{text}</H3>}
+                    bodyContent={
+                        <>
+                            <H3>{title}</H3>
+                            <P>{description}</P>
+                        </>
+                    }
                     footerContent={
                         <>
                             <ButtonPrimary
@@ -54,6 +67,7 @@ const ModalConfirm: FC<TModalConfirm> = inject("store")(
                                     onConfirm(confirmModalData);
                                     handleCloseModal();
                                 }}
+                                type="button"
                             >
                                 {confirmText ?? "Confirm"}
                             </ButtonPrimary>

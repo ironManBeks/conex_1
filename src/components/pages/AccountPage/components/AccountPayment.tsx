@@ -76,7 +76,7 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
                 </div>
                 <ModalCardBinding />
                 <ModalConfirm
-                    text="Do you want to remove the card?"
+                    title="Do you want to remove the card?"
                     confirmColor={EButtonColor.primary}
                     onConfirm={(confirmModalData) => {
                         notImplemented(

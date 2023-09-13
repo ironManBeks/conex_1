@@ -51,7 +51,7 @@ const CartList: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                 )}
             </div>
             <ModalConfirm
-                text="Do you want to remove the door from the cart?"
+                title="Do you want to remove the door from the cart?"
                 confirmColor={EButtonColor.danger}
                 onConfirm={() => notImplemented()}
             />
