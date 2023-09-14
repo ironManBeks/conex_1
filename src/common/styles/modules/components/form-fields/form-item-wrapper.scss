@@ -15,7 +15,7 @@
       }
     }
     &._error{
-      &._input{
+      &._input, &._textarea{
         .form-field_field, .form-field_field._activeLabel {
           border-color: $border-color-critical;
         }
@@ -86,14 +86,17 @@
     bottom: 10px;
     right: 20px;
     width: auto;
-    padding: 4px 8px;
-    border-radius: $border-radius-bs;
-    background-color: $color-white;
+    padding: space(1) space(2);
+    border-radius: borderRadius(1);
+    background-color: $color-primary-strong;
     z-index: 1;
     &._disabled{
       cursor: not-allowed;
       background-color: $color-disabled-selection-bg;
       color: $color-black;
+    }
+    &._error{
+      color: $text-color-critical;
     }
   }
 

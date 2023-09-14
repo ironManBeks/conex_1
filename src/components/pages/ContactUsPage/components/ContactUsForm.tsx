@@ -6,6 +6,7 @@ import FieldInputController from "@components/form/formControllers/FieldInputCon
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { H3 } from "@components/Text";
 
 import {
     contactsUsDefaultValues,
@@ -15,7 +16,7 @@ import {
     TContactsUsForm,
 } from "@components/pages/ContactUsPage/formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { EButtonColor } from "@components/buttons/types";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
 
@@ -46,6 +47,7 @@ const ContactUsForm: FC<TSectionTypes> = inject("store")(
                         onSubmit={handleSubmit(onSubmit)}
                         className={`${classPrefix}__form`}
                     >
+                        <H3 className={`${classPrefix}__title`}>Feedback</H3>
                         <FieldInputController
                             name={EContactsUsFieldsNames.name}
                             placeholder="Your Name"
@@ -71,6 +73,7 @@ const ContactUsForm: FC<TSectionTypes> = inject("store")(
                                 color={EButtonColor.primary}
                                 isLoading={createFeedbackFetching}
                                 disabled={createFeedbackFetching}
+                                size={EButtonSize.lg}
                             >
                                 Send
                             </ButtonPrimary>

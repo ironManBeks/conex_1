@@ -1,120 +1,110 @@
 .contact-us-page{
 
   &_layout__inner-wrapper{
-    padding: 50px 0 100px;
+    padding: space(10) 0;
+    .container{
+      gap: space(10);
+    }
+  }
+
+  &_head{
+    &__wrapper{
+      width: 60%;
+    }
+    &__title{
+      margin-bottom: space(4);
+      font-size: $font-size-xxl;
+      line-height: $line-height-xxl;
+    }
+    &__description{
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-secondary;
+      font-weight: 500;
+      &:last-of-type{
+        margin-bottom: 0;
+      }
+    }
   }
 
   &_content{
     display: flex;
     justify-content: space-between;
-    padding: 20px 30px 70px;
-    background: rgba(251, 246, 221, 0.38);
-    box-shadow: 0 0 20px 0 rgba(250, 187, 30, 0.12);
-    border-radius: $border-radius-lg;
   }
 
-  &_contacts{
+  &_map{
     &__wrapper{
-      position: relative;
-      padding-right: 40px;
       width: 100%;
-    }
-    &__title{
-      margin-bottom: 5px;
-      font-size: $contacts-us-title-font-size;
-      line-height: calc($contacts-us-title-font-size + 2px);
-      color: #FFC700;
-      font-family: $font-family-primary;
-      font-weight: 600;
-    }
-    &__description{
-      margin-bottom: 0;
-      font-size: $font-size-lg;
-      line-height: $line-height-lg;
-      color: $color-grey-800;
-      font-weight: 600;
-    }
-    &__map{
-      margin-top: 40px;
-      .common-title{
-        margin-bottom: 10px;
-        font-size: $font-size-lg;
-        line-height: $line-height-lg;
-        font-family: $font-family-primary;
-      }
+      padding-right: space(10);
       iframe{
+        border-radius: borderRadius(4);
         border: 0;
-      }
-    }
-    &__list{
-      margin-top: 40px;
-      display: flex;
-      justify-content: space-between;
-    }
-    &__item{
-      margin-bottom: 20px;
-      max-width: 260px;
-      .common-title{
-        margin-bottom: 8px;
-        font-size: $font-size-lg;
-        line-height: $line-height-lg;
-        font-family: $font-family-primary;
-      }
-      .common-text,{
-        font-size: $font-size-md;
-        line-height: $line-height-md;
-        font-weight: 300;
-        &:not(:last-of-type){
-          margin-bottom: 8px;
-        }
-        a{
-          color: $color-text-default;
-          border-bottom: 1px solid $color-black;
-          &:hover{
-            color: $color-secondary;
-            border-color: $color-secondary;
-          }
-        }
       }
     }
   }
 
   &_form{
     &__wrapper{
+      position: relative;
       width: 40%;
-      max-width: 490px;
-      margin-top: 60px;
+      max-width: 440px;
       flex: 0 0 auto;
     }
     &__form{
-      padding: 30px;
-      background-color: $color-white;
-      border-radius: $border-radius-lg;
-      box-shadow: 0 0 20px 0 rgba(250, 187, 30, 0.12);
-      .form-field{
-        &_wrapper{
-          .form-field {
-            ._textarea{
-              margin-top: 40px;
-            }
-            &_field {
-              padding-top: 20px;
-              padding-bottom: 20px;
-              font-size: $font-size-lg;
-              line-height: $line-height-lg;
-            }
-          }
-        }
-        &_label-wrapper{
-          color: $color-black;
-        }
+      display: flex;
+      flex-direction: column;
+      padding: space(8);
+      background-color: $color-primary-strong;
+      gap: space(6);
+      border-radius: borderRadius(4);
+      .form-field_wrapper{
+        margin-bottom: 0;
       }
     }
+    &__title{
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+    }
     &__actions{
-      margin-top: 40px;
-      display: flex;
-      justify-content: flex-end;
+      .common-btn{
+        width: 100%;
+      }
     }
   }
 
+  &_contacts{
+    &__list{
+      display: flex;
+      justify-content: space-between;
+      gap: space(10);
+    }
+    &__item{
+      margin-bottom: 20px;
+      width: calc(33% - 4 * 10px);
+      max-width: 370px;
+      .common-title{
+        margin-bottom: space(4);
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+      }
+      .common-text{
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        font-weight: 500;
+        color: $text-color-secondary;
+
+        &:not(:last-of-type){
+          margin-bottom: space(3);
+        }
+        a{
+          color: inherit;
+          border-bottom: 1px solid transparent;
+          &:hover{
+            color: $text-color-primary;
+            border-color: $color-secondary-strong;
+          }
+        }
+      }
+    }
+  }
 }

@@ -6,21 +6,6 @@ const ContactUsContacts: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_contacts`;
     return (
         <div className={`${classPrefix}__wrapper`}>
-            <H2 className={`${classPrefix}__title`}>Get in touch</H2>
-            <P className={`${classPrefix}__description`}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus
-                laoreet velit at tortor tristique sagittis. Cras consequat justo
-                ut enim posuere vestibulum.{" "}
-            </P>{" "}
-            <div className={`${classPrefix}__map`}>
-                <H4>Store locations</H4>
-                <iframe
-                    width="100%"
-                    height="325"
-                    className="gmap_iframe"
-                    src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=University of Oxford&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                />
-            </div>
             <div className={`${classPrefix}__list`}>
                 <div className={`${classPrefix}__item`}>
                     <H5>Headquarters</H5>

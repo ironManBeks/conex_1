@@ -36,12 +36,12 @@
     }
     &_label{
       position: absolute;
-      left: 0;
+      left: space(4);
       top: 50%;
       width: auto;
       margin: 0;
       background: transparent;
-      transform: translate(space(4), -50%);
+      transform: translateY(-50%);
       transform-origin: 0 0;
       transition-property: transform;
       transition: $transition;
@@ -52,7 +52,7 @@
       cursor: text;
       z-index: 3;
       &._activeLabel {
-        transform: translate(space(4), space(-4.5));
+        transform: translateY(space(-4.5));
         font-size: $font-size-xs;
         line-height: $line-height-bs;
       }

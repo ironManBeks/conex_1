@@ -1,42 +1,75 @@
 .form-field_wrapper._textarea{
-  --x-p: 15px;
-  --y-p: 12px;
 
   .form-field{
+    &_field-wrapper{
+      overflow: hidden;
+      border-radius: borderRadius(2);
+      &:hover{
+        .form-field_field{
+          &:not([disabled]){
+            border-color: $icon-color-secondary-active;
+          }
+        }
+      }
+    }
+
     &_field{
       width: 100%;
       height: 100%;
-      background-color: transparent;
-      border: 1px solid $color-grey-250;
-      padding: var(--y-p) var(--x-p) calc((var(--x-p)) * 2);
-      font-size: $font-size-md;
-      line-height: $line-height-md;
-      color: $color-grey-800;
+      background-color: $color-primary-strong;
+      border: 1px solid $border-color-secondary;
+      padding: space(6.5) space(4) space(8.5);
+      border-radius: borderRadius(2);
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-primary;
+      font-weight: 500;
       outline: none !important;
-      border-radius: $border-radius-bs;
-      min-height: 100px;
-      max-height: 300px;
+      min-height: 120px;
+      max-height: 320px;
       &[disabled]{
-        background-color: $color-disabled-bg;
-        border-color: $color-disabled-border;
-        color: $color-disabled-text;
+        background-color: $color-secondary-40;
       }
       &:hover, &:focus{
         box-shadow: none;
         &:not([disabled]){
-          border-color: $color-primary;
+          border-color: $icon-color-secondary-active;
         }
       }
+      &._activeLabel{
+        border-color: $icon-color-secondary-active;
+      }
     }
-  }
-
-  &._error{
-    .form-field_field{
-      border-color: $color-red-250 !important;
-      &:hover, &:focus{
-        &:not([disabled]){
-          border-color: $color-primary !important;
-        }
+    &_label{
+      position: absolute;
+      left: 0;
+      top: space(4);
+      width: calc(100% - 4 * $space);
+      padding-top: 0;
+      margin: 1px 0 0 1px;
+      padding-left: space(4);
+      background: white;
+      border-radius: borderRadius(2);
+      transform: translateY(0);
+      transform-origin: 0 0;
+      transition-property: transform;
+      transition: $transition;
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-secondary;
+      font-weight: 500;
+      cursor: text;
+      z-index: 3;
+      &._activeLabel {
+        transform: translateY(space(-4));
+        font-size: $font-size-xs;
+        line-height: $line-height-bs;
+        padding-top: space(3);
+        padding-bottom: space(1);
+      }
+      &._disabled{
+        cursor: not-allowed;
+        color: $text-color-disabled;
       }
     }
   }
