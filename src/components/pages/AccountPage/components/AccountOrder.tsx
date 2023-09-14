@@ -31,8 +31,7 @@ const segmentAccountOrderMockup: Record<
             orderNumber: "XR-685069050596",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
-            orderStatus: EAccountOrderStatus.processed,
-            moneyStatus: EAccountOrderMoneyStatus.delivered,
+            moneyStatus: EAccountOrderMoneyStatus.processed,
             statusTimelapse: [
                 {
                     time: "Today at 4:34 pm",
@@ -65,7 +64,6 @@ const segmentAccountOrderMockup: Record<
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
             orderStatus: EAccountOrderStatus.delivered,
-            moneyStatus: EAccountOrderMoneyStatus.processed,
             statusTimelapse: [
                 {
                     time: "Today at 4:34 pm",
@@ -73,7 +71,7 @@ const segmentAccountOrderMockup: Record<
                     description: "You used your EUR balance",
                 },
                 {
-                    time: "Today at 4:34 pm",
+                    time: "Your order has been delivered",
                     status: EAccountOrderStatusTimelapse.processed,
                 },
                 {
@@ -88,7 +86,6 @@ const segmentAccountOrderMockup: Record<
             orderNumber: "XR-123",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
-            orderStatus: EAccountOrderStatus.delivered,
             moneyStatus: EAccountOrderMoneyStatus.processed,
             statusTimelapse: [
                 {
@@ -115,7 +112,6 @@ const segmentAccountOrderMockup: Record<
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
             orderStatus: EAccountOrderStatus.delivered,
-            moneyStatus: EAccountOrderMoneyStatus.processed,
             statusTimelapse: [
                 {
                     time: "Today at 4:34 pm",
@@ -138,7 +134,6 @@ const segmentAccountOrderMockup: Record<
             orderNumber: "XR-22222qwdwqeq",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
-            orderStatus: EAccountOrderStatus.delivered,
             moneyStatus: EAccountOrderMoneyStatus.processed,
             statusTimelapse: [
                 {

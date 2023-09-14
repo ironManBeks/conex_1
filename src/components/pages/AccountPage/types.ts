@@ -28,8 +28,8 @@ export type TAccountOrderItem = {
     orderNumber: string;
     dateOfOrder: string;
     orderAddress: string;
-    orderStatus: EAccountOrderStatus;
-    moneyStatus: EAccountOrderMoneyStatus;
+    orderStatus?: EAccountOrderStatus;
+    moneyStatus?: EAccountOrderMoneyStatus;
     statusTimelapse: TOrderStatusTimelapse[];
 };
 
