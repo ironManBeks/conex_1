@@ -20,27 +20,26 @@ const BuilderEndStep: FC<TBuilderCompProps> = inject("store")(
                 <br />
                 <br />
                 <div className={cn(`${classPrefix}__list`)}>
-                    {renderResultDataToOptionsList(resultDoorData).map(
-                        (item, index) => (
-                            <div
-                                key={index}
-                                className={cn(`${classPrefix}__item`)}
-                            >
-                                <H4>{item.title}:</H4>
-                                <ul>
-                                    {item.list.map(
-                                        (listItem, listItemIndex) => (
-                                            <li key={listItemIndex}>
-                                                <b>{listItem.label}</b>
-                                                <span>${listItem.value}</span>
-                                            </li>
-                                        ),
-                                    )}
-                                </ul>
-                                <br />
-                            </div>
-                        ),
-                    )}
+                    {renderResultDataToOptionsList(
+                        resultDoorData,
+                        undefined,
+                        undefined,
+                        undefined,
+                        true,
+                    ).map((item, index) => (
+                        <div key={index} className={cn(`${classPrefix}__item`)}>
+                            <H4>{item.title}:</H4>
+                            <ul>
+                                {item.list.map((listItem, listItemIndex) => (
+                                    <li key={listItemIndex}>
+                                        <b>{listItem.label}</b>
+                                        <span>{listItem.value}</span>
+                                    </li>
+                                ))}
+                            </ul>
+                            <br />
+                        </div>
+                    ))}
                 </div>
             </div>
         );

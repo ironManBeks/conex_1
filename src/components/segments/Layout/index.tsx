@@ -8,6 +8,7 @@ import ModalAuth from "@components/modals/components/ModalAuth";
 import { TLayout } from "./types";
 import DrawerHeader from "@components/drawers/components/DrawerHeader";
 import { IRoot } from "@store/store";
+import Footer from "@components/segments/Footer";
 
 export const Layout: FC<TLayout> = inject("store")(
     observer(
@@ -17,6 +18,7 @@ export const Layout: FC<TLayout> = inject("store")(
             pageClassPrefix,
             headerClassName,
             layoutClassName,
+            footerClassName,
         }) => {
             const classPrefix = "layout";
             const { commonStore } = store as IRoot;
@@ -48,6 +50,10 @@ export const Layout: FC<TLayout> = inject("store")(
                         >
                             {children}
                         </div>
+                        <Footer
+                            pageClassPrefix={pageClassPrefix}
+                            className={footerClassName}
+                        />
                         <ModalAuth />
                         <DrawerHeader />
                     </div>

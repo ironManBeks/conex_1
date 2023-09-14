@@ -21,7 +21,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   letter-spacing: $letter-spacing-bs;
-  background-color: $color-grey-40;
+  background: $color-secondary-40;
   &.disable-scroll {
     overflow: hidden !important;
   }

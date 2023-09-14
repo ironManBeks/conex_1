@@ -302,6 +302,7 @@ export const renderResultDataToOptionsList = (
     ) => void,
     stepHistory?: number[],
     currentStepData?: TNullable<TBuilderStepDataDTO>,
+    renderMainTitle = false,
 ): TAddedOptionsListItem[] => {
     const result: TAddedOptionsListItem[] = [];
     if (!resultDoorData?.length) return result;
@@ -316,14 +317,14 @@ export const renderResultDataToOptionsList = (
                 if (element.value.toLowerCase() !== BUILDER_VALUE_NONE) {
                     list.push({
                         label: element.mainTitle,
-                        value: element.price,
+                        value: element.priceCurrency + element.price,
                     });
                 }
             }
         }
 
         return {
-            title: stepItem.stepTitle,
+            title: renderMainTitle ? stepItem.stepTitle : undefined,
             onClick: () => {
                 if (isFunction(updateCurrentStepData) && stepHistory?.length) {
                     const mainStep = stepHistory[0];

@@ -14,8 +14,8 @@ const HowItWorksItem: FC<THowItWorksItem> = ({
     imgHeight,
 }) => {
     return (
-        <div className={`${classPrefix}_item__wrapper`}>
-            <div className={`${classPrefix}_item__content`}>
+        <div className={`${classPrefix}__item _wrapper`}>
+            <div className={`${classPrefix}__item _content`}>
                 <H4>{title}</H4>
                 {description && <P>{description}</P>}
             </div>

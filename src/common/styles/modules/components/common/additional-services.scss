@@ -1,36 +1,37 @@
 .additional-services{
+
   &_wrapper{
-    padding-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: space(3);
+    padding-top: space(3);
+    border-top: 1px solid $border-color-secondary;
+    .common-title, .common-text{
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      margin-bottom: 0;
+    }
+    .common-title{
+      padding-right: 15px;
+      color: $text-color-secondary;
+    }
+    .common-text{
+      font-weight: 500;
+    }
   }
+
   &_item{
     display: flex;
     justify-content: space-between;
     &:not(:last-of-type){
-      margin-bottom: 12px;
-    }
-    .common-text, .common-title{
-      font-size: $font-size-bs;
-      line-height: $line-height-bs;
-      font-family: $font-family-primary;
-    }
-    .common-text{
-      margin-bottom: 0;
-      color: $color-grey-800;
-    }
-    .common-title{
-      padding-right: 15px;
-      color: rgba(94, 94, 94, 0.63);
+      margin-bottom: space(3);
     }
   }
+
   &_total{
-    margin-top: 20px;
-    .common-text, .common-title {
+    .common-text {
       font-size: $font-size-md;
-      line-height: $line-height-md;
-      font-family: $font-family-primary;
-    }
-    .common-title{
-      color: $color-grey-800;
     }
   }
+
 }

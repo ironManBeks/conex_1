@@ -2,17 +2,19 @@
   &_item{
     &__wrapper{
       position: relative;
-      margin-bottom: 10px;
+      &:not(:last-of-type){
+        margin-bottom: space(3);
+      }
       &:before{
         position: absolute;
         content: '';
-        background: $color-grey-50;
+        background: $color-secondary-40;
         top: -5px;
         bottom: -5px;
         right: -5px;
         left: -5px;
         opacity: 0;
-        border-radius: $border-radius-md;
+        border-radius: borderRadius(2);
         transition: .2s;
       }
       &._clickable{
@@ -31,47 +33,40 @@
     }
     &__title{
       position: relative;
-      margin-bottom: 10px;
-      padding-left: 16px;
+      margin-bottom: space(3);
+      padding-left: space(4);
       font-size: $font-size-md;
       line-height: $line-height-md;
-      font-family: $font-family-primary;
-      color: $color-orange-600;
-      &:before{
-        position: absolute;
-        content: '';
-        left: 0;
-        top: calc($line-height-md / 2);
-        transform: translateY(-50%);
-        width: 8px;
-        height: 8px;
-        background-color: $color-yellow-500;
-      }
     }
     &__list{
       position: relative;
-      .common-text{
-        font-size: $font-size-md;
-        line-height: $line-height-md;
-        display: flex;
-        justify-content: flex-end;
-        flex-wrap: wrap;
-        font-weight: 300;
-        text-align: right;
-        word-break: break-word;
-        margin-bottom: 10px;
-        &:last-of-type{
-          margin-bottom: 0;
-        }
-      }
-      .label{
-        color: $color-grey-500;
-      }
-      .value{
-        padding-left: 15px;
-        color: $color-grey-700;
-        flex: 0 0 auto;
-      }
+      display: flex;
+      flex-direction: column;
+      gap: space(3);
     }
   }
+
+  &_sub-item__wrapper{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    .common-title, .common-text{
+      margin-bottom: 0;
+      font-weight: 500;
+    }
+    .common-title{
+      padding-right: 15px;
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-secondary;
+      word-break: break-word;
+    }
+    .common-text{
+      font-size: $font-size-sm;
+      line-height: $line-height-md;
+      text-align: right;
+      flex: 0 0 auto;
+    }
+  }
+
 }

@@ -10,6 +10,7 @@ import { TBuilderCompProps } from "../types";
 import { IRoot } from "@store/store";
 import { renderResultDataToOptionsList } from "@helpers/builderHelper";
 import { H3 } from "@components/Text";
+import { isEmpty, isString } from "lodash";
 
 const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -36,10 +37,12 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
         const getTotal = (): number => {
             return resultDataToOptionsList().reduce(
                 (accumulator, currentValue) => {
-                    const fieldPrice = currentValue.list.reduce(
-                        (acc, cur) => acc + Number(cur.value),
-                        0,
-                    );
+                    const fieldPrice = currentValue.list.reduce((acc, cur) => {
+                        const val: number = isString(cur.value)
+                            ? parseFloat(cur.value.replace(/\*|%|#|&|\$/g, ""))
+                            : cur.value;
+                        return acc + parseFloat(val.toFixed(2));
+                    }, 0);
                     return accumulator + fieldPrice;
                 },
                 0,
@@ -51,20 +54,31 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
             value: `$${getTotal()}`,
         };
 
-        const optionsList = useMemo(
-            () => <AddedOptionsList optionsList={resultDataToOptionsList()} />,
-            [resultDoorData, stepHistory, currentStepData],
-        );
-
         return (
-            <div className={cn(`${classPrefix}__wrapper`)}>
+            <div
+                className={cn(`${classPrefix}__wrapper`)}
+                style={{ paddingTop: !isEmpty(currentStepData) ? "96px" : 0 }}
+            >
                 <div className={cn(`${classPrefix}__inner-wrapper`)}>
                     <H3 className={cn(`${classPrefix}__title`)}>
                         Price Estimate
                     </H3>
-                    {optionsList}
+                    <AddedOptionsList optionsList={resultDataToOptionsList()} />
                     <AdditionalServices
-                        options={[]}
+                        options={
+                            !isEmpty(resultDoorData)
+                                ? [
+                                      {
+                                          label: "Shipping cost",
+                                          value: "$123.00",
+                                      },
+                                      {
+                                          label: "Additional charges and more big text with big price",
+                                          value: "$123456.99",
+                                      },
+                                  ]
+                                : []
+                        }
                         totalOption={additionalServicesTotalOption}
                     />
                 </div>
