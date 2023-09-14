@@ -33,6 +33,7 @@ export interface IBuilderElementDataDTO {
 export interface IBuilderFieldDataDTO {
     id: number;
     fieldTitle: string;
+    fieldTitleSize: "small" | "big";
     fieldType: EBuilderFieldTypes;
     subfieldName: TNullable<string>;
     fieldWidth: number;
