@@ -74,6 +74,7 @@
 
   &.__transparent{
     background-color: transparent;
+    padding: 0;
     &:hover {
       color: $color-accent-strong;
       svg path {

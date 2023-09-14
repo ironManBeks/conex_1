@@ -9,6 +9,7 @@ import { TAdditionalServicesOption } from "@components/globalComponents/types";
 import { TBuilderCompProps } from "../types";
 import { IRoot } from "@store/store";
 import { renderResultDataToOptionsList } from "@helpers/builderHelper";
+import { H3 } from "@components/Text";
 
 const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -58,6 +59,9 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
         return (
             <div className={cn(`${classPrefix}__wrapper`)}>
                 <div className={cn(`${classPrefix}__inner-wrapper`)}>
+                    <H3 className={cn(`${classPrefix}__title`)}>
+                        Price Estimate
+                    </H3>
                     {optionsList}
                     <AdditionalServices
                         options={[]}

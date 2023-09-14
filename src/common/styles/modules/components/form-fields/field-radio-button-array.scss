@@ -1,9 +1,6 @@
 .form-field_wrapper._radiobuttonarray{
-  --x-p: 15px;
-  --y-p: 10px;
-  --bg-color: transparent;
-  --wrapper-mb: 20px;
-  --item-mb: 10px;
+  --wrapper-mb: space(5);
+  --item-mb: space(4);
 
   margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
 
@@ -12,45 +9,43 @@
       .ant-radio-group{
         display: flex;
         flex-wrap: wrap;
-        justify-content: center;
-        column-gap: 20px;
+        gap: space(5);
       }
     }
     &_field{
       display: flex;
+      justify-content: center;
       align-items: center;
       height: auto;
       margin-bottom: var(--item-mb);
-      padding: var(--y-p) var(--x-p);
-      border-radius: $border-radius-bs;
-      border: 1px solid $color-grey-250;
-      background-color: var(--bg-color);
-      box-shadow: $box-shadow-bs;
-      font-size: $font-size-md;
-      line-height: $line-height-md;
-      color: $color-grey-800;
-      min-width: 150px;
-      justify-content: center;
+      padding: space(3) space(7);
+      background-color: $color-primary-strong;
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+      color: $text-color-primary;
+      border: 2px solid $border-color-secondary;
+      font-weight: 500;
       text-align: center;
+      border-radius: borderRadius(2);
+      min-width: 150px;
       &:before{
         display: none;
       }
       &:hover{
-        border-color: $color-primary;
-        box-shadow: $box-shadow-bs-hover;
+        border-color: $box-shadow-sm;
+        box-shadow: $box-shadow-sm;
       }
       &:active{
         border-color: $color-primary;
       }
       &.ant-radio-button-wrapper{
         &-checked{
-          background-color: $color-primary;
-          border-color: $color-primary;
-          color: $color-white;
-          box-shadow: $box-shadow-bs;
+          border-color: $border-color-accent;
+          box-shadow: none;
           &:hover, &:active, &:focus{
-            background-color: $color-primary;
+            background-color: $color-primary-strong;
             border-color: $color-primary;
+            color: $text-color-primary;
           }
         }
         &-disabled{

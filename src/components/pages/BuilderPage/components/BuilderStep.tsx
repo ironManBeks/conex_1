@@ -44,6 +44,10 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             fieldRequired,
         } = currentStepData?.attributes;
 
+        useEffect(() => {
+            console.log("currentStepData", toJS(currentStepData));
+        }, ["currentStepData"]);
+
         const [confirmToChange, setConfirmToChange] = useState(false);
 
         const classPrefix = `builder-step`;
@@ -137,10 +141,6 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                 // @ts-ignore
                                 (item: IBuilderFieldDataDTO, index) => {
-                                    console.log(
-                                        "fieldTitleSize",
-                                        fieldTitleSize,
-                                    );
                                     return (
                                         <div
                                             key={index}

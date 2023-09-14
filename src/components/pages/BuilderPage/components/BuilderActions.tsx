@@ -228,7 +228,13 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__inner-wrapper`}>
                     {!!stepHistory.length && (
-                        <ButtonPrimary onClick={handleBack}>Back</ButtonPrimary>
+                        <ButtonPrimary
+                            onClick={handleBack}
+                            size={EButtonSize.lg}
+                            color={EButtonColor.secondary}
+                        >
+                            Back
+                        </ButtonPrimary>
                     )}
                     <ButtonPrimary
                         onClick={() => {
@@ -236,16 +242,17 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             resetAllBuilderData(true);
                         }}
                         color={EButtonColor.transparent}
-                        size={EButtonSize.sm}
+                        size={EButtonSize.lg}
                         style={{
-                            marginLeft: stepHistory.length ? 20 : 0,
+                            marginLeft: stepHistory.length ? 24 : 0,
                         }}
                     >
                         Reset form
                     </ButtonPrimary>
                     <ButtonPrimary
-                        color={EButtonColor.primary}
                         onClick={handleNext()}
+                        color={EButtonColor.primary}
+                        size={EButtonSize.lg}
                         style={{
                             marginLeft: "auto",
                         }}
