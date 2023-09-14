@@ -4,7 +4,6 @@
       margin-bottom: 15px;
       font-size: $font-size-md;
       line-height: $line-height-md;
-      font-family: $font-family-primary;
       color: $color-grey-850;
     }
   }
@@ -50,7 +49,6 @@
       color: #898989;
       font-size: $font-size-md;
       line-height: $line-height-md;
-      font-family: $font-family-primary;
       &:before{
         position: absolute;
         content: '';

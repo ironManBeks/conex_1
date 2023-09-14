@@ -1,18 +1,14 @@
 import { FC, useEffect, useRef, useState } from "react";
 import MaskedInput from "react-text-mask";
-
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 import { isFunction } from "lodash";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
-import { IconEdit } from "@components/Icons";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputMaskController } from "./types";
-import { EButtonColor } from "@components/buttons/types";
 
 const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const {
@@ -42,6 +38,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<MaskedInput>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
+    const [focus, setFocus] = useState(false);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
@@ -60,6 +57,11 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
             name={name}
             control={control}
             render={({ field }) => {
+                if (field.value) {
+                    setIsLabelActive(true);
+                } else if (!focus && !field.value) {
+                    setIsLabelActive(false);
+                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}
@@ -89,6 +91,13 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                             ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
+                                { _floatingLabel: isFloatingLabel && label },
+                                {
+                                    _activeLabel:
+                                        isFloatingLabel &&
+                                        label &&
+                                        isLabelActive,
+                                },
                             )}
                             value={field.value}
                             onChange={(e) => {
@@ -100,14 +109,13 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                                 if (onChangeValue) onChangeValue(val);
                             }}
                             onFocus={() => {
+                                setFocus(true);
                                 setIsLabelActive(true);
                             }}
-                            onBlur={(e) => {
-                                if (!e.target.value) {
-                                    setIsLabelActive(false);
-                                }
+                            onBlur={() => {
+                                setFocus(false);
+                                setIsLabelActive(false);
                             }}
-                            disabled={disabled}
                             style={{
                                 ...style,
                                 paddingRight: addonAfterWidth
@@ -120,6 +128,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                                     : placeholder
                             }
                             readOnly={propsReadOnly}
+                            disabled={disabled}
                         />
                         {addonAfter && (
                             <div

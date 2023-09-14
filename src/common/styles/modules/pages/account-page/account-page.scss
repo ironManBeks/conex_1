@@ -222,7 +222,7 @@
     }
     &__item{
       &._wrapper{
-        width: calc(50% - 6 * $spase);
+        width: calc(50% - 6 * $space);
       }
       &._inner-wrapper{
         display: flex;
@@ -333,7 +333,7 @@
               width: 2px;
               height: 24px;
               padding: 0;
-              top: calc(100% + 2 * $spase);
+              top: calc(100% + 2 * $space);
               left: 12px;
               background: $color-secondary-120;
               &:after{

@@ -19,9 +19,9 @@
 }
 
 @function space($value){
-  @return calc(#{$spase} * #{$value});
+  @return calc(#{$space} * #{$value});
 }
 
 @function borderRadius($value){
-  @return calc(#{$spase} * #{$value});
+  @return calc(#{$space} * #{$value});
 }

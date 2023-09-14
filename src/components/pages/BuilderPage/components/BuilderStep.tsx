@@ -121,8 +121,6 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                     _required: fieldRequired,
                 })}
             >
-                {/*{<b>id: {currentStepData?.id}</b>}*/}
-
                 {fieldTitle && (
                     <H3
                         className={cn(`${classPrefix}_title`, {
