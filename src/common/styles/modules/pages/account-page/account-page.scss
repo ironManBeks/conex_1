@@ -246,17 +246,27 @@
         }
       }
       &._title{
-        display: flex;
-        font-size: $font-size-lg;
-        line-height: $line-height-lg;
         font-weight: 700;
-        b{
-         flex: 0 0 auto;
-          margin-right: space(1);
-        }
         .common-title{
           display: flex;
+          margin-bottom: space(3);
+          font-size: $font-size-lg;
+          line-height: $line-height-lg;
+          b{
+            flex: 0 0 auto;
+            margin-right: space(1);
+          }
+        }
+        .common-text{
+          display: flex;
           align-items: center;
+          font-size: $font-size-sm;
+          line-height: $line-height-md;
+          margin-bottom: 0;
+          margin-left: space(-1.5);
+          .common-icon{
+            margin-right: space(2);
+          }
         }
       }
       &._info{

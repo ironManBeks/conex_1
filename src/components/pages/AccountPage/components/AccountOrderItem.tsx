@@ -66,6 +66,8 @@ const AccountOrderItem: FC<
         }, 300);
     }, [statusRef, statusRef?.current?.getBoundingClientRect().height]);
 
+    // const getCurrent
+
     return (
         <div className={cn(`${classPrefix} _wrapper`)}>
             <div
@@ -74,12 +76,25 @@ const AccountOrderItem: FC<
                 })}
             >
                 <div className={cn(`${classPrefix} _title`)}>
-                    <b>Order №</b>
                     <H4>
+                        <b>Order №</b>
                         {orderNumber}
                         <CopyText text={orderNumber} />
                     </H4>
+                    {moneyStatus && (
+                        <P>
+                            <IconPoint color="#FFD700" />
+                            Your money’s being {moneyStatus}
+                        </P>
+                    )}
+                    {orderStatus && (
+                        <P>
+                            <IconPoint color="#108700" />
+                            Your order has been {orderStatus}
+                        </P>
+                    )}
                 </div>
+
                 <div className={cn(`${classPrefix} _info`)}>
                     <OrderInfoItem
                         title={`Order ${dateOfOrder}`}
@@ -168,7 +183,6 @@ const OrderStatusTimeLapse = ({
     statusTimelapse: TOrderStatusTimelapse[];
 }) => {
     const classPrefix = "order-status-timelapse";
-    const description = "This is a description.";
 
     const currentStep: number | undefined = undefined;
 
