@@ -121,7 +121,7 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                     _required: fieldRequired,
                 })}
             >
-                {<b>id: {currentStepData?.id}</b>}
+                {/*{<b>id: {currentStepData?.id}</b>}*/}
 
                 {fieldTitle && (
                     <H3
@@ -139,6 +139,10 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                                 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                                 // @ts-ignore
                                 (item: IBuilderFieldDataDTO, index) => {
+                                    console.log(
+                                        "fieldTitleSize",
+                                        fieldTitleSize,
+                                    );
                                     return (
                                         <div
                                             key={index}
@@ -156,7 +160,10 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                                                 <H3
                                                     className={cn(
                                                         `${classPrefix}_title`,
-                                                        "_small",
+                                                        {
+                                                            [`_${item.fieldTitleSize}`]:
+                                                                item.fieldTitleSize,
+                                                        },
                                                     )}
                                                 >
                                                     {item.fieldTitle}

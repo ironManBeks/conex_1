@@ -54,6 +54,10 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             setEndDoorData,
         } = builderStore;
 
+        useEffect(() => {
+            console.log("123123", toJS(currentStepData));
+        }, [currentStepData]);
+
         const handleBack = () => {
             updateCurrentStepData("prev");
             const curr = currentStepData?.attributes.fieldName;
