@@ -73,7 +73,7 @@ export type TAddressSelection = {
     TFormItemLabel;
 
 export type TAddedOptionsListItem = {
-    title: string;
+    title?: string;
     list: { label: string; value: string | number }[];
     onClick?: () => void;
     isActive?: boolean;

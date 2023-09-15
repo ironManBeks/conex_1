@@ -5,31 +5,26 @@ import { H2 } from "@components/Text";
 import ButtonLink from "@components/buttons/ButtonLink";
 import Container from "@components/globalComponents/Container";
 
-import { PATH_CONTACTS_US_PAGE } from "@consts/pathsConsts";
+import { PATH_BUILDER_PAGE } from "@consts/pathsConsts";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { EButtonColor } from "@components/buttons/types";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 
 const HomeCallUs: FC<TSectionTypes> = ({ pageClassPrefix }) => {
-    const classPrefix = "call-us";
+    const classPrefix = `${pageClassPrefix}_call-us`;
 
     return (
-        <div className={cn(`${pageClassPrefix}_${classPrefix}__wrapper`)}>
+        <div className={cn(`${classPrefix}__wrapper`)}>
             <Container>
-                <div
-                    className={cn(`${pageClassPrefix}_${classPrefix}__content`)}
-                >
-                    <H2
-                        className={cn(
-                            `${pageClassPrefix}_${classPrefix}__title`,
-                        )}
-                    >
+                <div className={cn(`${classPrefix}__content`)}>
+                    <H2 className={cn(`${classPrefix}__title`)}>
                         Don’t know what are you looking for?
                     </H2>
                     <ButtonLink
-                        href={PATH_CONTACTS_US_PAGE}
+                        href={PATH_BUILDER_PAGE}
                         color={EButtonColor.primary}
+                        size={EButtonSize.lg}
                     >
-                        Call us
+                        Door builder{" "}
                     </ButtonLink>
                 </div>
             </Container>

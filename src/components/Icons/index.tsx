@@ -21,6 +21,7 @@ import IconLogout from "./common/IconLogout";
 import IconCalendar from "./common/IconCalendar";
 import IconPoint from "./common/IconPoint";
 import IconLinePoint from "./common/IconLinePoint";
+import IconUser from "./common/IconUser";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
@@ -58,4 +59,5 @@ export {
     IconCalendar,
     IconPoint,
     IconLinePoint,
+    IconUser,
 };

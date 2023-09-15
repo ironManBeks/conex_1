@@ -17,7 +17,6 @@ import {
     BUILDER_HISTORY,
     BUILDER_QUEUE,
 } from "@consts/storageNamesContsts";
-import { toJS } from "mobx";
 
 const BuilderForm: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -51,10 +50,6 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             }
         }, [stepHistory]);
 
-        // useEffect(() => {
-        //     console.log("resultDoorData", toJS(resultDoorData));
-        // }, [resultDoorData?.length, resultDoorData]);
-
         useEffect(() => {
             if (
                 !isNil(currentStepId) &&
@@ -67,7 +62,7 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
         return (
             <FormProvider {...methods}>
                 <form action="">
-                    <BuilderProgress pageClassPrefix={pageClassPrefix} />
+                    {/*<BuilderProgress pageClassPrefix={pageClassPrefix} />*/}
                     <div className={`${pageClassPrefix}_content__wrapper`}>
                         <div
                             className={`${pageClassPrefix}_left-side__wrapper`}

@@ -1,9 +1,10 @@
 import { FC } from "react";
 import cn from "classnames";
+import { isFunction } from "lodash";
+
+import { H4, H5, P } from "@components/Text";
 
 import { TAddedOptionsList } from "./types";
-import { H4, P } from "@components/Text";
-import { isFunction } from "lodash";
 
 const AddedOptionsList: FC<TAddedOptionsList> = ({
     className,
@@ -29,21 +30,20 @@ const AddedOptionsList: FC<TAddedOptionsList> = ({
                             }
                         }}
                     >
-                        <H4 className={`${classPrefix}_item__title`}>
-                            {item.title}
-                        </H4>
+                        {item.title && (
+                            <H4 className={`${classPrefix}_item__title`}>
+                                {item.title}
+                            </H4>
+                        )}
                         <div className={`${classPrefix}_item__list`}>
                             {item.list.map((subItem, subIndex) => (
-                                <P key={subIndex}>
-                                    <span className="label">
-                                        {subItem.label}
-                                    </span>
-                                    <span className="value">
-                                        {typeof subItem.value === "number"
-                                            ? `$${subItem.value}`
-                                            : subItem.value}
-                                    </span>
-                                </P>
+                                <div
+                                    key={subIndex}
+                                    className={`${classPrefix}_sub-item__wrapper`}
+                                >
+                                    <H5>{subItem.label}</H5>
+                                    <P>{subItem.value}</P>
+                                </div>
                             ))}
                         </div>
                     </div>

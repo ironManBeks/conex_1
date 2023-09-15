@@ -1,106 +1,86 @@
 .home-page {
 
-  &_layout__inner-wrapper{
-    padding-bottom: 300px;
-  }
-
   &_main-banner {
     &__wrapper{
-      padding: 60px 0 35px;
+      padding: space(20) 0;
+    }
+    &__image{
+      width: 60%;
+      .img-custom_wrapper{
+        height: 400px;
+      }
     }
     &__content{
-      text-align: center;
+      width: 40%;
       display: flex;
       flex-direction: column;
-      align-items: center;
-      .common-btn{
-        margin-right: 15px;
-        margin-bottom: 15px;
-      }
+      justify-content: center;
+      gap: space(5);
       .common-title{
-        font-size: $main-banner-font-size;
-        margin-bottom: 45px;
-      }
-      .img-custom_wrapper{
-        margin-bottom: 55px;
-      }
-      .common-btn{
-        width: 100%;
-        max-width: 380px;
-        color: #F7F4EE;
+        font-size: $font-size-xxl;
+        line-height: $line-height-xxl;
       }
       .common-text{
-        font-size: $font-size-lg;
+        margin-bottom: 0;
+        font-size: $font-size-bs;
         line-height: $line-height-lg;
-        color: $color-grey-550;
-        margin-bottom: 35px;
+        font-weight: 500;
       }
     }
   }
 
   &_how-it-works{
     &__wrapper{
-      padding: 35px 0;
+      padding: space(10) 0 space(20);
     }
     &__title{
-      margin-bottom: 80px;
-      font-size: $secondary-banner-font-size;
-      text-align: center;
-    }
-    &__description{
-      margin-bottom: 0;
-      font-size: $font-size-xlllll;
-      line-height: $line-height-lg;
-      color: $color-grey-550;
+      margin-bottom: space(10);
+      font-size: $font-size-xxl;
+      line-height: $line-height-xxl;
       text-align: center;
     }
     &__list{
       display: flex;
       justify-content: space-between;
-      margin-bottom: 65px;
-      .how-it-works_item__wrapper{
+    }
+    &__item{
+      &._wrapper{
         width: 100%;
         .common-title{
-          margin-bottom: 10px;
+          margin-bottom: space(4);
           font-size: $font-size-lg;
           line-height: $line-height-lg;
         }
         .common-text{
-          margin-bottom: 35px;
           font-size: $font-size-bs;
           line-height: $line-height-lg;
-          color: $color-grey-500;
-          font-weight: 300;
+          font-weight: 500;
+          color:  $text-color-secondary;
+          margin-bottom: space(4);
         }
         .img-custom_wrapper{
+          margin-top: space(10);
           margin-left: auto;
         }
       }
     }
     &__column{
-      width: calc(33% - 45px);
+      width: calc(33% - 10 * $space);
     }
   }
 
   &_call-us{
     &__wrapper{
-      padding: 35px 0;
-      text-align: center;
-      .common-btn{
-        width: 100%;
-        max-width: 380px;
-        font-size: $font-size-xlllll;
-        line-height: $line-height-lg;
-        color: $color-blue-800;
-      }
+      padding: space(10) 0;
     }
     &__content{
       width: 100%;
+      display: flex;
+      justify-content: space-between;
     }
     &__title{
-      margin-bottom: 80px;
-      font-size: $secondary-banner-font-size;
-      text-align: center;
+      font-size: $font-size-xxl;
+      line-height: $line-height-xxl;
     }
   }
 

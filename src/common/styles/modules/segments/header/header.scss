@@ -7,6 +7,7 @@
     background-color: $color-white;
     box-shadow: $box-shadow-md;
     z-index: $z-index-header;
+    padding: space(5) 0;
   }
 
   &_left-side{
@@ -15,6 +16,12 @@
 
   &_logo{
     margin-right: 100px;
+    display: flex;
+    align-items: center;
+    transition: $transition;
+    &:hover{
+      opacity: .8;
+    }
   }
 
   &_nav-links{
@@ -33,15 +40,6 @@
               color: $color-primary;
             }
           }
-          &._builder{
-            a{
-              color: $color-grey-600;
-              span{
-                transition: .3s;
-                padding: 0 5px;
-              }
-            }
-          }
         }
       }
     }
@@ -50,66 +48,43 @@
   &_nav-actions{
     &__wrapper{
       display: flex;
-
+      gap: space(4);
       .nav-actions{
-        &_search{
+        &_item{
           &__wrapper{
             display: flex;
+            flex-direction: column;
             align-items: center;
-            max-width: 220px;
-            margin-left: 28px;
-            form{
-              width: 100%;
-            }
-            .form-field{
-              &_wrapper{
-                margin: 0;
-              }
-              &_field{
-                font-size: $font-size-bs;
-                line-height: $line-height-bs;
-                padding-top: 6px;
-                padding-bottom: 6px;
-              }
-            }
-          }
-        }
-        &_cart{
-          &__wrapper{
-            display: flex;
-            align-items: center;
-            margin-left: 28px;
+            gap: space(1);
+            padding: 0 space(2);
             &:hover{
-              cursor: pointer;
-              .common-title{
-                color: $color-yellow-500;
+              .common-icon {
+                opacity: 1;
+                path{
+                  fill: $color-accent-strong;
+                }
+              }
+              .common-text{
+                color: $color-accent-strong;
               }
             }
-          }
-          &__icon{
-            width: 27px;
-            height: 27px;
-            background-color: $color-grey-200;
-            border-radius: $border-radius-circle;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            flex: 0 0 auto;
-          }
-          &__content{
-            margin-left: 15px;
-            text-align: center;
-            .common-title{
-              font-size: $font-size-bs;
-              font-family: $font-family-primary;
-              color: $color-grey-900;
-              transition: .3s;
+            .common-icon {
+              opacity: .4;
+              transition: $transition;
+              path{
+                transition: $transition;
+              }
             }
             .common-text{
-              color: $color-grey-450;
               font-size: $font-size-xs;
-              font-weight: 400;
-              margin-bottom: 0;
+              line-height: $line-height-bs;
+              color: $text-color-secondary;
+              font-weight: 500;
+              transition: $transition;
+              margin: 0;
+              a{
+                color: inherit;
+              }
             }
           }
         }

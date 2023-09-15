@@ -1,3 +1,35 @@
 .footer{
+  &_wrapper{
+    padding: space(4) 0;
+    --specific-color: #1572FD;
 
+    div{
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: space(6);
+    }
+    .common-text{
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      font-weight: 500;
+      color: $text-color-secondary;
+      margin-bottom: 0;
+      a{
+        color: inherit;
+        border-bottom: 1px solid transparent;
+        &:hover{
+          color: $text-color-primary;
+          border-color: $color-secondary-strong;
+        }
+        &._specific{
+          color: var(--specific-color);
+          &:hover{
+            color: var(--specific-color);
+            border-color: var(--specific-color);
+          }
+        }
+      }
+    }
+  }
 }
