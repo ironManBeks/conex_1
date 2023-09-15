@@ -4,7 +4,7 @@ import Link from "next/link";
 import { inject, observer } from "mobx-react";
 
 import Container from "@components/globalComponents/Container";
-import { IconBurger } from "@components/Icons";
+import { IconBurger, LogoMain } from "@components/Icons";
 import NavLinks from "../components/NavLinks";
 import NavActions from "../components/NavActions";
 
@@ -70,7 +70,9 @@ const Header: FC<THeader> = inject("store")(
                                 <>
                                     <div className={cn(`${classPrefix}_logo`)}>
                                         <Link href={PATH_HOME_PAGE}>
-                                            <a>LOGO</a>
+                                            <a>
+                                                <LogoMain />
+                                            </a>
                                         </Link>
                                     </div>
                                     <NavLinks

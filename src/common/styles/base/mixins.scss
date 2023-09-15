@@ -3,18 +3,16 @@
   align-items: center;
   position: relative;
   height: 100%;
-  padding: 28px 20px;
-  font-size: $font-size-lg;
+  padding: space(2) space(4);
+  font-size: $font-size-bs;
   line-height: $line-height-lg;
-  color: $color-black-300;
+  color: $text-color-primary;
+  font-weight: 700;
   text-decoration: none;
-  border-radius: 5px;
+  border-radius: space(2);
   cursor: pointer;
   &:hover{
-    color: $color-primary;
-    span{
-      color: $color-primary;
-    }
+    color: $color-accent-strong;
   }
 }
 

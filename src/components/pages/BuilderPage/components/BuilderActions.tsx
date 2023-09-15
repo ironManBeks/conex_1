@@ -227,15 +227,22 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__inner-wrapper`}>
-                    {!!stepHistory.length && (
-                        <ButtonPrimary
-                            onClick={handleBack}
-                            size={EButtonSize.lg}
-                            color={EButtonColor.secondary}
-                        >
-                            Back
-                        </ButtonPrimary>
-                    )}
+                    <ButtonPrimary
+                        onClick={handleBack}
+                        size={EButtonSize.lg}
+                        color={EButtonColor.secondary}
+                        disabled={!stepHistory.length}
+                    >
+                        Back
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        onClick={handleNext()}
+                        color={EButtonColor.primary}
+                        size={EButtonSize.lg}
+                        disabled={!isValid}
+                    >
+                        {isEmpty(endDoorData) ? "Next" : "Create order"}
+                    </ButtonPrimary>
                     <ButtonPrimary
                         onClick={() => {
                             handleClearBuilderStorage();
@@ -244,21 +251,10 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                         color={EButtonColor.transparent}
                         size={EButtonSize.lg}
                         style={{
-                            marginLeft: stepHistory.length ? 24 : 0,
-                        }}
-                    >
-                        Reset form
-                    </ButtonPrimary>
-                    <ButtonPrimary
-                        onClick={handleNext()}
-                        color={EButtonColor.primary}
-                        size={EButtonSize.lg}
-                        style={{
                             marginLeft: "auto",
                         }}
-                        disabled={!isValid}
                     >
-                        {isEmpty(endDoorData) ? "Next" : "Create order"}
+                        Reset form <sup>(remove in future)</sup>
                     </ButtonPrimary>
                 </div>
                 <ModalConfirm
