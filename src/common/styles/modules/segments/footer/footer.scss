@@ -22,13 +22,6 @@
           color: $text-color-primary;
           border-color: $color-secondary-strong;
         }
-        &._specific{
-          color: var(--specific-color);
-          &:hover{
-            color: var(--specific-color);
-            border-color: var(--specific-color);
-          }
-        }
       }
     }
   }

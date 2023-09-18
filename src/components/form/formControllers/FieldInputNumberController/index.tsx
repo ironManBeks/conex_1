@@ -1,5 +1,5 @@
-import { FC, useEffect, useRef, useState } from "react";
-import { InputNumber as AntInputNumber, InputRef } from "antd";
+import { FC, useRef, useState } from "react";
+import { InputNumber as AntInputNumber } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 
@@ -11,6 +11,7 @@ import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputNumberController } from "./types";
 import { EArrowDirection } from "@components/Icons/types";
+import { isNil } from "lodash";
 
 const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
     const {
@@ -31,6 +32,7 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
     const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<HTMLInputElement | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
+    const [focus, setFocus] = useState(false);
 
     const focusOnField = () => {
         if (fieldRef.current) {
@@ -38,23 +40,22 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
         }
     };
 
-    useEffect(() => {
-        console.log("fieldRef?.current", fieldRef);
-        if (fieldRef?.current?.value) {
-            setIsLabelActive(true);
-        }
-    }, [fieldRef?.current]);
-
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
+                if (!isNil(field.value)) {
+                    setIsLabelActive(true);
+                } else if (!focus && !field.value) {
+                    setIsLabelActive(false);
+                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.inputNumber}
                         errorMessage={errorMessage}
                         label={label}
+                        isFloatingLabel={isFloatingLabel}
                         wrapperClassName={cn(wrapperClassName)}
                     >
                         {isFloatingLabel && label && (
@@ -75,8 +76,8 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                             ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                { _floatingLabel: isFloatingLabel && label },
                                 {
+                                    _floatingLabel: isFloatingLabel && label,
                                     _activeLabel:
                                         isFloatingLabel &&
                                         label &&
@@ -90,27 +91,27 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                                 if (onChangeValue) onChangeValue(value);
                             }}
                             onFocus={() => {
+                                setFocus(true);
                                 setIsLabelActive(true);
                             }}
-                            onBlur={(e) => {
-                                if (!e.target.value) {
-                                    setIsLabelActive(false);
-                                }
+                            onBlur={() => {
+                                setFocus(false);
+                                setIsLabelActive(false);
                             }}
-                            disabled={disabled}
                             placeholder={
                                 isFloatingLabel && label
                                     ? undefined
                                     : placeholder
                             }
+                            disabled={disabled}
                             controls={{
                                 upIcon: (
-                                    <IconArrowSingle width={5} height={5} />
+                                    <IconArrowSingle width={12} height={12} />
                                 ),
                                 downIcon: (
                                     <IconArrowSingle
-                                        width={5}
-                                        height={5}
+                                        width={12}
+                                        height={12}
                                         direction={EArrowDirection.bottom}
                                     />
                                 ),

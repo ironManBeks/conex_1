@@ -1,40 +1,37 @@
 .form-field_wrapper._inputnumber{
-  --x-p: 10px;
-  --y-p: 8px;
-  --bg-color: transparent;
   .form-field{
     &_field{
       width: 100%;
       height: 100%;
-      background-color: var(--bg-color);
-      border: 1px solid $color-grey-250;
-      font-size: $font-size-md;
-      line-height: $line-height-md;
-      color: $color-grey-800;
+      background-color: $color-primary-strong;
+      border: 1px solid $border-color-secondary;
+      padding: 0;
+      border-radius: borderRadius(2);
       outline: none !important;
-      overflow: hidden;
-      border-radius: $border-radius-bs;
       &:hover{
         &:not(&.ant-input-number-disabled){
-          border-color: $color-primary;
+          border-color: $icon-color-secondary-active;
         }
       }
       &.ant-input-number{
         &-focused{
           box-shadow: none;
           outline: none;
-          border-color: $color-primary;
+          border-color: $icon-color-secondary-active;
         }
         &-disabled{
-          background-color: $color-disabled-bg;
-          border-color: $color-disabled-border;
-          color: $color-disabled-text;
+          background-color: $color-secondary-40;
         }
       }
       .ant-input-number{
         &-input{
-          padding: var(--y-p) var(--x-p);
+          padding: space(6.5) space(4) space(2.5);
           height: auto;
+          overflow: hidden;
+          font-size: $font-size-bs;
+          line-height: $line-height-lg;
+          color: $text-color-primary;
+          font-weight: 500;
         }
         &-handler{
           border: 0;
@@ -44,22 +41,29 @@
           }
           &-wrap{
             opacity: 1;
-            width: 20px;
+            width: 24px;
+            border-radius: 0 borderRadius(2) borderRadius(2) 0;
+          }
+          &-up{
+            border-top-right-radius: borderRadius(2);
+          }
+          &-down{
+            border-bottom-right-radius: borderRadius(2);
           }
           &-up-inner, &-down-inner{
-            right: 4px;
+            right: 6px;
           }
         }
       }
     }
     &_label{
       position: absolute;
-      left: 0;
+      left: space(4);
       top: 50%;
       width: auto;
       margin: 0;
       background: transparent;
-      transform: translate(space(4), -50%);
+      transform: translateY(-50%);
       transform-origin: 0 0;
       transition-property: transform;
       transition: $transition;
@@ -70,7 +74,7 @@
       cursor: text;
       z-index: 3;
       &._activeLabel {
-        transform: translate(space(4), space(-4.5));
+        transform: translateY(space(-4.5));
         font-size: $font-size-xs;
         line-height: $line-height-bs;
       }

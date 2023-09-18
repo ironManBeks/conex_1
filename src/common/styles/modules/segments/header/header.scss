@@ -15,7 +15,7 @@
   }
 
   &_logo{
-    margin-right: 100px;
+    margin-right: space(10);
     display: flex;
     align-items: center;
     transition: $transition;
@@ -37,7 +37,10 @@
           }
           &._active{
             a, span{
-              color: $color-primary;
+              color: $color-accent-strong;
+            }
+            svg {
+              fill: $color-accent-strong;
             }
           }
         }

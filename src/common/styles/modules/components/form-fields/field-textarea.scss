@@ -1,5 +1,4 @@
 .form-field_wrapper._textarea{
-
   .form-field{
     &_field-wrapper{
       overflow: hidden;
@@ -70,6 +69,7 @@
       &._disabled{
         cursor: not-allowed;
         color: $text-color-disabled;
+        background: transparent;
       }
     }
   }

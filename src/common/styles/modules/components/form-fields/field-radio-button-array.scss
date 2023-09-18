@@ -1,15 +1,12 @@
 .form-field_wrapper._radiobuttonarray{
-  --wrapper-mb: space(5);
-  --item-mb: space(4);
-
-  margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
+  margin-bottom: space(5);
 
   .form-field{
     &_field-wrapper{
       .ant-radio-group{
         display: flex;
         flex-wrap: wrap;
-        gap: space(5);
+        gap: space(4);
       }
     }
     &_field{
@@ -17,7 +14,6 @@
       justify-content: center;
       align-items: center;
       height: auto;
-      margin-bottom: var(--item-mb);
       padding: space(3) space(7);
       background-color: $color-primary-strong;
       font-size: $font-size-lg;

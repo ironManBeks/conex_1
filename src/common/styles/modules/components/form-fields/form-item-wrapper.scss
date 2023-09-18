@@ -15,9 +15,16 @@
       }
     }
     &._error{
-      &._input, &._textarea{
+      &._input, &._textarea, &._password, &._inputnumber{
         .form-field_field, .form-field_field._activeLabel {
           border-color: $border-color-critical;
+        }
+      }
+      &._select{
+        .form-field_field.ant-select {
+          .ant-select-selector{
+            border-color: $border-color-critical;
+          }
         }
       }
     }
