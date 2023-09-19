@@ -91,8 +91,8 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                             ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                { _floatingLabel: isFloatingLabel && label },
                                 {
+                                    _floatingLabel: isFloatingLabel && label,
                                     _activeLabel:
                                         isFloatingLabel &&
                                         label &&

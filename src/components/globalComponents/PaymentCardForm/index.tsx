@@ -1,9 +1,8 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useImperativeHandle, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import cn from "classnames";
 
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
-import FieldInputController from "@components/form/formControllers/FieldInputController";
 import { IconCreditCard } from "@components/Icons";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { P } from "@components/Text";
@@ -12,9 +11,8 @@ import {
     EPaymentCardFromFieldsNames,
     paymentCardFromDefaultValues,
     paymentCardFromResolver,
-    TPaymentCardFrom,
+    TPaymentCardForm,
 } from "./formAttrs";
-import { notImplemented } from "@helpers/notImplemented";
 import {
     CARD_AMERICAN_EXPRESS_REGEX,
     CARD_CVV_REGEX,
@@ -39,13 +37,16 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     submitText,
     actionsContent,
     onSuccessfulSubmit,
+    defaultValues,
+    reference,
 }) => {
     const classPrefix = "payment-card-form";
     const [cardType, setCardType] = useState<EPaymentCardNames | undefined>();
 
-    const methods = useForm<TPaymentCardFrom>({
+    const methods = useForm<TPaymentCardForm>({
         resolver: paymentCardFromResolver(),
-        defaultValues: paymentCardFromDefaultValues as TPaymentCardFrom,
+        defaultValues:
+            defaultValues || (paymentCardFromDefaultValues as TPaymentCardForm),
     });
 
     const {
@@ -59,12 +60,20 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     const cardNumberValue = watch(EPaymentCardFromFieldsNames.cardNumber);
     const expDateValue = watch(EPaymentCardFromFieldsNames.expDate);
 
-    const onSubmit: SubmitHandler<TPaymentCardFrom> = (data) => {
+    const onSubmit: SubmitHandler<TPaymentCardForm> = (data) => {
         if (onSuccessfulSubmit) {
             onSuccessfulSubmit(data);
         }
         reset();
     };
+
+    useImperativeHandle(reference, () => ({
+        reset: (newData?: TPaymentCardForm) => {
+            reset(
+                newData ?? (paymentCardFromDefaultValues as TPaymentCardForm),
+            );
+        },
+    }));
 
     useEffect(() => {
         setCardType(findDebitCardType(cardNumberValue));
@@ -146,7 +155,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                     </div>
                 </div>
                 {!!pickOutFormErrorMessages<
-                    FieldErrors<TPaymentCardFrom>,
+                    FieldErrors<TPaymentCardForm>,
                     EPaymentCardFromFieldsNames[]
                 >(errors, [
                     // EPaymentCardFromFieldsNames.nameOnCard,
@@ -154,7 +163,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                 ]).length && (
                     <div className={`${classPrefix}_errors`}>
                         {pickOutFormErrorMessages<
-                            FieldErrors<TPaymentCardFrom>,
+                            FieldErrors<TPaymentCardForm>,
                             EPaymentCardFromFieldsNames[]
                         >(errors, [
                             // EPaymentCardFromFieldsNames.nameOnCard,

@@ -74,11 +74,12 @@ const AccountMenuItem: FC<TAccountMenuItem> = ({
     pageClassPrefix,
     className,
     isActive,
+    onClick,
 }) => {
     const classPrefix = `${pageClassPrefix}_menu__item`;
 
     const content = (
-        <a>
+        <a onClick={onClick}>
             {icon && icon}
             {title}
         </a>

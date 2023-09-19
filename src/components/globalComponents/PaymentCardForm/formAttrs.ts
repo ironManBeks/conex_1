@@ -9,7 +9,7 @@ export enum EPaymentCardFromFieldsNames {
     expDate = "expDate",
 }
 
-export type TPaymentCardFrom = {
+export type TPaymentCardForm = {
     // [EPaymentCardFromFieldsNames.nameOnCard]: string;
     [EPaymentCardFromFieldsNames.cardNumber]: string;
     [EPaymentCardFromFieldsNames.cvv]: string;
@@ -26,7 +26,7 @@ export const paymentCardFromDefaultValues: Record<
     [EPaymentCardFromFieldsNames.expDate]: "",
 };
 
-export const paymentCardFromResolver = (): Resolver<TPaymentCardFrom> => {
+export const paymentCardFromResolver = (): Resolver<TPaymentCardForm> => {
     const requiredText = (fieldName: string) =>
         `Field "${fieldName}" is required`;
     const minLengthText = (fieldName: string, value: number) =>

@@ -25,13 +25,14 @@ import { AuthDataMockup } from "../../../../mockups/AuthDataMockup";
 import ModalCardBinding from "@components/modals/components/ModalCardBinding";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 import { notImplemented } from "@helpers/notImplemented";
+import { isFunction } from "lodash";
 
 const AccountPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_payment`;
         const { authStore, commonStore } = store as IRoot;
 
-        const { accountData, authData } = authStore;
+        const { accountData, authData, setSelectedCard } = authStore;
         const [formVisible, setFormVisible] = useState(false);
 
         const accountPaymentMockup = AuthDataMockup
@@ -52,13 +53,19 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
                                 key={item.id}
                                 id={item.id}
                                 classPrefix={classPrefix}
-                                name={item.name}
+                                cvv={item.cvv}
                                 cardNumber={item.cardNumber}
                                 expMonth={item.expMonth}
                                 expYear={item.expYear}
                                 onDelete={() => {
                                     commonStore.setModalConfirmVisible(true);
                                     commonStore.setConfirmModalData(item);
+                                }}
+                                onClick={() => {
+                                    setSelectedCard(item);
+                                    commonStore.setModalCardBindingVisible(
+                                        true,
+                                    );
                                 }}
                             />
                         ))}
@@ -92,79 +99,79 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
 export default AccountPayment;
 
 const AccountPaymentItem: FC<
-    TAuthPaymentCard & { classPrefix: string; onDelete: (id: string) => void }
-> = observer(
-    ({ id, classPrefix, name, cardNumber, expMonth, expYear, onDelete }) => {
-        const [cardType, setCardType] = useState<
-            EPaymentCardNames | undefined
-        >();
+    TAuthPaymentCard & {
+        classPrefix: string;
+        onDelete: (id: string) => void;
+        onClick?: (id: string) => void;
+    }
+> = observer(({ id, classPrefix, cardNumber, onDelete, onClick }) => {
+    const [cardType, setCardType] = useState<EPaymentCardNames | undefined>();
 
-        const isMobile = useMediaQuery({
-            minWidth: mediaBreakpoints.xsMedia,
-            maxWidth: mediaBreakpoints.smMediaEnd,
-        });
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
 
-        useEffect(() => {
-            setCardType(findDebitCardType(cardNumber));
-        }, [cardNumber]);
+    useEffect(() => {
+        setCardType(findDebitCardType(cardNumber));
+    }, [cardNumber]);
 
-        const cardIconContent = cardType && CARDS_LIST.includes(cardType) && (
-            <ImgWrapper
-                src={CARD_ICON[cardType]}
-                width={44}
-                objectFit="contain"
-            />
-        );
-        const cardNumberContent = paymentCardNumberMask(cardNumber, true);
-        const deleteButtonContent = (
-            <ButtonPrimary
-                color={EButtonColor.transparent}
-                className={`${classPrefix}__item _delete`}
-                onClick={() => onDelete(id)}
-            >
-                <IconTrash />
-            </ButtonPrimary>
-        );
+    const cardIconContent = cardType && CARDS_LIST.includes(cardType) && (
+        <ImgWrapper src={CARD_ICON[cardType]} width={44} objectFit="contain" />
+    );
+    const cardNumberContent = paymentCardNumberMask(cardNumber, true);
+    const deleteButtonContent = (
+        <ButtonPrimary
+            color={EButtonColor.transparent}
+            className={`${classPrefix}__item _delete`}
+            onClick={(e) => {
+                e?.stopPropagation();
+                onDelete(id);
+            }}
+        >
+            <IconTrash />
+        </ButtonPrimary>
+    );
 
-        const ItemLayout: FC = ({ children }) => {
-            return (
-                <div className={`${classPrefix}__item _wrapper`}>
-                    <div className={`${classPrefix}__item _inner-wrapper`}>
-                        {children}
-                    </div>
+    const ItemLayout: FC = ({ children }) => {
+        return (
+            <div className={`${classPrefix}__item _wrapper`}>
+                <div
+                    className={`${classPrefix}__item _inner-wrapper`}
+                    onClick={() => {
+                        if (isFunction(onClick)) {
+                            onClick(id);
+                        }
+                    }}
+                >
+                    {children}
                 </div>
-            );
-        };
-
-        return isMobile ? (
-            <ItemLayout>
-                {cardIconContent}
-                {cardNumberContent}
-                {/*{deleteButtonContent}*/}
-            </ItemLayout>
-        ) : (
-            <ItemLayout>
-                <div className={`${classPrefix}__item _content`}>
-                    <div className={`${classPrefix}__item _icon`}>
-                        {cardIconContent}
-                    </div>
-                    <div className={`${classPrefix}__item _info`}>
-                        <P>
-                            <span>
-                                {cardType ? CARD_NAME[cardType] : "Card"}
-                            </span>
-                            {cardNumberContent}
-                        </P>
-                        {/*<P className="_bot">*/}
-                        {/*    Valid until {addZeroBefore(expMonth)}/*/}
-                        {/*    {addZeroBefore(expYear)}*/}
-                        {/*</P>*/}
-                    </div>
-                </div>
-                <div className={`${classPrefix}__item _actions`}>
-                    {deleteButtonContent}
-                </div>
-            </ItemLayout>
+            </div>
         );
-    },
-);
+    };
+
+    return isMobile ? (
+        <ItemLayout>
+            {cardIconContent}
+            {cardNumberContent}
+            {/*{deleteButtonContent}*/}
+        </ItemLayout>
+    ) : (
+        <ItemLayout>
+            <div className={`${classPrefix}__item _content`}>
+                <div className={`${classPrefix}__item _icon`}>
+                    {cardIconContent}
+                </div>
+                <div className={`${classPrefix}__item _info`}>
+                    <P>
+                        <span>{cardType ? CARD_NAME[cardType] : "Card"}</span>
+                        {cardNumberContent}
+                    </P>
+                </div>
+            </div>
+            <div className={`${classPrefix}__item _actions`}>
+                {deleteButtonContent}
+            </div>
+        </ItemLayout>
+    );
+});

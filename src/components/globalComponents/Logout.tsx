@@ -5,7 +5,7 @@ import { inject, observer } from "mobx-react";
 import { TLogout } from "./types";
 import { removeStorage } from "@services/storage.service";
 import { PATH_HOME_PAGE } from "@consts/pathsConsts";
-import { JWT_TOKEN } from "@consts/storageNamesContsts";
+import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
 import { IRoot } from "@store/store";
 
 const Logout: React.FC<TLogout> = inject("store")(
@@ -15,6 +15,7 @@ const Logout: React.FC<TLogout> = inject("store")(
         const router = useRouter();
         const onClick = () => {
             removeStorage(JWT_TOKEN);
+            removeStorage(AUTH_DATA);
             authStore.setAuthData(null);
             authStore.setAccountData(null);
             if (pageLink) {

@@ -45,18 +45,6 @@ const Footer: FC<TFooter> = inject("store")(
                                 </Link>
                             </P>
                         </div>
-                        <div>
-                            <P>
-                                Design & Development -{" "}
-                                <a
-                                    href={PATH_ONE_PIX_SITE}
-                                    target="_blank"
-                                    className="_specific"
-                                >
-                                    OnePix
-                                </a>
-                            </P>
-                        </div>
                     </Container>
                 </div>
             </footer>

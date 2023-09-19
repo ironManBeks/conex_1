@@ -310,13 +310,19 @@ export const renderResultDataToOptionsList = (
     return resultDoorData?.map((stepItem) => {
         const list: { label: string; value: string | number }[] = [];
 
+        const isMulti = stepItem.stepType === EBuilderFieldTypes.multiple;
+
         for (let i = 0; i < stepItem.fields.length; i++) {
             const field = stepItem.fields[i];
             for (let j = 0; j < field.elements.length; j++) {
                 const element = field.elements[j];
                 if (element.value.toLowerCase() !== BUILDER_VALUE_NONE) {
                     list.push({
-                        label: element.mainTitle,
+                        label: isMulti
+                            ? `${field.fieldTitle ? field.fieldTitle : ""} ${
+                                  element.mainTitle
+                              }`
+                            : element.mainTitle,
                         value: element.priceCurrency + element.price,
                     });
                 }

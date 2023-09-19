@@ -2,6 +2,7 @@ import React, { FC } from "react";
 import cn from "classnames";
 
 import NavLinkItem from "./NavLinkItem";
+import { IconBurger } from "@components/Icons";
 
 import { PATH_BUILDER_PAGE, PATH_CONTACTS_US_PAGE } from "@consts/pathsConsts";
 import { TNavTypes } from "./types";
@@ -18,7 +19,12 @@ const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix }) => {
         >
             <NavLinkItem
                 href={PATH_BUILDER_PAGE}
-                title={"Door Builder"}
+                title={
+                    <>
+                        <IconBurger />
+                        Door Builder
+                    </>
+                }
                 classPrefix={classPrefix}
             />
             <NavLinkItem

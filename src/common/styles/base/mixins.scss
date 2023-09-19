@@ -11,8 +11,15 @@
   text-decoration: none;
   border-radius: space(2);
   cursor: pointer;
+  svg {
+    margin-right: space(3);
+    transition: $transition;
+  }
   &:hover{
     color: $color-accent-strong;
+    svg{
+      fill: $color-accent-strong;
+    }
   }
 }
 

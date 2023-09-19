@@ -81,9 +81,16 @@ const TestPage: FC = () => {
                                 options={optionsMockup}
                             />
                             <FieldSelectController
-                                name={EFieldNames.select + "123"}
-                                placeholder={EFieldNames.select}
-                                label={EFieldNames.select}
+                                name={EFieldNames.select + 321}
+                                placeholder={EFieldNames.select + 321}
+                                label={EFieldNames.select + 321}
+                                options={optionsMockup}
+                                showSearch={false}
+                            />
+                            <FieldSelectController
+                                name={EFieldNames.select + 123}
+                                placeholder={EFieldNames.select + 123}
+                                label={EFieldNames.select + 123}
                                 options={optionsMockup}
                                 disabled={true}
                             />
@@ -96,8 +103,8 @@ const TestPage: FC = () => {
                                 options={optionsMockup}
                             />
                             <FieldRadioButtonArrayController
-                                name={EFieldNames.radioButtonArray + "123"}
-                                label={EFieldNames.radioButtonArray}
+                                name={EFieldNames.radioButtonArray + 123}
+                                label={EFieldNames.radioButtonArray + 123}
                                 options={optionsMockup}
                                 disabled={true}
                             />
