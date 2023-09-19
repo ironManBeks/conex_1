@@ -7,7 +7,7 @@ import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/co
 
 export type TAuthPaymentCard = {
     id: string;
-    name: string;
+    cvv: string;
     cardNumber: string;
     expMonth: string;
     expYear: string;
@@ -63,4 +63,6 @@ export interface IAuthStore {
     resetPasswordRequest: (data: TResetPasswordRequest) => Promise<void>;
     changePasswordRequest: (data: TChangePasswordForm) => Promise<void>;
     emailConfirmationRequest: (data: TEmailConfirmationForm) => Promise<void>;
+    selectedCard: TAuthPaymentCard | null;
+    setSelectedCard: (data: TAuthPaymentCard | null) => void;
 }

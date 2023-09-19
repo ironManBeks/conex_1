@@ -12,6 +12,7 @@ import {
     IAuthStore,
     TAccountData,
     TAuthData,
+    TAuthPaymentCard,
     TEmailConfirmationResponse,
     TResetPasswordRequest,
 } from "./types";
@@ -19,12 +20,14 @@ import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
 import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/components/ForgotPasswordForm/formAttrs";
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
+import { valibotResolver } from "@hookform/resolvers/valibot";
 
 export class AuthStore implements IAuthStore {
     accountData: TAccountData = null;
     accountDataFetching = false;
     authData: TAuthData = null;
     authRequestFetching = false;
+    selectedCard: TAuthPaymentCard | null = null;
 
     constructor() {
         makeAutoObservable(this, {
@@ -32,10 +35,12 @@ export class AuthStore implements IAuthStore {
             accountDataFetching: observable,
             authData: observable,
             authRequestFetching: observable,
+            selectedCard: observable,
             setAccountData: action,
             setAccountDataFetching: action,
             setAuthData: action,
             setAuthRequestFetching: action,
+            setSelectedCard: action,
         });
     }
 
@@ -45,6 +50,10 @@ export class AuthStore implements IAuthStore {
 
     setAccountDataFetching = (value: boolean): void => {
         this.accountDataFetching = value;
+    };
+
+    setSelectedCard = (data: TAuthPaymentCard | null): void => {
+        this.selectedCard = data;
     };
 
     ////////////////////////////////////

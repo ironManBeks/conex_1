@@ -20,9 +20,9 @@ const AccountPage: FC<TStore> = inject("store")(
         const { accountDataFetching, authData } = authStore;
         const classPrefix = "account-page";
 
-        useEffect(() => {
-            console.log("authData", authData);
-        }, [authData]);
+        // useEffect(() => {
+        //     console.log("authData", authData);
+        // }, [authData]);
 
         const accountContent = useMemo(() => {
             if (accountDataFetching) {

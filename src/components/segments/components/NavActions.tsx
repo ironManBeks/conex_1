@@ -14,11 +14,13 @@ import { EButtonColor } from "@components/buttons/types";
 import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
 import ButtonLink from "@components/buttons/ButtonLink";
+import { isEmpty } from "lodash";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
-        const { commonStore } = store as IRoot;
+        const { commonStore, authStore } = store as IRoot;
         const { setModalAuthVisible } = commonStore;
+        const { authData } = authStore;
         const classPrefix = `nav-actions`;
         const items = 0;
 
@@ -51,7 +53,13 @@ const NavActions: FC<TNavTypes> = inject("store")(
                     // onClick={() => setModalAuthVisible(true)}
                 >
                     <IconUser />
-                    <P>Logout</P>
+                    <P>
+                        {!isEmpty(authData)
+                            ? authData?.user.username.length > 6
+                                ? `${authData?.user.username.slice(0, 6)}...`
+                                : authData?.user.username
+                            : "Log In"}
+                    </P>
                 </ButtonLink>
             </div>
         );

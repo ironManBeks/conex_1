@@ -40,4 +40,5 @@ export type TAccountMenuItem = {
     pageClassPrefix: string;
     isActive?: boolean;
     className?: string;
+    onClick?: () => void;
 };

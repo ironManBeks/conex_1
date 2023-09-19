@@ -66,18 +66,19 @@ const BuilderRightSide: FC<TBuilderCompProps> = inject("store")(
                     <AddedOptionsList optionsList={resultDataToOptionsList()} />
                     <AdditionalServices
                         options={
-                            !isEmpty(resultDoorData)
-                                ? [
-                                      {
-                                          label: "Shipping cost",
-                                          value: "$123.00",
-                                      },
-                                      {
-                                          label: "Additional charges and more big text with big price",
-                                          value: "$123456.99",
-                                      },
-                                  ]
-                                : []
+                            []
+                            // !isEmpty(resultDoorData)
+                            //     ? [
+                            //           {
+                            //               label: "Shipping cost",
+                            //               value: "$123.00",
+                            //           },
+                            //           {
+                            //               label: "Additional charges and more big text with big price",
+                            //               value: "$123456.99",
+                            //           },
+                            //       ]
+                            //     : []
                         }
                         totalOption={additionalServicesTotalOption}
                     />

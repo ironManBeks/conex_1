@@ -14,8 +14,11 @@ import {
 import AccountOrderItem from "./AccountOrderItem";
 import { Empty } from "antd";
 import AccountSectionWrapper from "./AccountSectionWrapper";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { EButtonColor } from "@components/buttons/types";
 
 enum ESegmentedOptionsNames {
+    all = "all",
     transit = "transit",
     inProgress = "inProgress",
     completed = "completed",
@@ -25,7 +28,7 @@ const segmentAccountOrderMockup: Record<
     ESegmentedOptionsNames,
     TAccountOrderItem[]
 > = {
-    [ESegmentedOptionsNames.transit]: [
+    [ESegmentedOptionsNames.all]: [
         {
             id: "1",
             orderNumber: "XR-685069050596",
@@ -105,7 +108,7 @@ const segmentAccountOrderMockup: Record<
             ],
         },
     ],
-    [ESegmentedOptionsNames.inProgress]: [
+    [ESegmentedOptionsNames.transit]: [
         {
             id: "21",
             orderNumber: "XR-11111111",
@@ -173,6 +176,7 @@ const segmentAccountOrderMockup: Record<
             ],
         },
     ],
+    [ESegmentedOptionsNames.inProgress]: [],
     [ESegmentedOptionsNames.completed]: [],
 };
 
@@ -190,6 +194,13 @@ const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     };
 
     const orderSegmentedOptions: SegmentedLabeledOption[] = [
+        {
+            value: ESegmentedOptionsNames.all,
+            label: generateOptionValue(
+                "All Orders",
+                getAccountOrderList(ESegmentedOptionsNames.all),
+            ),
+        },
         {
             value: ESegmentedOptionsNames.transit,
             label: generateOptionValue(
@@ -254,6 +265,11 @@ const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                     )}
                 </div>
             </AccountSectionWrapper>
+            <div className={`${classPrefix}__actions`}>
+                <ButtonPrimary color={EButtonColor.primary} type="submit">
+                    Manage other
+                </ButtonPrimary>
+            </div>
         </div>
     );
 };

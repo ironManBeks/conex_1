@@ -1,62 +1,54 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useEffect, useRef } from "react";
 import { inject, observer } from "mobx-react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 
-import { H2 } from "@components/Text";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ModalLayout from "@components/modals/ModalLayout";
-import FieldInputController from "@components/form/formControllers/FieldInputController";
-import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
-import AddressSelection from "@components/globalComponents/AddressSelection";
-import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 
 import { EModalSize } from "@components/modals/types";
-import { EButtonColor } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
-// import {
-//     customQuoteDefaultValues,
-//     customQuoteFormResolver,
-//     ECustomQuoteFieldsNames,
-//     TCustomQuoteForm,
-// } from "./formAttrs";
-import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
 import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
+import { isEmpty } from "lodash";
+import {
+    EPaymentCardFromFieldsNames,
+    paymentCardFromDefaultValues,
+    TPaymentCardForm,
+} from "@components/globalComponents/PaymentCardForm/formAttrs";
+import { addZeroBefore } from "@helpers/textHelpers";
+import { IPaymentCardFormRef } from "@components/globalComponents/PaymentCardForm/types";
 
 const ModalCardBinding: FC<TStore> = inject("store")(
     observer(({ store }) => {
         const classPrefix = "modal-card-binding";
-        const { commonStore } = store as IRoot;
+        const { commonStore, authStore } = store as IRoot;
         const { modalCardBindingVisible, setModalCardBindingVisible } =
             commonStore;
-        const [addressValue, setAddressValue] = useState<string>("");
-
-        // const methods = useForm<TCustomQuoteForm>({
-        //     resolver: customQuoteFormResolver(),
-        //     defaultValues: customQuoteDefaultValues,
-        // });
-
-        // const {
-        //     handleSubmit,
-        //     formState: { errors },
-        //     setValue,
-        //     reset,
-        // } = methods;
-
-        // useEffect(() => {
-        //     setValue(ECustomQuoteFieldsNames.address, addressValue);
-        // }, [addressValue]);
-
-        // const onSubmit: SubmitHandler<TCustomQuoteForm> = (data) => {
-        //     notImplemented(`value: ${JSON.stringify(data)}`);
-        //     handleCloseModal();
-        // };
+        const { selectedCard, setSelectedCard } = authStore;
+        const isEdit = !isEmpty(selectedCard);
+        const formRef = useRef<IPaymentCardFormRef>(null);
 
         const handleCloseModal = () => {
             setModalCardBindingVisible(false);
-            // reset();
+            setSelectedCard(null);
+            if (formRef?.current) {
+                formRef.current.reset(
+                    paymentCardFromDefaultValues as TPaymentCardForm,
+                );
+            }
         };
+
+        useEffect(() => {
+            if (modalCardBindingVisible && formRef?.current && isEdit) {
+                formRef.current.reset({
+                    [EPaymentCardFromFieldsNames.cardNumber]:
+                        selectedCard?.cardNumber,
+                    [EPaymentCardFromFieldsNames.cvv]: selectedCard?.cvv,
+                    [EPaymentCardFromFieldsNames.expDate]: `${addZeroBefore(
+                        selectedCard?.expMonth,
+                    )}/${selectedCard?.expYear}`,
+                });
+            }
+        }, [modalCardBindingVisible]);
 
         return (
             <ModalLayout
@@ -66,18 +58,15 @@ const ModalCardBinding: FC<TStore> = inject("store")(
                 modalSize={EModalSize.sm}
                 title={"Card binding"}
                 bodyContent={
-                    <>
-                        <PaymentCardForm
-                            className={`${classPrefix}__form`}
-                            submitText="Add to card"
-                            onSuccessfulSubmit={(data) => {
-                                notImplemented(
-                                    `value: ${JSON.stringify(data)}`,
-                                );
-                                handleCloseModal();
-                            }}
-                        />
-                    </>
+                    <PaymentCardForm
+                        reference={formRef}
+                        className={`${classPrefix}__form`}
+                        submitText={isEdit ? "Save changes" : "Add to card"}
+                        onSuccessfulSubmit={(data) => {
+                            notImplemented(`value: ${JSON.stringify(data)}`);
+                            handleCloseModal();
+                        }}
+                    />
                 }
             />
         );
