@@ -11,11 +11,3 @@
     min-height: calc(100vh - 100px);
   }
 }
-
-@media (min-width: $xs-media) and (max-width: $sm-media-end) {
-
-  .layout_wrapper{
-    background: $color-white;
-  }
-
-}

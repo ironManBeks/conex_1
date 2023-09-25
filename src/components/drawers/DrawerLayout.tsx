@@ -8,6 +8,8 @@ import { H3, H4 } from "@components/Text";
 import disableBodyScroll from "@helpers/disableBodyScroll";
 import { COLOR_BLACK } from "@common/theme/colorTheme";
 import { TDrawerLayout } from "./types";
+import { useRouter } from "next/router";
+import { isFunction } from "lodash";
 
 const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
     const {
@@ -26,8 +28,10 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
         maskZIndex,
         wrapperClassName,
         open,
+        closeOnChangePath = true,
         ...rest
     } = props;
+    const router = useRouter();
     const classPrefix = "common-drawer";
     const maskStyles = {
         zIndex: maskZIndex,
@@ -56,6 +60,12 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
     useEffect(() => {
         disableBodyScroll(open);
     }, [open]);
+
+    useEffect(() => {
+        if (router.asPath && isFunction(onClose) && closeOnChangePath) {
+            onClose();
+        }
+    }, [router.asPath]);
 
     return (
         <Drawer

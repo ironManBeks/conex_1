@@ -87,9 +87,9 @@ const BuilderElementCard: FC<
                             {imgSrc && (
                                 <ImgWrapper
                                     src={imgSrc}
-                                    height={220}
                                     alt={`image: ${mainTitle}`}
                                     title={mainTitle}
+                                    objectFit={"contain"}
                                 />
                             )}
                             {subTitle && <H5>{subTitle}</H5>}

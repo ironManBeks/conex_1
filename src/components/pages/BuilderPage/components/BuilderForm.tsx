@@ -26,7 +26,6 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             currentStepData,
             stepQueue,
             stepHistory,
-            resultDoorData,
             builderSettings,
         } = builderStore;
 

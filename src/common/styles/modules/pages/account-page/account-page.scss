@@ -42,9 +42,10 @@
         line-height: $line-height-lg;
         padding-top: space(2);
         padding-bottom: space(2);
-        svg {
+        .common-icon {
           margin-right: space(2);
           transition: $transition;
+          flex: 0 0 auto;
           path {
             fill: $icon-color-secondary;
             transition: $transition;
@@ -52,7 +53,7 @@
         }
         &:hover{
           color: $text-color-primary;
-          svg path {
+          .common-icon path {
             fill: $icon-color-primary;
           }
         }
@@ -61,7 +62,7 @@
         a{
           color: $text-color-primary;
         }
-        svg path {
+        .common-icon path {
           fill: $icon-color-primary;
         }
       }
@@ -69,7 +70,7 @@
         a{
           &:hover{
             color: $color-critical-800;
-            svg path {
+            .common-icon path {
               fill: $color-critical-800;
             }
           }
@@ -108,7 +109,6 @@
       .form-field_wrapper{
         width: 50%;
         max-width: 308px;
-        flex: 1;
         margin-bottom: 0;
       }
     }
@@ -133,7 +133,7 @@
     &__item{
       &._wrapper{
         position: relative;
-        max-width: 335px;
+        max-width: 350px;
         width: 100%;
         .common-text{
           margin-bottom: 0;
@@ -177,13 +177,18 @@
       &._info{
         .common-text{
           display: flex;
+          align-items: center;
           margin-bottom: 0;
-          gap: space(3);
           font-size: $font-size-bs;
           line-height: $line-height-lg;
           font-weight: 500;
           span{
             font-weight: 700;
+            margin-right: space(3);
+            white-space: nowrap;
+          }
+          .common-icon{
+            margin-right: space(1);
           }
         }
       }
@@ -252,10 +257,6 @@
           margin-bottom: space(3);
           font-size: $font-size-lg;
           line-height: $line-height-lg;
-          b{
-            flex: 0 0 auto;
-            margin-right: space(1);
-          }
         }
         .common-text{
           display: flex;
@@ -296,6 +297,9 @@
               line-height: $line-height-md;
               font-weight: 500;
               color: $text-color-secondary;
+              span{
+                margin-right: space(4);
+              }
             }
           }
         }

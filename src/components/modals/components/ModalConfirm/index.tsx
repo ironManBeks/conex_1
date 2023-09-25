@@ -18,7 +18,7 @@ const ModalConfirm: FC<TModalConfirm> = inject("store")(
             title,
             description,
             onConfirm,
-            confirmColor,
+            confirmColor = EButtonColor.primary,
             confirmText,
             onClose,
         }) => {

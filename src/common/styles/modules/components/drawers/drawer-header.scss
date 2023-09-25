@@ -1,37 +1,23 @@
 .drawer-header{
-  .common-drawer{
 
-  }
   &_nav-links{
     &__wrapper{
       .nav-links_item{
         &__wrapper{
-          &:not(:last-of-type){
-            margin-bottom: 10px;
-          }
-          .img-custom_wrapper{
-            flex: 0 0 auto;
-          }
           a{
             @include header-link;
-            padding: 8px 0;
           }
           &._active{
             a, span{
-              color: $color-primary;
+              color: $color-accent-strong;
             }
-          }
-          &._builder{
-            a{
-              color: $color-grey-600;
-              span{
-                transition: .3s;
-                padding: 0 5px;
-              }
+            svg {
+              fill: $color-accent-strong;
             }
           }
         }
       }
     }
   }
+
 }

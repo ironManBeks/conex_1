@@ -1,0 +1,103 @@
+@media (min-width: $lg-media) and (max-width: $lg-media-end) {
+
+  .builder-step{
+    &_elements{
+      &__list{
+        gap: space(4);
+      }
+    }
+  }
+
+  .builder-element {
+    &_wrapper {
+      width: calc(33% - $space * 3);
+    }
+  }
+
+}
+
+
+@media (min-width: $md-media) and (max-width: $md-media-end) {
+
+  .builder-step{
+    &_elements{
+      &__list{
+        gap: space(4);
+      }
+    }
+  }
+
+  .builder-element {
+    &_wrapper {
+      width: calc(50% - $space * 2);
+    }
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .builder-page {
+    &_layout__wrapper{
+      padding-bottom: space(12);
+    }
+
+    &_right-side__inner-wrapper{
+      padding: space(1);
+    }
+
+    &_content__wrapper{
+      min-height: unset;
+    }
+
+    &_actions__inner-wrapper{
+      flex-wrap: wrap;
+      .common-btn{
+        width: calc(50% - $space * 4);
+        margin: 0;
+        &:last-of-type{
+          width: 100%;
+        }
+      }
+    }
+  }
+
+  .builder-step{
+    &_elements{
+      &__list{
+        gap: space(4);
+      }
+    }
+  }
+
+  .builder-element{
+    &_wrapper{
+      width: calc(50% - $space * 2);
+    }
+    &-card{
+      &_wrapper{
+        .img-custom_wrapper{
+          height: 160px;
+        }
+        .common-title{
+          &._h4{
+            font-size: $font-size-sm;
+            line-height: $line-height-md;
+          }
+          &._h5{
+            font-size: $font-size-xs;
+            line-height: $line-height-bs;
+          }
+        }
+        .common-text{
+          font-size: $font-size-sm;
+          line-height: $line-height-md;
+        }
+      }
+      &_inner-wrapper{
+        min-height: 200px;
+      }
+    }
+  }
+
+}

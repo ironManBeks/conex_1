@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { isArray, isEmpty, isEqual, isNil, isNumber, uniq } from "lodash";
@@ -20,13 +20,15 @@ import {
 } from "@helpers/builderHelper";
 import { handleClearBuilderStorage } from "../utils";
 import { TResultDoorData } from "@store/builder/types";
-import { getStorage } from "@services/storage.service";
-import { BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
-import { toJS } from "mobx";
+import { getStorage, setStorage } from "@services/storage.service";
+import { BUILDER_CART, BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
+import { useRouter } from "next/router";
+import { PATH_CART_PAGE } from "@consts/pathsConsts";
 
 const BuilderActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_actions`;
+
         const { builderStore, commonStore } = store as IRoot;
         const {
             handleSubmit,
@@ -35,6 +37,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             getValues,
             reset,
         } = useFormContext();
+        const router = useRouter();
 
         const { setModalConfirmVisible } = commonStore;
 
@@ -50,13 +53,12 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             resultDoorData,
             setStepHistory,
             currentStepId,
-            resetAllBuilderData,
+            resetBuilderFormData,
             setEndDoorData,
+            setBuilderCartData,
+            builderCartData,
+            setElementsToBuilderCard,
         } = builderStore;
-
-        useEffect(() => {
-            console.log("123123", toJS(currentStepData));
-        }, [currentStepData]);
 
         const handleBack = () => {
             updateCurrentStepData("prev");
@@ -121,7 +123,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                               resultDoorData,
                           );
 
-                const parentId = getStorage(BUILDER_PARENT_ID);
+                const parentId: number = getStorage(BUILDER_PARENT_ID);
 
                 const nextStep = getNextStepByFormValues(
                     currentStepData,
@@ -131,16 +133,39 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
 
                 setResultDoorData(updatedResultDoorData);
 
-                // If last step and no queue
+                // If last step and no queue (end)
                 if (
                     !stepQueue.length &&
                     ((isArray(nextStep) && !nextStep.length) || !nextStep)
                 ) {
+                    const isInHistory = !isNil(
+                        stepHistory.find((item) => item === currentStepId),
+                    );
+
                     setEndDoorData(updatedResultDoorData);
                     setCurrentStepData(null);
-                    if (currentStepId) {
+
+                    const updatedHistory = [...stepHistory];
+
+                    if (!isInHistory && currentStepId) {
+                        updatedHistory.push(currentStepId);
                         setStepHistory(currentStepId, "add-to-end");
                     }
+
+                    setElementsToBuilderCard(
+                        [
+                            {
+                                doorId: Date.now().toString(),
+                                doorData: updatedResultDoorData,
+                                history: updatedHistory,
+                                builderParentId: parentId,
+                            },
+                        ],
+                        "add-to-end",
+                    );
+                    handleClearBuilderStorage();
+                    resetBuilderFormData(true);
+                    router.push(PATH_CART_PAGE);
                     return;
                 }
 
@@ -246,7 +271,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     <ButtonPrimary
                         onClick={() => {
                             handleClearBuilderStorage();
-                            resetAllBuilderData(true);
+                            resetBuilderFormData(true);
                         }}
                         color={EButtonColor.transparent}
                         size={EButtonSize.lg}

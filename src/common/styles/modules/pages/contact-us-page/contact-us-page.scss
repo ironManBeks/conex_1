@@ -79,7 +79,6 @@
       gap: space(10);
     }
     &__item{
-      margin-bottom: 20px;
       width: calc(33% - 4 * 10px);
       max-width: 370px;
       .common-title{
@@ -92,7 +91,7 @@
         line-height: $line-height-lg;
         font-weight: 500;
         color: $text-color-secondary;
-
+        margin-bottom: 0;
         &:not(:last-of-type){
           margin-bottom: space(3);
         }

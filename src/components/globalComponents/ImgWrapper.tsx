@@ -24,8 +24,8 @@ const ImgWrapper: FC<TImgWrapper> = (props) => {
                 }
             }}
             style={{
-                width: `${width}px`,
-                height: `${height}px`,
+                width: width ? `${width}px` : undefined,
+                height: height ? `${height}px` : undefined,
             }}
         >
             <Image

@@ -1,6 +1,22 @@
 .common-drawer{
   &_wrapper{
     z-index: $z-index-drawer-wrapper;
+    &.ant-drawer-left, &.ant-drawer-right{
+      .ant-drawer-content-wrapper{
+        max-width: 90%;
+      }
+    }
+    &.ant-drawer-bottom{
+      .common-drawer_content__wrapper{
+        height: 100%;
+      }
+      .common-drawer_body__wrapper{
+        height: 100%;
+      }
+      .ant-drawer-content-wrapper{
+        max-height: 90%;
+      }
+    }
     .ant-drawer {
       &-mask{
         z-index: $z-index-drawer-mask;
@@ -16,7 +32,6 @@
           overflow: hidden;
           z-index: $z-index-drawer-content;
           box-shadow: $box-shadow-md;
-          max-width: 90%;
         }
       }
       &-header {
@@ -54,14 +69,14 @@
 
   &_close{
     position: absolute;
-    right: 18px;
-    top: 18px;
+    right: space(3);
+    top:space(3);
     display: inline-flex;
     justify-content: center;
     align-items: center;
     flex: 0 0 auto;
     border: 0;
-    padding: 10px;
+    padding: space(2);
     border-radius: $border-radius-circle;
     box-shadow: none;
     outline: none;

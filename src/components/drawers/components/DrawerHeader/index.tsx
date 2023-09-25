@@ -12,13 +12,6 @@ const DrawerHeader: FC<TStore> = inject("store")(
         const { commonStore } = store as IRoot;
         const { headerDrawerVisible, setHeaderDrawerVisible } = commonStore;
         const classPrefix = "drawer-header";
-        const router = useRouter();
-
-        useEffect(() => {
-            if (router.asPath) {
-                setHeaderDrawerVisible(false);
-            }
-        }, [router.asPath]);
 
         return (
             <DrawerLayout

@@ -1,131 +1,120 @@
-
-@media (min-width: $lg-media) and (max-width: $lg-media-end) {
+@media (min-width: $xs-media) and (max-width: $md-media-end) {
 
   .account-page{
-
-    &_form{
-      &__wrapper{
-        & > div{
-          flex-direction: column;
-        }
-        .form-field_wrapper{
-          width: calc(100% - 20px);
-        }
-      }
-      &__actions{
-        margin-top: 20px;
-        .common-btn{
-          min-width: 100px;
-        }
+    &_layout__inner-wrapper{
+      .container{
+        flex-wrap: wrap;
       }
     }
 
-    &_payment{
+    &_menu{
+      &__wrapper{
+        width: 100%;
+        padding: 0;
+        gap: space(6);
+        margin-bottom: space(5);
+        flex-direction: row;
+        overflow-x: auto;
+      }
       &__item{
         &._wrapper{
-          width: calc(100% - 20px);
-        }
-      }
-      &__add{
-        &._wrapper{
-          width: calc(100% - 20px);
+          padding: space(2);
+          white-space: nowrap;
+          flex: 0 0 auto;
         }
       }
     }
-
-    &_order{
-      &__wrapper{
-        width: 50%;
-      }
-    }
-
-  }
-
-}
-
-@media (min-width: $md-media) and (max-width: $md-media-end) {
-
-  .account-page{
-
-    &_content{
-      &__wrapper{
-        flex-direction: column;
-      }
-    }
-
-    &_order{
-      &__wrapper{
-        margin-top: 50px;
-        width: 100%;
-      }
-    }
-
   }
 
 }
 
 @media (min-width: $xs-media) and (max-width: $sm-media-end) {
 
-  .account-page{
+  .account-page {
 
-    &_content__wrapper{
-      flex-direction: column;
-      box-shadow: none;
-      padding: 0;
-      .common-title._h2{
-        font-size: 1.375rem;
-        line-height: calc(1.375rem + 2px);
-        color: $color-grey-800;
-      }
+    &_section-wrapper{
+      padding: space(5);
     }
 
-    &_form{
+    &_my-form{
       &__wrapper{
-        & > div{
-          flex-direction: column;
+        .account-page_section-wrapper{
+          gap: space(4);
         }
+      }
+      &__form{
+        width: calc(100% + $space * 5 * 2);
+        margin: 0 space(-5);
+      }
+      &__fields{
+        gap: space(4);
         .form-field_wrapper{
-          width: calc(100% - 20px);
+          width: 100%;
+          max-width: 100%;
         }
       }
       &__actions{
-        margin-top: 20px;
+        padding: 0 space(5);
+        justify-content: center;
+        margin-top: space(2);
         .common-btn{
-          min-width: 100px;
+          width: 50%;
         }
       }
     }
 
     &_order{
-      &__wrapper{
-        width: 100%;
-        margin-top: 40px;
+      &__section-wrapper{
+        width: calc(100% + $space * 5 * 2);
+        margin: 0 space(-5);
+        padding: space(6) space(5);
+        gap: space(5);
       }
       &__item{
         &._wrapper{
-          ul{
-            padding-left: 0;
-          }
-          .item_delivery{
-            padding-left: 0;
-          }
-          .common-title._h4{
-            word-break: break-all;
-          }
-          .item_address{
-            flex-wrap: wrap;
-          }
-          .item_status{
-            width: 100%;
-            margin-left: 0;
-            margin-top: 10px;
-          }
-          .item_map__wrapper{
-            padding: 15px;
-          }
+          width: 100%;
         }
         &._inner-wrapper{
-          padding: 15px;
+          gap: space(4);
+        }
+        &._info{
+          gap: space(4);
+        }
+        &._actions{
+          .common-btn{
+            width: 100%;
+          }
+        }
+      }
+      &__actions{
+        .common-btn{
+          width: 100%;
+          margin-top: space(2);
+        }
+      }
+    }
+
+    &_payment{
+      &__wrapper{
+        .account-page_section-wrapper {
+          width: calc(100% + $space * 5 * 2);
+          margin: 0 space(-5);
+          padding: space(5);
+        }
+      }
+      &__list{
+        gap: space(5);
+      }
+      &__item {
+        &._wrapper {
+          width: 100%;
+          max-width: 100%;
+        }
+      }
+      &__actions{
+        .common-btn{
+          width: 100%;
+          margin-top: space(2);
         }
       }
     }

@@ -1,16 +1,15 @@
-import { FC, ReactNode, useCallback, useEffect, useState } from "react";
+import { FC, ReactNode, useCallback, useEffect } from "react";
 import cn from "classnames";
-import { isEmpty, isEqual } from "lodash";
+import { isEmpty } from "lodash";
 import { useFormContext } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
-import { H3, P } from "@components/Text";
+import { H2, H3, P } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 import FieldRadioArrayController from "@components/form/formControllers/FieldRadioArrayController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
 import BuilderElementCard from "./elements/BuilderElementCard";
 import BuilderElementColorPicker from "./elements/BuilderElementColorPicker";
-import ModalConfirm from "@components/modals/components/ModalConfirm";
 
 import {
     convertBuilderFieldName,
@@ -26,14 +25,11 @@ import {
 import { TBuilderStepBase } from "../types";
 import { IRoot } from "@store/store";
 import { BUILDER_VALUE_NONE } from "@components/pages/BuilderPage/consts";
-import { EButtonColor } from "@components/buttons/types";
-import { toJS } from "mobx";
 
 const BuilderStep: FC<TBuilderStepBase> = inject("store")(
     observer(({ store, className }) => {
-        const { builderStore, commonStore } = store as IRoot;
+        const { builderStore } = store as IRoot;
         const { resultDoorData, currentStepData } = builderStore;
-        const { setModalConfirmVisible } = commonStore;
         if (isEmpty(currentStepData)) return null;
         const {
             fieldType,
@@ -44,15 +40,9 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             fieldRequired,
         } = currentStepData?.attributes;
 
-        useEffect(() => {
-            console.log("currentStepData", toJS(currentStepData));
-        }, ["currentStepData"]);
-
-        const [confirmToChange, setConfirmToChange] = useState(false);
-
         const classPrefix = `builder-step`;
         const isMultiStep = fieldType === EBuilderFieldTypes.multiple;
-        const { setValue, setFocus, trigger, watch } = useFormContext();
+        const { setValue, setFocus, trigger } = useFormContext();
 
         const resultDefaultValues = useCallback(() => {
             return getDefaultValuesFromResultDoorData(
@@ -67,11 +57,6 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                 currentStepData.attributes,
             );
 
-            // const resultDefaultValues = getDefaultValuesFromResultDoorData(
-            //     currentStepData?.id,
-            //     resultDoorData,
-            // );
-
             const newDefaultValues = resultDefaultValues()
                 ? resultDefaultValues()
                 : builderDefaultValues;
@@ -85,46 +70,14 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             }
         }, [currentStepData.id]);
 
-        // const fieldNamesOnCurrentStep: string[] = isMultiStep
-        //     ? subQuestions.map((item) =>
-        //           convertBuilderFieldName(
-        //               currentStepData.id,
-        //               item.subfieldName || "",
-        //           ),
-        //       )
-        //     : [convertBuilderFieldName(currentStepData.id, fieldName)];
-        //
-        // const watchOnStepFields = watch(fieldNamesOnCurrentStep);
-        //
-        // useEffect(() => {
-        //     const newDefaultValues = resultDefaultValues();
-        //
-        //     if (newDefaultValues && watchOnStepFields) {
-        //         const isEqualArrays = isEqual(
-        //             Object.values(newDefaultValues),
-        //             watchOnStepFields,
-        //         );
-        //         console.log("isEqualArrays", isEqualArrays);
-        //     }
-        //     // setConfirmToChange(true);
-        // }, [watchOnStepFields]);
-        //
-        // useEffect(() => {
-        //     if (confirmToChange) {
-        //         setModalConfirmVisible(true);
-        //     }
-        // }, [confirmToChange]);
-        //
-        // const resetValuesAfter = () => {
-        //     console.log("resetValuesAfter_______");
-        // };
-
         return (
             <div
                 className={cn(`${classPrefix}_wrapper`, className, {
                     _required: fieldRequired,
                 })}
             >
+                {currentStepData.id && <H2>is edit: {}</H2>}
+                {currentStepData.id && <H2>STEP ID: {currentStepData.id}</H2>}
                 {fieldTitle && (
                     <H3
                         className={cn(`${classPrefix}_title`, {
@@ -204,11 +157,6 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                         </div>
                     )}
                 </div>
-                {/*{stepDescription && (*/}
-                {/*    <div className={`${classPrefix}__description`}>*/}
-                {/*        <P>{stepDescription}</P>*/}
-                {/*    </div>*/}
-                {/*)}*/}
             </div>
         );
     }),
@@ -242,6 +190,7 @@ const getElementsListByType = ({
                     imgSrc={item.image?.url}
                     default={item.default}
                     subfieldName={item.subfieldName}
+                    required={item.required}
                 />
             ));
         case EBuilderFieldTypes.checkbox:
@@ -319,6 +268,7 @@ const getElementsListByType = ({
                     color={item.color || undefined}
                     default={item.default}
                     subfieldName={item.subfieldName}
+                    required={item.required}
                 />
             ));
         default:

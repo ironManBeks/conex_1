@@ -77,8 +77,7 @@ const AccountOrderItem: FC<
             >
                 <div className={cn(`${classPrefix} _title`)}>
                     <H4>
-                        <b>Order №</b>
-                        {orderNumber}
+                        Order № {orderNumber}
                         <CopyText text={orderNumber} />
                     </H4>
                     {moneyStatus && (

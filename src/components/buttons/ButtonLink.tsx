@@ -2,11 +2,12 @@ import React, { JSX } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { Tooltip } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 import { commonButtonClassPrefix } from "@components/buttons/consts";
 
-import { TButtonLink } from "./types";
-import { EButtonColor, EButtonSize } from "./types";
+import { EButtonColor, EButtonSize, TButtonLink } from "./types";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 
 const ButtonLink: React.FC<TButtonLink> = ({
     children,
@@ -23,6 +24,11 @@ const ButtonLink: React.FC<TButtonLink> = ({
     style,
     isLinkSimple = false,
 }): JSX.Element => {
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
+
     const buttonContent = (
         <a
             className={cn(
@@ -30,7 +36,7 @@ const ButtonLink: React.FC<TButtonLink> = ({
                 "_link",
                 className,
                 `__${color}`,
-                `__${size}`,
+                `__${isMobile ? EButtonSize.md : size}`,
                 {
                     __disabled: disabled,
                     __notText: !children || children === "",

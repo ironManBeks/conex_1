@@ -22,11 +22,12 @@ export interface IBuilderElementDataDTO {
     priceCurrency: string;
     popular: boolean;
     default: boolean;
+    required: boolean | null;
     image?: {
         alt: TNullable<string>;
         url: TNullable<string>;
     };
-    color?: THEX;
+    color?: THEX | null;
     nextQuestion: TNullable<number>;
 }
 
@@ -37,7 +38,7 @@ export interface IBuilderFieldDataDTO {
     fieldType: EBuilderFieldTypes;
     subfieldName: TNullable<string>;
     fieldWidth: number;
-    required: true;
+    required: boolean;
     questions: IBuilderElementDataDTO[];
 }
 
@@ -76,6 +77,16 @@ export type TStepQueueActions =
     | "remove"
     | "clear";
 
+export type TBuilderCartActions =
+    | "add-to-start"
+    | "add-to-end"
+    | {
+          id: string;
+          action: "remove";
+      }
+    | "clear"
+    | "reset";
+
 export type TStepPath = number | number[] | null | undefined;
 
 export type TResultDoorData = {
@@ -97,6 +108,7 @@ export type TGetBuilderAllDataResponse = {
 export type TGetBuilderSettingsResponse = {
     data: {
         quizStartId: number;
+        lastUpdate: string;
     };
 } & TResponseMeta;
 
@@ -115,6 +127,17 @@ export type TUpdateCurrentStepWay =
     | "prev"
     | number;
 
+export type TCartItem = {
+    doorId: string;
+    doorData: TResultDoorData[];
+    history: number[];
+    builderParentId: number;
+};
+
+export type TBuilderCartData = {
+    elements: TCartItem[];
+};
+
 export interface IBuilderStore {
     builderAllData: TNullable<TGetBuilderAllDataResponse>;
     builderAllDataFetching: boolean;
@@ -131,6 +154,12 @@ export interface IBuilderStore {
     stepQueue: number[];
     resultDoorData: TNullable<TResultDoorData[]>;
     endDoorData: TNullable<TResultDoorData[]>;
+    builderCartData: TNullable<TBuilderCartData>;
+    // editParams: {
+    //     isEdit: boolean;
+    //     editParams: null;
+    //     editId: number;
+    // };
     //______________________
     // functions
     getBuilderAllData: () => Promise<AxiosResponse<TGetBuilderAllDataResponse>>;
@@ -176,5 +205,10 @@ export interface IBuilderStore {
         stepId: number,
         parentId: number,
     ) => void;
-    resetAllBuilderData: (withUpdateData?: boolean) => void;
+    resetBuilderFormData: (withUpdateData?: boolean) => void;
+    setBuilderCartData: (data: TNullable<TBuilderCartData>) => void;
+    setElementsToBuilderCard: (
+        data: TCartItem[] | undefined,
+        action: TBuilderCartActions | undefined,
+    ) => void;
 }

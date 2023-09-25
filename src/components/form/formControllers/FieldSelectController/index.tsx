@@ -44,17 +44,9 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
         }
     };
 
-    const focusHandler = (val: boolean, dropdownHandler?: boolean) => {
-        console.log("focusHandler", val, dropdownHandler);
+    const focusHandler = (val: boolean) => {
         setFocus(val);
-        if (dropdownHandler) {
-            setDropdownOpen(val);
-        }
     };
-
-    useEffect(() => {
-        console.log("dropdownOpen", dropdownOpen);
-    }, [dropdownOpen]);
 
     return (
         <Controller
@@ -81,7 +73,11 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                                     { _activeLabel: isLabelActive },
                                     { _disabled: disabled },
                                 )}
-                                onClick={focusOnField}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    focusOnField();
+                                    setDropdownOpen((val) => !val);
+                                }}
                             >
                                 {label}
                             </label>
@@ -107,22 +103,22 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                             )}
                             onChange={(val) => {
                                 field.onChange(val);
-                                focusHandler(false, true);
+                                focusHandler(false);
                                 if (isFunction(onChangeValue))
                                     onChangeValue(val);
                             }}
                             onFocus={() => {
-                                focusHandler(true, true);
+                                focusHandler(true);
                                 setIsLabelActive(true);
                             }}
                             onBlur={() => {
-                                focusHandler(false, true);
+                                focusHandler(false);
                                 setIsLabelActive(false);
+                                setDropdownOpen(false);
                             }}
-                            onClick={() => {
-                                if (!focus) {
-                                    setDropdownOpen(true);
-                                }
+                            onClick={(e) => {
+                                e.stopPropagation();
+                                setDropdownOpen((val) => !val);
                             }}
                             suffixIcon={
                                 <IconArrowSingle

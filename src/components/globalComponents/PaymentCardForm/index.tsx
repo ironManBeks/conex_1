@@ -137,7 +137,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                     <div className={`${classPrefix}_form__sub-fields`}>
                         <FieldInputMaskController
                             name={EPaymentCardFromFieldsNames.cvv}
-                            label="CVV"
+                            label="CVV/CVC"
                             wrapperClassName={"_cvv"}
                             mask={CARD_CVV_REGEX}
                             guide={false}
@@ -153,33 +153,33 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                             saveOnlyNumber={false}
                         />
                     </div>
+                    {!!pickOutFormErrorMessages<
+                        FieldErrors<TPaymentCardForm>,
+                        EPaymentCardFromFieldsNames[]
+                    >(errors, [
+                        // EPaymentCardFromFieldsNames.nameOnCard,
+                        EPaymentCardFromFieldsNames.cardNumber,
+                    ]).length && (
+                        <div className={`${classPrefix}_errors`}>
+                            {pickOutFormErrorMessages<
+                                FieldErrors<TPaymentCardForm>,
+                                EPaymentCardFromFieldsNames[]
+                            >(errors, [
+                                // EPaymentCardFromFieldsNames.nameOnCard,
+                                EPaymentCardFromFieldsNames.cardNumber,
+                            ]).map((item, index) => (
+                                <P key={index}>{item}</P>
+                            ))}
+                        </div>
+                    )}
                 </div>
-                {!!pickOutFormErrorMessages<
-                    FieldErrors<TPaymentCardForm>,
-                    EPaymentCardFromFieldsNames[]
-                >(errors, [
-                    // EPaymentCardFromFieldsNames.nameOnCard,
-                    EPaymentCardFromFieldsNames.cardNumber,
-                ]).length && (
-                    <div className={`${classPrefix}_errors`}>
-                        {pickOutFormErrorMessages<
-                            FieldErrors<TPaymentCardForm>,
-                            EPaymentCardFromFieldsNames[]
-                        >(errors, [
-                            // EPaymentCardFromFieldsNames.nameOnCard,
-                            EPaymentCardFromFieldsNames.cardNumber,
-                        ]).map((item, index) => (
-                            <P key={index}>{item}</P>
-                        ))}
-                    </div>
-                )}
                 {submitText && (
                     <div className={`${classPrefix}_actions`}>
                         {actionsContent && actionsContent}
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.secondary}
-                            size={EButtonSize.sm}
+                            size={EButtonSize.md}
                         >
                             {submitText}
                         </ButtonPrimary>

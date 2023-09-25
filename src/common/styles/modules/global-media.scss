@@ -11,4 +11,9 @@
 }
 
 @media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .container{
+    padding: 0 space(5);
+  }
+
 }

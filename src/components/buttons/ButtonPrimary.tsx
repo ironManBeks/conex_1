@@ -5,6 +5,8 @@ import { Spin, Tooltip } from "antd";
 import { commonButtonClassPrefix } from "./consts";
 
 import { EButtonColor, EButtonSize, TButtonPrimary } from "./types";
+import { useMediaQuery } from "react-responsive";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 
 const ButtonPrimary: React.FC<TButtonPrimary> = ({
     children,
@@ -22,6 +24,11 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     value,
     style,
 }) => {
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
+
     const buttonContent = (
         <button
             style={style}
@@ -31,7 +38,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
                 "_primary",
                 className,
                 `__${color}`,
-                `__${size}`,
+                `__${isMobile ? EButtonSize.md : size}`,
                 {
                     __disabled: disabled,
                     __loading: isLoading,

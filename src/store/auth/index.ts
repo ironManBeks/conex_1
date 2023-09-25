@@ -20,7 +20,6 @@ import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
 import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/components/ForgotPasswordForm/formAttrs";
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
-import { valibotResolver } from "@hookform/resolvers/valibot";
 
 export class AuthStore implements IAuthStore {
     accountData: TAccountData = null;
@@ -60,7 +59,6 @@ export class AuthStore implements IAuthStore {
     // Auth
     //
     setAuthData = (data: TAuthData | null): void => {
-        console.log("setAuthData______", data);
         this.authData = data;
         if (!isEmpty(data)) {
             setStorage(JWT_TOKEN, data?.jwt);
