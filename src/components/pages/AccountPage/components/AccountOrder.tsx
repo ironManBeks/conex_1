@@ -16,6 +16,7 @@ import { Empty } from "antd";
 import AccountSectionWrapper from "./AccountSectionWrapper";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor } from "@components/buttons/types";
+import { notImplemented } from "@helpers/notImplemented";
 
 enum ESegmentedOptionsNames {
     all = "all",
@@ -266,7 +267,10 @@ const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                 </div>
             </AccountSectionWrapper>
             <div className={`${classPrefix}__actions`}>
-                <ButtonPrimary color={EButtonColor.primary} type="submit">
+                <ButtonPrimary
+                    color={EButtonColor.primary}
+                    onClick={() => notImplemented()}
+                >
                     Manage other
                 </ButtonPrimary>
             </div>
