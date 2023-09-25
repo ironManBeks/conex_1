@@ -43,10 +43,36 @@
       border-radius: space(6);
       gap: space(6);
     }
+    &__head{
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
     &__title{
       font-size: $font-size-md;
       line-height: $line-height-lg;
-      text-align: center;
+    }
+  }
+
+  &_drawer-button__wrapper{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    padding: space(6);
+    background-color: $color-primary-strong;
+    border-radius: space(6) space(6) 0 0;
+    margin-left: 0;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    cursor: pointer;
+    transition: $transition;
+    font-size: $font-size-lg;
+    line-height: $line-height-lg;
+    font-weight: 500;
+    &:hover{
+      box-shadow: $box-shadow-sm;
     }
   }
 
@@ -131,10 +157,10 @@
     }
     &__item{
       display: flex;
-      margin-bottom: space(4);
+      margin-bottom: space(5);
       .common-title{
         margin-bottom: space(2);
-        width: 300px;
+        width: 200px;
       }
       ul{
         padding-left: space(4);
@@ -145,6 +171,7 @@
         list-style-type: none;
         font-size: $font-size-bs;
         line-height: $line-height-bs;
+        margin-bottom: space(1);
         b{
           margin-right: space(3);
           font-weight: 500;
@@ -235,7 +262,7 @@
 
 .builder-element{
   &_wrapper{
-    width: calc(25% - 5 * $space);
+    width: calc(25% - 4 * $space);
     display: flex;
     justify-content: center;
   }
@@ -276,10 +303,8 @@
         }
       }
       .img-custom_wrapper{
-        margin-bottom: 10px;
-        img{
-          object-fit: contain;
-        }
+        margin-bottom: space(3);
+        height: 200px;
       }
       .common-title{
         &._h4{
@@ -324,13 +349,10 @@
   &-color-picker{
     &_wrapper {
       &._active {
-        .common-title._h4{
-          color: $color-primary !important;
-        }
-        .builder-element-color-picker {
-          &_field {
-            border-color: $color-primary;
-            box-shadow: $box-shadow-bs-hover;
+        .builder-element-color-picker_inner-wrapper{
+          border: 2px solid $border-color-accent;
+          &:hover{
+            box-shadow: none;
           }
         }
       }
@@ -357,8 +379,10 @@
     &_inner-wrapper{
       position: relative;
       width: 100%;
-      padding: 20px;
-      background-color: $color-white;
+      padding: space(4);
+      background-color: $color-primary-strong;
+      border: 2px solid $border-color-secondary;
+      border-radius: borderRadius(3);
       transition: .2s;
       cursor: pointer;
       text-align: center;
@@ -367,12 +391,7 @@
       flex-direction: column;
       align-items: center;
       &:hover{
-        .builder-element-color-picker{
-          box-shadow: $box-shadow-bs-hover;
-        }
-        .common-title._h4{
-          color: $color-primary;
-        }
+        box-shadow: $box-shadow-sm;
       }
     }
     &_field{

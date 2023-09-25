@@ -12,11 +12,11 @@ import { TBuilderCompProps } from "../types";
 const BuilderNoData: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { builderStore } = store as IRoot;
-        const { resetAllBuilderData } = builderStore;
+        const { resetBuilderFormData } = builderStore;
 
         const handleReset = () => {
             handleClearBuilderStorage();
-            resetAllBuilderData(true);
+            resetBuilderFormData(true);
         };
 
         return (

@@ -7,7 +7,7 @@ import {
     TUpdateCurrentStepWay,
 } from "@store/builder/types";
 import { FieldValues } from "react-hook-form";
-import { isArray, isEmpty, isFunction, isNil, uniq } from "lodash";
+import { isArray, isEmpty, isFunction, isNil, isString, uniq } from "lodash";
 import {
     BUILDER_FIELD_ID_DIVIDER,
     BUILDER_FIELD_ID_PREFIX,
@@ -304,6 +304,10 @@ export const renderResultDataToOptionsList = (
     currentStepData?: TNullable<TBuilderStepDataDTO>,
     renderMainTitle = false,
 ): TAddedOptionsListItem[] => {
+    // console.log("resultDoorData", toJS(resultDoorData));
+    // console.log("stepHistory", toJS(stepHistory));
+    // console.log("currentStepData", toJS(currentStepData));
+
     const result: TAddedOptionsListItem[] = [];
     if (!resultDoorData?.length) return result;
 
@@ -331,18 +335,19 @@ export const renderResultDataToOptionsList = (
 
         return {
             title: renderMainTitle ? stepItem.stepTitle : undefined,
-            onClick: () => {
-                if (isFunction(updateCurrentStepData) && stepHistory?.length) {
-                    const mainStep = stepHistory[0];
-                    updateCurrentStepData(
-                        stepItem.stepId === mainStep
-                            ? "main-step"
-                            : stepItem.stepId,
-                        false,
-                        false,
-                    );
-                }
-            },
+            onClick:
+                isFunction(updateCurrentStepData) && stepHistory?.length
+                    ? () => {
+                          const mainStep = stepHistory[0];
+                          updateCurrentStepData(
+                              stepItem.stepId === mainStep
+                                  ? "main-step"
+                                  : stepItem.stepId,
+                              false,
+                              false,
+                          );
+                      }
+                    : undefined,
             list: list,
             isActive: currentStepData?.id === stepItem.stepId,
         };
@@ -522,4 +527,26 @@ export const getFormValuesByStepId = (
     }
 
     return result;
+};
+
+export const getTotalPriceByResultData = (
+    resultDoorData: TResultDoorData[] | null,
+): number => {
+    if (isNil(resultDoorData)) return 0;
+
+    return resultDoorData.reduce((stepAcc, currentStep) => {
+        const stepPrice = currentStep.fields.reduce(
+            (fieldAcc, currentField) => {
+                const fieldPrice = currentField.elements.reduce(
+                    (elementAcc, currentElement) => {
+                        return elementAcc + currentElement.price;
+                    },
+                    0,
+                );
+                return fieldAcc + fieldPrice;
+            },
+            0,
+        );
+        return stepAcc + stepPrice;
+    }, 0);
 };

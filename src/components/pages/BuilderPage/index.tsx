@@ -1,6 +1,6 @@
 import { FC, useEffect, useMemo } from "react";
 import { inject, observer } from "mobx-react";
-import { isEmpty } from "lodash";
+import { isEmpty, isNil } from "lodash";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
@@ -9,17 +9,28 @@ import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoade
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
 import {
+    BUILDER_ADMIN_LAST_UPDATE,
+    BUILDER_CART,
     BUILDER_CURRENT_STEP_ID,
     BUILDER_HISTORY,
     BUILDER_PARENT_ID,
     BUILDER_QUEUE,
     BUILDER_RESUlT_DATA,
+    EDIT_BUILDER_CART_ITEM_DATA,
 } from "@consts/storageNamesContsts";
-import { getStorage } from "@services/storage.service";
+import {
+    getStorage,
+    removeStorage,
+    setStorage,
+} from "@services/storage.service";
 import { TNullable } from "@globalTypes/commonTypes";
-import { TResultDoorData } from "@store/builder/types";
+import {
+    TEditBuilderCartItemData,
+    TResultDoorData,
+} from "@store/builder/types";
 import BuilderError from "@components/pages/BuilderPage/components/BuilderError";
 import BuilderNoData from "@components/pages/BuilderPage/components/BuilderNoData";
+import { handleClearBuilderStorage } from "@components/pages/BuilderPage/utils";
 
 const BuilderPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
@@ -31,14 +42,28 @@ const BuilderPage: FC<TStore> = inject("store")(
             builderAllData,
             builderAllDataFetching,
             builderSettingsFetching,
-            resetAllBuilderData,
+            resetBuilderFormData,
             updateCurrentStepData,
             setDefaultValuesToBuilder,
             builderSettings,
+            setEditBuilderCartItemData,
+            editBuilderCartItemData,
         } = builderStore;
 
+        const adminLastUpdate = getStorage(BUILDER_ADMIN_LAST_UPDATE);
+
         useEffect(() => {
-            getBuilderSettings().then(() => {
+            getBuilderSettings().then((settings) => {
+                if (settings.data.data.lastUpdate !== adminLastUpdate) {
+                    handleClearBuilderStorage();
+                    removeStorage(BUILDER_CART);
+                }
+
+                setStorage(
+                    BUILDER_ADMIN_LAST_UPDATE,
+                    settings.data.data.lastUpdate,
+                );
+
                 getBuilderAllData().then(() => {
                     const history: TNullable<number[]> =
                         getStorage(BUILDER_HISTORY);
@@ -46,9 +71,27 @@ const BuilderPage: FC<TStore> = inject("store")(
                         getStorage(BUILDER_QUEUE);
                     const result: TNullable<TResultDoorData[]> =
                         getStorage(BUILDER_RESUlT_DATA);
-                    const stepId = getStorage(BUILDER_CURRENT_STEP_ID);
-                    const parentId = getStorage(BUILDER_PARENT_ID);
-                    if (stepId && result && history && queue && parentId) {
+                    const stepId: number = getStorage(BUILDER_CURRENT_STEP_ID);
+                    const parentId: number = getStorage(BUILDER_PARENT_ID);
+                    const editCartItemData: TNullable<TEditBuilderCartItemData> =
+                        getStorage(EDIT_BUILDER_CART_ITEM_DATA);
+
+                    if (!isNil(editCartItemData)) {
+                        setDefaultValuesToBuilder(
+                            editCartItemData.history,
+                            [],
+                            editCartItemData.doorData,
+                            editCartItemData.history[0],
+                            editCartItemData.builderParentId,
+                        );
+                        setEditBuilderCartItemData(editCartItemData);
+                    } else if (
+                        stepId &&
+                        result &&
+                        history &&
+                        queue &&
+                        parentId
+                    ) {
                         setDefaultValuesToBuilder(
                             history,
                             queue,
@@ -57,12 +100,18 @@ const BuilderPage: FC<TStore> = inject("store")(
                             parentId,
                         );
                     } else {
+                        handleClearBuilderStorage();
                         updateCurrentStepData("main-step");
                     }
                 });
             });
             return () => {
-                resetAllBuilderData();
+                resetBuilderFormData();
+                if (!isNil(editBuilderCartItemData)) {
+                    removeStorage(EDIT_BUILDER_CART_ITEM_DATA);
+                    handleClearBuilderStorage();
+                    setEditBuilderCartItemData(null);
+                }
             };
         }, []);
 

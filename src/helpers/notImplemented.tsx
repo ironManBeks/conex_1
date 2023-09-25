@@ -5,6 +5,5 @@ export const notImplemented = (description?: string): void => {
     return showNotification({
         message: "Not implemented",
         description,
-        closeIcon: <IconCross width={12} height={12} />,
     });
 };

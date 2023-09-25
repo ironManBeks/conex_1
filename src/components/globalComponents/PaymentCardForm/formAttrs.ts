@@ -1,6 +1,7 @@
 import { Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
+import { findDebitCardType } from "@helpers/paymentMethodHelpers";
 
 export enum EPaymentCardFromFieldsNames {
     // nameOnCard = "nameOnCard",
@@ -43,13 +44,12 @@ export const paymentCardFromResolver = (): Resolver<TPaymentCardForm> => {
             [EPaymentCardFromFieldsNames.cardNumber]: yup
                 .string()
                 .required(requiredText("Card number"))
-                // .min(12, minLengthText("Card number", 12))
                 .test(
                     EPaymentCardFromFieldsNames.cardNumber,
-                    minLengthText("Card number", 15),
+                    minLengthText("Card number", 14),
                     (value) => {
                         const trimVal = value.replace(/[^\d]/g, "").trim();
-                        return trimVal.length > 14;
+                        return trimVal.length >= 14;
                     },
                 ),
             [EPaymentCardFromFieldsNames.cvv]: yup

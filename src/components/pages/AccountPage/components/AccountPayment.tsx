@@ -1,6 +1,5 @@
-import { FC, Fragment, useEffect, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { useMediaQuery } from "react-responsive";
 
 import { H2, P } from "@components/Text";
 import { IconTrash } from "@components/Icons";
@@ -18,7 +17,6 @@ import {
 } from "@components/globalComponents/PaymentCardForm/consts";
 import { findDebitCardType } from "@helpers/paymentMethodHelpers";
 import { EButtonColor } from "@components/buttons/types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { IRoot } from "@store/store";
 import AccountSectionWrapper from "@components/pages/AccountPage/components/AccountSectionWrapper";
 import { AuthDataMockup } from "../../../../mockups/AuthDataMockup";
@@ -33,15 +31,10 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
         const { authStore, commonStore } = store as IRoot;
 
         const { accountData, authData, setSelectedCard } = authStore;
-        const [formVisible, setFormVisible] = useState(false);
 
         const accountPaymentMockup = AuthDataMockup
             ? AuthDataMockup.cards
             : null;
-
-        const handleFormVisible = (val: boolean) => {
-            setFormVisible(val);
-        };
 
         return (
             <div className={`${classPrefix}__wrapper`}>
@@ -107,11 +100,6 @@ const AccountPaymentItem: FC<
 > = observer(({ id, classPrefix, cardNumber, onDelete, onClick }) => {
     const [cardType, setCardType] = useState<EPaymentCardNames | undefined>();
 
-    const isMobile = useMediaQuery({
-        minWidth: mediaBreakpoints.xsMedia,
-        maxWidth: mediaBreakpoints.smMediaEnd,
-    });
-
     useEffect(() => {
         setCardType(findDebitCardType(cardNumber));
     }, [cardNumber]);
@@ -133,45 +121,33 @@ const AccountPaymentItem: FC<
         </ButtonPrimary>
     );
 
-    const ItemLayout: FC = ({ children }) => {
-        return (
-            <div className={`${classPrefix}__item _wrapper`}>
-                <div
-                    className={`${classPrefix}__item _inner-wrapper`}
-                    onClick={() => {
-                        if (isFunction(onClick)) {
-                            onClick(id);
-                        }
-                    }}
-                >
-                    {children}
+    return (
+        <div className={`${classPrefix}__item _wrapper`}>
+            <div
+                className={`${classPrefix}__item _inner-wrapper`}
+                onClick={() => {
+                    if (isFunction(onClick)) {
+                        onClick(id);
+                    }
+                }}
+            >
+                <div className={`${classPrefix}__item _content`}>
+                    <div className={`${classPrefix}__item _icon`}>
+                        {cardIconContent}
+                    </div>
+                    <div className={`${classPrefix}__item _info`}>
+                        <P>
+                            <span>
+                                {cardType ? CARD_NAME[cardType] : "Card"}
+                            </span>
+                            {cardNumberContent}
+                        </P>
+                    </div>
+                </div>
+                <div className={`${classPrefix}__item _actions`}>
+                    {deleteButtonContent}
                 </div>
             </div>
-        );
-    };
-
-    return isMobile ? (
-        <ItemLayout>
-            {cardIconContent}
-            {cardNumberContent}
-            {/*{deleteButtonContent}*/}
-        </ItemLayout>
-    ) : (
-        <ItemLayout>
-            <div className={`${classPrefix}__item _content`}>
-                <div className={`${classPrefix}__item _icon`}>
-                    {cardIconContent}
-                </div>
-                <div className={`${classPrefix}__item _info`}>
-                    <P>
-                        <span>{cardType ? CARD_NAME[cardType] : "Card"}</span>
-                        {cardNumberContent}
-                    </P>
-                </div>
-            </div>
-            <div className={`${classPrefix}__item _actions`}>
-                {deleteButtonContent}
-            </div>
-        </ItemLayout>
+        </div>
     );
 });

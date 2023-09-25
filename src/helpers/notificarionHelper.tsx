@@ -12,6 +12,6 @@ export const showNotification = (props: ArgsProps): void => {
         ...props,
         placement: placement ?? "topRight",
         maxCount: undefined,
-        closeIcon: closeIcon || <IconCross color={"#757474"} />,
+        closeIcon: closeIcon || <IconCross width={16} height={16} />,
     });
 };

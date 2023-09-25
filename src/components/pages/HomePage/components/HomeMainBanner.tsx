@@ -15,12 +15,12 @@ const HomeMainBanner: FC<TSectionTypes> = ({ pageClassPrefix }) => {
 
     return (
         <div className={cn(`${classPrefix}__wrapper`)}>
-            <Container>
+            <Container flexWrap="wrap" flexJustifyContent="space-between">
                 <div className={cn(`${classPrefix}__image`)}>
                     <ImgWrapper
                         src="/images/svg/main-banner.svg"
                         alt="Commercial Doors"
-                        objectFit={"contain"}
+                        objectFit={"initial"}
                     />
                 </div>
                 <div className={cn(`${classPrefix}__content`)}>

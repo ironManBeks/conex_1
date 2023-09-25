@@ -2,14 +2,10 @@
 @media (min-width: $lg-media) and (max-width: $lg-media-end) {
 
   .header{
-    &_logo{
-      margin-right: 20px;
-    }
     &_nav-links{
       &__wrapper{
         .nav-links_item__wrapper{
           a{
-            padding: 25px 10px;
             font-size: $font-size-md;
             line-height: $line-height-md;
           }

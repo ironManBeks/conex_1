@@ -14,4 +14,5 @@ export type TDrawerLayout = {
     maskZIndex?: number;
     open: boolean;
     wrapperClassName?: string;
+    closeOnChangePath?: boolean;
 } & DrawerProps;

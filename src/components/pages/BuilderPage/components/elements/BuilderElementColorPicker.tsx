@@ -1,6 +1,6 @@
 import { FC } from "react";
 import cn from "classnames";
-import { isFunction } from "lodash";
+import { isFunction, isNil } from "lodash";
 import { Controller, useFormContext } from "react-hook-form";
 
 import { H4, H5, P } from "@components/Text";
@@ -73,7 +73,9 @@ const BuilderElementColorPicker: FC<
                             <div
                                 className={`${classPrefix}_field`}
                                 style={{
-                                    background: isColorHex(color)
+                                    background: isNil(color)
+                                        ? "none"
+                                        : isColorHex(color)
                                         ? color
                                         : "none",
                                 }}

@@ -24,4 +24,6 @@ export interface ICommonStore {
     setModalCardBindingVisible: TSetElementVisible;
     headerDrawerVisible: boolean;
     setHeaderDrawerVisible: TSetElementVisible;
+    builderDrawerVisible: boolean;
+    setBuilderDrawerVisible: TSetElementVisible;
 }

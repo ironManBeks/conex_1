@@ -2,7 +2,6 @@ import { FC, useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
-import BuilderProgress from "./BuilderProgress";
 import BuilderStepLayout from "./BuilderStepLayout";
 import BuilderRightSide from "./BuilderRightSide";
 import BuilderActions from "./BuilderActions";
@@ -26,7 +25,6 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             currentStepData,
             stepQueue,
             stepHistory,
-            resultDoorData,
             builderSettings,
         } = builderStore;
 

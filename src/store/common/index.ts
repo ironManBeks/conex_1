@@ -11,8 +11,9 @@ export class CommonStore implements ICommonStore {
     modalConfirmVisible = false;
     modalAuthVisible = false;
     modalCustomQuoteVisible = false;
-    headerDrawerVisible = false;
     modalCardBindingVisible = false;
+    headerDrawerVisible = false;
+    builderDrawerVisible = false;
 
     constructor() {
         makeAutoObservable(this, {
@@ -23,15 +24,17 @@ export class CommonStore implements ICommonStore {
             modalConfirmVisible: observable,
             modalAuthVisible: observable,
             modalCustomQuoteVisible: observable,
-            headerDrawerVisible: observable,
             modalCardBindingVisible: observable,
+            headerDrawerVisible: observable,
+            builderDrawerVisible: observable,
             // Functions
             setConfirmModalData: action,
             setModalConfirmVisible: action,
             setModalAuthVisible: action,
             setModalCustomQuoteVisible: action,
-            setHeaderDrawerVisible: action,
             setModalCardBindingVisible: action,
+            setHeaderDrawerVisible: action,
+            setBuilderDrawerVisible: action,
         });
     }
 
@@ -83,12 +86,16 @@ export class CommonStore implements ICommonStore {
         this.modalCustomQuoteVisible = value;
     };
 
+    setModalCardBindingVisible = (value: boolean): void => {
+        this.modalCardBindingVisible = value;
+    };
+
     setHeaderDrawerVisible = (value: boolean): void => {
         this.headerDrawerVisible = value;
     };
 
-    setModalCardBindingVisible = (value: boolean): void => {
-        this.modalCardBindingVisible = value;
+    setBuilderDrawerVisible = (value: boolean): void => {
+        this.builderDrawerVisible = value;
     };
 
     //  ***____***____***____

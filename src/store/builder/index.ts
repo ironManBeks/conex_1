@@ -9,7 +9,11 @@ import { AxiosResponse } from "axios";
 
 import {
     IBuilderStore,
+    TBuilderCartActions,
+    TBuilderCartData,
     TBuilderStepDataDTO,
+    TCartItem,
+    TEditBuilderCartItemData,
     TGetBuilderAllDataResponse,
     TGetBuilderParamsDataParams,
     TGetBuilderParamsDataResponse,
@@ -27,6 +31,8 @@ import { TNullable } from "@globalTypes/commonTypes";
 import { showNotification } from "@helpers/notificarionHelper";
 import { setStorage } from "@services/storage.service";
 import {
+    BUILDER_CART,
+    BUILDER_HISTORY,
     BUILDER_PARENT_ID,
     BUILDER_RESUlT_DATA,
 } from "@consts/storageNamesContsts";
@@ -45,6 +51,8 @@ export class BuilderStore implements IBuilderStore {
     stepQueue: number[] = [];
     resultDoorData: TNullable<TResultDoorData[]> = null;
     endDoorData: TNullable<TResultDoorData[]> = null;
+    builderCartData: TNullable<TBuilderCartData> = null;
+    editBuilderCartItemData: TNullable<TEditBuilderCartItemData> = null;
 
     constructor() {
         makeAutoObservable(this, {
@@ -61,6 +69,8 @@ export class BuilderStore implements IBuilderStore {
             stepQueue: observable,
             resultDoorData: observable,
             endDoorData: observable,
+            builderCartData: observable,
+            editBuilderCartItemData: observable,
             // functions
             setBuilderAllData: action,
             setBuilderAllDataFetching: action,
@@ -75,6 +85,8 @@ export class BuilderStore implements IBuilderStore {
             setStepQueue: action,
             setResultDoorData: action,
             setEndDoorData: action,
+            setBuilderCartData: action,
+            setEditBuilderCartItemData: action,
         });
     }
 
@@ -181,7 +193,8 @@ export class BuilderStore implements IBuilderStore {
             }
             return;
         }
-        if (isArray(stepId) && stepId.length) {
+
+        if (isArray(stepId)) {
             if (action === "add-to-end") {
                 this.stepHistory = [...this.stepHistory, ...stepId];
             }
@@ -319,7 +332,9 @@ export class BuilderStore implements IBuilderStore {
                 );
                 if (!isEmpty(prevStep)) {
                     this.setCurrentStepData(prevStep);
-                    this.setStepHistory(prevStepId, "remove");
+                    if (changeHistory) {
+                        this.setStepHistory(prevStepId, "remove");
+                    }
                 }
             }
             return;
@@ -333,7 +348,15 @@ export class BuilderStore implements IBuilderStore {
 
                 if (!isEmpty(nextStepData)) {
                     if (changeHistory) {
-                        this.setStepHistory(this.currentStepId, "add-to-end");
+                        const isInHistory = this.stepHistory.find(
+                            (item) => item === this.currentStepId,
+                        );
+                        if (isNil(isInHistory)) {
+                            this.setStepHistory(
+                                this.currentStepId,
+                                "add-to-end",
+                            );
+                        }
                     }
                     if (changeQueue) {
                         this.setStepQueue(this.currentStepId, "remove");
@@ -352,10 +375,8 @@ export class BuilderStore implements IBuilderStore {
     };
 
     setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
-        runInAction(() => {
-            setStorage(BUILDER_RESUlT_DATA, data);
-            this.resultDoorData = data;
-        });
+        setStorage(BUILDER_RESUlT_DATA, data);
+        this.resultDoorData = data;
     };
 
     setEndDoorData = (data: TNullable<TResultDoorData[]>): void => {
@@ -379,7 +400,61 @@ export class BuilderStore implements IBuilderStore {
         });
     };
 
-    resetAllBuilderData = (withUpdateData = false): void => {
+    setBuilderCartData = (data: TNullable<TBuilderCartData>): void => {
+        setStorage(BUILDER_CART, data);
+        this.builderCartData = data;
+    };
+
+    setElementsToBuilderCard = (
+        data: TCartItem[] | undefined,
+        action: TBuilderCartActions | undefined,
+    ): void => {
+        if (action === "reset") {
+            this.builderCartData = null;
+            return;
+        }
+
+        if (isNil(data) && action === "clear" && !isNil(this.builderCartData)) {
+            this.builderCartData.elements = [];
+        }
+        const newResult: TBuilderCartData = {
+            elements: [],
+        };
+
+        if (!isNil(this.builderCartData)) {
+            Object.assign(newResult, this.builderCartData);
+        }
+
+        if (isNil(data)) {
+            if (isObject(action) && action.action === "remove" && action.id) {
+                this.setBuilderCartData({
+                    elements: newResult.elements.filter(
+                        (item) => item.doorId !== action.id,
+                    ),
+                });
+            }
+            return;
+        }
+
+        if (action === "add-to-end") {
+            this.setBuilderCartData({
+                elements: [...newResult.elements, ...data],
+            });
+        }
+        if (action === "add-to-start") {
+            this.setBuilderCartData({
+                elements: [...data, ...newResult.elements],
+            });
+        }
+    };
+
+    setEditBuilderCartItemData = (
+        data: TNullable<TEditBuilderCartItemData>,
+    ): void => {
+        this.editBuilderCartItemData = data;
+    };
+
+    resetBuilderFormData = (withUpdateData = false): void => {
         this.setBuilderAllData(null);
         this.setBuilderParamsData(null);
         this.setBuilderSettings(null);

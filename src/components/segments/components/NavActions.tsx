@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
@@ -14,20 +14,32 @@ import { EButtonColor } from "@components/buttons/types";
 import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
 import ButtonLink from "@components/buttons/ButtonLink";
-import { isEmpty } from "lodash";
+import { isEmpty, isNil } from "lodash";
+import { getStorage } from "@services/storage.service";
+import { BUILDER_CART } from "@consts/storageNamesContsts";
+import { toJS } from "mobx";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
-        const { commonStore, authStore } = store as IRoot;
+        const { commonStore, authStore, builderStore } = store as IRoot;
         const { setModalAuthVisible } = commonStore;
         const { authData } = authStore;
+        const { builderCartData, setBuilderCartData } = builderStore;
         const classPrefix = `nav-actions`;
-        const items = 0;
+
+        const cartLength = builderCartData?.elements?.length || 0;
 
         const isMobile = useMediaQuery({
             minWidth: mediaBreakpoints.xsMedia,
             maxWidth: mediaBreakpoints.smMediaEnd,
         });
+
+        useEffect(() => {
+            const cartData = getStorage(BUILDER_CART);
+            if (isNil(builderCartData) && cartData) {
+                setBuilderCartData(cartData);
+            }
+        }, []);
 
         return (
             <div
@@ -40,27 +52,33 @@ const NavActions: FC<TNavTypes> = inject("store")(
                     <a className={`${classPrefix}_item__wrapper`}>
                         <IconCart />
                         <P>
-                            {items
-                                ? `${items} ${items > 1 ? "items" : "item"}`
+                            {cartLength
+                                ? `${cartLength} ${
+                                      cartLength > 1 ? "items" : "item"
+                                  }`
                                 : "Cart"}
                         </P>
                     </a>
                 </Link>
-                <ButtonLink
+                <Link
                     color={EButtonColor.transparent}
-                    className={`${classPrefix}_item__wrapper`}
                     href={PATH_MY_ACCOUNT_PAGE}
                     // onClick={() => setModalAuthVisible(true)}
                 >
-                    <IconUser />
-                    <P>
-                        {!isEmpty(authData)
-                            ? authData?.user.username.length > 6
-                                ? `${authData?.user.username.slice(0, 6)}...`
-                                : authData?.user.username
-                            : "Log In"}
-                    </P>
-                </ButtonLink>
+                    <a className={`${classPrefix}_item__wrapper`}>
+                        <IconUser />
+                        <P>
+                            {!isEmpty(authData)
+                                ? authData?.user.username.length > 6
+                                    ? `${authData?.user.username.slice(
+                                          0,
+                                          6,
+                                      )}...`
+                                    : authData?.user.username
+                                : "Log In"}
+                        </P>
+                    </a>
+                </Link>
             </div>
         );
     }),

@@ -183,7 +183,7 @@ const segmentAccountOrderMockup: Record<
 const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_order`;
     const [selectedSegment, setSelectedSegment] =
-        useState<ESegmentedOptionsNames>(ESegmentedOptionsNames.transit);
+        useState<ESegmentedOptionsNames>(ESegmentedOptionsNames.all);
 
     const generateOptionValue = (label: string, count: number): string => {
         return `${label}${count > 0 ? ` (${count})` : ""}`;

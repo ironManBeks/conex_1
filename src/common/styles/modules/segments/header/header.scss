@@ -12,6 +12,7 @@
 
   &_left-side{
     display: flex;
+    align-items: center;
   }
 
   &_logo{
@@ -29,9 +30,6 @@
       display: flex;
       .nav-links_item{
         &__wrapper{
-          .img-custom_wrapper{
-            flex: 0 0 auto;
-          }
           a{
             @include header-link;
           }
