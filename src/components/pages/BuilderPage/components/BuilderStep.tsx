@@ -1,6 +1,6 @@
 import { FC, ReactNode, useCallback, useEffect } from "react";
 import cn from "classnames";
-import { isEmpty } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { useFormContext } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
@@ -25,11 +25,13 @@ import {
 import { TBuilderStepBase } from "../types";
 import { IRoot } from "@store/store";
 import { BUILDER_VALUE_NONE } from "@components/pages/BuilderPage/consts";
+import { toJS } from "mobx";
 
 const BuilderStep: FC<TBuilderStepBase> = inject("store")(
     observer(({ store, className }) => {
         const { builderStore } = store as IRoot;
-        const { resultDoorData, currentStepData } = builderStore;
+        const { resultDoorData, currentStepData, editBuilderCartItemData } =
+            builderStore;
         if (isEmpty(currentStepData)) return null;
         const {
             fieldType,
@@ -70,13 +72,22 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             }
         }, [currentStepData.id]);
 
+        useEffect(() => {
+            console.log(
+                "editBuilderCartItemData",
+                toJS(editBuilderCartItemData),
+            );
+        }, [editBuilderCartItemData]);
+
         return (
             <div
                 className={cn(`${classPrefix}_wrapper`, className, {
                     _required: fieldRequired,
                 })}
             >
-                {currentStepData.id && <H2>is edit: {}</H2>}
+                {currentStepData.id && (
+                    <H2>is edit: {`${!isNil(editBuilderCartItemData)}`}</H2>
+                )}
                 {currentStepData.id && <H2>STEP ID: {currentStepData.id}</H2>}
                 {fieldTitle && (
                     <H3

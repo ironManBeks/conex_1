@@ -304,9 +304,9 @@ export const renderResultDataToOptionsList = (
     currentStepData?: TNullable<TBuilderStepDataDTO>,
     renderMainTitle = false,
 ): TAddedOptionsListItem[] => {
-    console.log("resultDoorData", toJS(resultDoorData));
-    console.log("stepHistory", toJS(stepHistory));
-    console.log("currentStepData", toJS(currentStepData));
+    // console.log("resultDoorData", toJS(resultDoorData));
+    // console.log("stepHistory", toJS(stepHistory));
+    // console.log("currentStepData", toJS(currentStepData));
 
     const result: TAddedOptionsListItem[] = [];
     if (!resultDoorData?.length) return result;

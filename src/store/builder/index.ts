@@ -13,6 +13,7 @@ import {
     TBuilderCartData,
     TBuilderStepDataDTO,
     TCartItem,
+    TEditBuilderCartItemData,
     TGetBuilderAllDataResponse,
     TGetBuilderParamsDataParams,
     TGetBuilderParamsDataResponse,
@@ -51,6 +52,7 @@ export class BuilderStore implements IBuilderStore {
     resultDoorData: TNullable<TResultDoorData[]> = null;
     endDoorData: TNullable<TResultDoorData[]> = null;
     builderCartData: TNullable<TBuilderCartData> = null;
+    editBuilderCartItemData: TNullable<TEditBuilderCartItemData> = null;
 
     constructor() {
         makeAutoObservable(this, {
@@ -68,6 +70,7 @@ export class BuilderStore implements IBuilderStore {
             resultDoorData: observable,
             endDoorData: observable,
             builderCartData: observable,
+            editBuilderCartItemData: observable,
             // functions
             setBuilderAllData: action,
             setBuilderAllDataFetching: action,
@@ -83,6 +86,7 @@ export class BuilderStore implements IBuilderStore {
             setResultDoorData: action,
             setEndDoorData: action,
             setBuilderCartData: action,
+            setEditBuilderCartItemData: action,
         });
     }
 
@@ -189,7 +193,8 @@ export class BuilderStore implements IBuilderStore {
             }
             return;
         }
-        if (isArray(stepId) && stepId.length) {
+
+        if (isArray(stepId)) {
             if (action === "add-to-end") {
                 this.stepHistory = [...this.stepHistory, ...stepId];
             }
@@ -327,7 +332,9 @@ export class BuilderStore implements IBuilderStore {
                 );
                 if (!isEmpty(prevStep)) {
                     this.setCurrentStepData(prevStep);
-                    this.setStepHistory(prevStepId, "remove");
+                    if (changeHistory) {
+                        this.setStepHistory(prevStepId, "remove");
+                    }
                 }
             }
             return;
@@ -368,10 +375,8 @@ export class BuilderStore implements IBuilderStore {
     };
 
     setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
-        runInAction(() => {
-            setStorage(BUILDER_RESUlT_DATA, data);
-            this.resultDoorData = data;
-        });
+        setStorage(BUILDER_RESUlT_DATA, data);
+        this.resultDoorData = data;
     };
 
     setEndDoorData = (data: TNullable<TResultDoorData[]>): void => {
@@ -441,6 +446,12 @@ export class BuilderStore implements IBuilderStore {
                 elements: [...data, ...newResult.elements],
             });
         }
+    };
+
+    setEditBuilderCartItemData = (
+        data: TNullable<TEditBuilderCartItemData>,
+    ): void => {
+        this.editBuilderCartItemData = data;
     };
 
     resetBuilderFormData = (withUpdateData = false): void => {

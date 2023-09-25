@@ -138,6 +138,8 @@ export type TBuilderCartData = {
     elements: TCartItem[];
 };
 
+export type TEditBuilderCartItemData = TCartItem;
+
 export interface IBuilderStore {
     builderAllData: TNullable<TGetBuilderAllDataResponse>;
     builderAllDataFetching: boolean;
@@ -155,11 +157,7 @@ export interface IBuilderStore {
     resultDoorData: TNullable<TResultDoorData[]>;
     endDoorData: TNullable<TResultDoorData[]>;
     builderCartData: TNullable<TBuilderCartData>;
-    // editParams: {
-    //     isEdit: boolean;
-    //     editParams: null;
-    //     editId: number;
-    // };
+    editBuilderCartItemData: TNullable<TEditBuilderCartItemData>;
     //______________________
     // functions
     getBuilderAllData: () => Promise<AxiosResponse<TGetBuilderAllDataResponse>>;
@@ -210,5 +208,8 @@ export interface IBuilderStore {
     setElementsToBuilderCard: (
         data: TCartItem[] | undefined,
         action: TBuilderCartActions | undefined,
+    ) => void;
+    setEditBuilderCartItemData: (
+        data: TNullable<TEditBuilderCartItemData>,
     ) => void;
 }

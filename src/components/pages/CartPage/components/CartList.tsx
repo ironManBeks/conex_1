@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { inject, observer } from "mobx-react";
 import { useRouter } from "next/router";
@@ -19,16 +19,9 @@ import {
 } from "@helpers/builderHelper";
 import { IRoot } from "@store/store";
 import { TCartItem } from "@store/builder/types";
-import { removeStorage, setStorage } from "@services/storage.service";
-import {
-    BUILDER_CURRENT_STEP_ID,
-    BUILDER_EDIT_CART_ID,
-    BUILDER_HISTORY,
-    BUILDER_PARENT_ID,
-    BUILDER_RESUlT_DATA,
-} from "@consts/storageNamesContsts";
+import { setStorage } from "@services/storage.service";
+import { EDIT_BUILDER_CART_ITEM_DATA } from "@consts/storageNamesContsts";
 import { PATH_BUILDER_PAGE } from "@consts/pathsConsts";
-import { isNil } from "lodash";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -62,15 +55,18 @@ const CartList: FC<TSectionTypes> = inject("store")(
             setSelectedElementId(id);
         };
 
-        const handleEdit = (data: TCartItem) => {
-            // if (isNil(builderSettings?.data.quizStartId)) {
-            // }
-
-            setStorage(BUILDER_HISTORY, data.history);
-            setStorage(BUILDER_PARENT_ID, data.builderParentId);
-            setStorage(BUILDER_RESUlT_DATA, data.doorData);
-            setStorage(BUILDER_CURRENT_STEP_ID, data.history[0]);
-            setStorage(BUILDER_EDIT_CART_ID, data.doorId);
+        const handleEdit = ({
+            doorId,
+            doorData,
+            history,
+            builderParentId,
+        }: TCartItem) => {
+            setStorage(EDIT_BUILDER_CART_ITEM_DATA, {
+                doorId,
+                doorData,
+                history,
+                builderParentId,
+            });
             router.push(PATH_BUILDER_PAGE);
         };
 
@@ -123,6 +119,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                                         ?.elements[0].image?.url
                                                 }
                                                 wrapperClassName="cart-item_image"
+                                                objectFit={"contain"}
                                             />
                                         )}
 

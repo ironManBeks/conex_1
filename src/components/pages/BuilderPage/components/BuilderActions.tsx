@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useCallback } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { isArray, isEmpty, isEqual, isNil, isNumber, uniq } from "lodash";
@@ -24,6 +24,7 @@ import { getStorage, setStorage } from "@services/storage.service";
 import { BUILDER_CART, BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
 import { useRouter } from "next/router";
 import { PATH_CART_PAGE } from "@consts/pathsConsts";
+import { toJS } from "mobx";
 
 const BuilderActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -55,12 +56,27 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             currentStepId,
             resetBuilderFormData,
             setEndDoorData,
-            setBuilderCartData,
-            builderCartData,
+            editBuilderCartItemData,
             setElementsToBuilderCard,
+            builderSettings,
         } = builderStore;
 
         const handleBack = () => {
+            if (!isNil(editBuilderCartItemData)) {
+                const editedItemHistory = editBuilderCartItemData.history;
+                const currentStepIndex =
+                    editBuilderCartItemData.history.findIndex(
+                        (item) => item === currentStepId,
+                    );
+                if (currentStepIndex !== -1) {
+                    const prevStepId =
+                        editBuilderCartItemData.history[currentStepIndex - 1];
+                    updateCurrentStepData(prevStepId, false, false);
+                }
+
+                return;
+            }
+
             updateCurrentStepData("prev");
             const curr = currentStepData?.attributes.fieldName;
             if (curr) {
@@ -74,7 +90,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
 
         const handleNext = (
             checkToResetDataAfter = true,
-            newResultDoorData?: TResultDoorData[],
+            defaultResultDoorData?: TResultDoorData[],
         ) =>
             handleSubmit(() => {
                 if (!isEmpty(endDoorData)) {
@@ -115,8 +131,8 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                 }
 
                 const updatedResultDoorData =
-                    newResultDoorData?.length && !isEmpty(newResult)
-                        ? [...newResultDoorData, newResult]
+                    defaultResultDoorData && !isEmpty(newResult)
+                        ? [...defaultResultDoorData, newResult]
                         : getUpdatedResultDoorData(
                               formData,
                               currentStepData,
@@ -249,6 +265,10 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             }
         };
 
+        const isBackDisable = useCallback((): boolean => {
+            return currentStepId === builderSettings?.data.quizStartId;
+        }, [builderSettings, currentStepId]);
+
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__inner-wrapper`}>
@@ -256,7 +276,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                         onClick={handleBack}
                         size={EButtonSize.lg}
                         color={EButtonColor.secondary}
-                        disabled={!stepHistory.length}
+                        disabled={isBackDisable()}
                     >
                         Back
                     </ButtonPrimary>
@@ -266,7 +286,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                         size={EButtonSize.lg}
                         disabled={!isValid}
                     >
-                        {isEmpty(endDoorData) ? "Next" : "Create order"}
+                        {isEmpty(endDoorData) ? "Next" : "Create door"}
                     </ButtonPrimary>
                     <ButtonPrimary
                         onClick={() => {
