@@ -58,22 +58,6 @@ const TestPage: FC = () => {
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <FieldInputController
-                                name={EFieldNames.input}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                                isFloatingLabel={true}
-                            />
-                            <FieldInputController
-                                name={EFieldNames.input + "123"}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                                disabled={true}
-                                isFloatingLabel={true}
-                            />
-                            <br />
-                            <br />
-                            <br />
                             <FieldSelectController
                                 name={EFieldNames.select}
                                 placeholder={EFieldNames.select}
@@ -87,12 +71,28 @@ const TestPage: FC = () => {
                                 options={optionsMockup}
                                 showSearch={false}
                             />
-                            <FieldSelectController
-                                name={EFieldNames.select + 123}
-                                placeholder={EFieldNames.select + 123}
-                                label={EFieldNames.select + 123}
-                                options={optionsMockup}
+                            {/*<FieldSelectController*/}
+                            {/*    name={EFieldNames.select + 123}*/}
+                            {/*    placeholder={EFieldNames.select + 123}*/}
+                            {/*    label={EFieldNames.select + 123}*/}
+                            {/*    options={optionsMockup}*/}
+                            {/*    disabled={true}*/}
+                            {/*/>*/}
+                            <br />
+                            <br />
+                            <br />
+                            <FieldInputController
+                                name={EFieldNames.input}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                                isFloatingLabel={true}
+                            />
+                            <FieldInputController
+                                name={EFieldNames.input + "123"}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
                                 disabled={true}
+                                isFloatingLabel={true}
                             />
                             <br />
                             <br />

@@ -79,9 +79,10 @@
           transform: translateY(-50%);
           left: unset;
           right: space(3);
-          width: 20px;
-          height: 20px;
+          width: 24px;
+          height: 24px;
           margin-top: unset;
+          padding: space(1);
           border-radius: $border-radius-circle;
           &:hover{
             background: $color-primary-strong;
@@ -95,7 +96,7 @@
       &.ant-select-multiple{
         .ant-select{
           &-selection-placeholder{
-            padding: 0 var(--x-p);
+            padding: 0 space(4);
           }
         }
       }
@@ -155,23 +156,27 @@
 }
 
 .form-field_dropdown._select{
-  --x-p: 10px;
-  --y-p: 10px;
-  border-radius: $border-radius-bs;
+  border-radius: borderRadius(2);
+  padding: space(2) 0;
   .ant-select-item{
     &-option{
-      padding: var(--y-p) var(--x-p);
+      padding: space(3) space(4);
+      transition: $transition;
       &-selected{
-        background-color: $color-yellow-100;
+        background-color: $color-accent-200;
       }
       &-content{
-        font-size: $line-height-bs;
-        line-height: $line-height-bs;
-        color: $color-grey-800;
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        font-weight: 500;
       }
       &-disabled{
         background-color: $color-disabled-selection-bg;
       }
+      &-active:not(.ant-select-item-option-selected){
+        background-color: $color-secondary-40;
+      }
     }
   }
 }
+//.ant-select-item-option-active:not(.ant-select-item-option-disabled)
