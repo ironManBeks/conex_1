@@ -84,8 +84,8 @@ export type TBuilderCartActions =
           id: string;
           action: "remove";
       }
-    | "clear"
-    | "reset";
+    | "update"
+    | "clear";
 
 export type TStepPath = number | number[] | null | undefined;
 

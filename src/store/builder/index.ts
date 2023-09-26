@@ -409,11 +409,6 @@ export class BuilderStore implements IBuilderStore {
         data: TCartItem[] | undefined,
         action: TBuilderCartActions | undefined,
     ): void => {
-        if (action === "reset") {
-            this.builderCartData = null;
-            return;
-        }
-
         if (isNil(data) && action === "clear" && !isNil(this.builderCartData)) {
             this.builderCartData.elements = [];
         }
@@ -436,11 +431,28 @@ export class BuilderStore implements IBuilderStore {
             return;
         }
 
+        if (action === "update" && data?.length) {
+            for (let i = 0; i < data.length; i++) {
+                const doorId = data[i].doorId;
+                const doorIndex = newResult.elements.findIndex(
+                    (item) => item.doorId === doorId,
+                );
+
+                if (doorIndex !== -1) {
+                    newResult.elements[doorIndex] = data[i];
+                    this.setBuilderCartData({
+                        elements: [...newResult.elements],
+                    });
+                }
+            }
+        }
+
         if (action === "add-to-end") {
             this.setBuilderCartData({
                 elements: [...newResult.elements, ...data],
             });
         }
+
         if (action === "add-to-start") {
             this.setBuilderCartData({
                 elements: [...data, ...newResult.elements],
