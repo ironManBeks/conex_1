@@ -18,3 +18,28 @@ export const convertCheckboxArrayToBoolean = (
 
     return result;
 };
+
+export const renderValidationText = (
+    type: "required" | "min" | "max" | "invalidDate" | "validEmail",
+    fieldName?: string,
+    value?: number,
+): string => {
+    switch (type) {
+        case "required":
+            return fieldName
+                ? `Field "${fieldName}" is required`
+                : "This field is required";
+        case "max":
+            return fieldName
+                ? `Field "${fieldName}" cannot contain more than ${value} characters`
+                : `This field cannot contain more than ${value} characters`;
+        case "min":
+            return fieldName
+                ? `Field "${fieldName}" cannot contain less than ${value} characters`
+                : `This field cannot contain less than ${value} characters`;
+        case "invalidDate":
+            return "Invalid date format";
+        case "validEmail":
+            return "Please enter valid email address";
+    }
+};

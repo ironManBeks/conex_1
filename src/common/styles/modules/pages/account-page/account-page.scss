@@ -86,6 +86,32 @@
     background: $color-primary-strong;
   }
 
+  &_error{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    text-align: center;
+    flex-direction: column;
+    .common-title{
+      margin-bottom: 20px;
+      &._h3{
+        font-size: $font-size-xlllll;
+        line-height: $line-height-lg;
+      }
+    }
+    &__actions{
+      margin-top: 50px;
+    }
+  }
+
+  &_loader{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+  }
+
   &_my-form{
     &__wrapper{
       .account-page_section-wrapper{

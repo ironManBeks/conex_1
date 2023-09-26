@@ -1,7 +1,5 @@
-import { TEditBuilderCartItemData } from "@store/builder/types";
-
 export const JWT_TOKEN = "jwtToken";
-export const AUTH_DATA = "authData";
+export const JWT_TOKEN_EXP = "jwtTokenExp";
 // Builder
 export const BUILDER_HISTORY = "builderHistory";
 export const BUILDER_QUEUE = "builderQueue";

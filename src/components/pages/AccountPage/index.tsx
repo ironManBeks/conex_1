@@ -1,54 +1,64 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect, useMemo, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { isEmpty } from "lodash";
+import { isNil } from "lodash";
+import { Spin } from "antd";
+import { useRouter } from "next/router";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
-import AccountInfoSkeleton from "@components/skeletons/AccountInfoSkeleton";
-import AccountOrderSkeleton from "@components/skeletons/AccountOrderSkeleton";
 import AuthForm from "@components/globalComponents/AuthForm";
 import AccountMenu from "./components/AccountMenu";
 import AccountContent from "./components/AccountContent";
 
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
+import { getStorage } from "@services/storage.service";
+import { JWT_TOKEN } from "@consts/storageNamesContsts";
+import { EButtonColor } from "@components/buttons/types";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 const AccountPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
+        const router = useRouter();
         const { authStore } = store as IRoot;
-
-        const { accountDataFetching, authData } = authStore;
+        const { authRequestFetching, logOut } = authStore;
+        const [tokenState, setTokenState] = useState<string>();
         const classPrefix = "account-page";
 
-        // useEffect(() => {
-        //     console.log("authData", authData);
-        // }, [authData]);
+        const token = getStorage(JWT_TOKEN);
+
+        useEffect(() => {
+            if (token) {
+                setTokenState(token);
+            }
+        }, [token]);
+
+        const wrapperStyles = {
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            width: "100%",
+            minHeight: "50vh",
+        };
 
         const accountContent = useMemo(() => {
-            if (accountDataFetching) {
+            if (authRequestFetching) {
                 return (
-                    <>
-                        <AccountInfoSkeleton />
-                        <AccountOrderSkeleton />
-                    </>
+                    <div style={wrapperStyles}>
+                        <Spin size="large" />
+                    </div>
                 );
             }
 
-            if (isEmpty(authData)) {
+            if (isNil(tokenState)) {
                 return (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "center",
-                            width: "100%",
-                        }}
-                    >
+                    <div style={wrapperStyles}>
                         <AuthForm className={classPrefix} />
                     </div>
                 );
             }
 
-            if (!isEmpty(authData)) {
+            if (tokenState) {
                 return (
                     <>
                         <AccountMenu pageClassPrefix={classPrefix} />
@@ -58,11 +68,29 @@ const AccountPage: FC<TStore> = inject("store")(
             }
 
             return (
-                <div style={{ textAlign: "center" }}>
+                <div
+                    style={{
+                        ...wrapperStyles,
+                        flexDirection: "column",
+                        textAlign: "center",
+                    }}
+                >
                     Something went wrong. <br /> Please try to reload the page
+                    <br />
+                    <div style={{ marginTop: 20 }}>
+                        <ButtonPrimary
+                            color={EButtonColor.primary}
+                            onClick={() => {
+                                logOut();
+                                router.reload();
+                            }}
+                        >
+                            Reset and reload
+                        </ButtonPrimary>
+                    </div>
                 </div>
             );
-        }, [authData, accountDataFetching, classPrefix]);
+        }, [authRequestFetching, tokenState]);
 
         return (
             <Layout pageClassPrefix={classPrefix}>

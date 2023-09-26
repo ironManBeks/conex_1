@@ -112,8 +112,8 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
                                                 (prevState) => !prevState,
                                             )
                                         }
-                                        width={16}
-                                        height={16}
+                                        width={20}
+                                        height={20}
                                     />
                                 ) : (
                                     <IconEyeClose
@@ -122,8 +122,8 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
                                                 (prevState) => !prevState,
                                             )
                                         }
-                                        width={16}
-                                        height={16}
+                                        width={20}
+                                        height={20}
                                     />
                                 )
                             }
