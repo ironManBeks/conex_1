@@ -1,4 +1,4 @@
-import { FC, useCallback } from "react";
+import { FC, useCallback, useEffect, useMemo } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { isArray, isEmpty, isEqual, isNil, isNumber, uniq } from "lodash";
@@ -20,11 +20,21 @@ import {
 } from "@helpers/builderHelper";
 import { handleClearBuilderStorage } from "../utils";
 import { TResultDoorData } from "@store/builder/types";
-import { getStorage, setStorage } from "@services/storage.service";
-import { BUILDER_CART, BUILDER_PARENT_ID } from "@consts/storageNamesContsts";
+import {
+    getStorage,
+    removeStorage,
+    setStorage,
+} from "@services/storage.service";
+import {
+    BUILDER_CART,
+    BUILDER_PARENT_ID,
+    EDIT_BUILDER_CART_ITEM_DATA,
+} from "@consts/storageNamesContsts";
 import { useRouter } from "next/router";
 import { PATH_CART_PAGE } from "@consts/pathsConsts";
 import { toJS } from "mobx";
+import ButtonLink from "@components/buttons/ButtonLink";
+import { showNotification } from "@helpers/notificarionHelper";
 
 const BuilderActions: FC<TBuilderCompProps> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -59,11 +69,14 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             editBuilderCartItemData,
             setElementsToBuilderCard,
             builderSettings,
+            builderCartData,
+            setBuilderCartData,
         } = builderStore;
 
+        const isEdit = !isNil(editBuilderCartItemData);
+
         const handleBack = () => {
-            if (!isNil(editBuilderCartItemData)) {
-                const editedItemHistory = editBuilderCartItemData.history;
+            if (isEdit) {
                 const currentStepIndex =
                     editBuilderCartItemData.history.findIndex(
                         (item) => item === currentStepId,
@@ -112,7 +125,9 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     currentStepData,
                 );
 
-                // If user stepped back and changed the selected values
+                //
+                // If user stepped back and changed selected values
+                //
                 if (
                     checkToResetDataAfter &&
                     currentStepHistoryIndex !== -1 &&
@@ -149,11 +164,52 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
 
                 setResultDoorData(updatedResultDoorData);
 
-                // If last step and no queue (end)
+                //
+                // If last step and no queue (END -> go to cart)
+                //
                 if (
                     !stepQueue.length &&
                     ((isArray(nextStep) && !nextStep.length) || !nextStep)
                 ) {
+                    if (isEdit) {
+                        const isInCart = !isNil(
+                            builderCartData?.elements.find(
+                                (item) =>
+                                    item.doorId ===
+                                    editBuilderCartItemData?.doorId,
+                            ),
+                        );
+
+                        if (isInCart) {
+                            setElementsToBuilderCard(
+                                [
+                                    {
+                                        ...editBuilderCartItemData,
+                                        doorData: updatedResultDoorData,
+                                    },
+                                ],
+                                "update",
+                            );
+                            router.push(PATH_CART_PAGE);
+                        } else {
+                            showNotification({
+                                type: "warning",
+                                message: (
+                                    <>
+                                        The item being changed could not be
+                                        found. <br />
+                                        Please create a product again.
+                                    </>
+                                ),
+                            });
+                        }
+                        handleClearBuilderStorage();
+                        removeStorage(EDIT_BUILDER_CART_ITEM_DATA);
+                        setBuilderCartData(null);
+                        resetBuilderFormData(true);
+                        return;
+                    }
+
                     const isInHistory = !isNil(
                         stepHistory.find((item) => item === currentStepId),
                     );
@@ -185,7 +241,9 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
+                //
                 // If first (main) step
+                //
                 if (!stepHistory.length) {
                     const selectedElement = getSelectedElementByFormValues(
                         currentStepData,
@@ -202,7 +260,9 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
+                //
                 // In first way from the element, then from the queue
+                //
                 if (stepHistory.length) {
                     if (!isNil(nextStep)) {
                         if (isNumber(nextStep)) {
@@ -219,7 +279,9 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             return;
                         }
                     } else {
+                        //
                         // If way has steps in queue
+                        //
                         if (stepQueue.length) {
                             updateCurrentStepData(stepQueue[0], false);
                             setStepQueue(stepQueue[0], "remove");
@@ -269,6 +331,39 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             return currentStepId === builderSettings?.data.quizStartId;
         }, [builderSettings, currentStepId]);
 
+        const subActionsContent = useMemo(() => {
+            if (isEdit) {
+                return (
+                    <ButtonLink
+                        color={EButtonColor.transparent}
+                        size={EButtonSize.lg}
+                        href={PATH_CART_PAGE}
+                        style={{
+                            marginLeft: "auto",
+                        }}
+                    >
+                        Continue ordering
+                    </ButtonLink>
+                );
+            }
+
+            return (
+                <ButtonPrimary
+                    onClick={() => {
+                        handleClearBuilderStorage();
+                        resetBuilderFormData(true);
+                    }}
+                    color={EButtonColor.transparent}
+                    size={EButtonSize.lg}
+                    style={{
+                        marginLeft: "auto",
+                    }}
+                >
+                    Reset form
+                </ButtonPrimary>
+            );
+        }, [isEdit]);
+
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__inner-wrapper`}>
@@ -288,23 +383,13 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     >
                         {isEmpty(endDoorData) ? "Next" : "Create door"}
                     </ButtonPrimary>
-                    <ButtonPrimary
-                        onClick={() => {
-                            handleClearBuilderStorage();
-                            resetBuilderFormData(true);
-                        }}
-                        color={EButtonColor.transparent}
-                        size={EButtonSize.lg}
-                        style={{
-                            marginLeft: "auto",
-                        }}
-                    >
-                        Reset form <sup>(remove in future)</sup>
-                    </ButtonPrimary>
+                    {subActionsContent}
                 </div>
                 <ModalConfirm
                     title="Are you sure you want to change this option?"
-                    description="Doing so will clear any options you have selected past this section."
+                    description={
+                        "Doing so will clear any options you have selected past this section."
+                    }
                     confirmColor={EButtonColor.primary}
                     onConfirm={() => resetDataAfterCurrentStep()}
                 />

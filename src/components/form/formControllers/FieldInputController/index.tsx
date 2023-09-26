@@ -47,6 +47,8 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                 } else if (!focus && !field.value) {
                     setIsLabelActive(false);
                 }
+                const selectorId = `${name}-id_${EFormFieldType.select}`;
+
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}
@@ -63,6 +65,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                                     { _disabled: disabled },
                                 )}
                                 onClick={focusOnField}
+                                // htmlFor={selectorId}
                             >
                                 {label}
                             </label>
@@ -71,6 +74,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             {...field}
                             {...rest}
                             ref={fieldRef}
+                            // id={selectorId}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {

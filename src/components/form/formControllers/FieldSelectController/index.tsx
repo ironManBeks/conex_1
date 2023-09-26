@@ -129,6 +129,12 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                                     }
                                 />
                             }
+                            onSearch={(val) => {
+                                if (val) {
+                                    focusHandler(true);
+                                    setIsLabelActive(true);
+                                }
+                            }}
                             clearIcon={<IconCross />}
                             open={dropdownOpen}
                             disabled={disabled}

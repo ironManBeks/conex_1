@@ -55,7 +55,7 @@
       .common-btn{
         width: calc(50% - $space * 4);
         margin: 0;
-        &:last-of-type{
+        &:last-child{
           width: 100%;
         }
       }
