@@ -19,7 +19,6 @@ import { findDebitCardType } from "@helpers/paymentMethodHelpers";
 import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
 import AccountSectionWrapper from "@components/pages/AccountPage/components/AccountSectionWrapper";
-import { AuthDataMockup } from "../../../../mockups/AuthDataMockup";
 import ModalCardBinding from "@components/modals/components/ModalCardBinding";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 import { notImplemented } from "@helpers/notImplemented";
@@ -30,18 +29,14 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
         const classPrefix = `${pageClassPrefix}_payment`;
         const { authStore, commonStore } = store as IRoot;
 
-        const { accountData, authData, setSelectedCard } = authStore;
-
-        const accountPaymentMockup = AuthDataMockup
-            ? AuthDataMockup.cards
-            : null;
+        const { userCardsData, setSelectedCard } = authStore;
 
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <H2>Payment methods</H2>
                 <AccountSectionWrapper pageClassPrefix={pageClassPrefix}>
                     <div className={`${classPrefix}__list`}>
-                        {accountPaymentMockup?.map((item) => (
+                        {userCardsData?.map((item) => (
                             <AccountPaymentItem
                                 key={item.id}
                                 id={item.id}

@@ -2,16 +2,16 @@ import { AppProps } from "next/app";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Fragment, JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
+import jwt from "jwt-decode";
 
 import "antd/dist/antd.css";
 import "@common/styles/main.scss";
 import { observer } from "mobx-react";
 import { getStorage } from "@services/storage.service";
 import initializeStore from "@store/index";
-import { AUTH_DATA, JWT_TOKEN } from "@consts/storageNamesContsts";
+import { JWT_TOKEN, JWT_TOKEN_EXP } from "@consts/storageNamesContsts";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
-import { toJS } from "mobx";
 
 const CustomAppWrapper = inject("store")(
     observer(
@@ -22,22 +22,23 @@ const CustomAppWrapper = inject("store")(
             children: ReactNode;
         } & TStore): JSX.Element => {
             const { authStore } = store as IRoot;
-            const { authData, setAuthData } = authStore;
+            const { getUserData, logOut } = authStore;
             const storageToken = getStorage(JWT_TOKEN);
-            const storageAuthData = getStorage(AUTH_DATA);
+            const storageTokenExp = getStorage(JWT_TOKEN_EXP);
+
+            const tokenVerification = () => {
+                if (storageToken) {
+                    if (new Date(storageTokenExp) < new Date()) {
+                        logOut();
+                    } else {
+                        getUserData();
+                    }
+                }
+            };
 
             useEffect(() => {
-                if (storageToken && storageAuthData) {
-                    setAuthData({
-                        jwt: storageToken,
-                        user: storageAuthData,
-                    });
-                }
+                tokenVerification();
             }, []);
-
-            // useEffect(() => {
-            //     console.log("authData", toJS(authData));
-            // }, [authData]);
 
             return <>{children}</>;
         },

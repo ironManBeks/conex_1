@@ -1,4 +1,5 @@
 import * as yup from "yup";
+import { renderValidationText } from "@helpers/formHelpers";
 
 export const yupPhoneRequired = (
     requiredText?: string,
@@ -28,17 +29,11 @@ export const yupNameRequired = (
     surName?: boolean,
     requiredText?: string,
 ): yup.StringSchema<string, yup.AnyObject> => {
-    const minText = `${
-        surName ? "Surname" : "Name"
-    } cannot contain less than 2 symbols`;
-    const maxText = `${
-        surName ? "Surname" : "Name"
-    } cannot contain more than 30 symbols`;
     return yup
         .string()
-        .required(requiredText || "This field is required")
-        .min(2, minText)
-        .max(30, maxText)
+        .required(requiredText || renderValidationText("required"))
+        .min(2, renderValidationText("min", surName ? "Surname" : "Name", 2))
+        .max(30, renderValidationText("max", surName ? "Surname" : "Name", 30))
         .trim();
 };
 
@@ -46,10 +41,10 @@ export const yupEmailRequired = (
     requiredText?: string,
 ): yup.StringSchema<string, yup.AnyObject> => {
     const emailNotValid = "Please enter valid email address";
-    const emailMaxText = "Email cannot contain more than 255 symbols";
+    const emailMaxText = "Email cannot contain more than 100 symbols";
     return yup
         .string()
-        .required(requiredText || "This field is required")
-        .max(255, emailMaxText)
+        .required(requiredText || renderValidationText("required"))
+        .max(100, emailMaxText)
         .email(emailNotValid);
 };

@@ -24,12 +24,11 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_my-form`;
         const { authStore } = store as IRoot;
-
-        // const {} = authStore;
+        const { userData } = authStore;
 
         const methods = useForm<TAccountMyForm>({
             resolver: accountMyFormResolver(),
-            defaultValues: accountMyFormDefaultValues(),
+            defaultValues: accountMyFormDefaultValues(userData),
         });
 
         const { handleSubmit, reset } = methods;

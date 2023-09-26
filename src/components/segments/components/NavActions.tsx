@@ -3,6 +3,7 @@ import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
 import { useMediaQuery } from "react-responsive";
+import jwt from "jwt-decode";
 
 import { P } from "@components/Text";
 import { IconCart, IconUser } from "@components/Icons";
@@ -18,12 +19,13 @@ import { isEmpty, isNil } from "lodash";
 import { getStorage } from "@services/storage.service";
 import { BUILDER_CART } from "@consts/storageNamesContsts";
 import { toJS } from "mobx";
+import { Spin } from "antd";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
         const { commonStore, authStore, builderStore } = store as IRoot;
         const { setModalAuthVisible } = commonStore;
-        const { authData } = authStore;
+        const { userData, userDataFetching } = authStore;
         const { builderCartData, setBuilderCartData } = builderStore;
         const classPrefix = `nav-actions`;
 
@@ -63,20 +65,22 @@ const NavActions: FC<TNavTypes> = inject("store")(
                 <Link
                     color={EButtonColor.transparent}
                     href={PATH_MY_ACCOUNT_PAGE}
-                    // onClick={() => setModalAuthVisible(true)}
                 >
                     <a className={`${classPrefix}_item__wrapper`}>
-                        <IconUser />
-                        <P>
-                            {!isEmpty(authData)
-                                ? authData?.user.username.length > 6
-                                    ? `${authData?.user.username.slice(
-                                          0,
-                                          6,
-                                      )}...`
-                                    : authData?.user.username
-                                : "Log In"}
-                        </P>
+                        {userDataFetching ? (
+                            <Spin />
+                        ) : (
+                            <>
+                                <IconUser />
+                                <P>
+                                    {!isEmpty(userData)
+                                        ? userData?.name.length > 6
+                                            ? `${userData?.name.slice(0, 6)}...`
+                                            : userData?.name
+                                        : "Log In"}
+                                </P>
+                            </>
+                        )}
                     </a>
                 </Link>
             </div>

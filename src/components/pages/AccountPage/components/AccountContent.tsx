@@ -1,11 +1,10 @@
 import { FC, useMemo } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
-import { Empty } from "antd";
 
-import AccountMyForm from "./AccountMyForm";
-import AccountPayment from "./AccountPayment";
 import AccountOrder from "./AccountOrder";
+import AccountMyFormLayout from "./AccountMyFormLayout";
+import AccountPaymentLayout from "./AccountPaymentLayout";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { AccountTabKey, EAccountTabsPaths } from "../consts";
@@ -19,11 +18,15 @@ const AccountContent: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const content = useMemo(() => {
         switch (tabValue) {
             case EAccountTabsPaths.paymentMethods:
-                return <AccountPayment pageClassPrefix={pageClassPrefix} />;
+                return (
+                    <AccountPaymentLayout pageClassPrefix={pageClassPrefix} />
+                );
             case EAccountTabsPaths.orders:
                 return <AccountOrder pageClassPrefix={pageClassPrefix} />;
             default:
-                return <AccountMyForm pageClassPrefix={pageClassPrefix} />;
+                return (
+                    <AccountMyFormLayout pageClassPrefix={pageClassPrefix} />
+                );
         }
     }, [tabValue]);
 

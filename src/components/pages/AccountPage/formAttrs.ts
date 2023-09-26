@@ -1,12 +1,14 @@
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
 import { Resolver } from "react-hook-form";
-import { TAccountData } from "@store/auth/types";
 import {
     yupEmailRequired,
     yupNameRequired,
     yupPhoneRequired,
 } from "@consts/validationConsts";
+import { TUserData } from "@store/auth/types";
+import { TNullable } from "@globalTypes/commonTypes";
+import { renderValidationText } from "@helpers/formHelpers";
 
 export enum EAccountMyFormFieldsNames {
     name = "name",
@@ -31,7 +33,7 @@ export type TAccountMyForm = {
 };
 
 export const accountMyFormDefaultValues = (
-    data?: TAccountData,
+    data?: TNullable<TUserData>,
 ): TAccountMyForm => {
     return {
         [EAccountMyFormFieldsNames.name]: data?.name ?? "",
@@ -56,15 +58,19 @@ export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
             [EAccountMyFormFieldsNames.phone]: yupPhoneRequired(),
             [EAccountMyFormFieldsNames.country]: yup
                 .string()
+                .max(50, renderValidationText("max", undefined, 50))
                 .required(requiredText),
             [EAccountMyFormFieldsNames.city]: yup
                 .string()
+                .max(50, renderValidationText("max", undefined, 50))
                 .required(requiredText),
             [EAccountMyFormFieldsNames.address]: yup
                 .string()
+                .max(100, renderValidationText("max", undefined, 100))
                 .required(requiredText),
             [EAccountMyFormFieldsNames.index]: yup
                 .string()
+                .max(50, renderValidationText("max", undefined, 50))
                 .required(requiredText),
         }),
     );
