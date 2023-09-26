@@ -85,10 +85,10 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                     _required: fieldRequired,
                 })}
             >
-                {currentStepData.id && (
-                    <H2>is edit: {`${!isNil(editBuilderCartItemData)}`}</H2>
-                )}
-                {currentStepData.id && <H2>STEP ID: {currentStepData.id}</H2>}
+                {/*{currentStepData.id && (*/}
+                {/*    <H2>is edit: {`${!isNil(editBuilderCartItemData)}`}</H2>*/}
+                {/*)}*/}
+                {/*{currentStepData.id && <H2>STEP ID: {currentStepData.id}</H2>}*/}
                 {fieldTitle && (
                     <H3
                         className={cn(`${classPrefix}_title`, {
