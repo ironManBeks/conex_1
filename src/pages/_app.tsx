@@ -12,6 +12,7 @@ import initializeStore from "@store/index";
 import { JWT_TOKEN, JWT_TOKEN_EXP } from "@consts/storageNamesContsts";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
+import { showNotification } from "@helpers/notificarionHelper";
 
 const CustomAppWrapper = inject("store")(
     observer(
@@ -30,9 +31,17 @@ const CustomAppWrapper = inject("store")(
                 if (storageToken) {
                     if (new Date(storageTokenExp) < new Date()) {
                         logOut();
-                    } else {
-                        getUserData();
+                        showNotification({
+                            type: "warning",
+                            message: (
+                                <>
+                                    Your session has expired <br />
+                                    Please log in again
+                                </>
+                            ),
+                        });
                     }
+                    getUserData();
                 }
             };
 

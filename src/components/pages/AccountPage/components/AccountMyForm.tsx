@@ -4,7 +4,7 @@ import { inject, observer } from "mobx-react";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
-import { H2, H4 } from "@components/Text";
+import { H4 } from "@components/Text";
 
 import {
     accountMyFormDefaultValues,
@@ -43,7 +43,6 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
 
         return (
             <div className={`${classPrefix}__wrapper`}>
-                <H2>Your account</H2>
                 <FormProvider {...methods}>
                     <form
                         onSubmit={handleSubmit(onSubmit)}

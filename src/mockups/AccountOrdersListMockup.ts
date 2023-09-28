@@ -1,31 +1,12 @@
-import { FC, useState } from "react";
-import { SegmentedLabeledOption } from "antd/lib/segmented";
-
-import { H2 } from "@components/Text";
-import Segmented from "@components/globalComponents/Segmented";
-
-import { TSectionTypes } from "@globalTypes/sectionTypes";
+import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
 import {
     EAccountOrderMoneyStatus,
     EAccountOrderStatus,
     EAccountOrderStatusTimelapse,
     TAccountOrderItem,
-} from "@components/pages/AccountPage/types";
-import AccountOrderItem from "./AccountOrderItem";
-import { Empty } from "antd";
-import AccountSectionWrapper from "./AccountSectionWrapper";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import { EButtonColor } from "@components/buttons/types";
-import { notImplemented } from "@helpers/notImplemented";
+} from "@store/auth/types";
 
-enum ESegmentedOptionsNames {
-    all = "all",
-    transit = "transit",
-    inProgress = "inProgress",
-    completed = "completed",
-}
-
-const segmentAccountOrderMockup: Record<
+export const AccountOrdersMockup: Record<
     ESegmentedOptionsNames,
     TAccountOrderItem[]
 > = {
@@ -180,102 +161,3 @@ const segmentAccountOrderMockup: Record<
     [ESegmentedOptionsNames.inProgress]: [],
     [ESegmentedOptionsNames.completed]: [],
 };
-
-const AccountOrder: FC<TSectionTypes> = ({ pageClassPrefix }) => {
-    const classPrefix = `${pageClassPrefix}_order`;
-    const [selectedSegment, setSelectedSegment] =
-        useState<ESegmentedOptionsNames>(ESegmentedOptionsNames.all);
-
-    const generateOptionValue = (label: string, count: number): string => {
-        return `${label}${count > 0 ? ` (${count})` : ""}`;
-    };
-
-    const getAccountOrderList = (value: ESegmentedOptionsNames): number => {
-        return segmentAccountOrderMockup[value].length;
-    };
-
-    const orderSegmentedOptions: SegmentedLabeledOption[] = [
-        {
-            value: ESegmentedOptionsNames.all,
-            label: generateOptionValue(
-                "All Orders",
-                getAccountOrderList(ESegmentedOptionsNames.all),
-            ),
-        },
-        {
-            value: ESegmentedOptionsNames.transit,
-            label: generateOptionValue(
-                "In Transit",
-                getAccountOrderList(ESegmentedOptionsNames.transit),
-            ),
-        },
-        {
-            value: ESegmentedOptionsNames.inProgress,
-            label: generateOptionValue(
-                "In Progress",
-                getAccountOrderList(ESegmentedOptionsNames.inProgress),
-            ),
-        },
-        {
-            value: ESegmentedOptionsNames.completed,
-            label: generateOptionValue(
-                "Completed",
-                getAccountOrderList(ESegmentedOptionsNames.completed),
-            ),
-        },
-    ];
-
-    const accountOrderList = (): TAccountOrderItem[] => {
-        if (Object.values(ESegmentedOptionsNames).includes(selectedSegment)) {
-            return segmentAccountOrderMockup[selectedSegment];
-        }
-        return [];
-    };
-
-    return (
-        <div className={`${classPrefix}__wrapper`}>
-            <H2>Your Orders</H2>
-            <AccountSectionWrapper
-                pageClassPrefix={pageClassPrefix}
-                className={`${classPrefix}__section-wrapper`}
-            >
-                <Segmented
-                    options={orderSegmentedOptions}
-                    className={`${classPrefix}__segmented`}
-                    onChange={(value) => {
-                        setSelectedSegment(value as ESegmentedOptionsNames);
-                    }}
-                />
-                <div className={`${classPrefix}__list`}>
-                    {accountOrderList().length ? (
-                        accountOrderList().map((item) => (
-                            <AccountOrderItem
-                                key={item.id}
-                                wrapperClassPrefix={classPrefix}
-                                id={item.id}
-                                orderNumber={item.orderNumber}
-                                dateOfOrder={item.dateOfOrder}
-                                orderAddress={item.orderAddress}
-                                orderStatus={item.orderStatus}
-                                moneyStatus={item.moneyStatus}
-                                statusTimelapse={item.statusTimelapse}
-                            />
-                        ))
-                    ) : (
-                        <Empty />
-                    )}
-                </div>
-            </AccountSectionWrapper>
-            <div className={`${classPrefix}__actions`}>
-                <ButtonPrimary
-                    color={EButtonColor.primary}
-                    onClick={() => notImplemented()}
-                >
-                    Manage other
-                </ButtonPrimary>
-            </div>
-        </div>
-    );
-};
-
-export default AccountOrder;

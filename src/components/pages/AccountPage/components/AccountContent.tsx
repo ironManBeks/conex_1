@@ -2,12 +2,12 @@ import { FC, useMemo } from "react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 
-import AccountOrder from "./AccountOrder";
 import AccountMyFormLayout from "./AccountMyFormLayout";
 import AccountPaymentLayout from "./AccountPaymentLayout";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { AccountTabKey, EAccountTabsPaths } from "../consts";
+import AccountOrdersLayout from "@components/pages/AccountPage/components/AccountOrdersLayout";
 
 const AccountContent: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const router = useRouter();
@@ -22,7 +22,9 @@ const AccountContent: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                     <AccountPaymentLayout pageClassPrefix={pageClassPrefix} />
                 );
             case EAccountTabsPaths.orders:
-                return <AccountOrder pageClassPrefix={pageClassPrefix} />;
+                return (
+                    <AccountOrdersLayout pageClassPrefix={pageClassPrefix} />
+                );
             default:
                 return (
                     <AccountMyFormLayout pageClassPrefix={pageClassPrefix} />
