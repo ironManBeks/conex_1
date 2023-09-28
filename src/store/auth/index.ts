@@ -10,6 +10,7 @@ import { TSignUpForm } from "@components/globalComponents/AuthForm/components/Si
 import { TSignInForm } from "@components/globalComponents/AuthForm/components/SignInForm/formAttrs";
 import {
     IAuthStore,
+    TAccountOrderItem,
     TAuthData,
     TAuthPaymentCard,
     TEmailConfirmationResponse,
@@ -25,15 +26,19 @@ import {
     UserCardsDataMockup,
     UserDataMockup,
 } from "../../mockups/AuthDataMockup";
+import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
+import { AccountOrdersMockup } from "../../mockups/AccountOrdersListMockup";
 
 export class AuthStore implements IAuthStore {
     authData: TNullable<TAuthData> = null;
     authRequestFetching = false;
     userData: TNullable<TUserData> = null;
-    userDataFetching = true;
+    userDataFetching = false;
     userCardsData: TNullable<TAuthPaymentCard[]> = null;
     userCardsDataFetching = true;
-    selectedCard: TAuthPaymentCard | null = null;
+    selectedCard: TNullable<TAuthPaymentCard> = null;
+    userOrdersData: TNullable<TAccountOrderItem[]> = null;
+    userOrdersDataFetching = true;
 
     constructor() {
         makeAutoObservable(this, {
@@ -52,12 +57,13 @@ export class AuthStore implements IAuthStore {
             setUserCardsData: action,
             setUserCardsDataFetching: action,
             setSelectedCard: action,
+            setUserOrdersData: action,
+            setUserOrdersDataFetching: action,
         });
     }
     ////////////////////////////////////
     setAuthData = (data: TNullable<TAuthData>): void => {
         this.authData = data;
-        console.log("123123123123");
         if (!isNil(data)) {
             setStorage(JWT_TOKEN, data.jwt);
             setStorage(JWT_TOKEN_EXP, data?.jwt_expiration_date);
@@ -89,6 +95,14 @@ export class AuthStore implements IAuthStore {
 
     setUserCardsDataFetching = (value: boolean): void => {
         this.userCardsDataFetching = value;
+    };
+
+    setUserOrdersData = (data: TNullable<TAccountOrderItem[]>): void => {
+        this.userOrdersData = data;
+    };
+
+    setUserOrdersDataFetching = (value: boolean): void => {
+        this.userOrdersDataFetching = value;
     };
 
     ///
@@ -256,10 +270,34 @@ export class AuthStore implements IAuthStore {
             });
     };
 
+    getUserOrdersData = (
+        status: ESegmentedOptionsNames,
+    ): Promise<AxiosResponse<TAccountOrderItem[]>> => {
+        this.setUserOrdersDataFetching(true);
+        return axiosInstance
+            .get("/user/orders")
+            .then((response: AxiosResponse<TAccountOrderItem[]>) => {
+                const { data } = response;
+                // this.setUserOrdersData(data);
+                return response;
+            })
+            .catch((err) => {
+                // ToDo turn on !
+                // showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                console.log("status", status);
+                this.setUserOrdersData(AccountOrdersMockup[status]);
+                this.setUserOrdersDataFetching(false);
+            });
+    };
+
     resetUserData = (): void => {
         this.setAuthData(null);
         this.setUserData(null);
         this.setUserCardsData(null);
+        this.setUserOrdersData(null);
     };
 
     logOut = (): void => {

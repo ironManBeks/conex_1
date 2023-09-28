@@ -23,6 +23,7 @@ import ModalCardBinding from "@components/modals/components/ModalCardBinding";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 import { notImplemented } from "@helpers/notImplemented";
 import { isFunction } from "lodash";
+import { Empty } from "antd";
 
 const AccountPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -30,13 +31,17 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
         const { authStore, commonStore } = store as IRoot;
 
         const { userCardsData, setSelectedCard } = authStore;
+        const {
+            setModalConfirmVisible,
+            setConfirmModalData,
+            setModalCardBindingVisible,
+        } = commonStore;
 
         return (
-            <div className={`${classPrefix}__wrapper`}>
-                <H2>Payment methods</H2>
-                <AccountSectionWrapper pageClassPrefix={pageClassPrefix}>
-                    <div className={`${classPrefix}__list`}>
-                        {userCardsData?.map((item) => (
+            <>
+                <div className={`${classPrefix}__list`}>
+                    {userCardsData?.length ? (
+                        userCardsData?.map((item) => (
                             <AccountPaymentItem
                                 key={item.id}
                                 id={item.id}
@@ -46,28 +51,23 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
                                 expMonth={item.expMonth}
                                 expYear={item.expYear}
                                 onDelete={() => {
-                                    commonStore.setModalConfirmVisible(true);
-                                    commonStore.setConfirmModalData(item);
+                                    setModalConfirmVisible(true);
+                                    setConfirmModalData(item);
                                 }}
                                 onClick={() => {
                                     setSelectedCard(item);
-                                    commonStore.setModalCardBindingVisible(
-                                        true,
-                                    );
+                                    setModalCardBindingVisible(true);
                                 }}
                             />
-                        ))}
-                    </div>
-                </AccountSectionWrapper>
-                <div className={`${classPrefix}__actions`}>
-                    <ButtonPrimary
-                        color={EButtonColor.primary}
-                        onClick={() => {
-                            commonStore.setModalCardBindingVisible(true);
-                        }}
-                    >
-                        Add new card
-                    </ButtonPrimary>
+                        ))
+                    ) : (
+                        <Empty
+                            style={{
+                                width: "100%",
+                                minHeight: "50vh",
+                            }}
+                        />
+                    )}
                 </div>
                 <ModalCardBinding />
                 <ModalConfirm
@@ -79,7 +79,7 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
                         );
                     }}
                 />
-            </div>
+            </>
         );
     }),
 );

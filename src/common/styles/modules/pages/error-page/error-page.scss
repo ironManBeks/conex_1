@@ -1,28 +1,79 @@
 .error-page{
   &_wrapper{
     padding: 10vh 0;
+    overflow: hidden;
+    position: relative;
+    .container{
+      position: relative;
+    }
   }
   &_content{
     &__wrapper{
       text-align: center;
+      position: relative;
+      z-index: 4;
+      width: 100%;
       .common-title{
-        &._h2{
-          font-size: 6rem;
-          margin-bottom: 50px;
-        }
-        &._h3{
-          font-size: 4rem;
-          margin-bottom: 30px;
-        }
+        font-size: $font-size-xxl;
+        line-height: $line-height-xxl;
+        margin-bottom: space(4);
       }
       .common-text{
-        font-size: $font-size-xlllll;
-        margin-bottom: 50px;
+        font-size: $font-size-md;
+        line-height: $line-height-lg;
+        font-weight: 500;
+        margin-bottom: space(6);
       }
     }
     &__actions{
       display: flex;
       justify-content: center;
+    }
+  }
+  &_bg{
+    position: absolute;
+    top: -5vh;
+    left: 0;
+    width: 100%;
+    height: calc(100% + 20vh);
+  }
+  &_cloud{
+    position: absolute;
+    z-index: 1;
+    top: 50%;
+    left: 0;
+    opacity: 0;
+    animation-iteration-count: infinite;
+    animation-fill-mode: forwards;
+    animation-timing-function: linear;
+    animation-name: Float, FadeFloat;
+    &._1{
+      animation-delay:  0.5s;
+      animation-duration: 40s;
+      top: 10%;
+      left: 70%;
+    }
+    &._2{
+      animation-delay: 0.8s;
+      animation-duration: 28s;
+      top: 18%;
+      left: 18%;
+    }
+    &._3{
+      animation-delay: 1.2s;
+      animation-duration: 30s;
+    }
+    &._4{
+      animation-delay: 0.8s;
+      animation-duration: 20s;
+      top: 58%;
+      left: 40%;
+    }
+    &._5{
+      animation-delay: 1s;
+      animation-duration: 18s;
+      top: 80%;
+      left: 60%;
     }
   }
 }

@@ -7,6 +7,24 @@ import { TResetPasswordForm } from "@components/globalComponents/AuthForm/compon
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 import { TNullable } from "@globalTypes/commonTypes";
+import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
+
+export enum EAccountOrderStatus {
+    processed = "processed",
+    delivered = "delivered",
+}
+
+export enum EAccountOrderMoneyStatus {
+    processed = "processed",
+    delivered = "delivered",
+}
+
+export enum EAccountOrderStatusTimelapse {
+    done = "done",
+    processed = "processed",
+    feature = "feature",
+    failure = "failure",
+}
 
 export type TUserData = {
     name: string;
@@ -51,6 +69,22 @@ export type TEmailConfirmationResponse = {
     sent: boolean;
 };
 
+export type TOrderStatusTimelapse = {
+    time: string;
+    status: EAccountOrderStatusTimelapse;
+    description?: string;
+};
+
+export type TAccountOrderItem = {
+    id: string;
+    orderNumber: string;
+    dateOfOrder: string;
+    orderAddress: string;
+    orderStatus?: EAccountOrderStatus;
+    moneyStatus?: EAccountOrderMoneyStatus;
+    statusTimelapse: TOrderStatusTimelapse[];
+};
+
 export interface IAuthStore {
     authData: TNullable<TAuthData>;
     authRequestFetching: boolean;
@@ -59,6 +93,8 @@ export interface IAuthStore {
     userCardsData: TNullable<TAuthPaymentCard[]>;
     userCardsDataFetching: boolean;
     selectedCard: TNullable<TAuthPaymentCard>;
+    userOrdersData: TNullable<TAccountOrderItem[]>;
+    userOrdersDataFetching: boolean;
     // functions
     setAuthData: (data: TNullable<TAuthData>) => void;
     setAuthRequestFetching: (value: boolean) => void;
@@ -76,6 +112,12 @@ export interface IAuthStore {
     getUserCardsData: () => Promise<AxiosResponse<TAuthPaymentCard[]>>;
     setUserCardsData: (data: TNullable<TAuthPaymentCard[]>) => void;
     setUserCardsDataFetching: (value: boolean) => void;
+    //
+    getUserOrdersData: (
+        status: ESegmentedOptionsNames,
+    ) => Promise<AxiosResponse<TAccountOrderItem[]>>;
+    setUserOrdersData: (data: TNullable<TAccountOrderItem[]>) => void;
+    setUserOrdersDataFetching: (value: boolean) => void;
     //
     setSelectedCard: (data: TNullable<TAuthPaymentCard>) => void;
     resetUserData: () => void;

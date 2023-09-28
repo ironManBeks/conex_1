@@ -1,0 +1,22 @@
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .error-page{
+    &_wrapper{
+      padding: space(10) 0;
+    }
+    &_content{
+      &__wrapper{
+        width: 100%;
+        .common-title{
+          font-size: $font-size-xl;
+          line-height: $line-height-xl;
+        }
+        .common-text{
+          font-size: $font-size-sm;
+          line-height: $line-height-md;
+        }
+      }
+    }
+  }
+
+}

@@ -3,6 +3,7 @@ import cn from "classnames";
 import { Transition, TransitionStatus } from "react-transition-group";
 import CSS from "csstype";
 import { Steps } from "antd";
+import { StepProps } from "antd/lib/steps";
 
 import { H4, P } from "@components/Text";
 import {
@@ -18,14 +19,13 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import CopyText from "@components/globalComponents/CopyText";
 
 import { notImplemented } from "@helpers/notImplemented";
+import { EButtonColor } from "@components/buttons/types";
+import { EArrowDirection } from "@components/Icons/types";
 import {
     EAccountOrderStatusTimelapse,
     TAccountOrderItem,
     TOrderStatusTimelapse,
-} from "@components/pages/AccountPage/types";
-import { EButtonColor } from "@components/buttons/types";
-import { EArrowDirection } from "@components/Icons/types";
-import { StepProps } from "antd/lib/steps";
+} from "@store/auth/types";
 
 const AccountOrderItem: FC<
     TAccountOrderItem & { wrapperClassPrefix: string }

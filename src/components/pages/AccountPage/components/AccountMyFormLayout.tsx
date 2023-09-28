@@ -8,23 +8,42 @@ import AccountLoader from "./AccountLoader";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
+import { H2 } from "@components/Text";
+import AccountSectionWrapper from "./AccountSectionWrapper";
 
 const AccountMyFormLayout: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { authStore } = store as IRoot;
         const { userData, userDataFetching } = authStore;
+        const classPrefix = `${pageClassPrefix}_my-form`;
 
-        return useMemo(() => {
+        const content = useMemo(() => {
             if (userDataFetching) {
-                return <AccountLoader pageClassPrefix={pageClassPrefix} />;
+                return (
+                    <AccountSectionWrapper pageClassPrefix={pageClassPrefix}>
+                        <AccountLoader pageClassPrefix={pageClassPrefix} />
+                    </AccountSectionWrapper>
+                );
             }
 
             if (!isNil(userData)) {
                 return <AccountMyForm pageClassPrefix={pageClassPrefix} />;
             }
 
-            return <AccountNoData pageClassPrefix={pageClassPrefix} />;
+            return (
+                <AccountSectionWrapper pageClassPrefix={pageClassPrefix}>
+                    <AccountNoData pageClassPrefix={pageClassPrefix} />
+                </AccountSectionWrapper>
+            );
         }, [userData, userDataFetching]);
+
+        return (
+            <div className={`${classPrefix}__wrapper`}>
+                <H2>Your account</H2>
+
+                {content}
+            </div>
+        );
     }),
 );
 
