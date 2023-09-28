@@ -2,7 +2,6 @@ import { AppProps } from "next/app";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Fragment, JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
-import jwt from "jwt-decode";
 
 import "antd/dist/antd.css";
 import "@common/styles/main.scss";
@@ -40,8 +39,9 @@ const CustomAppWrapper = inject("store")(
                                 </>
                             ),
                         });
+                    } else {
+                        getUserData();
                     }
-                    getUserData();
                 }
             };
 

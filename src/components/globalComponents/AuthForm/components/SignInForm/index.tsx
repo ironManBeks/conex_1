@@ -23,7 +23,8 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
     observer(({ store, className, onAuth, setFormType }) => {
         const { authStore } = store as IRoot;
 
-        const { authRequestFetching, authSignInRequest } = authStore;
+        const { authRequestFetching, authSignInRequest, getUserData } =
+            authStore;
 
         const methods = useForm<TSignInForm>({
             resolver: signInFormResolver(),
@@ -33,7 +34,11 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
         const { handleSubmit } = methods;
 
         const onSubmit: SubmitHandler<TSignInForm> = (data) => {
-            authSignInRequest(data);
+            authSignInRequest(data).then(({ data }) => {
+                if (data?.jwt) {
+                    getUserData();
+                }
+            });
             if (isFunction(onAuth)) {
                 onAuth();
             }

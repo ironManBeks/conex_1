@@ -99,7 +99,7 @@ export interface IAuthStore {
     setAuthData: (data: TNullable<TAuthData>) => void;
     setAuthRequestFetching: (value: boolean) => void;
     authSignUpRequest: (data: TSignUpForm) => Promise<void>;
-    authSignInRequest: (data: TSignInForm) => Promise<void>;
+    authSignInRequest: (data: TSignInForm) => Promise<AxiosResponse<TAuthData>>;
     forgotPasswordRequest: (data: TForgotPasswordForm) => Promise<void>;
     resetPasswordRequest: (data: TResetPasswordRequest) => Promise<void>;
     changePasswordRequest: (data: TChangePasswordForm) => Promise<void>;

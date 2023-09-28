@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { action, makeAutoObservable, observable, toJS } from "mobx";
 import { AxiosResponse } from "axios";
 import { isEmpty, isNil } from "lodash";
 
@@ -78,6 +78,7 @@ export class AuthStore implements IAuthStore {
     };
 
     setUserData = (data: TNullable<TUserData>): void => {
+        console.log("data_____________", toJS(data));
         this.userData = data;
     };
 
@@ -126,7 +127,9 @@ export class AuthStore implements IAuthStore {
             });
     };
 
-    authSignInRequest = (formValues: TSignInForm): Promise<void> => {
+    authSignInRequest = (
+        formValues: TSignInForm,
+    ): Promise<AxiosResponse<TAuthData>> => {
         this.setAuthRequestFetching(true);
         return axiosInstance
             .post("/auth/local", formValues)
@@ -136,6 +139,7 @@ export class AuthStore implements IAuthStore {
                     type: "success",
                     message: "Welcome to Conexwest",
                 });
+                return data;
             })
             .catch((err) => {
                 showAxiosNotificationError(err);
@@ -245,6 +249,7 @@ export class AuthStore implements IAuthStore {
                 throw err;
             })
             .finally(() => {
+                console.log("getUserData", "finally");
                 this.setUserData(UserDataMockup);
                 this.setUserDataFetching(false);
             });
