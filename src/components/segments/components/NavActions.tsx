@@ -62,27 +62,27 @@ const NavActions: FC<TNavTypes> = inject("store")(
                         </P>
                     </a>
                 </Link>
-                <Link
-                    color={EButtonColor.transparent}
-                    href={PATH_MY_ACCOUNT_PAGE}
-                >
-                    <a className={`${classPrefix}_item__wrapper`}>
-                        {userDataFetching ? (
-                            <Spin />
-                        ) : (
-                            <>
-                                <IconUser />
-                                <P>
-                                    {!isEmpty(userData)
-                                        ? userData?.name.length > 6
-                                            ? `${userData?.name.slice(0, 6)}...`
-                                            : userData?.name
-                                        : "Log In"}
-                                </P>
-                            </>
-                        )}
-                    </a>
-                </Link>
+                {userDataFetching ? (
+                    <span className={`${classPrefix}_item__wrapper`}>
+                        <Spin />
+                    </span>
+                ) : (
+                    <Link
+                        color={EButtonColor.transparent}
+                        href={PATH_MY_ACCOUNT_PAGE}
+                    >
+                        <a className={`${classPrefix}_item__wrapper`}>
+                            <IconUser />
+                            <P>
+                                {!isEmpty(userData)
+                                    ? userData?.name.length > 6
+                                        ? `${userData?.name.slice(0, 6)}...`
+                                        : userData?.name
+                                    : "Log In"}
+                            </P>
+                        </a>
+                    </Link>
+                )}
             </div>
         );
     }),
