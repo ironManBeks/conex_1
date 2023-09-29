@@ -16,6 +16,7 @@ import AuthFooter from "./components/AuthFooter";
 
 import { AUTH_FORM_CLASSNAME_PREFIX } from "./consts";
 import { EAuthFormType, TAuthFormProps } from "./types";
+import AuthHead from "@components/globalComponents/AuthForm/components/AuthHead";
 
 const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
     const [formType, setFormType] = useState<EAuthFormType>(
@@ -82,18 +83,39 @@ const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
     }, [formType, onAuth]);
 
     return (
-        <div className={cn(`${AUTH_FORM_CLASSNAME_PREFIX}_wrapper`, className)}>
-            <ImgWrapper
-                src="/images/svg/auth-form.svg"
-                alt="Image: Auth form"
-                width="185"
-                height="113"
-            />
-            {/*<LoginWithGoogle />*/}
-            {/*<LoginWithApple />*/}
-            {/*<P className="divider">or</P>*/}
-            {formContent}
-            <AuthFooter formType={formType} setFormType={setFormType} />
+        // ToDo remove wrapper with styles
+        <div
+            style={{
+                width: "100%",
+                display: "flex",
+                alignItems: "center",
+                flexDirection: "column",
+            }}
+        >
+            <div
+                className={cn(
+                    `${AUTH_FORM_CLASSNAME_PREFIX}_wrapper`,
+                    className,
+                )}
+            >
+                <AuthHead formType={formType} setFormType={setFormType} />
+                {formContent}
+                <AuthFooter formType={formType} setFormType={setFormType} />
+                {/*<LoginWithGoogle />*/}
+                {/*<LoginWithApple />*/}
+            </div>
+            <br />
+            <a onClick={() => setFormType(EAuthFormType.resetPassword)}>
+                Reset password? (remove)
+            </a>
+            <br />
+            <a onClick={() => setFormType(EAuthFormType.changePassword)}>
+                Change password? (remove)
+            </a>
+            <br />
+            <a onClick={() => setFormType(EAuthFormType.sendEmailConfirmation)}>
+                Email confirmation? (remove)
+            </a>
         </div>
     );
 });

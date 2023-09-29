@@ -65,6 +65,7 @@ const ErrorPage: FC = () => {
                             <ImgWrapper
                                 src="/images/svg/error-bg.png"
                                 wrapperClassName={`${classPrefix}_bg`}
+                                objectFit="contain"
                             />
                         </MediaQuery>
                         <div className={`${classPrefix}_content__wrapper`}>

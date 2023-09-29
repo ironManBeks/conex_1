@@ -7,6 +7,7 @@ import { inject, observer } from "mobx-react";
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { H2, P } from "@components/Text";
+import AuthActions from "../AuthActions";
 
 import { TAuthFormProps, TAuthFormTypes } from "../../types";
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
@@ -47,10 +48,9 @@ const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         className,
                     )}
                 >
-                    <H2>Forgot your password?</H2>
                     <P>
-                        No worries! Fill in your email and we'll send you a link
-                        to reset your password.
+                        Fill in your email and we'll send you a link to reset
+                        your password.
                     </P>
                     <FieldInputController
                         name={EForgotPasswordFormFieldsNames.email}
@@ -61,7 +61,7 @@ const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         If link doesn’t appear within a few minutes, check your
                         spam folder.
                     </P>
-                    <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_actions`}>
+                    <AuthActions>
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.primary}
@@ -70,7 +70,7 @@ const ForgotPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         >
                             Reset password
                         </ButtonPrimary>
-                    </div>
+                    </AuthActions>
                 </form>
             </FormProvider>
         );

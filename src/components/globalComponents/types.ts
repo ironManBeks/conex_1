@@ -1,8 +1,6 @@
 import { ReactNode, MouseEvent, JSX } from "react";
 import { ImageProps } from "next/image";
 import { ProgressProps } from "antd/lib/progress/progress";
-import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
-import { SegmentedRawOption } from "rc-segmented";
 import { TooltipProps } from "antd/lib/tooltip";
 
 import {
@@ -14,6 +12,8 @@ import {
 import { TFormItemError } from "@components/form/FormItemError/types";
 import { TFormItemLabel } from "@components/form/FormItemWrapper/types";
 import { TStore } from "@globalTypes/storeTypes";
+import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
+import { SegmentedRawOption } from "rc-segmented";
 
 export type TContainer = {
     children: ReactNode;
@@ -36,7 +36,7 @@ export type TProgressWrapper = { wrapperClassPrefix?: string } & ProgressProps;
 
 export type TSegmented = {
     options: (SegmentedRawOption | SegmentedLabeledOption)[];
-    className?: string;
+    viewStyle?: "default" | "block";
 } & SegmentedProps;
 
 export type TCopyText = {

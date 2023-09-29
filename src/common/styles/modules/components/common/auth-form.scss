@@ -10,11 +10,12 @@
 
 .auth-form{
   &_wrapper{
-    padding-top: 40px;
-    max-width: 370px;
     width: 100%;
+    max-width: 375px;
+    padding: space(6) space(5);
+    background: $color-primary-strong;
     .img-custom_wrapper{
-      margin: 0 auto 50px;
+      margin: space(6) auto 50px;
     }
     .common-text.divider{
       text-align: center;
@@ -26,30 +27,52 @@
     .form-field_label-wrapper{
       padding-left: 0;
     }
-    //.form-field_wrapper._input{
-    //  .form-field_field{
-    //    border-color: #D9D7D7;
-    //  }
-    //}
+    .common-text{
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      font-weight: 500;
+      color: $text-color-secondary;
+      text-align: center;
+      margin-bottom: space(4);
+    }
+    a{
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      font-weight: 500;
+      color: $text-color-blue;
+    }
+  }
+
+  &_header{
+    &__logo{
+      display: flex;
+      justify-content: center;
+      margin-bottom: space(5);
+    }
+    &__segmented{
+      width: 100%;
+      margin-bottom: space(6);
+      .ant-segmented-item{
+        width: 50%;
+      }
+    }
   }
 
   &_actions{
-    display: flex;
-    justify-content: center;
-    margin: 60px 0 20px;
-    .common-btn{
-      width: 100%;
-      max-width: 240px;
+    &__wrapper{
+      display: flex;
+      justify-content: center;
+      margin: space(6) 0 space(4);
+      gap: space(4);
+      .common-btn{
+        width: 100%;
+      }
     }
   }
 
   &_footer{
-    font-size: $font-size-bs;
-    line-height: $line-height-bs;
-    color: #6F7175;
-    text-align: center;
-    a{
-      color: #2E7CF6;
+    &__wrapper{
+
     }
   }
 

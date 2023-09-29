@@ -28,6 +28,10 @@
       &-label {
         padding: 0;
         transition: 0s;
+        line-height: $line-height-lg;
+        display: flex;
+        align-items: center;
+        justify-content: center;
       }
       &-selected{
         background: $color-accent-strong;
@@ -39,6 +43,28 @@
       top: 4px;
       background: $color-accent-strong;
       height: calc(100% - 8px);
+    }
+  }
+
+  &._block{
+    padding: 0;
+    border: 1px solid $border-color-secondary;
+    border-radius: borderRadius(2);
+    .ant-segmented{
+      &-group{
+        gap: space(3);
+      }
+      &-item{
+        border-radius: borderRadius(2);
+        color: red;
+        &-selected{
+          background: $color-secondary-40;
+        }
+      }
+      &-thumb{
+        border-radius: borderRadius(2);
+        background: $color-secondary-40;
+      }
     }
   }
 }

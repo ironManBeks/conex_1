@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-import { isFunction } from "lodash";
+import { isFunction, isNil } from "lodash";
 import cn from "classnames";
 import { inject, observer } from "mobx-react";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import AuthActions from "../AuthActions";
 
 import { EButtonColor } from "@components/buttons/types";
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
@@ -23,8 +24,12 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
     observer(({ store, className, onAuth, setFormType }) => {
         const { authStore } = store as IRoot;
 
-        const { authRequestFetching, authSignInRequest, getUserData } =
-            authStore;
+        const {
+            authRequestFetching,
+            authSignInRequest,
+            getUserData,
+            userData,
+        } = authStore;
 
         const methods = useForm<TSignInForm>({
             resolver: signInFormResolver(),
@@ -35,7 +40,7 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
 
         const onSubmit: SubmitHandler<TSignInForm> = (data) => {
             authSignInRequest(data).then(({ data }) => {
-                if (data?.jwt) {
+                if (data?.jwt && isNil(userData)) {
                     getUserData();
                 }
             });
@@ -70,7 +75,7 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                     >
                         Forgot password?
                     </a>
-                    <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_actions`}>
+                    <AuthActions>
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.primary}
@@ -79,7 +84,7 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         >
                             Log in
                         </ButtonPrimary>
-                    </div>
+                    </AuthActions>
                 </form>
             </FormProvider>
         );

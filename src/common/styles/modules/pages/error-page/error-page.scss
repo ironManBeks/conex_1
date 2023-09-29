@@ -1,7 +1,9 @@
 .error-page{
+  &_layout__inner-wrapper{
+    overflow: hidden;
+  }
   &_wrapper{
     padding: 10vh 0;
-    overflow: hidden;
     position: relative;
     .container{
       position: relative;

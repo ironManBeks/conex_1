@@ -7,6 +7,7 @@ import { inject, observer } from "mobx-react";
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import AuthActions from "../AuthActions";
 
 import { TAuthFormProps } from "../../types";
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
@@ -62,7 +63,7 @@ const SignUpForm: FC<TAuthFormProps> = inject("store")(
                         placeholder="Password"
                         label="Password"
                     />
-                    <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_actions`}>
+                    <AuthActions>
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.primary}
@@ -71,7 +72,7 @@ const SignUpForm: FC<TAuthFormProps> = inject("store")(
                         >
                             Sign up
                         </ButtonPrimary>
-                    </div>
+                    </AuthActions>
                 </form>
             </FormProvider>
         );
