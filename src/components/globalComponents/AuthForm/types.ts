@@ -12,6 +12,7 @@ export type TAuthFormTypes = {
 };
 
 export type TAuthFooter = TAuthFormTypes;
+export type TAuthHeader = TAuthFormTypes;
 
 export enum EAuthFormType {
     login = "login",

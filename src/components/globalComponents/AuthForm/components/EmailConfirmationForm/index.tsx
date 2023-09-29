@@ -6,6 +6,7 @@ import { inject, observer } from "mobx-react";
 
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import FieldInputController from "@components/form/formControllers/FieldInputController";
+import AuthActions from "../AuthActions";
 
 import { EButtonColor } from "@components/buttons/types";
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
@@ -51,7 +52,7 @@ const ChangePasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         placeholder="Email"
                         label="Email"
                     />
-                    <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_actions`}>
+                    <AuthActions>
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.primary}
@@ -60,7 +61,7 @@ const ChangePasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         >
                             Confirm email
                         </ButtonPrimary>
-                    </div>
+                    </AuthActions>
                 </form>
             </FormProvider>
         );

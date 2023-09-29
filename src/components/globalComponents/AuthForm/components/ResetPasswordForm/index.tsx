@@ -7,6 +7,7 @@ import { inject, observer } from "mobx-react";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { P } from "@components/Text";
 import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
+import AuthActions from "../AuthActions";
 
 import { EButtonColor } from "@components/buttons/types";
 import {
@@ -46,10 +47,6 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         className,
                     )}
                 >
-                    <P>
-                        Fill in your new password and we'll send you a link to
-                        update your password.
-                    </P>
                     <FieldPasswordController
                         name={EResetPasswordFormFieldsNames.password}
                         placeholder="Password"
@@ -66,7 +63,7 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         If link doesn’t appear within a few minutes, check your
                         spam folder.
                     </P>
-                    <div className={`${AUTH_FORM_CLASSNAME_PREFIX}_actions`}>
+                    <AuthActions>
                         <ButtonPrimary
                             type="submit"
                             color={EButtonColor.primary}
@@ -75,7 +72,7 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         >
                             Change password
                         </ButtonPrimary>
-                    </div>
+                    </AuthActions>
                 </form>
             </FormProvider>
         );

@@ -19,6 +19,7 @@ $color-secondary-40: rgba($color-secondary-strong, 0.04);
 $color-secondary-120: rgba($color-secondary-strong, 0.12);
 $color-secondary-160: rgba($color-secondary-strong, 0.16);
 $color-secondary-200: rgba($color-secondary-strong, 0.2);
+$color-secondary-360: rgba($color-secondary-strong, 0.36);
 $color-secondary-400: rgba($color-secondary-strong, 0.4);
 $color-secondary-600: rgba($color-secondary-strong, 0.6);
 $color-secondary-800: rgba($color-secondary-strong, 0.8);
@@ -44,12 +45,19 @@ $color-critical-400: rgba($color-critical-strong, 0.4);
 $color-critical-600: rgba($color-critical-strong, 0.6);
 $color-critical-800: rgba($color-critical-strong, 0.8);
 
+$color-blue-strong: rgba(21, 114, 253, 1);
+$color-blue-200: rgba($color-blue-strong, 0.2);
+$color-blue-400: rgba($color-blue-strong, 0.4);
+$color-blue-600: rgba($color-blue-strong, 0.6);
+$color-blue-800: rgba($color-blue-strong, 0.8);
+
 // Text-color
 $text-color-primary: $color-secondary-strong;
-$text-color-secondary: $color-secondary-400;
+$text-color-secondary: $color-secondary-360;
 $text-color-disabled: $color-secondary-200;
 $text-color-success: $color-success-strong;
 $text-color-critical: $color-critical-strong;
+$text-color-blue: $color-blue-strong;
 
 // Icon-color
 $icon-color-primary: $color-secondary-strong;

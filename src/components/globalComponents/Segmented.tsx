@@ -4,20 +4,25 @@ import cn from "classnames";
 
 import { TSegmented } from "./types";
 
-const Segmented: FC<TSegmented> = ({
-    className,
-    options,
-    disabled,
-    defaultValue,
-    onChange,
-}) => {
+const Segmented: FC<TSegmented> = (props) => {
+    const {
+        className,
+        // options,
+        disabled,
+        defaultValue,
+        onChange,
+        viewStyle = "default",
+        ref,
+        ...rest
+    } = props;
     return (
         <AntSegmented
+            {...rest}
             disabled={disabled}
             defaultValue={defaultValue}
             onChange={onChange}
-            className={cn(className, "common-segmented")}
-            options={options}
+            className={cn(className, "common-segmented", `_${viewStyle}`)}
+            // options={options}
         />
     );
 };
