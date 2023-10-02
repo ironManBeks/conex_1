@@ -77,10 +77,13 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                             reference={guestFormRef}
                         />
                     )}
-                    <AddressSelection
-                        className={classPrefix}
-                        errorMessage={undefined}
-                    />
+                    <br />
+                    address
+                    <br />
+                    {/*<AddressSelection*/}
+                    {/*    className={classPrefix}*/}
+                    {/*    errorMessage={undefined}*/}
+                    {/*/>*/}
                     <OrderShippingMethod
                         className={classPrefix}
                         onChange={(value) => setSelectedDelivery(value)}

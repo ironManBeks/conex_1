@@ -7,7 +7,9 @@ export type TProductDoorData = {
     description: string;
     priceOld: number;
     priceNew: number;
+    priceCurrency: string;
     src: string;
+    deliveryStatus: string;
 };
 
 export type TProductCartData = {

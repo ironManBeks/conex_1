@@ -1,12 +1,13 @@
 import React from "react";
 import cn from "classnames";
-import { Spin, Tooltip } from "antd";
+import { Spin } from "antd";
 
 import { commonButtonClassPrefix } from "./consts";
 
 import { EButtonColor, EButtonSize, TButtonPrimary } from "./types";
 import { useMediaQuery } from "react-responsive";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import Tooltip from "@components/globalComponents/Tooltip";
 
 const ButtonPrimary: React.FC<TButtonPrimary> = ({
     children,
@@ -22,6 +23,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     tooltipClassName,
     onClick,
     value,
+    changeSizeOnMobile = true,
     style,
 }) => {
     const isMobile = useMediaQuery({
@@ -38,7 +40,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
                 "_primary",
                 className,
                 `__${color}`,
-                `__${isMobile ? EButtonSize.md : size}`,
+                `__${isMobile && changeSizeOnMobile ? EButtonSize.md : size}`,
                 {
                     __disabled: disabled,
                     __loading: isLoading,

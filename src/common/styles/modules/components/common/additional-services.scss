@@ -9,7 +9,6 @@
     .common-title, .common-text{
       font-size: $font-size-bs;
       line-height: $line-height-lg;
-      margin-bottom: 0;
     }
     .common-title{
       padding-right: 15px;
@@ -29,7 +28,7 @@
   }
 
   &_total{
-    .common-text {
+    .common-text{
       font-size: $font-size-md;
     }
   }

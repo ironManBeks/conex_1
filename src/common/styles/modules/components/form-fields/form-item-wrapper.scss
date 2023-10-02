@@ -27,6 +27,13 @@
           }
         }
       }
+      &._autocomplete{
+        .form-field_field{
+          .ant-input{
+            border-color: $border-color-critical;
+          }
+        }
+      }
     }
   }
 
@@ -54,7 +61,7 @@
     }
   }
 
-  &_addonAfter{
+  &_addonafter{
     position: absolute;
     display: flex;
     justify-content: center;

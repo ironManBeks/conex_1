@@ -20,7 +20,10 @@ const DrawerHeader: FC<TStore> = inject("store")(
                 onClose={() => setHeaderDrawerVisible(false)}
                 bodyContent={
                     <>
-                        <NavLinks wrapperClassPrefix={classPrefix} />
+                        <NavLinks
+                            wrapperClassPrefix={classPrefix}
+                            placement="drawerHeader"
+                        />
                     </>
                 }
                 placement="left"

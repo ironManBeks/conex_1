@@ -96,7 +96,7 @@
     .common-title{
       margin-bottom: 20px;
       &._h3{
-        font-size: $font-size-xlllll;
+        font-size: $font-size-lg-plus;
         line-height: $line-height-lg;
       }
     }
@@ -159,11 +159,8 @@
     &__item{
       &._wrapper{
         position: relative;
-        max-width: 350px;
+        max-width: 360px;
         width: 100%;
-        .common-text{
-          margin-bottom: 0;
-        }
       }
       &._inner-wrapper{
         position: relative;
@@ -201,17 +198,15 @@
         flex: 0 0 auto;
       }
       &._info{
-        .common-text{
+        .common-text, span{
           display: flex;
           align-items: center;
-          margin-bottom: 0;
+          flex-wrap: wrap;
           font-size: $font-size-bs;
           line-height: $line-height-lg;
           font-weight: 500;
-          span{
-            font-weight: 700;
+          b{
             margin-right: space(3);
-            white-space: nowrap;
           }
           .common-icon{
             margin-right: space(1);
@@ -289,7 +284,6 @@
           align-items: center;
           font-size: $font-size-sm;
           line-height: $line-height-md;
-          margin-bottom: 0;
           margin-left: space(-1.5);
           .common-icon{
             margin-right: space(2);
@@ -318,7 +312,6 @@
               font-weight: 500;
             }
             .common-text{
-              margin-bottom: 0;
               font-size: $line-height-sm;
               line-height: $line-height-md;
               font-weight: 500;

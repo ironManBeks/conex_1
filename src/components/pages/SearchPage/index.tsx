@@ -3,8 +3,9 @@ import { observer } from "mobx-react";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
+import { H2 } from "@components/Text";
 import SearchList from "./components/SearchList";
-import SearchFilter from "./components/SearchFilter";
+import SearchRequest from "./components/SearchRequest";
 
 const SearchPage: FC = observer(() => {
     const classPrefix = "search-page";
@@ -13,9 +14,12 @@ const SearchPage: FC = observer(() => {
         <Layout pageClassPrefix={classPrefix}>
             <div className={`${classPrefix}_wrapper`}>
                 <div className={`${classPrefix}_inner-wrapper`}>
-                    <Container>
+                    <Container flexDirection="column">
+                        <H2 className={`${classPrefix}_title`}>
+                            Search results
+                        </H2>
                         <SearchList pageClassPrefix={classPrefix} />
-                        <SearchFilter pageClassPrefix={classPrefix} />
+                        <SearchRequest pageClassPrefix={classPrefix} />
                     </Container>
                 </div>
             </div>

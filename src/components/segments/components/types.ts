@@ -3,6 +3,7 @@ import { TStore } from "@globalTypes/storeTypes";
 
 export type TNavTypes = {
     wrapperClassPrefix: string;
+    placement: "header" | "drawerHeader";
 } & TStore;
 
 export interface TNavLinkItem {

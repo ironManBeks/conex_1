@@ -263,12 +263,12 @@ const TestPage: FC = () => {
                                             size={EButtonSize.lg}
                                             color={EButtonColor.primary}
                                             type="submit"
-                                            rightIcon={
-                                                <IconMapPoint
-                                                    width={24}
-                                                    height={24}
-                                                />
-                                            }
+                                            // rightIcon={
+                                            //     <IconMapPoint
+                                            //         width={24}
+                                            //         height={24}
+                                            //     />
+                                            // }
                                         >
                                             primary
                                         </ButtonPrimary>
@@ -280,17 +280,17 @@ const TestPage: FC = () => {
                                         >
                                             primary
                                         </ButtonPrimary>
-                                        <ButtonPrimary
-                                            size={EButtonSize.lg}
-                                            color={EButtonColor.primary}
-                                            rightIcon={
-                                                <IconMapPoint
-                                                    width={24}
-                                                    height={24}
-                                                />
-                                            }
-                                            type="submit"
-                                        ></ButtonPrimary>
+                                        {/*<ButtonPrimary*/}
+                                        {/*    size={EButtonSize.lg}*/}
+                                        {/*    color={EButtonColor.primary}*/}
+                                        {/*    rightIcon={*/}
+                                        {/*        <IconMapPoint*/}
+                                        {/*            width={24}*/}
+                                        {/*            height={24}*/}
+                                        {/*        />*/}
+                                        {/*    }*/}
+                                        {/*    type="submit"*/}
+                                        {/*></ButtonPrimary>*/}
                                         {/*________________________________________________*/}
                                         <br />
                                         {/*________________________________________________*/}

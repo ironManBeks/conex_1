@@ -2,60 +2,154 @@
   &_wrapper{
     --left-side-mr: 20px;
     --left-side-width: 100px;
-
     width: 100%;
-    margin-bottom: 30px;
-  }
-  &_inner-wrapper{
-    padding: 30px;
-    background-color: $color-white;
-    box-shadow: 0 0 20px 0 rgba(87, 110, 124, 0.23), 0 0 20px 0 rgba(250, 187, 30, 0.12);
-    border-radius: $border-radius-lg;
   }
 
-  &_info{
-    &__wrapper{
-      display: flex;
-      margin-bottom: 30px;
-      .img-custom_wrapper{
-        width: var(--left-side-width);
-        max-height: 150px;
-        margin-right: var(--left-side-mr);
-        flex: 0 0 auto;
-      }
-    }
-    &__details{
-      width: 100%;
+  &_inner-wrapper{
+    padding: space(5) space(3);
+    background-color: $color-primary-strong;
+    border-radius: borderRadius(4);
+    border: 1px solid $border-color-secondary;
+    transition: $transition;
+    display: flex;
+    gap: space(5);
+    &:hover{
+      border-color: $border-color-accent;
     }
   }
-  &_actions{
-    &__wrapper{
+
+  &_image__wrapper{
+    width: 170px;
+    min-height: 100px;
+    flex: 0 0 auto;
+  }
+
+  &_actions__wrapper{
+    width: 140px;
+    flex: 0 0 auto;
+    margin-left: auto;
+    .common-title{
+      margin-bottom: space(3);
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+    }
+    .common-text{
       display: flex;
-      align-items: center;
-      .common-title{
-        width: var(--left-side-width);
-        margin-right: var(--left-side-mr);
-        text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
-        font-size: $font-size-lg;
-        line-height: $line-height-lg;
-        color: rgba(0, 0, 0, 0.67);
-        font-family: $font-family-primary;
-        text-align: right;
+      gap: space(2);
+      font-size: $font-size-xs;
+      line-height: $line-height-bs;
+      color: $text-color-secondary;
+      margin-bottom: space(5);
+      .common-icon{
         flex: 0 0 auto;
       }
     }
-    &__btns{
-      display: flex;
+  }
+
+}
+
+
+@media (min-width: $md-media) and (max-width: $lg-media-end) {
+
+  .product-search-card{
+    &_inner-wrapper{
       flex-wrap: wrap;
-      .common-btn{
-        width: calc(50% - 30px);
-        &._add{
-          background-color: #F99F3F;
+    }
+    &_details__wrapper{
+      width: calc(100% - 170px - $space * 5);
+    }
+    &_actions{
+      &__wrapper{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        .common-title{
+          width: 170px;
+          flex: 0 0 auto;
         }
-        &:not(:last-of-type){
-          margin-right: 20px;
-        }
+      }
+      &__btns{
+        margin-left: space(4);
+        flex: 0 0 auto;
       }
     }
   }
+
+}
+
+@media (min-width: $md-media) and (max-width: $md-media-end) {
+
+  .product-search-card{
+    &_inner-wrapper{
+      flex-wrap: wrap;
+    }
+    &_image__wrapper{
+      width: 120px;
+    }
+    &_details__wrapper{
+      width: calc(100% - 120px - $space * 5);
+    }
+    &_actions__wrapper{
+      justify-content: space-between;
+      .common-title{
+        width: auto;
+        margin-right: space(4);
+      }
+    }
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .product-search-card{
+
+    &_inner-wrapper{
+      padding: space(3);
+      flex-direction: column;
+    }
+
+    &_image__wrapper{
+      width: 100%;
+      height: 130px;
+    }
+
+    &_actions{
+      &__wrapper{
+        display: flex;
+        flex-direction: column;
+        margin-left: unset;
+        width: 100%;
+        .common-btn{
+          width: 100%;
+          padding: space(2) space(4);
+          font-size: $font-size-sm;
+          line-height: $line-height-lg;
+        }
+        .common-title{
+          order: 0;
+          &._h5{
+            font-size: $font-size-bs;
+            line-height: $line-height-lg;
+          }
+          &._h3{
+            font-size: $font-size-sm;
+            line-height: $line-height-md;
+            margin-bottom: space(4);
+          }
+        }
+        .common-text{
+          order: 2;
+          margin-top: space(2);
+          align-items: center;
+        }
+      }
+      &__btns{
+        order: 0;
+      }
+    }
+
+  }
+
 }

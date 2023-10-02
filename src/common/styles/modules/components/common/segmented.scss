@@ -56,7 +56,6 @@
       }
       &-item{
         border-radius: borderRadius(2);
-        color: red;
         &-selected{
           background: $color-secondary-40;
         }
@@ -75,7 +74,7 @@
     .ant-segmented{
       &-item{
         &:not(.ant-segmented-item-selected){
-          background: $color-secondary-40;
+          //background: $color-secondary-40;
         }
       }
     }

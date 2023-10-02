@@ -3,7 +3,6 @@ import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import cn from "classnames";
 
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
-import { IconCreditCard } from "@components/Icons";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { P } from "@components/Text";
 
@@ -31,6 +30,8 @@ import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
+import { IconQuestionCircle } from "@components/Icons";
+import Tooltip from "../Tooltip";
 
 const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     className,
@@ -104,6 +105,13 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                     {/*    wrapperClassName={"_name"}*/}
                     {/*    maxLength={26}*/}
                     {/*/>*/}
+                    {cardType && CARDS_LIST.includes(cardType) && (
+                        <ImgWrapper
+                            src={CARD_ICON[cardType]}
+                            width={50}
+                            height={24}
+                        />
+                    )}
                     <FieldInputMaskController
                         name={EPaymentCardFromFieldsNames.cardNumber}
                         label="Card number"
@@ -119,18 +127,18 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                                 ? CARD_AMERICAN_EXPRESS_REGEX
                                 : CARDS_REGEX
                         }
-                        minAddonWidth={60}
-                        addonAfter={
-                            cardType && CARDS_LIST.includes(cardType) ? (
-                                <ImgWrapper
-                                    src={CARD_ICON[cardType]}
-                                    width={50}
-                                    height={24}
-                                />
-                            ) : (
-                                <IconCreditCard />
-                            )
-                        }
+                        // minAddonWidth={60}
+                        // addonAfter={
+                        //     cardType && CARDS_LIST.includes(cardType) ? (
+                        //         <ImgWrapper
+                        //             src={CARD_ICON[cardType]}
+                        //             width={50}
+                        //             height={24}
+                        //         />
+                        //     ) : (
+                        //         <IconCreditCard />
+                        //     )
+                        // }
                         guide={false}
                         saveOnlyNumber={false}
                     />
@@ -151,6 +159,16 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                             guide={false}
                             showError={false}
                             saveOnlyNumber={false}
+                            addonAfter={
+                                <Tooltip
+                                    placement="top"
+                                    title={"Something text"}
+                                >
+                                    <span>
+                                        <IconQuestionCircle opacity={"0.36"} />
+                                    </span>
+                                </Tooltip>
+                            }
                         />
                     </div>
                     {!!pickOutFormErrorMessages<
@@ -173,6 +191,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         </div>
                     )}
                 </div>
+                <P className="_top-text">Something text</P>
                 {submitText && (
                     <div className={`${classPrefix}_actions`}>
                         {actionsContent && actionsContent}
@@ -185,6 +204,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         </ButtonPrimary>
                     </div>
                 )}
+                <P className="_bottom-text">Something text</P>
             </form>
         </FormProvider>
     );

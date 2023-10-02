@@ -1,10 +1,10 @@
 .product-card{
 
   &_title{
-    margin-bottom: 8px;
-    font-size: $font-size-md;
-    line-height: $line-height-md;
-    font-family: $font-family-primary;
+    margin-bottom: space(5);
+    font-size: $font-size-bs;
+    line-height: $line-height-lg;
+    font-weight: 700;
   }
 
   &_list{
@@ -12,17 +12,15 @@
     padding: 0;
     li{
       list-style-type: none;
-      font-size: $font-size-bs;
-      line-height: $line-height-bs;
+      font-size: $font-size-sm;
+      line-height: $line-height-md;
       &:not(:last-of-type){
-        margin-bottom: 8px;
+        margin-bottom: space(2);
       }
       .label{
-        color: $color-grey-800;
-        padding-right: 8px;
-      }
-      .value{
-        font-weight: 300;
+        padding-right: space(2);
+        color: $text-color-secondary;
+        font-weight: 700;
       }
     }
   }

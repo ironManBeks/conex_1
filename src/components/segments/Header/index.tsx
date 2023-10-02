@@ -77,11 +77,15 @@ const Header: FC<THeader> = inject("store")(
                                     </div>
                                     <NavLinks
                                         wrapperClassPrefix={classPrefix}
+                                        placement="header"
                                     />
                                 </>
                             )}
                         </div>
-                        <NavActions wrapperClassPrefix={classPrefix} />
+                        <NavActions
+                            wrapperClassPrefix={classPrefix}
+                            placement="header"
+                        />
                     </Container>
                 </div>
             </header>

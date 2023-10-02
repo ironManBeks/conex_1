@@ -9,6 +9,18 @@
       display: flex;
       flex-direction: column;
       gap: space(4);
+      .common-text{
+        color: $text-color-secondary;
+        &._top-text{
+          font-size: $font-size-sm;
+          line-height: $line-height-md;
+          font-weight: 500;
+        }
+        &._bottom-text{
+          font-size: $font-size-xs;
+          line-height: $line-height-bs;
+        }
+      }
     }
     &_inner{
       display: flex;

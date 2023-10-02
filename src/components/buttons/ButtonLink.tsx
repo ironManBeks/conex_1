@@ -1,8 +1,8 @@
 import React, { JSX } from "react";
 import cn from "classnames";
 import Link from "next/link";
-import { Tooltip } from "antd";
 import { useMediaQuery } from "react-responsive";
+import Tooltip from "@components/globalComponents/Tooltip";
 
 import { commonButtonClassPrefix } from "@components/buttons/consts";
 

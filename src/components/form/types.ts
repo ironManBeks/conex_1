@@ -10,6 +10,8 @@ import {
     TFormWrapperErrorMessage,
 } from "@components/form/FormItemWrapper/types";
 import { RadioProps } from "antd/lib/radio";
+import { AutoCompleteProps } from "antd";
+import FormFieldAutoComplete from "@components/form/formFields/FormFieldAutoComplete";
 
 export enum EFormFieldType {
     input = "input",
@@ -22,6 +24,7 @@ export enum EFormFieldType {
     textArea = "textarea",
     inputNumber = "inputnumber",
     password = "password",
+    autocomplete = "autocomplete",
 }
 
 export type TDefaultOption = {
@@ -64,3 +67,17 @@ export type TFormFieldRadio = {
     name: string;
     label?: string;
 } & RadioProps;
+
+export type TFormFieldAutoComplete = {
+    name: string;
+    label?: string;
+    onSearchButtonClick?: (value: string) => void;
+    onChangeValue?: (value: unknown) => void;
+    fieldPlaceholder?: string;
+    icon?: ReactNode;
+    fieldLabel?: ReactNode;
+} & AutoCompleteProps &
+    TFormWrapperClassName &
+    TFormItemLabel &
+    TFormWrapperErrorMessage &
+    TFormShowError;
