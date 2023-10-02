@@ -6,7 +6,6 @@ import cn from "classnames";
 import FormItemWrapper from "@components/form/FormItemWrapper";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputController } from "./types";
 
@@ -47,8 +46,6 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                 } else if (!focus && !field.value) {
                     setIsLabelActive(false);
                 }
-                const selectorId = `${name}-id_${EFormFieldType.select}`;
-
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}

@@ -1,7 +1,7 @@
 .search-page{
 
   &_layout__inner-wrapper{
-    padding: 20px 0 100px;
+    padding: space(10) 0 0;
     display: flex;
   }
 
@@ -13,41 +13,40 @@
     height: 100%;
   }
 
+  &_title{
+    margin-bottom: space(10);
+    font-size: $font-size-xl;
+    line-height: $line-height-xl;
+  }
+
   &_list{
     &__wrapper{
       width: 100%;
-      padding-right: 40px;
+      margin-bottom: space(10);
       .product-search-card_wrapper, .skeleton_product-search-card{
-        width: calc(50% - 20px);
+        width: calc(50% - $space * 2.5);
       }
     }
     &__inner-wrapper{
       display: flex;
       flex-wrap: wrap;
       justify-content: space-between;
-    }
-    &_title{
-      margin-bottom: 20px;
-      font-family: $font-family-primary;
-      font-size: $font-size-lg;
-      line-height: $line-height-lg;
-      text-align: center;
+      gap: space(5);
     }
   }
 
   &_request__wrapper{
     width: 100%;
-    margin-top: 100px;
+    padding: space(10) 0;
     display: flex;
     flex-direction: column;
     align-items: center;
     .common-title{
-      margin-bottom: 30px;
-      font-size: $font-size-xlllll;
-      line-height: $line-height-lg;
-      color: $color-grey-800;
-      font-weight: 500;
+      margin-bottom: space(10);
+      font-size: $font-size-xl;
+      line-height: $line-height-xl;
     }
+
     .common-btn{
       color: $color-grey-800;
     }
@@ -116,7 +115,7 @@
       background-color: $color-grey-30;
     }
     .common-title{
-      font-size: $font-size-xlllll;
+      font-size: $font-size-lg-plus;
       line-height: $line-height-lg;
       font-family: $font-family-primary;
       color: $color-grey-800;

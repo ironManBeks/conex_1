@@ -14,6 +14,5 @@ export const mediaBreakpoints = {
     lgMedia: 992,
     lgMediaEnd: 1199.98,
     xlMedia: 1200,
-    xlMediaEnd: 1199.98,
     xxlMedia: 1400,
 };

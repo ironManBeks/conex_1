@@ -132,10 +132,8 @@ const AccountPaymentItem: FC<
                     </div>
                     <div className={`${classPrefix}__item _info`}>
                         <P>
-                            <span>
-                                {cardType ? CARD_NAME[cardType] : "Card"}
-                            </span>
-                            {cardNumberContent}
+                            <b>{cardType ? CARD_NAME[cardType] : "Card"}</b>
+                            <span>{cardNumberContent}</span>
                         </P>
                     </div>
                 </div>

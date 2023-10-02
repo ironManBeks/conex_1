@@ -1,0 +1,132 @@
+.form-field_wrapper._autocomplete{
+  .form-field{
+    &_field{
+      .ant-input{
+        background-color: $color-primary-strong;
+        border: 1px solid $border-color-secondary;
+        padding:  calc($space * 4 - 2px) space(4) calc($space * 4 - 2px) space(12);
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        color: $text-color-primary;
+        font-weight: 500;
+        box-shadow: none !important;
+        border-radius: borderRadius(2);
+        flex: 0 0 auto;
+        outline: none !important;
+        &[disabled]{
+          background-color: $color-secondary-40;
+        }
+        &:hover, &:focus{
+          box-shadow: none;
+          &:not([disabled]){
+            border-color: $icon-color-secondary-active;
+          }
+        }
+        &-wrapper{
+
+        }
+        &-group-addon{
+          position: absolute;
+          left: 0;
+          top: 50%;
+          height: calc(100% - 2px);
+          transform: translateY(-50%);
+          width: space(12);
+          overflow: hidden;
+          border-radius: borderRadius(2) 0 0 borderRadius(2);
+          background: transparent;
+          border: transparent;
+          z-index: 2;
+          padding: 0 0 0 space(2);
+          button{
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            border: 0;
+            box-shadow: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            cursor: pointer;
+            transition: $transition;
+            &:hover{
+              background: $color-secondary-40;
+            }
+          }
+        }
+      }
+
+      &._floatingLabel{
+        .ant-input{
+          padding:  calc($space * 6 - 2px) space(4) space(2) space(12);
+        }
+      }
+
+      &._activeLabel{
+        .ant-input {
+          border-color: $icon-color-secondary-active;
+        }
+      }
+
+    }
+    &_label{
+      position: absolute;
+      left: space(12);
+      top: 50%;
+      width: auto;
+      margin: 0;
+      background: transparent;
+      transform: translateY(-50%);
+      transform-origin: 0 0;
+      transition-property: transform;
+      transition: $transition;
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      color: $text-color-secondary;
+      font-weight: 500;
+      cursor: text;
+      z-index: 3;
+      &._activeLabel {
+        transform: translateY(space(-4.5));
+        font-size: $font-size-xs;
+        line-height: $line-height-bs;
+      }
+      &._disabled{
+        cursor: not-allowed;
+        color: $text-color-disabled;
+      }
+    }
+  }
+}
+
+.form-field_dropdown._autocomplete{
+  z-index: $z-index-header-dropdown;
+  border-radius: borderRadius(2);
+  padding: space(2) 0;
+  border: 1px solid $border-color-secondary;
+  background: #ececec;
+  box-shadow: none;
+  .ant-select-item{
+    &-option{
+      padding: space(3) space(4);
+      transition: $transition;
+      font-family: $font-family-secondary;
+      &-selected{
+        background-color: $color-accent-200;
+      }
+      &-content{
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        font-weight: 500;
+        white-space: pre-wrap;
+      }
+      &-disabled{
+        background-color: $color-disabled-selection-bg;
+      }
+      &-active:not(.ant-select-item-option-selected){
+        background-color: $color-secondary-40;
+      }
+    }
+  }
+}

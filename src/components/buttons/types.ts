@@ -13,6 +13,7 @@ export type TButtonCommon = {
     tooltipClassName?: string;
     value?: string;
     style?: CSSProperties;
+    changeSizeOnMobile?: boolean;
 };
 
 export type TButtonTypes = {

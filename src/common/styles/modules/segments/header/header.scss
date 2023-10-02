@@ -20,6 +20,10 @@
     display: flex;
     align-items: center;
     transition: $transition;
+    a{
+      display: flex;
+      align-items: center;
+    }
     &:hover{
       opacity: .8;
     }
@@ -92,6 +96,21 @@
           }
         }
       }
+      .form-field_wrapper._autocomplete {
+        margin-bottom: 0;
+        .form-field_field {
+          .ant-input{
+            padding: calc($space * 3 - 1px) space(4) calc($space * 3 - 1px) space(12);
+            background: $color-secondary-40;
+            border-color: transparent;
+          }
+          &.ant-select-focused {
+            .ant-input {
+              background: $color-primary-strong;
+            }
+          }
+        }
+      }
     }
   }
 
@@ -106,3 +125,7 @@
   }
 
 }
+
+
+//ant-select ant-select-lg ant-select-auto-complete form-field_field ant-select-single ant-select-customize-input ant-select-show-search
+//ant-select ant-select-lg ant-select-auto-complete form-field_field ant-select-single ant-select-customize-input ant-select-show-search

@@ -3,23 +3,25 @@ import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
 import { useMediaQuery } from "react-responsive";
-import jwt from "jwt-decode";
+import { Spin } from "antd";
+import { isEmpty, isNil } from "lodash";
 
 import { P } from "@components/Text";
 import { IconCart, IconUser } from "@components/Icons";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import FormFieldAutoComplete from "@components/form/formFields/FormFieldAutoComplete";
 
-import { PATH_CART_PAGE, PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
+import {
+    PATH_CART_PAGE,
+    PATH_MY_ACCOUNT_PAGE,
+    PATH_SEARCH_PAGE,
+} from "@consts/pathsConsts";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { EButtonColor } from "@components/buttons/types";
 import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
-import ButtonLink from "@components/buttons/ButtonLink";
-import { isEmpty, isNil } from "lodash";
 import { getStorage } from "@services/storage.service";
 import { BUILDER_CART } from "@consts/storageNamesContsts";
-import { toJS } from "mobx";
-import { Spin } from "antd";
+import { useRouter } from "next/router";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
@@ -28,6 +30,7 @@ const NavActions: FC<TNavTypes> = inject("store")(
         const { userData, userDataFetching } = authStore;
         const { builderCartData, setBuilderCartData } = builderStore;
         const classPrefix = `nav-actions`;
+        const router = useRouter();
 
         const cartLength = builderCartData?.elements?.length || 0;
 
@@ -36,12 +39,20 @@ const NavActions: FC<TNavTypes> = inject("store")(
             maxWidth: mediaBreakpoints.smMediaEnd,
         });
 
+        const handleSearchChange = (val: string) => {
+            console.log("handleSearchChange", val);
+        };
+
         useEffect(() => {
             const cartData = getStorage(BUILDER_CART);
             if (isNil(builderCartData) && cartData) {
                 setBuilderCartData(cartData);
             }
         }, []);
+
+        const handleSearch = (value: string) => {
+            router.push(PATH_SEARCH_PAGE);
+        };
 
         return (
             <div
@@ -50,6 +61,22 @@ const NavActions: FC<TNavTypes> = inject("store")(
                     `${classPrefix}_wrapper`,
                 )}
             >
+                <FormFieldAutoComplete
+                    name="search"
+                    // isFloatingLabel={false}
+                    fieldPlaceholder="Search"
+                    errorMessage={undefined}
+                    onChange={(e) => {
+                        const val = e.target.value;
+                        handleSearchChange(val);
+                    }}
+                    onSelect={(value) => {
+                        handleSearch(value);
+                    }}
+                    onSearchButtonClick={(value) => {
+                        handleSearch(value);
+                    }}
+                />
                 <Link href={PATH_CART_PAGE}>
                     <a className={`${classPrefix}_item__wrapper`}>
                         <IconCart />

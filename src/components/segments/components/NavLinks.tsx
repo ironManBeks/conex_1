@@ -4,10 +4,14 @@ import cn from "classnames";
 import NavLinkItem from "./NavLinkItem";
 import { IconBurger } from "@components/Icons";
 
-import { PATH_BUILDER_PAGE, PATH_CONTACTS_US_PAGE } from "@consts/pathsConsts";
+import {
+    PATH_BUILDER_PAGE,
+    PATH_CONTACTS_US_PAGE,
+    PATH_HOME_PAGE,
+} from "@consts/pathsConsts";
 import { TNavTypes } from "./types";
 
-const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix }) => {
+const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix, placement }) => {
     const classPrefix = `nav-links`;
 
     return (
@@ -17,6 +21,13 @@ const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix }) => {
                 `${classPrefix}_wrapper`,
             )}
         >
+            {placement === "drawerHeader" && (
+                <NavLinkItem
+                    href={PATH_HOME_PAGE}
+                    title="Home"
+                    classPrefix={classPrefix}
+                />
+            )}
             <NavLinkItem
                 href={PATH_BUILDER_PAGE}
                 title={

@@ -70,7 +70,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                         label={label}
                         isFloatingLabel={isFloatingLabel}
                         wrapperClassName={cn(wrapperClassName, {
-                            _addonAfter: addonAfter,
+                            _addonafter: addonAfter,
                         })}
                     >
                         {isFloatingLabel && label && (
@@ -133,7 +133,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                         {addonAfter && (
                             <div
                                 className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_addonAfter`,
+                                    `${FORM_FIELD_CLASSNAME_PREFIX}_addonafter`,
                                     {
                                         _click: isFunction(onAddonClick),
                                     },

@@ -1,66 +1,84 @@
 .modal-custom-quote{
+  .common-modal_inner-wrapper.ant-modal{
+    .ant-modal-content{
+      padding: space(8);
+    }
+  }
   .common-title._h2{
-    margin-top: 30px;
-    margin-bottom: 60px;
+    margin-bottom: space(8);
     text-align: center;
-    font-size: $font-size-xlllll;
-    line-height: $line-height-lg;
-    font-family: $font-family-primary;
-    color: $color-blue-800;
-    font-weight: 500;
+    font-size: $font-size-xl;
+    line-height: $line-height-xl;
   }
 
   &_form{
-
     &__main-fields{
       display: flex;
       justify-content: space-between;
-      margin-bottom: 30px;
+      gap: space(6);
+      margin-bottom: space(6);
       .form-field_wrapper{
         width: calc(50%  - 12px);
-      }
-    }
-
-    .form-field{
-      &_label-wrapper{
-        font-size: $font-size-md;
-        line-height: $line-height-md;
-        font-weight: 500;
-      }
-      &_wrapper._input, &_wrapper._textarea {
-        .form-field_field{
-          border-color: $color-grey-275;
-        }
+        margin-bottom: 0;
       }
     }
 
     .address-selection_wrapper{
-      margin-bottom: 30px;
-      .form-field{
-        &_label-wrapper{
-          margin-bottom: 15px;
-        }
-        &_wrapper._input {
-          .form-field_field{
-            border-color: transparent;
-          }
-        }
+      margin-bottom: space(8);
+      .form-field_wrapper{
+        margin-bottom: space(8);
       }
     }
 
+    .form-field_wrapper._textarea .form-field_field{
+      min-height: 180px;
+    }
   }
 
   &_actions{
     display: flex;
     justify-content: center;
-    margin-top: 50px;
-    .common-btn{
-      color: $color-grey-800;
-      font-size: $font-size-md;
-      line-height: $line-height-md;
-      &:hover{
-        box-shadow: none;
+    margin-top: space(8);
+  }
+
+}
+
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .modal-custom-quote {
+    .common-modal_inner-wrapper.ant-modal {
+      .ant-modal-content{
+        padding: space(6) space(5);
+      }
+    }
+    .common-title._h2{
+      margin-bottom: space(6);
+      font-size: $font-size-lg-plus;
+      line-height: $line-height-lg-plus;
+    }
+    &_form{
+      &__main-fields{
+        flex-direction: column;
+        margin-bottom: space(4);
+        gap: space(4);
+        .form-field_wrapper{
+          width: 100%;
+        }
+      }
+      .address-selection_wrapper {
+        margin-bottom: space(6);
+        .form-field_wrapper{
+          margin-bottom: space(6);
+        }
+      }
+    }
+    &_actions{
+      margin-top: space(6);
+      .common-btn{
+        width: 100%;
       }
     }
   }
+
 }

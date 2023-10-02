@@ -66,7 +66,7 @@
       padding-right: space(6);
     }
     &__title{
-      font-size: $font-size-xlllll;
+      font-size: $font-size-lg-plus;
       line-height: $line-height-lg-plus;
       width: 100%;
     }
@@ -81,14 +81,14 @@
 
   &_close{
     position: absolute;
-    right: space(5);
-    top: space(5);
+    right: space(4);
+    top: space(4);
     display: inline-flex;
     justify-content: center;
     align-items: center;
     flex: 0 0 auto;
-    width: space(6);
-    height: space(6);
+    width: space(8);
+    height: space(8);
     padding: 0;
     border: 0;
     border-radius: $border-radius-circle;
@@ -101,6 +101,16 @@
     &:hover{
       opacity: 1;
     }
+  }
+
+}
+
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .ant-modal{
+    margin: 0;
+    max-width: 100%
   }
 
 }

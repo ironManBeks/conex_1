@@ -1,18 +1,17 @@
 import { FC } from "react";
 import cn from "classnames";
-
-import FormFieldInput from "@components/form/formFields/FormFieldInput";
-import { IconMapPoint } from "@components/Icons";
-import { P } from "@components/Text";
-
 import { isFunction } from "lodash";
+
+import { IconMapPoint } from "@components/Icons";
+import FieldAutoComplete from "@components/form/formControllers/FieldAutoComplete";
+
 import { TAddressSelection } from "./types";
 
 const AddressSelection: FC<TAddressSelection> = ({
     className,
     onValueChange,
-    label,
     errorMessage,
+    isFloatingLabel,
     name,
 }) => {
     const classPrefix = "address-selection";
@@ -24,22 +23,32 @@ const AddressSelection: FC<TAddressSelection> = ({
         }
     };
 
+    const handleSearch = (value: string) => {
+        console.log("handleSearch", value);
+    };
+
     return (
         <div className={cn(`${classPrefix}_wrapper`, className)}>
-            <FormFieldInput
+            <FieldAutoComplete
                 name={name ?? "address"}
-                label={label}
-                placeholder="Address"
+                fieldPlaceholder="Address"
                 errorMessage={errorMessage}
-                icon={<IconMapPoint color="#8D8D8D" />}
-                iconPosition="left"
+                icon={<IconMapPoint opacity="0.36" />}
                 onChange={(e) => {
                     const value = e.target.value;
                     handeValueChange(value);
                 }}
+                onSelect={(value) => {
+                    handleSearch(value);
+                }}
+                onSearchButtonClick={(value) => {
+                    handleSearch(value);
+                }}
+                isFloatingLabel={isFloatingLabel}
+                fieldLabel="Address1"
             />
             <div className={`${classPrefix}_map`}>
-                <P>Select location manually</P>
+                {/*<P>Select location manually</P>*/}
                 <iframe
                     width="100%"
                     height="200"

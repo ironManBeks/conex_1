@@ -28,12 +28,21 @@
 
 }
 
+
 @media (min-width: $xs-media) and (max-width: $sm-media-end) {
 
   .account-page {
 
     &_section-wrapper{
       padding: space(5);
+    }
+
+    &_content__wrapper{
+      .common-title._h2 {
+        font-size: $font-size-lg-plus;
+        line-height: $line-height-lg-plus;
+        justify-content: center;
+      }
     }
 
     &_my-form{
@@ -110,6 +119,11 @@
           width: 100%;
           max-width: 100%;
         }
+        &._info{
+          .common-text{
+            flex-wrap: wrap;
+          }
+        }
       }
       &__actions{
         .common-btn{
@@ -122,3 +136,27 @@
   }
 
 }
+
+@media (min-width: $sm-media) and (max-width: $sm-media-end) {
+
+  .account-page_my-form__form{
+    width: calc(100% + $space * 4 * 2);
+    margin: 0 space(-4);
+  }
+
+}
+
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .account-page{
+    &_my-form__actions{
+      .common-btn{
+        padding-left: space(2);
+        padding-right: space(2);
+      }
+    }
+  }
+
+}
+

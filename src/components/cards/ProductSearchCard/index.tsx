@@ -2,17 +2,19 @@ import { FC } from "react";
 import cn from "classnames";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
-import { H5 } from "@components/Text";
+import { H5, P } from "@components/Text";
+import { IconBox } from "@components/Icons";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ProductCardTitle from "../components/ProductCardTitle";
-import ProductCardDescription from "../components/ProductCardDescription";
 import ProductCardList from "../components/ProductCardList";
 
 import { PRODUCT_CARD_CLASSNAME } from "../consts";
-import { notImplemented } from "@helpers/notImplemented";
 import { cutText } from "@helpers/textHelpers";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { TProductInfoListItem, TProductSearchCard } from "../types";
+import { notImplemented } from "@helpers/notImplemented";
+import { useMediaQuery } from "react-responsive";
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 
 const ProductSearchCard: FC<TProductSearchCard> = ({
     className,
@@ -20,17 +22,25 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
     material,
     size,
     color,
-    description,
     priceNew,
     src,
+    deliveryStatus,
+    priceCurrency,
 }) => {
     const classPrefix = "product-search-card";
 
     const optionsList: TProductInfoListItem[] = [
-        { label: "Material", value: cutText(material, 20) },
-        { label: "Size", value: cutText(size, 20) },
-        { label: "Color", value: cutText(color, 20) },
+        { label: "Material", value: cutText(material, 12) },
+        { label: "Size", value: cutText(size, 12) },
+        { label: "Color", value: cutText(color, 12) },
     ];
+
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
+
+    const titleContent = <ProductCardTitle title={title} letterLimit={40} />;
 
     return (
         <div
@@ -41,31 +51,38 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
             )}
         >
             <div className={`${classPrefix}_inner-wrapper`}>
-                <div className={`${classPrefix}_info__wrapper`}>
-                    <ImgWrapper src={src} />
-                    <div className={`${classPrefix}_info__details`}>
-                        <ProductCardTitle title={title} />
+                <ImgWrapper
+                    src={src}
+                    wrapperClassName={`${classPrefix}_image__wrapper`}
+                    objectFit="contain"
+                />
+                {!isMobile && (
+                    <div className={`${classPrefix}_details__wrapper`}>
+                        {titleContent}
                         <ProductCardList optionsList={optionsList} />
-                        <ProductCardDescription description={description} />
                     </div>
-                </div>
+                )}
                 <div className={`${classPrefix}_actions__wrapper`}>
-                    <H5>${priceNew}</H5>
+                    {priceNew && (
+                        <H5>
+                            {priceCurrency}
+                            {priceNew}
+                        </H5>
+                    )}
+                    {isMobile && titleContent}
+                    {deliveryStatus && (
+                        <P>
+                            <IconBox opacity="0.36" />
+                            <span>{deliveryStatus}</span>
+                        </P>
+                    )}
                     <div className={`${classPrefix}_actions__btns`}>
                         <ButtonPrimary
-                            color={EButtonColor.secondary}
+                            color={EButtonColor.primary}
                             size={EButtonSize.sm}
                             onClick={() => notImplemented()}
-                            className="_add"
                         >
                             Add to cart
-                        </ButtonPrimary>
-                        <ButtonPrimary
-                            color={EButtonColor.secondary}
-                            size={EButtonSize.sm}
-                            onClick={() => notImplemented()}
-                        >
-                            Buy Now
                         </ButtonPrimary>
                     </div>
                 </div>

@@ -6,13 +6,11 @@
       .common-title{
         font-size: $font-size-lg;
         line-height: $line-height-lg;
-        margin-bottom: 0;
       }
       .common-text{
         font-size: $font-size-bs;
         line-height: $line-height-md;
-        margin-top: 20px;
-        margin-bottom: 0;
+        margin-top: space(5);
       }
     }
     &_footer__wrapper{

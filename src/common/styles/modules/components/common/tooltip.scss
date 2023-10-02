@@ -1,15 +1,40 @@
 .common-tooltip{
-  .ant-tooltip{
-    &-inner{
-      background: $color-grey-900;
-      border-radius: $border-radius-sm;
-      font-size: $font-size-bs;
-      line-height: $line-height-bs;
+  &_wrapper{
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+  }
+  &_overlay{
+    &.ant-tooltip{
+      &-placement-topLeft{
+        .ant-tooltip {
+          &-content, &-arrow{
+            margin-left: space(-3);
+          }
+        }
+      }
     }
-    &-arrow-content{
-      &:before{
-        background: $color-grey-900;
+
+    .ant-tooltip{
+      &-inner{
+        background: $color-primary-strong;
+        border-radius: $border-radius-bs;
+        padding: space(2) space(4);
+        font-size: $font-size-sm;
+        line-height: $line-height-bs;
+        color: $text-color-primary;
+        font-weight: 500;
+        box-shadow: $box-shadow-bs;
+        .common-text{
+          margin-top: 0;
+        }
+      }
+      &-arrow-content{
+        &:before{
+          background: $color-primary-strong;
+        }
       }
     }
   }
+
 }

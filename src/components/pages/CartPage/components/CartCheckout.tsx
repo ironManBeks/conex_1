@@ -46,10 +46,13 @@ const CartCheckout: FC<TSectionTypes> = ({ pageClassPrefix }) => {
             }
             bodyContent={
                 selectedMode === ECartCheckoutModes.delivery && (
-                    <AddressSelection
-                        className={classPrefix}
-                        errorMessage={undefined}
-                    />
+                    <>
+                        {/*<AddressSelection*/}
+                        {/*    className={classPrefix}*/}
+                        {/*    errorMessage={undefined}*/}
+                        {/*/>*/}
+                        address
+                    </>
                 )
             }
             footerContent={

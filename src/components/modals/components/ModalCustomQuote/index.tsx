@@ -11,7 +11,7 @@ import AddressSelection from "@components/globalComponents/AddressSelection";
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 
 import { EModalSize } from "@components/modals/types";
-import { EButtonColor } from "@components/buttons/types";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
 import {
     customQuoteDefaultValues,
@@ -89,7 +89,6 @@ const ModalCustomQuote: FC<TStore> = inject("store")(
                                 <AddressSelection
                                     className={classPrefix}
                                     name={ECustomQuoteFieldsNames.address}
-                                    label="Delivery address"
                                     onValueChange={(value) =>
                                         setAddressValue(value)
                                     }
@@ -104,13 +103,14 @@ const ModalCustomQuote: FC<TStore> = inject("store")(
                                     }
                                     placeholder="Additional details"
                                     label="Additional details"
-                                    minHeight={140}
                                     maxSymbolLength={1000}
                                 />
                                 <div className={`${classPrefix}_actions`}>
                                     <ButtonPrimary
                                         type="submit"
                                         color={EButtonColor.primary}
+                                        size={EButtonSize.lg}
+                                        changeSizeOnMobile={false}
                                     >
                                         Send request
                                     </ButtonPrimary>

@@ -1,35 +1,63 @@
 import { FC } from "react";
 import { Skeleton } from "antd";
+import { useMediaQuery } from "react-responsive";
 
 import SkeletonLayout from "./SkeletonLayout";
 
+import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { TSkeleton } from "./types";
 
 const ProductSearchCardSkeleton: FC<TSkeleton> = ({ className }) => {
     const isActive = true;
     const classPrefix = "product-search-card";
 
+    const isMobile = useMediaQuery({
+        minWidth: mediaBreakpoints.xsMedia,
+        maxWidth: mediaBreakpoints.smMediaEnd,
+    });
+
+    const isBigTablet = useMediaQuery({
+        minWidth: mediaBreakpoints.mdMedia,
+        maxWidth: mediaBreakpoints.lgMediaEnd,
+    });
+
     return (
         <SkeletonLayout className={className} classPrefix={classPrefix}>
             <div className={`${classPrefix}_inner-wrapper`}>
-                <div className={`${classPrefix}_info__wrapper`}>
-                    <div className="img-custom_wrapper">
-                        <Skeleton.Input active={isActive} />
-                    </div>
-                    <div className={`${classPrefix}_info__details`}>
-                        <Skeleton.Input
-                            active={isActive}
-                            className="common-title"
-                        />
-                        <div className={`${classPrefix}_info__list`}>
+                <div className={`${classPrefix}_image__wrapper`}>
+                    <Skeleton.Input active={isActive} />
+                </div>
+                <div className={`${classPrefix}_details__wrapper`}>
+                    <Skeleton.Input active={isActive} className="title" />
+                    {!isMobile && (
+                        <div className={`${classPrefix} list`}>
                             <Skeleton.Input active={isActive} size="small" />
-                            <Skeleton.Input active={isActive} size="small" />
-                            <Skeleton.Input active={isActive} size="small" />
+                            <Skeleton.Input
+                                active={isActive}
+                                size="small"
+                                style={{ width: "80%" }}
+                            />
+                            {!isBigTablet && (
+                                <Skeleton.Input
+                                    active={isActive}
+                                    size="small"
+                                    style={{ width: "60%" }}
+                                />
+                            )}
                         </div>
-                    </div>
+                    )}
                 </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
-                    <Skeleton.Input active={isActive} />
+                    <Skeleton.Input
+                        active={isActive}
+                        size="small"
+                        style={{ width: "50%" }}
+                    />
+                    <Skeleton.Input
+                        active={isActive}
+                        size="large"
+                        style={{ maxWidth: "150px" }}
+                    />
                 </div>
             </div>
         </SkeletonLayout>

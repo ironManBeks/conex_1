@@ -44,7 +44,6 @@
           .common-text{
             font-size: $font-size-sm;
             line-height: $line-height-md;
-            margin-bottom: 0;
           }
         }
       }
@@ -71,7 +70,7 @@
         width: 100%;
         gap: space(3);
         .common-title{
-          font-size: $font-size-xlllll;
+          font-size: $font-size-lg-plus;
           line-height: $line-height-lg-plus;
         }
         .common-text{
@@ -90,7 +89,7 @@
         padding: space(8) 0;
       }
       &__title{
-        font-size: $font-size-xlllll;
+        font-size: $font-size-lg-plus;
         line-height: $line-height-lg-plus;
         text-align: left;
         margin-bottom: space(6);
@@ -107,7 +106,7 @@
         flex-wrap: wrap;
       }
       &__title{
-        font-size: $font-size-xlllll;
+        font-size: $font-size-lg-plus;
         line-height: $line-height-lg-plus;
         margin-bottom: 20px;
       }

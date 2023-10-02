@@ -12,6 +12,8 @@ export const ProductCartListDataMockup: TProductCartData[] = [
         priceNew: 1,
         src: "https://picsum.photos/id/9/200/300",
         quantity: 1,
+        priceCurrency: "$",
+        deliveryStatus: "deliveryStatus 123",
     },
     {
         id: "2",
@@ -25,6 +27,8 @@ export const ProductCartListDataMockup: TProductCartData[] = [
         priceNew: 123,
         src: "https://picsum.photos/id/10/200/300",
         quantity: 2,
+        priceCurrency: "$",
+        deliveryStatus: "deliveryStatus 123",
     },
     {
         id: "3",
@@ -38,6 +42,8 @@ export const ProductCartListDataMockup: TProductCartData[] = [
         priceNew: 1234,
         src: "https://picsum.photos/id/121/200/300",
         quantity: 3,
+        priceCurrency: "$",
+        deliveryStatus: "deliveryStatus 123",
     },
     {
         id: "4",
@@ -51,5 +57,7 @@ export const ProductCartListDataMockup: TProductCartData[] = [
         priceNew: 123,
         src: "https://picsum.photos/id/101/200/300",
         quantity: 4,
+        priceCurrency: "$",
+        deliveryStatus: "deliveryStatus 123",
     },
 ];

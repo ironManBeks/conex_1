@@ -89,7 +89,7 @@ $font-size-sm: 0.875rem;
 $font-size-bs: 1rem;
 $font-size-md: 1.125rem;
 $font-size-lg: 1.25rem;
-$font-size-xlllll: 1.5rem;
+$font-size-lg-plus: 1.5rem;
 $font-size-xl: 2rem;
 $font-size-xxl: 2.5rem;
 
@@ -245,6 +245,7 @@ $header-filter-item-height: 36px;
 
 // Z-indexes
 $z-index-header: 1100;
+$z-index-header-dropdown: 1101;
 $z-index-notification: 1110;
 
 $z-index-modal-wrapper: 1105;

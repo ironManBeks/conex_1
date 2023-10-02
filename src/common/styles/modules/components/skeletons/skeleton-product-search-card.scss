@@ -1,49 +1,75 @@
 .skeleton_product-search-card{
-  --left-side-mr: 20px;
-  --left-side-width: 100px;
-
   width: 100%;
-  margin-bottom: 30px;
-
   .product-search-card{
-    &_inner-wrapper{
-      padding: 30px;
-      background-color: $color-white;
-      box-shadow: 0 0 20px 0 rgba(87, 110, 124, 0.23), 0 0 20px 0 rgba(250, 187, 30, 0.12);
-      border-radius: $border-radius-lg;
+    &_image__wrapper{
+      .ant-skeleton{
+        height: 100%;
+      }
     }
-    &_info{
-      &__wrapper{
-        .img-custom_wrapper{
-          width: var(--left-side-width);
-          max-height: 150px;
-          margin-right: var(--left-side-mr);
-          flex: 0 0 auto;
-          .ant-skeleton{
-            height: 100%;
-          }
-        }
-        .ant-skeleton.common-title{
-          margin-bottom: 10px;
-          width: 80%;
-        }
+    &_details__wrapper{
+      width: 100%;
+      .title{
+        margin-bottom: space(2);
       }
-      &__list{
-        width: 60%;
+      .list{
         .ant-skeleton{
-          &:not(:last-of-type){
-            margin-bottom: 10px;
+          &:not(:last-child){
+            margin-bottom: space(1);
           }
         }
-      }
-      &__details{
-        width: 100%;
       }
     }
     &_actions__wrapper{
-      .ant-skeleton{
-        width: 100%;
+      .ant-skeleton {
+        &:not(:last-child){
+          margin-bottom: space(8);
+        }
       }
     }
   }
+
+}
+
+@media (min-width: $md-media) and (max-width: $xl-media) {
+
+  .skeleton_product-search-card{
+    .product-search-card{
+      &_details__wrapper{
+        width: calc(100% - 170px - $space * 5);
+      }
+      &_actions__wrapper{
+        .ant-skeleton {
+          margin-bottom: 0;
+          &:last-child{
+            display: flex;
+            justify-content: flex-end;
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .skeleton_product-search-card{
+    width: 100%;
+    .product-search-card{
+      &_details__wrapper{
+        width: 100%;
+        .title{
+          margin-bottom: space(1);
+        }
+      }
+      &_actions__wrapper{
+        .ant-skeleton {
+          &:not(:last-child){
+            margin-bottom: space(3);
+          }
+        }
+      }
+    }
+  }
+
 }
