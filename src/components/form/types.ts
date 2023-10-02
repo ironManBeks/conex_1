@@ -67,17 +67,3 @@ export type TFormFieldRadio = {
     name: string;
     label?: string;
 } & RadioProps;
-
-export type TFormFieldAutoComplete = {
-    name: string;
-    label?: string;
-    onSearchButtonClick?: (value: string) => void;
-    onChangeValue?: (value: unknown) => void;
-    fieldPlaceholder?: string;
-    icon?: ReactNode;
-    fieldLabel?: ReactNode;
-} & AutoCompleteProps &
-    TFormWrapperClassName &
-    TFormItemLabel &
-    TFormWrapperErrorMessage &
-    TFormShowError;

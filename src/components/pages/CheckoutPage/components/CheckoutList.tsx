@@ -37,6 +37,8 @@ const CheckoutList: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                             priceNew={item.priceNew}
                             src={item.src}
                             quantity={item.quantity}
+                            priceCurrency={item.priceCurrency}
+                            deliveryStatus={item.deliveryStatus}
                         />
                     ))
                 ) : (

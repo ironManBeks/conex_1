@@ -8,7 +8,8 @@ import { IconSearch } from "@components/Icons";
 import FormItemWrapper from "@components/form/FormItemWrapper";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-import { EFormFieldType, TFormFieldAutoComplete } from "@components/form/types";
+import { EFormFieldType } from "@components/form/types";
+import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
 
 const getRandomInt = (max: number, min = 0) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
@@ -35,7 +36,7 @@ const searchResult = (query: string) =>
             };
         });
 
-const FormFieldAutoComplete: FC<TFormFieldAutoComplete> = (props) => {
+const FormFieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
     const {
         wrapperClassName,
         errorMessage,
