@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 import { AxiosResponse } from "axios";
 
 import {
