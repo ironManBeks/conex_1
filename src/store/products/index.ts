@@ -13,15 +13,7 @@ export class ProductsStore implements IProductsStore {
     productListFetching = true;
 
     constructor() {
-        makeAutoObservable(this, {
-            productList: observable,
-            productListFetching: observable,
-            searchParams: observable,
-            // functions
-            setProductList: action,
-            setProductListFetching: action,
-            setSearchParams: action,
-        });
+        makeAutoObservable(this);
     }
 
     getProductListRequest = (

@@ -48,39 +48,7 @@ export class BuilderStore implements IBuilderStore {
     editBuilderCartItemData: TNullable<TEditBuilderCartItemData> = null;
 
     constructor() {
-        makeAutoObservable(this, {
-            builderAllData: observable,
-            builderAllDataFetching: observable,
-            builderParamsData: observable,
-            builderParamsDataFetching: observable,
-            builderSettings: observable,
-            builderSettingsFetching: observable,
-            //
-            currentStepData: observable,
-            currentStepId: observable,
-            stepHistory: observable,
-            stepQueue: observable,
-            resultDoorData: observable,
-            endDoorData: observable,
-            builderCartData: observable,
-            editBuilderCartItemData: observable,
-            // functions
-            setBuilderAllData: action,
-            setBuilderAllDataFetching: action,
-            setBuilderParamsData: action,
-            setBuilderParamsDataFetching: action,
-            setBuilderSettings: action,
-            setBuilderSettingsFetching: action,
-            //
-            setStepHistory: action,
-            setCurrentStepData: action,
-            setCurrentStepId: action,
-            setStepQueue: action,
-            setResultDoorData: action,
-            setEndDoorData: action,
-            setBuilderCartData: action,
-            setEditBuilderCartItemData: action,
-        });
+        makeAutoObservable(this);
     }
 
     getBuilderSettings = (): Promise<

@@ -17,26 +17,7 @@ export class CommonStore implements ICommonStore {
     builderDrawerVisible = false;
 
     constructor() {
-        makeAutoObservable(this, {
-            headerHeight: observable,
-            urlParams: observable,
-            // Modals and Drawers
-            confirmModalData: observable,
-            modalConfirmVisible: observable,
-            modalAuthVisible: observable,
-            modalCustomQuoteVisible: observable,
-            modalCardBindingVisible: observable,
-            headerDrawerVisible: observable,
-            builderDrawerVisible: observable,
-            // Functions
-            setConfirmModalData: action,
-            setModalConfirmVisible: action,
-            setModalAuthVisible: action,
-            setModalCustomQuoteVisible: action,
-            setModalCardBindingVisible: action,
-            setHeaderDrawerVisible: action,
-            setBuilderDrawerVisible: action,
-        });
+        makeAutoObservable(this);
     }
 
     setHeaderHeight = (value: number): void => {

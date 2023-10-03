@@ -41,26 +41,9 @@ export class AuthStore implements IAuthStore {
     userOrdersDataFetching = true;
 
     constructor() {
-        makeAutoObservable(this, {
-            authData: observable,
-            authRequestFetching: observable,
-            userData: observable,
-            userDataFetching: observable,
-            userCardsData: observable,
-            userCardsDataFetching: observable,
-            selectedCard: observable,
-            //
-            setAuthData: action,
-            setAuthRequestFetching: action,
-            setUserData: action,
-            setUserDataFetching: action,
-            setUserCardsData: action,
-            setUserCardsDataFetching: action,
-            setSelectedCard: action,
-            setUserOrdersData: action,
-            setUserOrdersDataFetching: action,
-        });
+        makeAutoObservable(this);
     }
+
     ////////////////////////////////////
     setAuthData = (data: TNullable<TAuthData>): void => {
         this.authData = data;
