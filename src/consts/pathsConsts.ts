@@ -9,6 +9,3 @@ export const PATH_CHECKOUT_PAGE = "/checkout";
 export const PATH_LOGIN = "/auth/login";
 export const PATH_POLICY_PAGE = "/policy";
 export const PATH_TERMS_PAGE = "/terms";
-
-// project paths
-export const PATH_ONE_PIX_SITE = "https://onepix.ru/";

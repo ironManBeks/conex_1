@@ -9,9 +9,10 @@ import {
 
 export type TFieldAutoCompleteController = {
     name: string;
+    fieldValue: string;
     label?: string;
-    onSearchButtonClick?: (value: string) => void;
-    onChangeValue?: (value: unknown) => void;
+    onAddonButtonClick?: (value: string) => void;
+    onChangeValue?: (value: string) => void;
     fieldPlaceholder?: string;
     icon?: ReactNode;
     fieldLabel?: ReactNode;
