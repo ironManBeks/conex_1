@@ -1,6 +1,6 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useState } from "react";
 import cn from "classnames";
-import { AutoComplete, Input, InputRef } from "antd";
+import { AutoComplete, Input } from "antd";
 import type { SelectProps } from "antd/es/select";
 import { isFunction } from "lodash";
 
@@ -10,7 +10,6 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
-import { BaseSelectRef } from "rc-select";
 
 const getRandomInt = (max: number, min = 0) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
@@ -37,7 +36,9 @@ const searchResult = (query: string) =>
             };
         });
 
-const FormFieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
+const FormFieldAutoComplete: FC<
+    TFieldAutoCompleteController & { fieldValue: string }
+> = (props) => {
     const {
         wrapperClassName,
         errorMessage,

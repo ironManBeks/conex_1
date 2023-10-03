@@ -9,7 +9,6 @@ import {
 
 export type TFieldAutoCompleteController = {
     name: string;
-    fieldValue: string;
     label?: string;
     onAddonButtonClick?: (value: string) => void;
     onChangeValue?: (value: string) => void;
