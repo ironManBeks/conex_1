@@ -1,11 +1,12 @@
 import { FC } from "react";
 import { inject, observer } from "mobx-react";
 
+import Spin from "@components/globalComponents/Spin";
+
 import { TBuilderCompProps } from "../types";
-import { Spin } from "antd";
 
 const BuilderStepLoader: FC<TBuilderCompProps> = inject("store")(
-    observer(({ store, pageClassPrefix }) => {
+    observer(({ pageClassPrefix }) => {
         return (
             <div className={`${pageClassPrefix}_step-loader`}>
                 <Spin size="large" />

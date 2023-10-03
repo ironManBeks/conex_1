@@ -1,3 +1,5 @@
+import { TNullable } from "@globalTypes/commonTypes";
+
 export type TUrlParams = Record<string, string>;
 
 type TSetElementVisible = (value: boolean) => void;
@@ -10,10 +12,8 @@ export interface ICommonStore {
     getUrlParams: (value: string[]) => TUrlParams;
     removeUrlParams: (value: string[]) => void;
     //Modals and Drawers
-    // ToDo remove type any
-    confirmModalData: any;
-    // ToDo remove type any
-    setConfirmModalData: (confirmModalData: any) => void;
+    confirmModalData: TNullable<unknown>;
+    setConfirmModalData: (confirmModalData: TNullable<unknown>) => void;
     modalConfirmVisible: boolean;
     setModalConfirmVisible: TSetElementVisible;
     modalAuthVisible: boolean;

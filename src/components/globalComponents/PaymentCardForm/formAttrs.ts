@@ -1,7 +1,6 @@
 import { Resolver } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";
-import { findDebitCardType } from "@helpers/paymentMethodHelpers";
 
 export enum EPaymentCardFromFieldsNames {
     // nameOnCard = "nameOnCard",

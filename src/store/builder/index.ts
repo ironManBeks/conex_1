@@ -1,10 +1,4 @@
-import {
-    action,
-    makeAutoObservable,
-    observable,
-    runInAction,
-    toJS,
-} from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { AxiosResponse } from "axios";
 
 import {
@@ -32,7 +26,6 @@ import { showNotification } from "@helpers/notificarionHelper";
 import { setStorage } from "@services/storage.service";
 import {
     BUILDER_CART,
-    BUILDER_HISTORY,
     BUILDER_PARENT_ID,
     BUILDER_RESUlT_DATA,
 } from "@consts/storageNamesContsts";
@@ -366,9 +359,12 @@ export class BuilderStore implements IBuilderStore {
                 }
             }
             showNotification({
-                type: "error",
-                message: "Step not found",
-                description: "Try to reload the page or select another option",
+                mainProps: {
+                    type: "error",
+                    message: "Step not found",
+                    description:
+                        "Try to reload the page or select another option",
+                },
             });
             return;
         }

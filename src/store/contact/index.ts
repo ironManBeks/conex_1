@@ -25,8 +25,10 @@ export class ContactStore implements IContactStore {
             .post("/feedbacks", { data: data })
             .then(() => {
                 showNotification({
-                    type: "success",
-                    message: "Feedback successfully created",
+                    mainProps: {
+                        type: "success",
+                        message: "Feedback successfully created",
+                    },
                 });
             })
             .catch((err) => {

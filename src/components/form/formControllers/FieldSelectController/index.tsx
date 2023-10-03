@@ -1,16 +1,16 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import cn from "classnames";
 import { Select as AntSelect } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
-import type { BaseSelectRef } from "rc-select";
+import { isFunction } from "lodash";
+import { BaseSelectRef } from "rc-select";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import { IconArrowSingle, IconCross } from "@components/Icons";
 
 import { EFormFieldType } from "@components/form/types";
 import { TFieldSelectController } from "./types";
-import { isFunction } from "lodash";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-import { IconArrowSingle, IconCross, IconUser } from "@components/Icons";
 import { EArrowDirection } from "@components/Icons/types";
 
 const FieldSelectController: FC<TFieldSelectController> = (props) => {
@@ -29,11 +29,10 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
     } = props;
     const {
         control,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
-    const fieldRef = useRef<any | null>(null);
+    const fieldRef = useRef<BaseSelectRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
     const [dropdownOpen, setDropdownOpen] = useState(false);

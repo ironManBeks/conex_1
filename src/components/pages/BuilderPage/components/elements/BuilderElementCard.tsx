@@ -1,12 +1,7 @@
-import { FC, useCallback, useEffect } from "react";
+import { FC, useCallback } from "react";
 import cn from "classnames";
 import { isFunction } from "lodash";
-import {
-    Controller,
-    ControllerRenderProps,
-    FieldValues,
-    useFormContext,
-} from "react-hook-form";
+import { Controller, useFormContext } from "react-hook-form";
 
 import { H4, H5, P } from "@components/Text";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
@@ -32,12 +27,7 @@ const BuilderElementCard: FC<
     fieldName,
 }) => {
     const classPrefix = `builder-element-card`;
-    const {
-        control,
-        getValues,
-        formState: { errors },
-    } = useFormContext();
-    const errorMessage = errors[fieldName]?.message;
+    const { control, getValues } = useFormContext();
 
     const getIsActive = useCallback(
         (value: string | number | null | undefined) => {
@@ -87,9 +77,8 @@ const BuilderElementCard: FC<
                             {imgSrc && (
                                 <ImgWrapper
                                     src={imgSrc}
-                                    alt={`image: ${mainTitle}`}
+                                    alt={`Image: ${mainTitle}`}
                                     title={mainTitle}
-                                    objectFit={"contain"}
                                 />
                             )}
                             {subTitle && <H5>{subTitle}</H5>}

@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { useRouter } from "next/router";
@@ -79,10 +79,10 @@ const AccountMenuItem: FC<TAccountMenuItem> = ({
     const classPrefix = `${pageClassPrefix}_menu__item`;
 
     const content = (
-        <a onClick={onClick}>
+        <>
             {icon && icon}
             {title}
-        </a>
+        </>
     );
 
     return (
@@ -101,7 +101,7 @@ const AccountMenuItem: FC<TAccountMenuItem> = ({
                     {content}
                 </Link>
             ) : (
-                content
+                <a onClick={onClick}>{content}</a>
             )}
         </div>
     );

@@ -7,7 +7,7 @@ import {
     TUpdateCurrentStepWay,
 } from "@store/builder/types";
 import { FieldValues } from "react-hook-form";
-import { isArray, isEmpty, isFunction, isNil, isString, uniq } from "lodash";
+import { isArray, isEmpty, isFunction, isNil, uniq } from "lodash";
 import {
     BUILDER_FIELD_ID_DIVIDER,
     BUILDER_FIELD_ID_PREFIX,
@@ -26,6 +26,7 @@ export type TGetDefaultValuesResult =
 export type TResultValuesParams = {
     stepId: number;
     fieldName: string;
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     fieldValue: any;
 };
 
@@ -51,22 +52,23 @@ export const getSelectedElementByFormValues = (
                     const elements: IBuilderElementDataDTO[] = [];
                     for (let j = 0; j < formValue.fieldValue.length; j++) {
                         const fieldValue = formValue.fieldValue[j];
-                        // ToDo Remove ts-ignore
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
                         const selectedElement = attributes.subQuestions.find(
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
                             (item: IBuilderElementDataDTO) =>
                                 item.value === fieldValue,
                         );
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         elements.push(selectedElement);
                     }
-                    // ToDo here may be bugs
                     result = elements[0];
                 } else {
-                    // ToDo Remove ts-ignore
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     result = attributes.subQuestions.find(
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         (item: IBuilderElementDataDTO) =>
                             item.value === formValue.fieldValue,
                     );
@@ -124,18 +126,21 @@ export const getNextStepByFormValues = (
                     const nextQuestions = [];
                     for (let j = 0; j < formValue.fieldValue.length; j++) {
                         const fieldValue = formValue.fieldValue[j];
-                        // ToDo Remove ts-ignore
-                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                        // @ts-ignore
                         const selectedElement = attributes.subQuestions.find(
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
                             (item: IBuilderElementDataDTO) =>
                                 item.value === fieldValue,
                         );
                         if (
+                            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                            // @ts-ignore
                             selectedElement.nextQuestion ||
                             attributes.nextQuestion
                         ) {
                             nextQuestions.push(
+                                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                                // @ts-ignore
                                 selectedElement.nextQuestion ??
                                     attributes.nextQuestion,
                             );
@@ -143,16 +148,17 @@ export const getNextStepByFormValues = (
                     }
                     result = uniq(nextQuestions);
                 } else {
-                    // ToDo Remove ts-ignore
-                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                    // @ts-ignore
                     const selectedElement = attributes.subQuestions.find(
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         (item: IBuilderElementDataDTO) =>
                             item.value === formValue.fieldValue,
                     );
 
                     result =
                         getBranchingId() ??
+                        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                        // @ts-ignore
                         selectedElement?.nextQuestion ??
                         attributes.nextQuestion;
                 }
@@ -297,8 +303,8 @@ export const renderResultDataToOptionsList = (
     resultDoorData: TResultDoorData[] | null,
     updateCurrentStepData?: (
         way: TUpdateCurrentStepWay,
-        changeQueue?: true,
-        changeHistory?: true,
+        changeQueue?: boolean,
+        changeHistory?: boolean,
     ) => void,
     stepHistory?: number[],
     currentStepData?: TNullable<TBuilderStepDataDTO>,

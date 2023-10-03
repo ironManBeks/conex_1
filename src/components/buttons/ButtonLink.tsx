@@ -29,55 +29,48 @@ const ButtonLink: React.FC<TButtonLink> = ({
         maxWidth: mediaBreakpoints.smMediaEnd,
     });
 
+    const linkParams = {
+        className: cn(
+            `${commonButtonClassPrefix}`,
+            "_link",
+            className,
+            `__${color}`,
+            `__${isMobile ? EButtonSize.md : size}`,
+            {
+                __disabled: disabled,
+                __notText: !children || children === "",
+                __icon: leftIcon || rightIcon,
+            },
+        ),
+        target: target || "_self",
+        rel: "noreferrer",
+        style: style,
+    };
+
     const buttonContent = (
-        <a
-            className={cn(
-                `${commonButtonClassPrefix}`,
-                "_link",
-                className,
-                `__${color}`,
-                `__${isMobile ? EButtonSize.md : size}`,
-                {
-                    __disabled: disabled,
-                    __notText: !children || children === "",
-                    __icon: leftIcon || rightIcon,
-                },
+        <>
+            {leftIcon && (
+                <span
+                    className={cn(`${commonButtonClassPrefix}_icon`, "_left")}
+                >
+                    {leftIcon}
+                </span>
             )}
-            target={target || "_self"}
-            rel="noreferrer"
-            style={style}
-            href={isLinkSimple ? href : undefined}
-        >
-            <>
-                {leftIcon && (
-                    <span
-                        className={cn(
-                            `${commonButtonClassPrefix}_icon`,
-                            "_left",
-                        )}
-                    >
-                        {leftIcon}
-                    </span>
-                )}
-                {children}
-                {rightIcon && (
-                    <span
-                        className={cn(
-                            `${commonButtonClassPrefix}_icon`,
-                            "_right",
-                        )}
-                    >
-                        {rightIcon}
-                    </span>
-                )}
-            </>
-        </a>
+            {children}
+            {rightIcon && (
+                <span
+                    className={cn(`${commonButtonClassPrefix}_icon`, "_right")}
+                >
+                    {rightIcon}
+                </span>
+            )}
+        </>
     );
 
     return isLinkSimple ? (
-        buttonContent
+        <a {...linkParams}>{buttonContent}</a>
     ) : tooltipText ? (
-        <Link href={href}>
+        <Link href={href} {...linkParams}>
             <Tooltip
                 placement="top"
                 title={tooltipText}
@@ -87,7 +80,9 @@ const ButtonLink: React.FC<TButtonLink> = ({
             </Tooltip>
         </Link>
     ) : (
-        <Link href={href}>{buttonContent}</Link>
+        <Link href={href} {...linkParams}>
+            {buttonContent}
+        </Link>
     );
 };
 

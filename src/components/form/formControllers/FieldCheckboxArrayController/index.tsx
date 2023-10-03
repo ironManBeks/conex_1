@@ -7,7 +7,6 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { IconCheck } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-import { COLOR_WHITE } from "@common/theme/colorTheme";
 import { EDirection } from "@globalTypes/commonTypes";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldCheckboxArrayController } from "./types";

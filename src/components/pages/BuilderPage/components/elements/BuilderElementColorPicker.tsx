@@ -24,16 +24,10 @@ const BuilderElementColorPicker: FC<
     popular,
     onClick,
     fieldName,
-    nextQuestion,
     color,
 }) => {
     const classPrefix = `builder-element-color-picker`;
-    const {
-        control,
-        getValues,
-        formState: { errors },
-    } = useFormContext();
-    const errorMessage = errors[fieldName]?.message;
+    const { control, getValues } = useFormContext();
 
     const getIsActive = (
         value: string | number | null | undefined,

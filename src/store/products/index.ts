@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable, toJS } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { AxiosResponse } from "axios";
 
 import { IProductsStore, TProductDoorData, TSearchParams } from "./types";
@@ -31,7 +31,7 @@ export class ProductsStore implements IProductsStore {
         return axiosInstance
             .get("/product/", { params })
             .then((response: AxiosResponse<TProductDoorData[]>) => {
-                const { data } = response;
+                // const { data } = response;
                 // this.setProductList(data);
                 return response;
             })

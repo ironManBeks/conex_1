@@ -1,7 +1,7 @@
 import { FC, useState } from "react";
 import cn from "classnames";
 import { AutoComplete, Input } from "antd";
-import type { SelectProps } from "antd/es/select";
+import type { DefaultOptionType } from "antd/es/select";
 import { isFunction } from "lodash";
 
 import { IconSearch } from "@components/Icons";
@@ -10,31 +10,6 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
-
-const getRandomInt = (max: number, min = 0) =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
-
-const searchResult = (query: string) =>
-    new Array(getRandomInt(5))
-        .join(".")
-        .split(".")
-        .map((_, idx) => {
-            const category = `${query}${idx}`;
-            return {
-                value: category,
-                label: (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            background: "red !important",
-                        }}
-                    >
-                        <span>{category}</span>
-                    </div>
-                ),
-            };
-        });
 
 const FormFieldAutoComplete: FC<
     TFieldAutoCompleteController & { fieldValue: string }
@@ -54,18 +29,27 @@ const FormFieldAutoComplete: FC<
         ...rest
     } = props;
 
-    // ToDo Remove mock options
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
+    const [options, setOptions] = useState<DefaultOptionType[]>([]);
 
     const handleSearch = (value: string) => {
-        setOptions(value ? searchResult(value) : []);
+        setOptions(
+            !value
+                ? []
+                : [
+                      { label: value, value: value },
+                      { label: value + value, value: value + value },
+                      {
+                          label: value + value + value,
+                          value: value + value + value,
+                      },
+                  ],
+        );
     };
 
-    const handleSelect = (value: string) => {
+    const handleSelect = (value: string, option: DefaultOptionType) => {
         // setSearchText(value);
         if (isFunction(onSelect)) {
-            onSelect(value);
+            onSelect(value, option);
         }
     };
 
@@ -79,21 +63,23 @@ const FormFieldAutoComplete: FC<
         >
             <AutoComplete
                 options={options}
-                onSelect={(value) => {
-                    handleSelect(value);
+                onSelect={(value, option) => {
+                    handleSelect(value, option);
                 }}
                 onSearch={handleSearch}
-                size="large"
                 popupClassName={cn(
                     `${FORM_FIELD_CLASSNAME_PREFIX}_dropdown`,
                     `_${EFormFieldType.autocomplete}`,
                 )}
                 className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_field`)}
                 value={fieldValue}
+                style={{
+                    width: 200,
+                }}
             >
                 <Input
                     {...rest}
-                    size="large"
+                    allowClear={false}
                     onChange={(e) => {
                         const val = e.target.value;
                         // handleChange(val);

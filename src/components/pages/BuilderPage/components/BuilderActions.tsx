@@ -1,8 +1,9 @@
-import { FC, useCallback, useEffect, useMemo } from "react";
+import { FC, useCallback, useMemo } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 import { isArray, isEmpty, isEqual, isNil, isNumber, uniq } from "lodash";
 
+import ButtonLink from "@components/buttons/ButtonLink";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 
@@ -20,20 +21,13 @@ import {
 } from "@helpers/builderHelper";
 import { handleClearBuilderStorage } from "../utils";
 import { TResultDoorData } from "@store/builder/types";
+import { getStorage, removeStorage } from "@services/storage.service";
 import {
-    getStorage,
-    removeStorage,
-    setStorage,
-} from "@services/storage.service";
-import {
-    BUILDER_CART,
     BUILDER_PARENT_ID,
     EDIT_BUILDER_CART_ITEM_DATA,
 } from "@consts/storageNamesContsts";
 import { useRouter } from "next/router";
 import { PATH_CART_PAGE } from "@consts/pathsConsts";
-import { toJS } from "mobx";
-import ButtonLink from "@components/buttons/ButtonLink";
 import { showNotification } from "@helpers/notificarionHelper";
 
 const BuilderActions: FC<TBuilderCompProps> = inject("store")(
@@ -154,7 +148,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                               resultDoorData,
                           );
 
-                const parentId: number = getStorage(BUILDER_PARENT_ID);
+                const parentId = getStorage(BUILDER_PARENT_ID) as number;
 
                 const nextStep = getNextStepByFormValues(
                     currentStepData,
@@ -193,14 +187,16 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             router.push(PATH_CART_PAGE);
                         } else {
                             showNotification({
-                                type: "warning",
-                                message: (
-                                    <>
-                                        The item being changed could not be
-                                        found. <br />
-                                        Please create a product again.
-                                    </>
-                                ),
+                                mainProps: {
+                                    type: "warning",
+                                    message: (
+                                        <>
+                                            The item being changed could not be
+                                            found. <br />
+                                            Please create a product again.
+                                        </>
+                                    ),
+                                },
                             });
                         }
                         handleClearBuilderStorage();

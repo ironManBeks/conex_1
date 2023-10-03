@@ -1,9 +1,7 @@
 import cn from "classnames";
 import React, { FC, useMemo, useState } from "react";
 import { observer } from "mobx-react";
-import { isFunction } from "lodash";
 
-import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { P } from "@components/Text";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
@@ -23,11 +21,11 @@ const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
         EAuthFormType.login,
     );
 
-    const onAuthSuccess = () => {
-        if (isFunction(onAuth)) {
-            onAuth();
-        }
-    };
+    // const onAuthSuccess = () => {
+    //     if (isFunction(onAuth)) {
+    //         onAuth();
+    //     }
+    // };
 
     const formContent = useMemo(() => {
         if (formType === EAuthFormType.login) {

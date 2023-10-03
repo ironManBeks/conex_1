@@ -1,4 +1,5 @@
-import axios from "axios";
+// import axios from "axios";
+export const axiosText = "axiosText";
 // import { useEffect, useState } from "react";
 //
 // /**

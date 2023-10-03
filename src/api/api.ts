@@ -11,6 +11,7 @@ const axiosInstance = axios.create({
     baseURL,
 });
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 axiosInstance.interceptors.request.use((request: any) => {
     const { url } = request;
     if (url !== PATH_LOGIN) {
@@ -30,6 +31,7 @@ axiosInstance.interceptors.request.use((request: any) => {
 });
 
 axiosInstance.interceptors.response.use(
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     (response: any) => {
         return response;
     },

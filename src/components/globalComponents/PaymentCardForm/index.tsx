@@ -110,6 +110,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                             src={CARD_ICON[cardType]}
                             width={50}
                             height={24}
+                            alt="Card"
                         />
                     )}
                     <FieldInputMaskController

@@ -1,17 +1,26 @@
 import { notification } from "antd";
 import { IconCross } from "@components/Icons";
-import { ArgsProps } from "antd/lib/notification";
 
-export const showNotification = (props: ArgsProps): void => {
-    const { maxCount, closeIcon, placement } = props;
-    const type = props.type || "info";
+import { ArgsProps, GlobalConfigProps } from "antd/es/notification/interface";
+
+export const showNotification = ({
+    mainProps,
+    configProps,
+}: {
+    mainProps: ArgsProps;
+    configProps?: GlobalConfigProps;
+}): void => {
+    const { closeIcon, placement } = mainProps;
+    const type = mainProps.type || "info";
     notification.config({
-        maxCount: maxCount || 3,
+        ...configProps,
+        maxCount: configProps?.maxCount || 3,
     });
+
     notification[type]({
-        ...props,
+        ...mainProps,
         placement: placement ?? "topRight",
-        maxCount: undefined,
         closeIcon: closeIcon || <IconCross width={16} height={16} />,
+        className: "common-notification",
     });
 };

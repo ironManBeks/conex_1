@@ -1,10 +1,4 @@
-import {
-    CSSProperties,
-    MouseEvent,
-    MouseEventHandler,
-    ReactNode,
-    RefObject,
-} from "react";
+import { CSSProperties, MouseEvent, ReactNode, RefObject } from "react";
 
 export interface ITitlesProps {
     ref?: RefObject<HTMLHeadingElement>;

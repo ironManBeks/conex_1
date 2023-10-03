@@ -1,6 +1,6 @@
-import { action, makeAutoObservable, observable, toJS } from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { AxiosResponse } from "axios";
-import { isEmpty, isNil } from "lodash";
+import { isNil } from "lodash";
 
 import { removeStorage, setStorage } from "@services/storage.service";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
@@ -113,8 +113,10 @@ export class AuthStore implements IAuthStore {
             .then((data: AxiosResponse<TAuthData>) => {
                 this.setAuthData(data.data);
                 showNotification({
-                    type: "success",
-                    message: "We sent you a link to prove your email",
+                    mainProps: {
+                        type: "success",
+                        message: "We sent you a link to prove your email",
+                    },
                 });
             })
             .catch((err) => {
@@ -135,8 +137,10 @@ export class AuthStore implements IAuthStore {
             .then((data: AxiosResponse<TAuthData>) => {
                 this.setAuthData(data.data);
                 showNotification({
-                    type: "success",
-                    message: "Welcome to Conexwest",
+                    mainProps: {
+                        type: "success",
+                        message: "Welcome to Conexwest",
+                    },
                 });
                 return data;
             })
@@ -156,10 +160,13 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .post("/auth/local", formValues)
             .then((data: AxiosResponse<{ ok: boolean }>) => {
+                console.log("forgotPasswordRequest", data);
                 showNotification({
-                    type: "success",
-                    message:
-                        "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.",
+                    mainProps: {
+                        type: "success",
+                        message:
+                            "Check your email for a link to reset your password. If it doesn’t appear within a few minutes, check your spam folder.",
+                    },
                 });
             })
             .catch((err) => {
@@ -178,7 +185,7 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .post("/auth/reset-password", formValues)
             .then((data: AxiosResponse<TAuthData>) => {
-                console.log("resetPasswordRequest");
+                console.log("resetPasswordRequest", data);
             })
             .catch((err) => {
                 showAxiosNotificationError(err);
@@ -196,7 +203,7 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .post("/auth/change-password", formValues)
             .then((data: AxiosResponse<TAuthData>) => {
-                console.log("changePasswordRequest");
+                console.log("changePasswordRequest", data);
             })
             .catch((err) => {
                 showAxiosNotificationError(err);
@@ -215,12 +222,14 @@ export class AuthStore implements IAuthStore {
             .post("/auth/send-email-confirmation", formValues)
             .then((response: AxiosResponse<TEmailConfirmationResponse>) => {
                 const { data } = response;
-                console.log("emailConfirmationRequest");
+                console.log("emailConfirmationRequest", data);
                 if (data.sent) {
                     showNotification({
-                        type: "success",
-                        message:
-                            "Check your email for a link to confirm your email. If it doesn’t appear within a few minutes, check your spam folder.",
+                        mainProps: {
+                            type: "success",
+                            message:
+                                "Check your email for a link to confirm your email. If it doesn’t appear within a few minutes, check your spam folder.",
+                        },
                     });
                 }
             })
@@ -238,7 +247,7 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .get("/user")
             .then((response: AxiosResponse<TUserData>) => {
-                const { data } = response;
+                // const { data } = response;
                 // this.setUserData(data);
                 return response;
             })
@@ -258,7 +267,7 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .get("/user/cards")
             .then((response: AxiosResponse<TAuthPaymentCard[]>) => {
-                const { data } = response;
+                // const { data } = response;
                 // this.setUserCardsData(data);
                 return response;
             })
@@ -280,7 +289,7 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .get("/user/orders")
             .then((response: AxiosResponse<TAccountOrderItem[]>) => {
-                const { data } = response;
+                // const { data } = response;
                 // this.setUserOrdersData(data);
                 return response;
             })

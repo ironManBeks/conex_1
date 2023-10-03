@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import cn from "classnames";
 
-import { H2, P } from "@components/Text";
+import { H2 } from "@components/Text";
 import Container from "@components/globalComponents/Container";
 import HowItWorksItem from "./HowItWorksItem";
 

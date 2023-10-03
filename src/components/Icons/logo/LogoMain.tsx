@@ -4,7 +4,6 @@ import { IIcon } from "../types";
 import { DEFAULT_ICON_COLOR } from "@components/Icons/consts";
 
 const LogoMain: FC<IIcon> = ({ color, className, width, height, opacity }) => {
-    const defaultWidth = width || 89;
     return (
         <svg
             width={width || 89}

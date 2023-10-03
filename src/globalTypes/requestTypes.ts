@@ -1,10 +1,10 @@
 export type TResponseError = {
-    data: any;
+    data: unknown;
     error: {
         status: number;
         name: string;
         message: string;
-        details: any;
+        details: unknown;
     };
 };
 

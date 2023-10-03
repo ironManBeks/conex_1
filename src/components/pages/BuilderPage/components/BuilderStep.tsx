@@ -1,10 +1,10 @@
 import { FC, ReactNode, useCallback, useEffect } from "react";
 import cn from "classnames";
-import { isEmpty, isNil } from "lodash";
+import { isEmpty } from "lodash";
 import { useFormContext } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
-import { H2, H3, P } from "@components/Text";
+import { H3, P } from "@components/Text";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 import FieldRadioArrayController from "@components/form/formControllers/FieldRadioArrayController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
@@ -32,7 +32,7 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
         const { builderStore } = store as IRoot;
         const { resultDoorData, currentStepData, editBuilderCartItemData } =
             builderStore;
-        if (isEmpty(currentStepData)) return null;
+        if (isEmpty(currentStepData) || !currentStepData) return null;
         const {
             fieldType,
             fieldName,
@@ -40,7 +40,7 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             fieldTitleSize,
             subQuestions,
             fieldRequired,
-        } = currentStepData?.attributes;
+        } = currentStepData.attributes;
 
         const classPrefix = `builder-step`;
         const isMultiStep = fieldType === EBuilderFieldTypes.multiple;

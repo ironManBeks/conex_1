@@ -89,7 +89,7 @@ const ProductCartCard: FC<TProductCartCard> = inject("store")(
                 >
                     <div className={`${classPrefix}_inner-wrapper`}>
                         <div className={`${classPrefix}_info__wrapper`}>
-                            <ImgWrapper src={src} />
+                            <ImgWrapper src={src} alt="Product image" />
                             <div className={`${classPrefix}_info__details`}>
                                 <ProductCardTitle title={title} />
                                 <ProductCardList optionsList={optionsList} />

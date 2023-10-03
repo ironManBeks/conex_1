@@ -1,6 +1,5 @@
-import { FC, useEffect } from "react";
+import { FC } from "react";
 import { inject, observer } from "mobx-react";
-import { useRouter } from "next/router";
 
 import DrawerLayout from "@components/drawers/DrawerLayout";
 import NavLinks from "@components/segments/components/NavLinks";
@@ -17,7 +16,7 @@ const DrawerHeader: FC<TStore> = inject("store")(
             <DrawerLayout
                 wrapperClassName={classPrefix}
                 open={headerDrawerVisible}
-                onClose={() => setHeaderDrawerVisible(false)}
+                closeDrawer={() => setHeaderDrawerVisible(false)}
                 bodyContent={
                     <>
                         <NavLinks

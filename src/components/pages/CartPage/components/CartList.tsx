@@ -1,5 +1,4 @@
 import { FC, useCallback, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 import { inject, observer } from "mobx-react";
 import { useRouter } from "next/router";
 
@@ -12,7 +11,6 @@ import CartEmpty from "./CartEmpty";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import {
     getTotalPriceByResultData,
     renderResultDataToOptionsList,
@@ -27,19 +25,13 @@ const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_list`;
         const { builderStore, commonStore } = store as IRoot;
-        const { builderCartData, setElementsToBuilderCard, setStepHistory } =
-            builderStore;
+        const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
         const router = useRouter();
 
         const [selectedElementId, setSelectedElementId] = useState<
             string | null
         >(null);
-
-        const isMobile = useMediaQuery({
-            minWidth: mediaBreakpoints.xsMedia,
-            maxWidth: mediaBreakpoints.smMediaEnd,
-        });
 
         const deleteElementFromCart = useCallback(() => {
             if (selectedElementId) {
@@ -75,7 +67,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                 <H2>Cart</H2>
                 <div className={"cart-item-page_wrapper"}>
                     {builderCartData?.elements?.length ? (
-                        builderCartData?.elements.map((item, index) => {
+                        builderCartData?.elements.map((item) => {
                             return (
                                 <div
                                     key={item.doorId}
@@ -119,7 +111,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                                         ?.elements[0].image?.url
                                                 }
                                                 wrapperClassName="cart-item_image"
-                                                objectFit={"contain"}
+                                                alt="Product image"
                                             />
                                         )}
 

@@ -1,14 +1,14 @@
 import { FC, useEffect, useRef } from "react";
 import { inject, observer } from "mobx-react";
+import { isEmpty } from "lodash";
 
 import ModalLayout from "@components/modals/ModalLayout";
+import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
 
 import { EModalSize } from "@components/modals/types";
 import { notImplemented } from "@helpers/notImplemented";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
-import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
-import { isEmpty } from "lodash";
 import {
     EPaymentCardFromFieldsNames,
     paymentCardFromDefaultValues,

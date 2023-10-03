@@ -1,10 +1,14 @@
 import { FC, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
+import { isFunction } from "lodash";
+import { Empty } from "antd";
 
-import { H2, P } from "@components/Text";
+import { P } from "@components/Text";
 import { IconTrash } from "@components/Icons";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
+import ModalCardBinding from "@components/modals/components/ModalCardBinding";
+import ModalConfirm from "@components/modals/components/ModalConfirm";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { paymentCardNumberMask } from "@helpers/textMaskHelper";
@@ -18,12 +22,7 @@ import {
 import { findDebitCardType } from "@helpers/paymentMethodHelpers";
 import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
-import AccountSectionWrapper from "@components/pages/AccountPage/components/AccountSectionWrapper";
-import ModalCardBinding from "@components/modals/components/ModalCardBinding";
-import ModalConfirm from "@components/modals/components/ModalConfirm";
 import { notImplemented } from "@helpers/notImplemented";
-import { isFunction } from "lodash";
-import { Empty } from "antd";
 
 const AccountPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -100,7 +99,7 @@ const AccountPaymentItem: FC<
     }, [cardNumber]);
 
     const cardIconContent = cardType && CARDS_LIST.includes(cardType) && (
-        <ImgWrapper src={CARD_ICON[cardType]} width={44} objectFit="contain" />
+        <ImgWrapper src={CARD_ICON[cardType]} width={44} alt={"Card"} />
     );
     const cardNumberContent = paymentCardNumberMask(cardNumber, true);
     const deleteButtonContent = (

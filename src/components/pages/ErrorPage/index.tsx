@@ -21,6 +21,7 @@ const ErrorPage: FC = () => {
         src: "/images/svg/cloud-1.svg",
         width: 200,
         height: 70,
+        alt: "Cloud",
     };
     const cloudBasicClassName = `${classPrefix}_cloud`;
 
@@ -35,27 +36,22 @@ const ErrorPage: FC = () => {
                 <MediaQuery minWidth={mediaBreakpoints.mdMedia}>
                     <ImgWrapper
                         {...basicCloudImgProps}
-                        objectFit="contain"
                         wrapperClassName={`${cloudBasicClassName} _1`}
                     />
                     <ImgWrapper
                         {...basicCloudImgProps}
-                        objectFit="contain"
                         wrapperClassName={`${cloudBasicClassName} _2`}
                     />
                     <ImgWrapper
                         {...basicCloudImgProps}
-                        objectFit="contain"
                         wrapperClassName={`${cloudBasicClassName} _3`}
                     />
                     <ImgWrapper
                         {...basicCloudImgProps}
-                        objectFit="contain"
                         wrapperClassName={`${cloudBasicClassName} _4`}
                     />
                     <ImgWrapper
                         {...basicCloudImgProps}
-                        objectFit="contain"
                         wrapperClassName={`${cloudBasicClassName} _5`}
                     />
                 </MediaQuery>
@@ -65,7 +61,7 @@ const ErrorPage: FC = () => {
                             <ImgWrapper
                                 src="/images/svg/error-bg.png"
                                 wrapperClassName={`${classPrefix}_bg`}
-                                objectFit="contain"
+                                alt={"Error page background"}
                             />
                         </MediaQuery>
                         <div className={`${classPrefix}_content__wrapper`}>
@@ -73,12 +69,14 @@ const ErrorPage: FC = () => {
                                 <ImgWrapper
                                     src="/images/svg/error-404-mobile.svg"
                                     height={isMobile ? 230 : 300}
+                                    alt={"404 error"}
                                 />
                             </MediaQuery>
                             <MediaQuery minWidth={mediaBreakpoints.mdMedia}>
                                 <ImgWrapper
                                     src="/images/svg/error-404.svg"
                                     height={390}
+                                    alt={"404 error"}
                                 />
                             </MediaQuery>
                             <H2>Error 404</H2>

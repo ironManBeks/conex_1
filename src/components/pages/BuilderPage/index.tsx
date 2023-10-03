@@ -65,16 +65,22 @@ const BuilderPage: FC<TStore> = inject("store")(
                 );
 
                 getBuilderAllData().then(() => {
-                    const history: TNullable<number[]> =
-                        getStorage(BUILDER_HISTORY);
-                    const queue: TNullable<number[]> =
-                        getStorage(BUILDER_QUEUE);
-                    const result: TNullable<TResultDoorData[]> =
-                        getStorage(BUILDER_RESUlT_DATA);
-                    const stepId: number = getStorage(BUILDER_CURRENT_STEP_ID);
-                    const parentId: number = getStorage(BUILDER_PARENT_ID);
-                    const editCartItemData: TNullable<TEditBuilderCartItemData> =
-                        getStorage(EDIT_BUILDER_CART_ITEM_DATA);
+                    const history = getStorage(BUILDER_HISTORY) as TNullable<
+                        number[]
+                    >;
+                    const queue = getStorage(BUILDER_QUEUE) as TNullable<
+                        number[]
+                    >;
+                    const result = getStorage(BUILDER_RESUlT_DATA) as TNullable<
+                        TResultDoorData[]
+                    >;
+                    const stepId = getStorage(
+                        BUILDER_CURRENT_STEP_ID,
+                    ) as number;
+                    const parentId = getStorage(BUILDER_PARENT_ID) as number;
+                    const editCartItemData = getStorage(
+                        EDIT_BUILDER_CART_ITEM_DATA,
+                    ) as TNullable<TEditBuilderCartItemData>;
 
                     if (!isNil(editCartItemData)) {
                         setDefaultValuesToBuilder(

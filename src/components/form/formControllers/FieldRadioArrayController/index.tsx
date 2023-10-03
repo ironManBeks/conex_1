@@ -24,10 +24,9 @@ const FieldRadioArrayController: FC<TFieldRadioArrayController> = (props) => {
     } = props;
     const {
         control,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
 
     return (
         <Controller

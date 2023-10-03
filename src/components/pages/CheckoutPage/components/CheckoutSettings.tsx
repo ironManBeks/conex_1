@@ -4,7 +4,6 @@ import { observer } from "mobx-react";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import ChoiceMode from "@components/globalComponents/ChoiceMode";
 import OrderSettingsLayout from "@components/order/OrderSettingsLayout";
-import AddressSelection from "@components/globalComponents/AddressSelection";
 import OrderGuestModeForm from "@components/order/OrderGuestModeForm";
 import OrderShippingMethod from "@components/order/OrderShippingMethod";
 import AuthForm from "@components/globalComponents/AuthForm";
@@ -29,8 +28,8 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
     const [selectedMode, setSelectedMode] = useState<ECheckoutUserModes>(
         ECheckoutUserModes.guest,
     );
-    const [selectedDelivery, setSelectedDelivery] = useState<string>("");
-    const [guestFormValues, setGuestFormValues] = useState<TGuestModeForm>();
+    // const [selectedDelivery, setSelectedDelivery] = useState<string>("");
+    // const [guestFormValues, setGuestFormValues] = useState<TGuestModeForm>();
     const guestFormRef = useRef<IOrderGuestModeFormRef>(null);
 
     const choiceModeOptions = [
@@ -71,9 +70,9 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                     {selectedMode === ECheckoutUserModes.guest && (
                         <OrderGuestModeForm
                             className={classPrefix}
-                            onValuesChange={(values) =>
-                                setGuestFormValues(values)
-                            }
+                            // onValuesChange={(values) =>
+                            //     setGuestFormValues(values)
+                            // }
                             reference={guestFormRef}
                         />
                     )}
@@ -86,7 +85,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                     {/*/>*/}
                     <OrderShippingMethod
                         className={classPrefix}
-                        onChange={(value) => setSelectedDelivery(value)}
+                        // onChange={(value) => setSelectedDelivery(value)}
                         options={ShippingMethodsMockup}
                     />
                 </>
@@ -119,7 +118,7 @@ const CheckoutSettings: FC<TSectionTypes> = observer(({ pageClassPrefix }) => {
                 .then((data) => {
                     userData = data as TGuestModeForm;
                 })
-                .catch((err) => {
+                .catch(() => {
                     userData = null;
                 });
         }

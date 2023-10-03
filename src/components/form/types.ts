@@ -10,8 +10,6 @@ import {
     TFormWrapperErrorMessage,
 } from "@components/form/FormItemWrapper/types";
 import { RadioProps } from "antd/lib/radio";
-import { AutoCompleteProps } from "antd";
-import FormFieldAutoComplete from "@components/form/formFields/FormFieldAutoComplete";
 
 export enum EFormFieldType {
     input = "input",

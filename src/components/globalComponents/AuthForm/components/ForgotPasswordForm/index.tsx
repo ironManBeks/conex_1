@@ -6,7 +6,7 @@ import { inject, observer } from "mobx-react";
 
 import FieldInputController from "@components/form/formControllers/FieldInputController";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import { H2, P } from "@components/Text";
+import { P } from "@components/Text";
 import AuthActions from "../AuthActions";
 
 import { TAuthFormProps, TAuthFormTypes } from "../../types";

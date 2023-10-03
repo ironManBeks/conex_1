@@ -1,6 +1,6 @@
 .common-drawer{
-  &_wrapper{
-    z-index: $z-index-drawer-wrapper;
+  &_root{
+    z-index: $z-index-drawer-root;
     &.ant-drawer-left, &.ant-drawer-right{
       .ant-drawer-content-wrapper{
         max-width: 90%;
@@ -18,10 +18,6 @@
       }
     }
     .ant-drawer {
-      &-mask{
-        z-index: $z-index-drawer-mask;
-        background: rgba(217, 217, 217, 0.59);
-      }
       &-content {
         position: relative;
         margin: 0 auto;
@@ -29,10 +25,12 @@
         overflow: hidden;
         padding: 60px 40px 30px;
         &-wrapper{
-          overflow: hidden;
           z-index: $z-index-drawer-content;
-          box-shadow: $box-shadow-md;
         }
+      }
+      &-mask{
+        z-index: $z-index-drawer-mask;
+        background-color: $color-secondary-360;
       }
       &-header {
         display: none;
@@ -67,25 +65,28 @@
     }
   }
 
+
   &_close{
     position: absolute;
-    right: space(3);
-    top:space(3);
+    right: space(4);
+    top: space(4);
     display: inline-flex;
     justify-content: center;
     align-items: center;
     flex: 0 0 auto;
+    width: space(8);
+    height: space(8);
+    padding: 0;
     border: 0;
-    padding: space(2);
     border-radius: $border-radius-circle;
     box-shadow: none;
     outline: none;
     background-color: transparent;
     cursor: pointer;
     margin-left: auto;
-    transition: 0.2s;
+    opacity: .4;
     &:hover{
-      background-color: $color-grey-200;
+      opacity: 1;
     }
   }
 

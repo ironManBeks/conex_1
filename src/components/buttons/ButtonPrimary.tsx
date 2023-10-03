@@ -1,13 +1,13 @@
 import React from "react";
 import cn from "classnames";
-import { Spin } from "antd";
+import { useMediaQuery } from "react-responsive";
+
+import Tooltip from "@components/globalComponents/Tooltip";
+import Spin from "@components/globalComponents/Spin";
 
 import { commonButtonClassPrefix } from "./consts";
-
 import { EButtonColor, EButtonSize, TButtonPrimary } from "./types";
-import { useMediaQuery } from "react-responsive";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
-import Tooltip from "@components/globalComponents/Tooltip";
 
 const ButtonPrimary: React.FC<TButtonPrimary> = ({
     children,
