@@ -6,11 +6,7 @@ import { inject, observer } from "mobx-react";
 import Container from "@components/globalComponents/Container";
 import { P } from "@components/Text";
 
-import {
-    PATH_ONE_PIX_SITE,
-    PATH_POLICY_PAGE,
-    PATH_TERMS_PAGE,
-} from "@consts/pathsConsts";
+import { PATH_POLICY_PAGE, PATH_TERMS_PAGE } from "@consts/pathsConsts";
 import { TFooter } from "./types";
 
 const Footer: FC<TFooter> = inject("store")(

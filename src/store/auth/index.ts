@@ -78,7 +78,6 @@ export class AuthStore implements IAuthStore {
     };
 
     setUserData = (data: TNullable<TUserData>): void => {
-        console.log("data_____________", toJS(data));
         this.userData = data;
     };
 
@@ -249,7 +248,6 @@ export class AuthStore implements IAuthStore {
                 throw err;
             })
             .finally(() => {
-                console.log("getUserData", "finally");
                 this.setUserData(UserDataMockup);
                 this.setUserDataFetching(false);
             });

@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import cn from "classnames";
 import { AutoComplete, Input, InputRef } from "antd";
 import type { SelectProps } from "antd/es/select";
@@ -10,6 +10,7 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
+import { BaseSelectRef } from "rc-select";
 
 const getRandomInt = (max: number, min = 0) =>
     Math.floor(Math.random() * (max - min + 1)) + min;
@@ -42,31 +43,26 @@ const FormFieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
         errorMessage,
         showError,
         onSelect,
-        onSearchButtonClick,
+        onAddonButtonClick,
         icon,
         fieldLabel,
         disabled,
         onChangeValue,
         fieldPlaceholder,
+        fieldValue,
         ...rest
     } = props;
 
     // ToDo Remove mock options
     // eslint-disable-next-line @typescript-eslint/ban-types
     const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
-    const [searchText, setSearchText] = useState<string>("");
-    const fieldRef = useRef<InputRef | null>(null);
 
     const handleSearch = (value: string) => {
         setOptions(value ? searchResult(value) : []);
     };
 
-    const handleChange = (value: string) => {
-        setSearchText(value);
-    };
-
     const handleSelect = (value: string) => {
-        setSearchText(value);
+        // setSearchText(value);
         if (isFunction(onSelect)) {
             onSelect(value);
         }
@@ -92,14 +88,14 @@ const FormFieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                     `_${EFormFieldType.autocomplete}`,
                 )}
                 className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_field`)}
+                value={fieldValue}
             >
                 <Input
                     {...rest}
                     size="large"
-                    ref={fieldRef}
                     onChange={(e) => {
                         const val = e.target.value;
-                        handleChange(val);
+                        // handleChange(val);
                         if (onChangeValue) onChangeValue(val);
                     }}
                     disabled={disabled}
@@ -109,10 +105,10 @@ const FormFieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                             type="button"
                             onClick={() => {
                                 if (
-                                    searchText &&
-                                    isFunction(onSearchButtonClick)
+                                    fieldValue &&
+                                    isFunction(onAddonButtonClick)
                                 ) {
-                                    onSearchButtonClick(searchText);
+                                    onAddonButtonClick(fieldValue);
                                 }
                             }}
                         >

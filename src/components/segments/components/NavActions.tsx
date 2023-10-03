@@ -1,10 +1,11 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
 import { useMediaQuery } from "react-responsive";
 import { Spin } from "antd";
 import { isEmpty, isNil } from "lodash";
+import { useRouter } from "next/router";
 
 import { P } from "@components/Text";
 import { IconCart, IconUser } from "@components/Icons";
@@ -21,17 +22,16 @@ import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
 import { getStorage } from "@services/storage.service";
 import { BUILDER_CART } from "@consts/storageNamesContsts";
-import { useRouter } from "next/router";
+import { SEARCH_QUERY } from "@consts/queryNamesConsts";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
-        const { commonStore, authStore, builderStore } = store as IRoot;
-        const { setModalAuthVisible } = commonStore;
+        const { authStore, builderStore, productsStore } = store as IRoot;
+        const { setSearchParams, searchParams } = productsStore;
         const { userData, userDataFetching } = authStore;
         const { builderCartData, setBuilderCartData } = builderStore;
         const classPrefix = `nav-actions`;
         const router = useRouter();
-
         const cartLength = builderCartData?.elements?.length || 0;
 
         const isMobile = useMediaQuery({
@@ -39,8 +39,8 @@ const NavActions: FC<TNavTypes> = inject("store")(
             maxWidth: mediaBreakpoints.smMediaEnd,
         });
 
-        const handleSearchChange = (val: string) => {
-            console.log("handleSearchChange", val);
+        const handleSearchChange = (value: string) => {
+            setSearchParams({ ...searchParams, text: value });
         };
 
         useEffect(() => {
@@ -51,7 +51,18 @@ const NavActions: FC<TNavTypes> = inject("store")(
         }, []);
 
         const handleSearch = (value: string) => {
-            router.push(PATH_SEARCH_PAGE);
+            setSearchParams({ ...searchParams, text: value });
+            router.replace(
+                {
+                    pathname: PATH_SEARCH_PAGE,
+                    query: { [SEARCH_QUERY]: value },
+                },
+                undefined,
+                {
+                    scroll: true,
+                    shallow: true,
+                },
+            );
         };
 
         return (
@@ -63,19 +74,18 @@ const NavActions: FC<TNavTypes> = inject("store")(
             >
                 <FormFieldAutoComplete
                     name="search"
-                    // isFloatingLabel={false}
                     fieldPlaceholder="Search"
                     errorMessage={undefined}
-                    onChange={(e) => {
-                        const val = e.target.value;
-                        handleSearchChange(val);
-                    }}
                     onSelect={(value) => {
                         handleSearch(value);
                     }}
-                    onSearchButtonClick={(value) => {
+                    onAddonButtonClick={(value) => {
                         handleSearch(value);
                     }}
+                    onChangeValue={(value) => {
+                        handleSearchChange(value);
+                    }}
+                    fieldValue={searchParams?.text ?? ""}
                 />
                 <Link href={PATH_CART_PAGE}>
                     <a className={`${classPrefix}_item__wrapper`}>
@@ -117,41 +127,32 @@ const NavActions: FC<TNavTypes> = inject("store")(
 
 export default NavActions;
 
-// SEARCH LOGIC
-// import FieldInputController from "@components/form/formControllers/FieldInputController";
-// import { IconSearch } from "@components/Icons";
-// import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
-// import { useRouter } from "next/router";
-// import { IRoot } from "@store/store";
-// import { PATH_SEARCH_PAGE } from "@consts/pathsConsts";
-// import {
-//     ESearchFormNames,
-//     searchFormDefaultValues,
-//     TSearchForm,
-// } from "./formAttrs";
-//
-//
-// const { commonStore } = store as IRoot;
-// const router = useRouter();
-// const methods = useForm<TSearchForm>({
-//     defaultValues: searchFormDefaultValues,
-// });
-// const { handleSubmit } = methods;
-// const onSubmit: SubmitHandler<TSearchForm> = (data) => {
-//     commonStore.setUrlParams({ search: data[ESearchFormNames.search] });
-//     router.push(PATH_SEARCH_PAGE);
+// ToDo Remove this component
+// const SearchField = ({
+//     handleSearch,
+//     handleSearchChange,
+//     text,
+// }: {
+//     handleSearch: any;
+//     handleSearchChange: any;
+//     text: any;
+// }) => {
+//     console.log("text", text);
+//     return (
+//         <FormFieldAutoComplete
+//             name="search"
+//             fieldPlaceholder="Search"
+//             errorMessage={undefined}
+//             onSelect={(value) => {
+//                 handleSearch(value);
+//             }}
+//             onAddonButtonClick={(value) => {
+//                 handleSearch(value);
+//             }}
+//             onChangeValue={(value) => {
+//                 handleSearchChange(value);
+//             }}
+//             value={text}
+//         />
+//     );
 // };
-//
-//
-// {/*<div className={`${classPrefix}_search__wrapper`}>*/}
-// {/*    <FormProvider {...methods}>*/}
-// {/*        <form onSubmit={handleSubmit(onSubmit)}>*/}
-// {/*            <FieldInputController*/}
-// {/*                name={ESearchFormNames.search}*/}
-// {/*                placeholder="Search"*/}
-// {/*                addonAfter={<IconSearch />}*/}
-// {/*                onAddonClick={handleSubmit(onSubmit)}*/}
-// {/*            />*/}
-// {/*        </form>*/}
-// {/*    </FormProvider>*/}
-// {/*</div>*/}
