@@ -3,7 +3,7 @@ import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Fragment, JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
 
-import "antd/dist/antd.css";
+// import "antd/dist/antd.css";
 import "@common/styles/main.scss";
 import { observer } from "mobx-react";
 import { getStorage } from "@services/storage.service";
@@ -24,20 +24,22 @@ const CustomAppWrapper = inject("store")(
             const { authStore } = store as IRoot;
             const { getUserData, logOut } = authStore;
             const storageToken = getStorage(JWT_TOKEN);
-            const storageTokenExp = getStorage(JWT_TOKEN_EXP);
+            const storageTokenExp = getStorage(JWT_TOKEN_EXP) as string;
 
             const tokenVerification = () => {
                 if (storageToken) {
                     if (new Date(storageTokenExp) < new Date()) {
                         logOut();
                         showNotification({
-                            type: "warning",
-                            message: (
-                                <>
-                                    Your session has expired <br />
-                                    Please log in again
-                                </>
-                            ),
+                            mainProps: {
+                                type: "warning",
+                                message: (
+                                    <>
+                                        Your session has expired <br />
+                                        Please log in again
+                                    </>
+                                ),
+                            },
                         });
                     } else {
                         getUserData();

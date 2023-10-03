@@ -1,12 +1,13 @@
 import { FC, useEffect, useMemo, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { isNil } from "lodash";
-import { Spin } from "antd";
 import { useRouter } from "next/router";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
 import AuthForm from "@components/globalComponents/AuthForm";
+import Spin from "@components/globalComponents/Spin";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import AccountMenu from "./components/AccountMenu";
 import AccountContent from "./components/AccountContent";
 
@@ -15,7 +16,6 @@ import { TStore } from "@globalTypes/storeTypes";
 import { getStorage } from "@services/storage.service";
 import { JWT_TOKEN } from "@consts/storageNamesContsts";
 import { EButtonColor } from "@components/buttons/types";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 const AccountPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
@@ -25,7 +25,7 @@ const AccountPage: FC<TStore> = inject("store")(
         const [tokenState, setTokenState] = useState<string>();
         const classPrefix = "account-page";
 
-        const token = getStorage(JWT_TOKEN);
+        const token = getStorage(JWT_TOKEN) as string;
 
         useEffect(() => {
             if (token) {

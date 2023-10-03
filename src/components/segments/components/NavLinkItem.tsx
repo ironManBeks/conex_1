@@ -19,9 +19,7 @@ const NavLinkItem: FC<TNavLinkItem> = ({
                 _active: router.pathname === href,
             })}
         >
-            <Link href={href}>
-                <a>{title}</a>
-            </Link>
+            <Link href={href}>{title}</Link>
         </div>
     );
 };

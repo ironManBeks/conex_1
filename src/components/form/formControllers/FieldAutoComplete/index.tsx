@@ -1,7 +1,6 @@
 import { FC, useRef, useState } from "react";
 import cn from "classnames";
 import { AutoComplete, Input, InputRef } from "antd";
-import type { SelectProps } from "antd/es/select";
 import { isFunction } from "lodash";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -11,31 +10,7 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
-
-const getRandomInt = (max: number, min = 0) =>
-    Math.floor(Math.random() * (max - min + 1)) + min;
-
-const searchResult = (query: string) =>
-    new Array(getRandomInt(5))
-        .join(".")
-        .split(".")
-        .map((_, idx) => {
-            const category = `${query}${idx}`;
-            return {
-                value: category,
-                label: (
-                    <div
-                        style={{
-                            display: "flex",
-                            justifyContent: "space-between",
-                            background: "red !important",
-                        }}
-                    >
-                        <span>{category}</span>
-                    </div>
-                ),
-            };
-        });
+import { DefaultOptionType } from "antd/es/select";
 
 const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
     const {
@@ -55,15 +30,24 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
     } = props;
     const { control } = useFormContext();
 
-    // ToDo Remove mock options
-    // eslint-disable-next-line @typescript-eslint/ban-types
-    const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
+    const [options, setOptions] = useState<DefaultOptionType[]>([]);
     const fieldRef = useRef<InputRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
 
     const handleSearch = (value: string) => {
-        setOptions(value ? searchResult(value) : []);
+        setOptions(
+            !value
+                ? []
+                : [
+                      { label: value, value: value },
+                      { label: value + value, value: value + value },
+                      {
+                          label: value + value + value,
+                          value: value + value + value,
+                      },
+                  ],
+        );
     };
 
     const focusOnField = () => {
@@ -72,9 +56,9 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
         }
     };
 
-    const handleSelect = (value: string) => {
+    const handleSelect = (value: string, option: DefaultOptionType) => {
         if (isFunction(onSelect)) {
-            onSelect(value);
+            onSelect(value, option);
         }
     };
 
@@ -111,9 +95,9 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                         )}
                         <AutoComplete
                             options={options}
-                            onSelect={(value) => {
+                            onSelect={(value, option) => {
                                 field.onChange(value);
-                                handleSelect(value);
+                                handleSelect(value, option);
                             }}
                             onSearch={handleSearch}
                             size="large"
@@ -137,7 +121,7 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                             <Input
                                 {...field}
                                 {...rest}
-                                size="large"
+                                allowClear={false}
                                 ref={fieldRef}
                                 placeholder={
                                     isFloatingLabel && fieldLabel

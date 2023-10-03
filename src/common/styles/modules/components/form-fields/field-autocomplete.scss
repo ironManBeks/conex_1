@@ -1,10 +1,11 @@
 .form-field_wrapper._autocomplete{
   .form-field{
     &_field{
+      height: auto;
       .ant-input{
         background-color: $color-primary-strong;
         border: 1px solid $border-color-secondary;
-        padding:  calc($space * 4 - 2px) space(4) calc($space * 4 - 2px) space(12);
+        padding:  calc($space * 4) space(4) calc($space * 4) space(12);
         font-size: $font-size-bs;
         line-height: $line-height-lg;
         color: $text-color-primary;

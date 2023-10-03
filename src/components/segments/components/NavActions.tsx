@@ -1,28 +1,28 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
-import { useMediaQuery } from "react-responsive";
-import { Spin } from "antd";
 import { isEmpty, isNil } from "lodash";
 import { useRouter } from "next/router";
 
 import { P } from "@components/Text";
 import { IconCart, IconUser } from "@components/Icons";
 import FormFieldAutoComplete from "@components/form/formFields/FormFieldAutoComplete";
+import Spin from "@components/globalComponents/Spin";
 
 import {
     PATH_CART_PAGE,
     PATH_MY_ACCOUNT_PAGE,
     PATH_SEARCH_PAGE,
 } from "@consts/pathsConsts";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { EButtonColor } from "@components/buttons/types";
 import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
 import { getStorage } from "@services/storage.service";
 import { BUILDER_CART } from "@consts/storageNamesContsts";
 import { SEARCH_QUERY } from "@consts/queryNamesConsts";
+import { TNullable } from "@globalTypes/commonTypes";
+import { TBuilderCartData } from "@store/builder/types";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
@@ -34,17 +34,14 @@ const NavActions: FC<TNavTypes> = inject("store")(
         const router = useRouter();
         const cartLength = builderCartData?.elements?.length || 0;
 
-        const isMobile = useMediaQuery({
-            minWidth: mediaBreakpoints.xsMedia,
-            maxWidth: mediaBreakpoints.smMediaEnd,
-        });
-
         const handleSearchChange = (value: string) => {
             setSearchParams({ ...searchParams, text: value });
         };
 
         useEffect(() => {
-            const cartData = getStorage(BUILDER_CART);
+            const cartData = getStorage(
+                BUILDER_CART,
+            ) as TNullable<TBuilderCartData>;
             if (isNil(builderCartData) && cartData) {
                 setBuilderCartData(cartData);
             }
@@ -87,17 +84,18 @@ const NavActions: FC<TNavTypes> = inject("store")(
                     }}
                     fieldValue={searchParams?.text ?? ""}
                 />
-                <Link href={PATH_CART_PAGE}>
-                    <a className={`${classPrefix}_item__wrapper`}>
-                        <IconCart />
-                        <P>
-                            {cartLength
-                                ? `${cartLength} ${
-                                      cartLength > 1 ? "items" : "item"
-                                  }`
-                                : "Cart"}
-                        </P>
-                    </a>
+                <Link
+                    href={PATH_CART_PAGE}
+                    className={`${classPrefix}_item__wrapper`}
+                >
+                    <IconCart />
+                    <P>
+                        {cartLength
+                            ? `${cartLength} ${
+                                  cartLength > 1 ? "items" : "item"
+                              }`
+                            : "Cart"}
+                    </P>
                 </Link>
                 {userDataFetching ? (
                     <span className={`${classPrefix}_item__wrapper`}>
@@ -107,17 +105,16 @@ const NavActions: FC<TNavTypes> = inject("store")(
                     <Link
                         color={EButtonColor.transparent}
                         href={PATH_MY_ACCOUNT_PAGE}
+                        className={`${classPrefix}_item__wrapper`}
                     >
-                        <a className={`${classPrefix}_item__wrapper`}>
-                            <IconUser />
-                            <P>
-                                {!isEmpty(userData)
-                                    ? userData?.name.length > 6
-                                        ? `${userData?.name.slice(0, 6)}...`
-                                        : userData?.name
-                                    : "Log In"}
-                            </P>
-                        </a>
+                        <IconUser />
+                        <P>
+                            {!isEmpty(userData)
+                                ? userData?.name.length > 6
+                                    ? `${userData?.name.slice(0, 6)}...`
+                                    : userData?.name
+                                : "Log In"}
+                        </P>
                     </Link>
                 )}
             </div>

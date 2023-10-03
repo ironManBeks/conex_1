@@ -3,13 +3,13 @@
 //
 import { isNil } from "lodash";
 
-export const setStorage = (key: string, value: any): void => {
+export const setStorage = (key: string, value: unknown): void => {
     if (!isNil(value)) {
         localStorage.setItem(key, JSON.stringify(value));
     }
 };
 
-export const getStorage = (key: string): any | null => {
+export const getStorage = (key: string): unknown | null => {
     if (typeof window !== "undefined") {
         const value = localStorage.getItem(key);
         return value ? JSON.parse(value) : null;
@@ -34,7 +34,7 @@ export const setSessionStorage = (
     sessionStorage.setItem(key, JSON.stringify(value));
 };
 
-export const getSessionStorage = (key: string): any | null => {
+export const getSessionStorage = (key: string): unknown | null => {
     if (typeof window !== "undefined") {
         const value = sessionStorage.getItem(key);
         return value ? JSON.parse(value) : null;

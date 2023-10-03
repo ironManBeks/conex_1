@@ -54,7 +54,7 @@ const ProductSearchCard: FC<TProductSearchCard> = ({
                 <ImgWrapper
                     src={src}
                     wrapperClassName={`${classPrefix}_image__wrapper`}
-                    objectFit="contain"
+                    alt="Product image"
                 />
                 {!isMobile && (
                     <div className={`${classPrefix}_details__wrapper`}>

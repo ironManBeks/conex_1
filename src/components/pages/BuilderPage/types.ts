@@ -1,8 +1,7 @@
-import { THEX, TNullable } from "@globalTypes/commonTypes";
+import { TNullable } from "@globalTypes/commonTypes";
 import {
     EBuilderFieldTypes,
     IBuilderElementDataDTO,
-    TBuilderStepDataDTO,
 } from "@store/builder/types";
 import { TStore } from "@globalTypes/storeTypes";
 

@@ -1,7 +1,4 @@
-import {
-    TAddedOptionsList,
-    TAddedOptionsListItem,
-} from "@components/globalComponents/types";
+import { TAddedOptionsListItem } from "@components/globalComponents/types";
 
 export const AddedOptionsListMockup: TAddedOptionsListItem[] = [
     {

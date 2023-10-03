@@ -30,6 +30,13 @@ export type TImgWrapper = {
     imageClassName?: string;
     wrapperClassName?: string;
     isTypeWebp?: boolean;
+    objectFit?:
+        | "fill"
+        | "contain"
+        | "cover"
+        | "none"
+        | "scale-down"
+        | "initial";
 } & ImageProps;
 
 export type TProgressWrapper = { wrapperClassPrefix?: string } & ProgressProps;

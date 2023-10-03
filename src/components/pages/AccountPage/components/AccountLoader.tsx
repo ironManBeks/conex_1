@@ -1,5 +1,6 @@
 import { FC } from "react";
-import { Spin } from "antd";
+
+import Spin from "@components/globalComponents/Spin";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 

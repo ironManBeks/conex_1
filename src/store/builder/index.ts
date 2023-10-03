@@ -1,10 +1,4 @@
-import {
-    action,
-    makeAutoObservable,
-    observable,
-    runInAction,
-    toJS,
-} from "mobx";
+import { action, makeAutoObservable, observable } from "mobx";
 import { AxiosResponse } from "axios";
 
 import {
@@ -32,7 +26,6 @@ import { showNotification } from "@helpers/notificarionHelper";
 import { setStorage } from "@services/storage.service";
 import {
     BUILDER_CART,
-    BUILDER_HISTORY,
     BUILDER_PARENT_ID,
     BUILDER_RESUlT_DATA,
 } from "@consts/storageNamesContsts";
@@ -55,39 +48,7 @@ export class BuilderStore implements IBuilderStore {
     editBuilderCartItemData: TNullable<TEditBuilderCartItemData> = null;
 
     constructor() {
-        makeAutoObservable(this, {
-            builderAllData: observable,
-            builderAllDataFetching: observable,
-            builderParamsData: observable,
-            builderParamsDataFetching: observable,
-            builderSettings: observable,
-            builderSettingsFetching: observable,
-            //
-            currentStepData: observable,
-            currentStepId: observable,
-            stepHistory: observable,
-            stepQueue: observable,
-            resultDoorData: observable,
-            endDoorData: observable,
-            builderCartData: observable,
-            editBuilderCartItemData: observable,
-            // functions
-            setBuilderAllData: action,
-            setBuilderAllDataFetching: action,
-            setBuilderParamsData: action,
-            setBuilderParamsDataFetching: action,
-            setBuilderSettings: action,
-            setBuilderSettingsFetching: action,
-            //
-            setStepHistory: action,
-            setCurrentStepData: action,
-            setCurrentStepId: action,
-            setStepQueue: action,
-            setResultDoorData: action,
-            setEndDoorData: action,
-            setBuilderCartData: action,
-            setEditBuilderCartItemData: action,
-        });
+        makeAutoObservable(this);
     }
 
     getBuilderSettings = (): Promise<
@@ -366,9 +327,12 @@ export class BuilderStore implements IBuilderStore {
                 }
             }
             showNotification({
-                type: "error",
-                message: "Step not found",
-                description: "Try to reload the page or select another option",
+                mainProps: {
+                    type: "error",
+                    message: "Step not found",
+                    description:
+                        "Try to reload the page or select another option",
+                },
             });
             return;
         }

@@ -42,6 +42,7 @@ const OrderShippingMethod: FC<TOrderShippingMethod> = ({
                                 src={item.iconSrc}
                                 width={20}
                                 height={20}
+                                alt="Icon"
                             />
                         )}
                         <span>

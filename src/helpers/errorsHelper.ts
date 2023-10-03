@@ -1,10 +1,10 @@
 import { isEmpty, isObject, isString } from "lodash";
 import axios, { AxiosError } from "axios";
 import { FieldErrors } from "react-hook-form/dist/types/errors";
-import { ArgsProps } from "antd/lib/notification";
 
 import { showNotification } from "@helpers/notificarionHelper";
 import { TResponseError } from "@globalTypes/requestTypes";
+import { ArgsProps } from "antd/es/notification/interface";
 
 export const pickOutFormErrorMessages = <
     S extends FieldErrors,
@@ -37,7 +37,7 @@ export const pickOutFormErrorMessages = <
 };
 
 export const showAxiosNotificationError = (
-    // ToDo remove type any
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     props: AxiosError | TResponseError | any,
 ): void => {
     let notificationProps: ArgsProps = {
@@ -46,8 +46,10 @@ export const showAxiosNotificationError = (
     };
     if (!props) {
         showNotification({
-            ...notificationProps,
-            type: "error",
+            mainProps: {
+                ...notificationProps,
+                type: "error",
+            },
         });
         return;
     }
@@ -70,7 +72,9 @@ export const showAxiosNotificationError = (
     }
 
     showNotification({
-        ...notificationProps,
-        type: "error",
+        mainProps: {
+            ...notificationProps,
+            type: "error",
+        },
     });
 };

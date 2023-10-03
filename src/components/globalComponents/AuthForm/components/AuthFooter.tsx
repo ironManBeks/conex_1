@@ -1,4 +1,4 @@
-import React, { FC, useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
 
 import { P } from "@components/Text";
 

@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { Input as AntInput, InputRef } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
@@ -24,10 +24,9 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
     } = props;
     const {
         control,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<InputRef | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [isLabelActive, setIsLabelActive] = useState(false);

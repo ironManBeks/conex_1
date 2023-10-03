@@ -7,11 +7,11 @@ import { TSegmented } from "./types";
 const Segmented: FC<TSegmented> = (props) => {
     const {
         className,
-        // options,
         disabled,
         defaultValue,
         onChange,
         viewStyle = "default",
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         ref,
         ...rest
     } = props;

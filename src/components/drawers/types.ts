@@ -2,6 +2,7 @@ import { ReactNode } from "react";
 import { DrawerProps } from "antd/lib/drawer";
 
 export type TDrawerLayout = {
+    closeDrawer: () => void;
     title?: string;
     subTitle?: string;
     headContent?: ReactNode;

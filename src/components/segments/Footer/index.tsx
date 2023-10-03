@@ -1,4 +1,4 @@
-import { FC, RefObject, useEffect, useRef } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
@@ -10,7 +10,7 @@ import { PATH_POLICY_PAGE, PATH_TERMS_PAGE } from "@consts/pathsConsts";
 import { TFooter } from "./types";
 
 const Footer: FC<TFooter> = inject("store")(
-    observer(({ store, pageClassPrefix, className }) => {
+    observer(({ pageClassPrefix, className }) => {
         const classPrefix = `footer`;
 
         return (
@@ -29,15 +29,13 @@ const Footer: FC<TFooter> = inject("store")(
                         <div>
                             <P>
                                 <Link href={PATH_POLICY_PAGE}>
-                                    <a>Privacy Policy</a>
+                                    Privacy Policy
                                 </Link>
                             </P>
                             <P>
                                 <Link href={PATH_TERMS_PAGE}>
-                                    <a>
-                                        Terms and conditions for purchasing
-                                        services on the website
-                                    </a>
+                                    Terms and conditions for purchasing services
+                                    on the website
                                 </Link>
                             </P>
                         </div>

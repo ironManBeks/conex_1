@@ -1,7 +1,6 @@
 import { FC } from "react";
 
 import { Layout } from "@components/segments/Layout";
-import { H4 } from "@components/Text";
 import Container from "@components/globalComponents/Container";
 import ContactUsForm from "./components/ContactUsForm";
 import ContactUsContacts from "./components/ContactUsContacts";

@@ -12,7 +12,10 @@ const ImgWrapper: FC<TImgWrapper> = (props) => {
         wrapperClassName,
         width,
         height,
-        isTypeWebp,
+        alt,
+        objectFit,
+        title,
+        // isTypeWebp,
         ...rest
     } = props;
     return (
@@ -32,8 +35,12 @@ const ImgWrapper: FC<TImgWrapper> = (props) => {
                 {...rest}
                 className={cn("img-custom_image", imageClassName)}
                 layout="fill"
-                width={isTypeWebp ? undefined : width}
-                height={isTypeWebp ? undefined : height}
+                fill={true}
+                style={{ objectFit: objectFit ?? "contain" }}
+                alt={alt ?? "Image"}
+                title={title ?? "Image"}
+                // width={isTypeWebp ? undefined : width}
+                // height={isTypeWebp ? undefined : height}
             />
         </div>
     );

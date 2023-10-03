@@ -70,9 +70,7 @@ const Header: FC<THeader> = inject("store")(
                                 <>
                                     <div className={cn(`${classPrefix}_logo`)}>
                                         <Link href={PATH_HOME_PAGE}>
-                                            <a>
-                                                <LogoMain />
-                                            </a>
+                                            <LogoMain />
                                         </Link>
                                     </div>
                                     <NavLinks

@@ -1,4 +1,4 @@
-import React, { FC, useEffect, useMemo, useState } from "react";
+import React, { FC, useMemo } from "react";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { LogoMain } from "@components/Icons";

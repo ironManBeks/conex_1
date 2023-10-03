@@ -5,12 +5,15 @@ import { PATH_LOGIN } from "@consts/pathsConsts";
 import { getStorage } from "@services/storage.service";
 
 // Test api URL
-const baseURL = "https://conexwest-doors.opserver.store/api";
+const baseURL = process.env.NEXT_PUBLIC_ENV_DEV_API
+    ? "https://conexwest-doors.opserver.store/dev_api"
+    : "https://conexwest-doors.opserver.store/prod_api";
 
 const axiosInstance = axios.create({
     baseURL,
 });
 
+/* eslint-disable  @typescript-eslint/no-explicit-any */
 axiosInstance.interceptors.request.use((request: any) => {
     const { url } = request;
     if (url !== PATH_LOGIN) {
@@ -30,6 +33,7 @@ axiosInstance.interceptors.request.use((request: any) => {
 });
 
 axiosInstance.interceptors.response.use(
+    /* eslint-disable  @typescript-eslint/no-explicit-any */
     (response: any) => {
         return response;
     },

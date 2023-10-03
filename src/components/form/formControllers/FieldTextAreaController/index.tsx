@@ -30,10 +30,9 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
     } = props;
     const {
         control,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<TextAreaRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);

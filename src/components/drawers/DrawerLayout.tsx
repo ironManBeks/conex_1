@@ -13,7 +13,7 @@ import { isFunction } from "lodash";
 
 const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
     const {
-        onClose,
+        closeDrawer,
         title,
         subTitle,
         headContent,
@@ -29,6 +29,7 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
         wrapperClassName,
         open,
         closeOnChangePath = true,
+        rootClassName,
         ...rest
     } = props;
     const router = useRouter();
@@ -39,7 +40,7 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
     };
 
     const closeButton = isCloseBtn ? (
-        <button className={`${classPrefix}_close`} onClick={onClose}>
+        <button className={`${classPrefix}_close`} onClick={closeDrawer}>
             <IconCross color={COLOR_BLACK} />
         </button>
     ) : null;
@@ -62,8 +63,8 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
     }, [open]);
 
     useEffect(() => {
-        if (router.asPath && isFunction(onClose) && closeOnChangePath) {
-            onClose();
+        if (router.asPath && isFunction(closeDrawer) && closeOnChangePath) {
+            closeDrawer();
         }
     }, [router.asPath]);
 
@@ -72,7 +73,7 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
             {...rest}
             title={null}
             footer={null}
-            onClose={onClose}
+            onClose={closeDrawer}
             open={open}
             maskStyle={maskStyles}
             className={cn(
@@ -80,6 +81,7 @@ const DrawerLayout: React.FC<TDrawerLayout> = (props) => {
                 className,
                 wrapperClassName,
             )}
+            rootClassName={cn(`${classPrefix}_root`, rootClassName)}
             closeIcon={<IconCross />}
         >
             <div className={`${classPrefix}_content__wrapper`}>

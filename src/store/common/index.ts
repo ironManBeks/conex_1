@@ -1,13 +1,14 @@
 import { action, makeAutoObservable, observable } from "mobx";
 
 import { ICommonStore, TUrlParams } from "./types";
+import { TNullable } from "@globalTypes/commonTypes";
 
 export class CommonStore implements ICommonStore {
     headerHeight = 0;
     urlParams: TUrlParams = {};
     // Modals and Drawers
     // ToDo remove type any
-    confirmModalData: any = null;
+    confirmModalData: TNullable<unknown> = null;
     modalConfirmVisible = false;
     modalAuthVisible = false;
     modalCustomQuoteVisible = false;
@@ -16,26 +17,7 @@ export class CommonStore implements ICommonStore {
     builderDrawerVisible = false;
 
     constructor() {
-        makeAutoObservable(this, {
-            headerHeight: observable,
-            urlParams: observable,
-            // Modals and Drawers
-            confirmModalData: observable,
-            modalConfirmVisible: observable,
-            modalAuthVisible: observable,
-            modalCustomQuoteVisible: observable,
-            modalCardBindingVisible: observable,
-            headerDrawerVisible: observable,
-            builderDrawerVisible: observable,
-            // Functions
-            setConfirmModalData: action,
-            setModalConfirmVisible: action,
-            setModalAuthVisible: action,
-            setModalCustomQuoteVisible: action,
-            setModalCardBindingVisible: action,
-            setHeaderDrawerVisible: action,
-            setBuilderDrawerVisible: action,
-        });
+        makeAutoObservable(this);
     }
 
     setHeaderHeight = (value: number): void => {
@@ -70,7 +52,7 @@ export class CommonStore implements ICommonStore {
     //  ***____ Modals and Drawers
     // ***____***____***____
     // ToDo remove type any
-    setConfirmModalData = (confirmModalData: any): void => {
+    setConfirmModalData = (confirmModalData: TNullable<unknown>): void => {
         this.confirmModalData = confirmModalData;
     };
 

@@ -1,6 +1,6 @@
 import { FC } from "react";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { H2, H4, H5, P } from "@components/Text";
+import { H5, P } from "@components/Text";
 
 const ContactUsContacts: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_contacts`;

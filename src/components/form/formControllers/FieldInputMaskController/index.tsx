@@ -32,10 +32,9 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const [addonAfterWidth, setAddonAfterWidth] = useState<number>(0);
     const {
         control,
-        formState: { errors, touchedFields },
+        formState: { errors },
     } = useFormContext();
     const errorMessage = errors[name]?.message;
-    const isError = !!errorMessage && !!touchedFields;
     const fieldRef = useRef<MaskedInput>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);

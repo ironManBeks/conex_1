@@ -1,3 +1,5 @@
+import { isString } from "lodash";
+
 export const cutText = (text: string, limit: number): string => {
     text = text.trim();
     if (text.length <= limit) return text;
@@ -6,5 +8,8 @@ export const cutText = (text: string, limit: number): string => {
 };
 
 export const addZeroBefore = (text: number | string): string => {
+    if (isString(text)) {
+        return (parseInt(text, 10) < 10 ? "0" : "") + text;
+    }
     return (text < 10 ? "0" : "") + text;
 };

@@ -4,8 +4,8 @@ import cn from "classnames";
 import { TSkeletonLayout } from "./types";
 
 const SkeletonLayout: FC<TSkeletonLayout> = ({
-    className,
     children,
+    className,
     classPrefix,
 }) => {
     return (

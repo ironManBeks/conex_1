@@ -7,6 +7,7 @@ module.exports = withPlugins([], {
     forceSwcTransforms: true,
     optimizeFonts: true,
     images: {
+        unoptimized: true,
         remotePatterns: [
             {
                 protocol: "https",

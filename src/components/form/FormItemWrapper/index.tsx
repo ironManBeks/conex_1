@@ -52,7 +52,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
                             )}
                         >
-                            <span>{errorMessage}</span>
+                            <span>{errorMessage.toString()}</span>
                         </div>
                     )}
                 </div>
