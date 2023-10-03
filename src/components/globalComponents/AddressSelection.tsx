@@ -41,7 +41,7 @@ const AddressSelection: FC<TAddressSelection> = ({
                 onSelect={(value) => {
                     handleSearch(value);
                 }}
-                onSearchButtonClick={(value) => {
+                onAddonButtonClick={(value) => {
                     handleSearch(value);
                 }}
                 isFloatingLabel={isFloatingLabel}

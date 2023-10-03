@@ -43,7 +43,7 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
         errorMessage,
         showError,
         onSelect,
-        onSearchButtonClick,
+        onAddonButtonClick,
         fieldPlaceholder,
         icon,
         name,
@@ -58,7 +58,6 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
     // ToDo Remove mock options
     // eslint-disable-next-line @typescript-eslint/ban-types
     const [options, setOptions] = useState<SelectProps<object>["options"]>([]);
-    const [searchText, setSearchText] = useState<string>("");
     const fieldRef = useRef<InputRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
@@ -73,12 +72,7 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
         }
     };
 
-    const handleChange = (value: string) => {
-        setSearchText(value);
-    };
-
     const handleSelect = (value: string) => {
-        setSearchText(value);
         if (isFunction(onSelect)) {
             onSelect(value);
         }
@@ -154,7 +148,6 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                                 onChange={(e) => {
                                     const val = e.target.value;
                                     field.onChange(val);
-                                    handleChange(val);
                                     if (onChangeValue) onChangeValue(val);
                                 }}
                                 onFocus={() => {
@@ -171,10 +164,10 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                                         type="button"
                                         onClick={() => {
                                             if (
-                                                searchText &&
-                                                isFunction(onSearchButtonClick)
+                                                field.value &&
+                                                isFunction(onAddonButtonClick)
                                             ) {
-                                                onSearchButtonClick(searchText);
+                                                onAddonButtonClick(field.value);
                                             }
                                         }}
                                     >
