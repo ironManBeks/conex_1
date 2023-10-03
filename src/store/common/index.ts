@@ -1,4 +1,4 @@
-import { action, makeAutoObservable, observable } from "mobx";
+import { makeAutoObservable } from "mobx";
 
 import { ICommonStore, TUrlParams } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
