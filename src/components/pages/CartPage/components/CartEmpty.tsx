@@ -1,8 +1,7 @@
 import { FC } from "react";
-import { Empty } from "antd";
 
 import ButtonLink from "@components/buttons/ButtonLink";
-import { P } from "@components/Text";
+import { H3, P } from "@components/Text";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { EButtonColor } from "@components/buttons/types";
@@ -14,15 +13,15 @@ const CartEmpty: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     return (
         <div className={`${classPrefix}__wrapper`}>
             <div className={`${classPrefix}__content`}>
-                <Empty description="Your cart is empty" />
-                <P>Go to the link to add a door</P>
+                <H3>Shopping cart's empty</H3>
+                <P>Go to the catalog to add your desired products</P>
             </div>
             <div className={`${classPrefix}__actions`}>
                 <ButtonLink
-                    color={EButtonColor.primary}
+                    color={EButtonColor.secondary}
                     href={PATH_BUILDER_PAGE}
                 >
-                    Door builder
+                    Go to catalog
                 </ButtonLink>
             </div>
         </div>

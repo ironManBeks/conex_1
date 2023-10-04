@@ -85,7 +85,7 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                             <label
                                 className={cn(
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activeLabel: isLabelActive },
+                                    { _activelabel: isLabelActive },
                                     { _disabled: disabled },
                                 )}
                                 onClick={focusOnField}
@@ -108,9 +108,9 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {
-                                    _floatingLabel:
+                                    _floatinglabel:
                                         isFloatingLabel && fieldLabel,
-                                    _activeLabel:
+                                    _activelabel:
                                         isFloatingLabel &&
                                         fieldLabel &&
                                         isLabelActive,

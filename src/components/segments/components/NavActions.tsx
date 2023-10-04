@@ -86,7 +86,9 @@ const NavActions: FC<TNavTypes> = inject("store")(
                 />
                 <Link
                     href={PATH_CART_PAGE}
-                    className={`${classPrefix}_item__wrapper`}
+                    className={cn(`${classPrefix}_item__wrapper`, {
+                        _active: router.pathname === PATH_CART_PAGE,
+                    })}
                 >
                     <IconCart />
                     <P>
@@ -105,7 +107,9 @@ const NavActions: FC<TNavTypes> = inject("store")(
                     <Link
                         color={EButtonColor.transparent}
                         href={PATH_MY_ACCOUNT_PAGE}
-                        className={`${classPrefix}_item__wrapper`}
+                        className={cn(`${classPrefix}_item__wrapper`, {
+                            _active: router.pathname === PATH_MY_ACCOUNT_PAGE,
+                        })}
                     >
                         <IconUser />
                         <P>
@@ -123,33 +127,3 @@ const NavActions: FC<TNavTypes> = inject("store")(
 );
 
 export default NavActions;
-
-// ToDo Remove this component
-// const SearchField = ({
-//     handleSearch,
-//     handleSearchChange,
-//     text,
-// }: {
-//     handleSearch: any;
-//     handleSearchChange: any;
-//     text: any;
-// }) => {
-//     console.log("text", text);
-//     return (
-//         <FormFieldAutoComplete
-//             name="search"
-//             fieldPlaceholder="Search"
-//             errorMessage={undefined}
-//             onSelect={(value) => {
-//                 handleSearch(value);
-//             }}
-//             onAddonButtonClick={(value) => {
-//                 handleSearch(value);
-//             }}
-//             onChangeValue={(value) => {
-//                 handleSearchChange(value);
-//             }}
-//             value={text}
-//         />
-//     );
-// };

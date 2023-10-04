@@ -16,7 +16,7 @@
     }
     &._error{
       &._input, &._textarea, &._password, &._inputnumber{
-        .form-field_field, .form-field_field._activeLabel {
+        .form-field_field, .form-field_field._activelabel {
           border-color: $border-color-critical;
         }
       }

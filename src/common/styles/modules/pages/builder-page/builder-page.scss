@@ -235,8 +235,9 @@
           margin-bottom: 0;
         }
         &.title{
-          font-size: $font-size-md;
+          font-size: $font-size-sm;
           line-height: $line-height-md;
+          font-weight: 500;
         }
         &.sub-title{
           font-size: $font-size-bs;

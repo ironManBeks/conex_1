@@ -21,7 +21,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                 fieldType && `_${fieldType}`,
                 wrapperClassName,
                 { _error: errorMessage },
-                { _floatingLabel: isFloatingLabel && label },
+                { _floatinglabel: isFloatingLabel && label },
             )}
         >
             <div className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_inner-wrapper`)}>

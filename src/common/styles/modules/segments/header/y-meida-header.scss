@@ -1,25 +1,18 @@
 
-@media (min-width: $lg-media) and (max-width: $lg-media-end) {
+@media (min-width: $md-media) and (max-width: $md-media-end) {
 
   .header{
-    &_nav-links{
-      &__wrapper{
-        .nav-links_item__wrapper{
-          a{
-            font-size: $font-size-md;
-            line-height: $line-height-md;
-          }
-        }
-      }
+    &_logo{
+      margin-right: space(3);
     }
     &_nav-actions{
       &__wrapper{
         .nav-actions{
           &_cart__wrapper{
-            margin-left: 20px;
+            margin-left: space(5);
           }
           &_search__wrapper{
-            margin-left: 20px;
+            margin-left: space(5);
           }
         }
       }

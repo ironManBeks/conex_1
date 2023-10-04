@@ -57,7 +57,7 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             <label
                                 className={cn(
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activeLabel: isLabelActive },
+                                    { _activelabel: isLabelActive },
                                     { _disabled: disabled },
                                 )}
                                 onClick={focusOnField}
@@ -74,8 +74,8 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {
-                                    _floatingLabel: isFloatingLabel && label,
-                                    _activeLabel:
+                                    _floatinglabel: isFloatingLabel && label,
+                                    _activelabel:
                                         isFloatingLabel &&
                                         label &&
                                         isLabelActive,

@@ -1,6 +1,6 @@
-import { TProductCartData, TProductDoorData } from "@store/products/types";
 import { ReactNode } from "react";
-import { TStore } from "@globalTypes/storeTypes";
+import { TNullable } from "@globalTypes/commonTypes";
+import { TProductDoorData } from "@store/products/types";
 
 export type TProductSearchCard = {
     className?: string;
@@ -8,8 +8,20 @@ export type TProductSearchCard = {
 
 export type TProductCartCard = {
     className?: string;
-} & TProductCartData &
-    TStore;
+    id: string;
+    title: string;
+    price: number;
+    priceCurrency: string;
+    material: string;
+    size: string;
+    color: string;
+    imageSrc: TNullable<string> | undefined;
+    deliveryStatus: string;
+    select?: {
+        isSelect: boolean;
+        onSelectChange: (id: string, value: boolean) => void;
+    };
+};
 
 export type TProductInfoListItem = {
     label: string;

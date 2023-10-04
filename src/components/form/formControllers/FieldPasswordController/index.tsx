@@ -60,7 +60,7 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
                             <label
                                 className={cn(
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activeLabel: isLabelActive },
+                                    { _activelabel: isLabelActive },
                                     { _disabled: disabled },
                                 )}
                                 onClick={focusOnField}
@@ -76,8 +76,8 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 { _visible: passwordVisible },
                                 {
-                                    _floatingLabel: isFloatingLabel && label,
-                                    _activeLabel:
+                                    _floatinglabel: isFloatingLabel && label,
+                                    _activelabel:
                                         isFloatingLabel &&
                                         label &&
                                         isLabelActive,

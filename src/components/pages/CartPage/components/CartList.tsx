@@ -1,25 +1,15 @@
 import { FC, useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { useRouter } from "next/router";
+import { isString, uniq } from "lodash";
 
-import { H2, H3, P } from "@components/Text";
 import ModalConfirm from "@components/modals/components/ModalConfirm";
-import ImgWrapper from "@components/globalComponents/ImgWrapper";
+import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
+import ProductCartCard from "@components/cards/ProductCartCard";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
-import CartEmpty from "./CartEmpty";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { EButtonColor, EButtonSize } from "@components/buttons/types";
-import {
-    getTotalPriceByResultData,
-    renderResultDataToOptionsList,
-} from "@helpers/builderHelper";
 import { IRoot } from "@store/store";
-import { TCartItem } from "@store/builder/types";
-import { setStorage } from "@services/storage.service";
-import { EDIT_BUILDER_CART_ITEM_DATA } from "@consts/storageNamesContsts";
-import { PATH_BUILDER_PAGE } from "@consts/pathsConsts";
+import { EButtonColor } from "@components/buttons/types";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -27,151 +17,137 @@ const CartList: FC<TSectionTypes> = inject("store")(
         const { builderStore, commonStore } = store as IRoot;
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
-        const router = useRouter();
 
-        const [selectedElementId, setSelectedElementId] = useState<
-            string | null
-        >(null);
+        const [selected, setSelected] = useState<string[]>([]);
+        const [selectAll, setSelectAll] = useState<boolean>();
 
-        const deleteElementFromCart = useCallback(() => {
-            if (selectedElementId) {
-                setElementsToBuilderCard(undefined, {
-                    action: "remove",
-                    id: selectedElementId,
-                });
+        const handleSelect = (
+            id: string | string[] | undefined,
+            action: "add" | "remove" | "clear",
+        ) => {
+            if (action === "add" && id) {
+                setSelected((oldList) =>
+                    isString(id) ? [...oldList, id] : uniq([...oldList, ...id]),
+                );
             }
-        }, [selectedElementId]);
-
-        const handleDelete = (id: string) => {
-            setModalConfirmVisible(true);
-            setSelectedElementId(id);
+            if (action === "remove" && id) {
+                setSelected((oldList) => oldList.filter((item) => item !== id));
+            }
+            if (action === "clear") {
+                setSelected([]);
+            }
         };
 
-        const handleEdit = ({
-            doorId,
-            doorData,
-            history,
-            builderParentId,
-        }: TCartItem) => {
-            setStorage(EDIT_BUILDER_CART_ITEM_DATA, {
-                doorId,
-                doorData,
-                history,
-                builderParentId,
-            });
-            router.push(PATH_BUILDER_PAGE);
+        const deleteElementFromCart = useCallback(() => {
+            if (selected) {
+                setElementsToBuilderCard(undefined, {
+                    action: "remove",
+                    id: selected,
+                });
+            }
+        }, [selected]);
+
+        const handleDelete = () => {
+            setModalConfirmVisible(true);
         };
 
         return (
-            <div className={`${classPrefix}__wrapper`}>
-                <H2>Cart</H2>
-                <div className={"cart-item-page_wrapper"}>
-                    {builderCartData?.elements?.length ? (
-                        builderCartData?.elements.map((item) => {
+            <>
+                <div className={`${classPrefix}__wrapper`}>
+                    <div className={`${classPrefix}__head`}>
+                        <FormFieldCheckbox
+                            name={"selectAll"}
+                            errorMessage={undefined}
+                            className={`${classPrefix}_checkbox`}
+                            checked={selectAll}
+                            onChange={() => {
+                                if (
+                                    selected.length !==
+                                    builderCartData?.elements?.length
+                                ) {
+                                    setSelectAll(true);
+                                    handleSelect(
+                                        builderCartData?.elements.map(
+                                            (item) => item.doorId,
+                                        ),
+                                        "add",
+                                    );
+                                } else {
+                                    setSelectAll(false);
+                                    handleSelect(undefined, "clear");
+                                }
+                            }}
+                            label="Select all"
+                        />
+                        {!!selected.length && (
+                            <ButtonPrimary
+                                color={EButtonColor.transparent}
+                                onClick={() => {
+                                    handleDelete();
+                                }}
+                            >
+                                Delete selected
+                            </ButtonPrimary>
+                        )}
+                    </div>
+                    <div className={`${classPrefix}__content`}>
+                        {builderCartData?.elements.map((item) => {
+                            const mainFieldData = item.doorData[0];
                             return (
-                                <div
+                                <ProductCartCard
                                     key={item.doorId}
-                                    className={"cart-item_wrapper"}
-                                >
-                                    <div className={"cart-item_inner-wrapper"}>
-                                        <div>
-                                            {item.doorData[0].stepTitle && (
-                                                <H3>
-                                                    {
-                                                        item.doorData[0]
-                                                            .fields[0]
-                                                            .elements[0]
-                                                            .mainTitle
-                                                    }
-                                                </H3>
-                                            )}
-                                            <P
-                                                style={{
-                                                    wordBreak: "break-all",
-                                                    marginBottom: 0,
-                                                }}
-                                            >
-                                                <b>History:</b>{" "}
-                                                {JSON.stringify(item.history)}
-                                            </P>
-                                            <P
-                                                style={{
-                                                    wordBreak: "break-all",
-                                                    marginBottom: 0,
-                                                }}
-                                            >
-                                                <b>ID:</b> {item.doorId}
-                                            </P>
-                                        </div>
-                                        {item.doorData[0]?.fields[0]
-                                            ?.elements[0].image?.url && (
-                                            <ImgWrapper
-                                                src={
-                                                    item.doorData[0]?.fields[0]
-                                                        ?.elements[0].image?.url
-                                                }
-                                                wrapperClassName="cart-item_image"
-                                                alt="Product image"
-                                            />
-                                        )}
-
-                                        <div className="cart-item_list__wrapper">
-                                            <AddedOptionsList
-                                                optionsList={renderResultDataToOptionsList(
-                                                    item.doorData,
-                                                )}
-                                                className="cart-item_list__inner-wrapper"
-                                            />
-                                        </div>
-                                        <P
-                                            style={{
-                                                display: "flex",
-                                                justifyContent: "space-between",
-                                            }}
-                                        >
-                                            Total:
-                                            <b>
-                                                $
-                                                {getTotalPriceByResultData(
-                                                    item.doorData,
-                                                )}
-                                            </b>
-                                        </P>
-                                        <div className={"cart-item_actions"}>
-                                            <ButtonPrimary
-                                                color={EButtonColor.secondary}
-                                                size={EButtonSize.md}
-                                                onClick={() => {
-                                                    handleEdit(item);
-                                                }}
-                                            >
-                                                Edit
-                                            </ButtonPrimary>
-                                            <ButtonPrimary
-                                                color={EButtonColor.secondary}
-                                                size={EButtonSize.md}
-                                                onClick={() => {
-                                                    handleDelete(item.doorId);
-                                                }}
-                                            >
-                                                Delete
-                                            </ButtonPrimary>
-                                        </div>
-                                    </div>
-                                </div>
+                                    id={item.doorId}
+                                    title={`title _id: ${item.doorId}`}
+                                    material={"material"}
+                                    size={"size"}
+                                    color={"color"}
+                                    price={123}
+                                    imageSrc={
+                                        mainFieldData.fields[0]?.elements[0]
+                                            .image?.url
+                                    }
+                                    deliveryStatus={"null"}
+                                    priceCurrency={"null"}
+                                    select={{
+                                        isSelect: !!selected?.includes(
+                                            item.doorId,
+                                        ),
+                                        onSelectChange: (id, val) => {
+                                            handleSelect(
+                                                id,
+                                                val ? "add" : "remove",
+                                            );
+                                        },
+                                    }}
+                                />
                             );
-                        })
-                    ) : (
-                        <CartEmpty pageClassPrefix={pageClassPrefix} />
-                    )}
+                        })}
+                    </div>
                 </div>
                 <ModalConfirm
-                    title="Do you want to remove the door from the cart?"
+                    title={`Do you want to remove ${
+                        selected.length > 1 ? "doors" : "the door"
+                    } from the cart?`}
                     onConfirm={() => deleteElementFromCart()}
                 />
-            </div>
+            </>
         );
     }),
 );
 
 export default CartList;
+
+// const handleEdit = ({
+//     doorId,
+//     doorData,
+//     history,
+//     builderParentId,
+// }: TCartItem) => {
+//     setStorage(EDIT_BUILDER_CART_ITEM_DATA, {
+//         doorId,
+//         doorData,
+//         history,
+//         builderParentId,
+//     });
+//     router.push(PATH_BUILDER_PAGE);
+// };

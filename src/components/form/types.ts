@@ -20,7 +20,7 @@ export enum EFormFieldType {
     radioArray = "radioarray",
     radioButtonArray = "radiobuttonarray",
     textArea = "textarea",
-    inputNumber = "inputnumber",
+    inputnumber = "inputnumber",
     password = "password",
     autocomplete = "autocomplete",
 }
@@ -46,10 +46,19 @@ export type TFormFieldInputNumber = {
     name: string;
     icon?: JSX.Element;
     onIconClick?: () => void;
+    onValueChange?: (value: number) => void;
+    sideButtons?: true | TSideButtonsProps;
 } & InputNumberProps &
     TFormWrapperClassName &
     TFormItemLabel &
     TFormWrapperErrorMessage;
+
+export type TSideButtonsProps = {
+    beforeButtonContent: ReactNode;
+    afterButtonContent: ReactNode;
+    beforeButtonClick?: () => void;
+    afterButtonClick?: () => void;
+};
 
 export type TFormFieldSelect = {
     name: string;
@@ -59,7 +68,10 @@ export type TFormFieldSelect = {
 export type TFormFieldCheckbox = {
     name: string;
     label?: string;
-} & CheckboxProps;
+} & CheckboxProps &
+    TFormWrapperClassName &
+    TFormItemLabel &
+    TFormWrapperErrorMessage;
 
 export type TFormFieldRadio = {
     name: string;

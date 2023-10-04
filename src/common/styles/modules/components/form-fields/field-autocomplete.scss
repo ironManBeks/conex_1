@@ -5,7 +5,7 @@
       .ant-input{
         background-color: $color-primary-strong;
         border: 1px solid $border-color-secondary;
-        padding:  calc($space * 4) space(4) calc($space * 4) space(12);
+        padding:  space(4) space(4) space(4) space(12);
         font-size: $font-size-bs;
         line-height: $line-height-lg;
         color: $text-color-primary;
@@ -58,13 +58,13 @@
         }
       }
 
-      &._floatingLabel{
+      &._floatinglabel{
         .ant-input{
           padding:  calc($space * 6 - 2px) space(4) space(2) space(12);
         }
       }
 
-      &._activeLabel{
+      &._activelabel{
         .ant-input {
           border-color: $icon-color-secondary-active;
         }
@@ -88,7 +88,7 @@
       font-weight: 500;
       cursor: text;
       z-index: 3;
-      &._activeLabel {
+      &._activelabel {
         transform: translateY(space(-4.5));
         font-size: $font-size-xs;
         line-height: $line-height-bs;

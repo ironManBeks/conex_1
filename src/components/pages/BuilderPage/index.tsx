@@ -5,7 +5,10 @@ import { isEmpty, isNil } from "lodash";
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
 import BuilderForm from "./components/BuilderForm";
-import BuilderLoader from "@components/pages/BuilderPage/components/BuilderLoader";
+import BuilderLoader from "./components/BuilderLoader";
+import BuilderError from "./components/BuilderError";
+import BuilderNoData from "./components/BuilderNoData";
+
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
 import {
@@ -28,8 +31,7 @@ import {
     TEditBuilderCartItemData,
     TResultDoorData,
 } from "@store/builder/types";
-import BuilderError from "@components/pages/BuilderPage/components/BuilderError";
-import BuilderNoData from "@components/pages/BuilderPage/components/BuilderNoData";
+
 import { handleClearBuilderStorage } from "@components/pages/BuilderPage/utils";
 
 const BuilderPage: FC<TStore> = inject("store")(

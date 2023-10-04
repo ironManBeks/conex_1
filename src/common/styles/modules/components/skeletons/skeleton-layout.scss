@@ -4,11 +4,13 @@
     .ant-skeleton{
       width: 100%;
     }
-    .ant-skeleton-input{
-      width: 100%;
-      min-height: 100%;
-      min-width: 30px;
-      border-radius: borderRadius(1);
+    .ant-skeleton.ant-skeleton-element{
+      .ant-skeleton-input{
+        width: 100%;
+        min-height: 100%;
+        min-width: auto;
+        border-radius: borderRadius(1);
+      }
     }
   }
 }
