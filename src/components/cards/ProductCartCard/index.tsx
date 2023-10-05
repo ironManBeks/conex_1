@@ -1,23 +1,20 @@
 import { FC } from "react";
 import cn from "classnames";
+import { isEmpty } from "lodash";
+import { useMediaQuery } from "react-responsive";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { H5, P } from "@components/Text";
 import { IconBox } from "@components/Icons";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import FormFieldInputNumber from "@components/form/formFields/FormFieldInputNumber";
+import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
 import ProductCardTitle from "../components/ProductCardTitle";
 import ProductCardList from "../components/ProductCardList";
 
 import { PRODUCT_CARD_CLASSNAME } from "../consts";
 import { cutText } from "@helpers/textHelpers";
-import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { TProductInfoListItem, TProductCartCard } from "../types";
-import { notImplemented } from "@helpers/notImplemented";
-import { useMediaQuery } from "react-responsive";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
-import FormFieldInputNumber from "@components/form/formFields/FormFieldInputNumber";
-import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
-import { isEmpty } from "lodash";
 
 const ProductCartCard: FC<TProductCartCard> = ({
     id,
