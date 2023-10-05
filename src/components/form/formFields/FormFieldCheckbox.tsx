@@ -1,15 +1,56 @@
 import { FC } from "react";
-import { Checkbox } from "antd";
+import { Checkbox as AntCheckbox } from "antd";
 
-import { TFormFieldCheckbox } from "../types";
+import cn from "classnames";
+import FormItemWrapper from "../FormItemWrapper";
+import { IconCheck } from "@components/Icons";
+
+import { EFormFieldType, TFormFieldCheckbox } from "../types";
+import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
+import { COLOR_WHITE } from "@common/theme/colorTheme";
 
 const FormFieldCheckbox: FC<TFormFieldCheckbox> = (props) => {
-    const { name, label, ...rest } = props;
+    const {
+        name,
+        errorMessage,
+        wrapperClassName,
+        checked,
+        label,
+        disabled,
+        ...rest
+    } = props;
 
     return (
-        <Checkbox {...rest} name={name}>
-            {label}
-        </Checkbox>
+        <FormItemWrapper
+            fieldType={EFormFieldType.checkbox}
+            errorMessage={errorMessage}
+            label={undefined}
+            showError={false}
+            wrapperClassName={cn(wrapperClassName, "_simple-field", {
+                _checked: checked,
+                _disabled: disabled,
+            })}
+        >
+            <label
+                className={cn(
+                    `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label-wrapper`,
+                )}
+            >
+                <AntCheckbox
+                    {...rest}
+                    checked={checked}
+                    name={name}
+                    className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_field`)}
+                >
+                    <IconCheck color={COLOR_WHITE} width={16} height={16} />
+                </AntCheckbox>
+                <span
+                    className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_sub-label`)}
+                >
+                    {label}
+                </span>
+            </label>
+        </FormItemWrapper>
     );
 };
 

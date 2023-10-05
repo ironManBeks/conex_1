@@ -44,9 +44,10 @@
     &_sub-label{
       display: inline-flex;
       cursor: pointer;
-      font-size: $line-height-md;
+      font-size: $line-height-sm;
       line-height: $line-height-md;
-      color: $color-grey-800;
+      color: $text-color-primary;
+      font-weight: 500;
       padding-left: space(3);
     }
 
@@ -102,4 +103,18 @@
       }
     }
   }
+
+  &._simple-field{
+    .form-field{
+      &_sub-label-wrapper{
+        display: flex;
+        align-items: center;
+        padding-left: 0;
+      }
+      &_sub-label{
+        //padding-left: 0;
+      }
+    }
+  }
+
 }

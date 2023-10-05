@@ -51,7 +51,7 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                 }
                 return (
                     <FormItemWrapper
-                        fieldType={EFormFieldType.inputNumber}
+                        fieldType={EFormFieldType.inputnumber}
                         errorMessage={errorMessage}
                         label={label}
                         isFloatingLabel={isFloatingLabel}
@@ -61,7 +61,7 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                             <label
                                 className={cn(
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activeLabel: isLabelActive },
+                                    { _activelabel: isLabelActive },
                                     { _disabled: disabled },
                                 )}
                                 onClick={focusOnField}
@@ -76,8 +76,8 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {
-                                    _floatingLabel: isFloatingLabel && label,
-                                    _activeLabel:
+                                    _floatinglabel: isFloatingLabel && label,
+                                    _activelabel:
                                         isFloatingLabel &&
                                         label &&
                                         isLabelActive,
@@ -85,7 +85,6 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                             )}
                             value={field.value}
                             onChange={(value) => {
-                                // const val = e.target.value;
                                 field.onChange(value);
                                 if (onChangeValue) onChangeValue(value);
                             }}

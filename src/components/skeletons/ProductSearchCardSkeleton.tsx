@@ -53,8 +53,8 @@ const ProductSearchCardSkeleton: FC<TSkeleton> = ({ className }) => {
                     />
                     <Skeleton.Input
                         active={isActive}
-                        size="large"
                         style={{ maxWidth: "150px" }}
+                        size="large"
                     />
                 </div>
             </div>

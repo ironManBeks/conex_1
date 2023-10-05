@@ -6,8 +6,8 @@ import { getStorage } from "@services/storage.service";
 
 // Test api URL
 const baseURL = process.env.NEXT_PUBLIC_ENV_DEV_API
-    ? "https://conexwest-doors.opserver.store/dev_api"
-    : "https://conexwest-doors.opserver.store/prod_api";
+    ? "https://conexwest-doors.opserver.store/api"
+    : "https://conexwest-doors.opserver.store/api";
 
 const axiosInstance = axios.create({
     baseURL,

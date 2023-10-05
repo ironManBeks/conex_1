@@ -20,7 +20,15 @@ import {
 } from "./types";
 import axiosInstance from "../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
-import { isArray, isEmpty, isNil, isNumber, isObject, uniq } from "lodash";
+import {
+    isArray,
+    isEmpty,
+    isNil,
+    isNumber,
+    isObject,
+    isString,
+    uniq,
+} from "lodash";
 import { TNullable } from "@globalTypes/commonTypes";
 import { showNotification } from "@helpers/notificarionHelper";
 import { setStorage } from "@services/storage.service";
@@ -32,7 +40,7 @@ import {
 
 export class BuilderStore implements IBuilderStore {
     builderAllData: TNullable<TGetBuilderAllDataResponse> = null;
-    builderAllDataFetching = true;
+    builderAllDataFetching = false;
     builderParamsData: TNullable<TGetBuilderParamsDataResponse> = null;
     builderParamsDataFetching = false;
     builderSettings: TNullable<TGetBuilderSettingsResponse> = null;
@@ -386,11 +394,20 @@ export class BuilderStore implements IBuilderStore {
 
         if (isNil(data)) {
             if (isObject(action) && action.action === "remove" && action.id) {
-                this.setBuilderCartData({
-                    elements: newResult.elements.filter(
-                        (item) => item.doorId !== action.id,
-                    ),
-                });
+                if (isString(action.id)) {
+                    this.setBuilderCartData({
+                        elements: newResult.elements.filter(
+                            (item) => item.doorId !== action.id,
+                        ),
+                    });
+                }
+                if (isArray(action.id)) {
+                    this.setBuilderCartData({
+                        elements: newResult.elements.filter(
+                            (item) => !action.id.includes(item.doorId),
+                        ),
+                    });
+                }
             }
             return;
         }

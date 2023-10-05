@@ -22,6 +22,7 @@ import {
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
+import FieldInputNumberController from "@components/form/formControllers/FieldInputNumberController";
 
 const ModalCustomQuote: FC<TStore> = inject("store")(
     observer(({ store }) => {

@@ -25,6 +25,7 @@ const HowItWorksItem: FC<THowItWorksItem> = ({
                     alt={title}
                     width={imgWidth ?? 256}
                     height={imgHeight ?? 164}
+                    priority={true}
                 />
             )}
         </div>

@@ -69,7 +69,7 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                             <label
                                 className={cn(
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activeLabel: isLabelActive },
+                                    { _activelabel: isLabelActive },
                                     { _disabled: disabled },
                                 )}
                                 onClick={(e) => {
@@ -89,8 +89,8 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {
                                     _disabled: disabled,
-                                    _floatingLabel: isFloatingLabel && label,
-                                    _activeLabel:
+                                    _floatinglabel: isFloatingLabel && label,
+                                    _activelabel:
                                         isFloatingLabel &&
                                         label &&
                                         isLabelActive,

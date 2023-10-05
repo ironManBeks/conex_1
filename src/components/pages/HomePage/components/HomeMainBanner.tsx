@@ -21,6 +21,7 @@ const HomeMainBanner: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         src="/images/svg/main-banner.svg"
                         alt="Commercial Doors"
                         objectFit={"initial"}
+                        priority={true}
                     />
                 </div>
                 <div className={cn(`${classPrefix}__content`)}>

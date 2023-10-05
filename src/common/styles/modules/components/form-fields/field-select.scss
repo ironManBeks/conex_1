@@ -2,7 +2,7 @@
 
   .form-field{
     &_field.ant-select{
-
+      height: auto;
       &:not(.ant-select-show-search){
         .ant-select-selector {
           min-height: 58px;
@@ -141,7 +141,7 @@
       font-weight: 500;
       cursor: text;
       z-index: 3;
-      &._activeLabel {
+      &._activelabel {
         transform: translateY(space(-4.5));
         font-size: $font-size-xs;
         line-height: $line-height-bs;
