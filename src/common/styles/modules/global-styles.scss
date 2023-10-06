@@ -8,7 +8,7 @@ a,
 button {
   text-decoration: none;
   outline: none !important;
-  transition: 0.2s;
+  transition: $transition;
 }
 
 body {
@@ -55,4 +55,9 @@ div#__next{
   height: 100%;
   width: 100%;
   z-index: 3;
+}
+
+._logout{
+  cursor: pointer;
+  transition: $transition;
 }

@@ -12,4 +12,8 @@ export type TPaymentCardFormSection = {
     onSuccessfulSubmit?: (data: TPaymentCardForm) => void;
     defaultValues?: TPaymentCardForm;
     reference?: Ref<IPaymentCardFormRef> | undefined;
+    subText?: {
+        top?: ReactNode;
+        bottom?: ReactNode;
+    };
 };

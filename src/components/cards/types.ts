@@ -16,11 +16,11 @@ export type TProductCartCard = {
     size: string;
     color: string;
     imageSrc: TNullable<string> | undefined;
-    deliveryStatus: string;
     select?: {
         isSelect: boolean;
         onSelectChange: (id: string, value: boolean) => void;
     };
+    onDeleteClick?: () => void;
 };
 
 export type TProductInfoListItem = {

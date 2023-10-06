@@ -14,11 +14,11 @@
   box-shadow: none;
   border: 0;
   cursor: pointer;
-  transition: 0.2s;
-  svg{
-    transition: 0.2s;
+  transition:$transition;
+  svg, .common-icon, span{
+    transition: $transition;
     path{
-      transition: 0.2s;
+      transition: $transition;
     }
   }
 
@@ -81,8 +81,17 @@
   &.__transparent{
     background-color: transparent;
     padding: 0;
+    &.__opacity{
+      color: $text-color-secondary;
+      .common-icon{
+        opacity: 0.36;
+      }
+    }
     &:hover {
       color: $color-accent-strong;
+      .common-icon{
+        opacity: 1;
+      }
       svg path {
         fill: $color-accent-strong
       }

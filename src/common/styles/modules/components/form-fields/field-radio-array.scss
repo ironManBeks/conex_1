@@ -1,9 +1,6 @@
 .form-field_wrapper._radioarray{
-  --x-p: 15px;
-  --y-p: 12px;
-  --bg-color: transparent;
-  --wrapper-mb: 20px;
-  --item-mb: 10px;
+  --wrapper-mb: space(5);
+  --item-mb: space(2);
 
   margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
 
@@ -43,15 +40,15 @@
         position: relative;
         width: 32px;
         height: 32px;
-        background-color: var(--bg-color);
+        background-color: transparent;
         border: 1px solid $color-grey-250;
         border-radius: $border-radius-circle;
-        transition: .2s;
+        transition: $transition;
         box-shadow: none;
         &:after{
           transform: translate(-50%, -50%) scale(0);
           margin: 0;
-          background-color: $color-primary;
+          background-color: $color-accent-strong;
           width: 16px;
           height: 16px;
           transition: all 0.2s cubic-bezier(0.78, 0.14, 0.15, 0.86);
@@ -61,15 +58,15 @@
         top: 0;
         &:hover{
           .ant-radio-inner{
-            border-color: $color-primary;
+            border-color: $color-accent-strong;
           }
         }
         &.ant-radio-checked{
           &:after{
-            border-color: $color-primary;
+            border-color: $color-accent-strong;
           }
           .ant-radio-inner{
-            border-color: $color-primary;
+            border-color: $color-accent-strong;
             &:after{
               transform: translate(-50%, -50%) scale(1);
             }

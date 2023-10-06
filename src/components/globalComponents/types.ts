@@ -9,7 +9,6 @@ import {
     TFlexJustifyContent,
     TFlexWrap,
 } from "@globalTypes/stylesTypes";
-import { TFormItemError } from "@components/form/FormItemError/types";
 import { TFormItemLabel } from "@components/form/FormItemWrapper/types";
 import { TStore } from "@globalTypes/storeTypes";
 import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
@@ -76,8 +75,7 @@ export type TAddressSelection = {
     className?: string;
     onValueChange?: (value: string) => void;
     name?: string;
-} & TFormItemError &
-    TFormItemLabel;
+} & TFormItemLabel;
 
 export type TAddedOptionsListItem = {
     title?: string;

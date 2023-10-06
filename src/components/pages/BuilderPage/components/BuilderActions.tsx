@@ -101,7 +101,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
         ) =>
             handleSubmit(() => {
                 if (!isEmpty(endDoorData)) {
-                    notImplemented();
+                    notImplemented("Error on the end step");
                     return;
                 }
 

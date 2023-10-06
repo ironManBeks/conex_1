@@ -10,6 +10,11 @@
       line-height: $line-height-bs;
       .ant-checkbox{
         display: none;
+        &-wrapper{
+          &:after{
+            display: none;
+          }
+        }
       }
       span{
         &:not(.ant-checkbox){
@@ -19,7 +24,7 @@
           background-color: $color-primary-strong;
           border: 1px solid $border-color-primary;
           border-radius: borderRadius(1);
-          transition: .2s;
+          transition: $transition;
           &:hover{
             svg{
               transform: translate(-50%, -50%) scale(1);
@@ -32,7 +37,7 @@
             left: 50%;
             transform: translate(-50%, -50%) scale(0);
             opacity: 0;
-            transition: all 0.2s cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
+            transition: all $transition cubic-bezier(0.12, 0.4, 0.29, 1.46) 0.1s;
             path{
               fill: $icon-color-secondary;
             }

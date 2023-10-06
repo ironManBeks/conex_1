@@ -59,19 +59,23 @@ export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
             [EAccountMyFormFieldsNames.country]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
-                .required(requiredText),
+                .required(requiredText)
+                .trim(),
             [EAccountMyFormFieldsNames.city]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
-                .required(requiredText),
+                .required(requiredText)
+                .trim(),
             [EAccountMyFormFieldsNames.address]: yup
                 .string()
                 .max(100, renderValidationText("max", undefined, 100))
-                .required(requiredText),
+                .required(requiredText)
+                .trim(),
             [EAccountMyFormFieldsNames.index]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
-                .required(requiredText),
+                .required(requiredText)
+                .trim(),
         }),
     );
 };

@@ -1,32 +1,31 @@
 .cart-page{
-  &_layout__inner-wrapper{
-    padding: space(10);
-    .common-title._h2{
-      margin-bottom: space(10);
-      font-size: $font-size-xl;
-      line-height: $line-height-xl;
-    }
-  }
-
-  &_content{
-    display: flex;
-    gap: space(10);
-  }
-
   &_list{
-    &__wrapper{
-      width: 100%;
-    }
     &__head{
       display: flex;
-      justify-content: space-between;
+      flex-direction: column;
+      gap: space(5);
       margin-bottom: space(10);
+    }
+    &__select{
+      display: flex;
+      justify-content: space-between;
       .form-field_wrapper{
         margin-bottom: 0;
         .form-field_sub-label{
           font-size: $font-size-bs;
           line-height: $line-height-lg;
         }
+      }
+    }
+    &__weight{
+      display: flex;
+      align-items: center;
+      gap: space(1);
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      font-weight: 500;
+      span{
+        color: $text-color-secondary;
       }
     }
     &__content{
@@ -36,69 +35,4 @@
     }
   }
 
-  &_empty{
-    &__wrapper{
-      display: flex;
-      width: 100%;
-      min-height: 50vh;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      text-align: center;
-      .common-title{
-        margin-bottom: space(3);
-        font-size: $font-size-lg-plus;
-        line-height: $line-height-lg-plus;
-      }
-      .common-text{
-        font-size: $font-size-bs;
-        line-height: $line-height-lg;
-        color: $text-color-secondary;
-        font-weight: 500;
-      }
-    }
-    &__actions{
-      margin-top: space(6);
-    }
-  }
-
-}
-
-.cart-item{
-  &_wrapper{
-
-    width: calc(33% - 16px);
-    position: relative;
-    .common-title{
-      &._h3{
-        text-align: center;
-      }
-    }
-  }
-  &_inner-wrapper{
-    display: flex;
-    flex-direction: column;
-    gap: space(5);
-    padding: space(4);
-    border: 2px solid $border-color-secondary;
-    border-radius: borderRadius(3);
-    background-color: $color-primary-strong;
-  }
-
-  &_image{
-    height: 200px;
-  }
-  &_list{
-    &__wrapper{
-      max-height: 300px;
-      overflow-y: auto;
-    }
-    &__inner-wrapper{
-      overflow: hidden;
-    }
-  }
-  &_actions{
-    display: flex;
-    justify-content: space-between;
-  }
 }

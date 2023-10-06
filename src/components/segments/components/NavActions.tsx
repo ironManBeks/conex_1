@@ -72,7 +72,6 @@ const NavActions: FC<TNavTypes> = inject("store")(
                 <FormFieldAutoComplete
                     name="search"
                     fieldPlaceholder="Search"
-                    errorMessage={undefined}
                     onSelect={(value) => {
                         handleSearch(value);
                     }}

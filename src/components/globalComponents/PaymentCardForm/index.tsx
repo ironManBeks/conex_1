@@ -1,10 +1,14 @@
 import { FC, useEffect, useImperativeHandle, useState } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import cn from "classnames";
+import { FieldErrors } from "react-hook-form/dist/types/errors";
 
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { P } from "@components/Text";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { IconQuestionCircle } from "@components/Icons";
+import Tooltip from "@components/globalComponents/Tooltip";
 
 import {
     EPaymentCardFromFieldsNames,
@@ -26,12 +30,8 @@ import {
     findDebitCardType,
     stripeCardExpValidation,
 } from "@helpers/paymentMethodHelpers";
-import { FieldErrors } from "react-hook-form/dist/types/errors";
 import { pickOutFormErrorMessages } from "@helpers/errorsHelper";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
-import { IconQuestionCircle } from "@components/Icons";
-import Tooltip from "../Tooltip";
 
 const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     className,
@@ -40,6 +40,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     onSuccessfulSubmit,
     defaultValues,
     reference,
+    subText,
 }) => {
     const classPrefix = "payment-card-form";
     const [cardType, setCardType] = useState<EPaymentCardNames | undefined>();
@@ -192,7 +193,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         </div>
                     )}
                 </div>
-                <P className="_top-text">Something text</P>
+                {subText?.top && <P className="_top-text">{subText?.top}</P>}
                 {submitText && (
                     <div className={`${classPrefix}_actions`}>
                         {actionsContent && actionsContent}
@@ -205,7 +206,9 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                         </ButtonPrimary>
                     </div>
                 )}
-                <P className="_bottom-text">Something text</P>
+                {subText?.bottom && (
+                    <P className="_bottom-text">{subText?.bottom}</P>
+                )}
             </form>
         </FormProvider>
     );

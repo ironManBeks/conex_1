@@ -9,13 +9,14 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
-import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
+import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoCompleteController/types";
 import { DefaultOptionType } from "antd/es/select";
 
-const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
+const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
+    props,
+) => {
     const {
         wrapperClassName,
-        errorMessage,
         showError,
         onSelect,
         onAddonButtonClick,
@@ -28,8 +29,11 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
         onChangeValue,
         ...rest
     } = props;
-    const { control } = useFormContext();
-
+    const {
+        control,
+        formState: { errors },
+    } = useFormContext();
+    const errorMessage = errors[name]?.message;
     const [options, setOptions] = useState<DefaultOptionType[]>([]);
     const fieldRef = useRef<InputRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
@@ -169,4 +173,4 @@ const FieldAutoComplete: FC<TFieldAutoCompleteController> = (props) => {
     );
 };
 
-export default FieldAutoComplete;
+export default FieldAutoCompleteController;

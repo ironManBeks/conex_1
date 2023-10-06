@@ -4,7 +4,7 @@
       &:hover{
         .form-field_field{
           &:not([disabled]){
-            border-color: $icon-color-secondary-active;
+            border-color: $border-color-secondary-active;
           }
         }
       }
@@ -14,7 +14,7 @@
       height: 100%;
       background-color: $color-primary-strong;
       border: 1px solid $border-color-secondary;
-      padding: space(6.5) space(4) space(2.5);
+      padding: space(4);
       border-radius: borderRadius(2);
       font-size: $font-size-bs;
       line-height: $line-height-lg;
@@ -27,11 +27,11 @@
       &:hover, &:focus{
         box-shadow: none;
         &:not([disabled]){
-          border-color: $icon-color-secondary-active;
+          border-color: $border-color-secondary-active;
         }
       }
       &._activelabel{
-        border-color: $icon-color-secondary-active;
+        border-color: $border-color-secondary-active;
       }
     }
     &_label{
@@ -62,4 +62,11 @@
       }
     }
   }
+
+  &._floatinglabel{
+    .form-field_field{
+      padding: space(6.5) space(4) space(2.5);
+    }
+  }
+
 }

@@ -1,26 +1,21 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useMemo } from "react";
 import { isNil } from "lodash";
 import { inject, observer } from "mobx-react";
 
+import { H2 } from "@components/Text";
+import AccountSectionWrapper from "./AccountSectionWrapper";
 import AccountMyForm from "./AccountMyForm";
 import AccountNoData from "./AccountNoData";
 import AccountLoader from "./AccountLoader";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
-import { H2 } from "@components/Text";
-import AccountSectionWrapper from "./AccountSectionWrapper";
-import { toJS } from "mobx";
 
 const AccountMyFormLayout: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { authStore } = store as IRoot;
         const { userData, userDataFetching } = authStore;
         const classPrefix = `${pageClassPrefix}_my-form`;
-
-        useEffect(() => {
-            console.log("userData", toJS(userData));
-        }, [userData]);
 
         const content = useMemo(() => {
             if (userDataFetching) {

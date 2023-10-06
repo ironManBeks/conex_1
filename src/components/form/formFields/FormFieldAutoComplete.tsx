@@ -9,14 +9,13 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
-import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoComplete/types";
+import { TFieldAutoCompleteController } from "@components/form/formControllers/FieldAutoCompleteController/types";
 
 const FormFieldAutoComplete: FC<
     TFieldAutoCompleteController & { fieldValue: string }
 > = (props) => {
     const {
         wrapperClassName,
-        errorMessage,
         showError,
         onSelect,
         onAddonButtonClick,
@@ -56,7 +55,7 @@ const FormFieldAutoComplete: FC<
     return (
         <FormItemWrapper
             fieldType={EFormFieldType.autocomplete}
-            errorMessage={errorMessage}
+            errorMessage={undefined}
             label={fieldLabel}
             wrapperClassName={wrapperClassName}
             showError={showError}

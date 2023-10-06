@@ -1,5 +1,3 @@
-@import "pages";
-
 @import "home-page/home-page";
 @import "error-page/error-page";
 @import "contact-us-page/contact-us-page";
@@ -8,6 +6,7 @@
 @import "search-page/search-page";
 @import "cart-page/cart-page";
 @import "checkout-page/checkout-page";
+@import "order-page/order-page";
 
 @import "home-page/y-media-home-page";
 @import "error-page/y-media-error-page";
@@ -17,3 +16,4 @@
 @import "search-page/y-media-search-page";
 @import "cart-page/y-media-cart-page";
 @import "checkout-page/y-media-checkout-page";
+@import "order-page/y-media-order-page";
