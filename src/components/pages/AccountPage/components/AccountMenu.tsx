@@ -56,7 +56,6 @@ const AccountMenu: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                         title="Logout"
                         icon={<IconLogout />}
                         tabName={null}
-                        className="_logout"
                         pageClassPrefix={pageClassPrefix}
                     />
                 }

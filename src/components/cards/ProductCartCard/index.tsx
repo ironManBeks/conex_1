@@ -1,20 +1,22 @@
 import { FC } from "react";
 import cn from "classnames";
-import { isEmpty } from "lodash";
+import { isEmpty, isFunction } from "lodash";
 import { useMediaQuery } from "react-responsive";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
-import { H5, P } from "@components/Text";
-import { IconBox } from "@components/Icons";
+import { H5 } from "@components/Text";
+import { IconTrash } from "@components/Icons";
 import FormFieldInputNumber from "@components/form/formFields/FormFieldInputNumber";
 import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
 import ProductCardTitle from "../components/ProductCardTitle";
 import ProductCardList from "../components/ProductCardList";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { PRODUCT_CARD_CLASSNAME } from "../consts";
 import { cutText } from "@helpers/textHelpers";
-import { TProductInfoListItem, TProductCartCard } from "../types";
+import { TProductCartCard, TProductInfoListItem } from "../types";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { EButtonColor } from "@components/buttons/types";
 
 const ProductCartCard: FC<TProductCartCard> = ({
     id,
@@ -26,8 +28,8 @@ const ProductCartCard: FC<TProductCartCard> = ({
     size,
     color,
     imageSrc,
-    deliveryStatus,
     select,
+    onDeleteClick,
 }) => {
     const classPrefix = "product-cart-card";
 
@@ -74,12 +76,22 @@ const ProductCartCard: FC<TProductCartCard> = ({
                         alt="Product image"
                     />
                 )}
-                {!isMobile && (
-                    <div className={`${classPrefix}_details__wrapper`}>
-                        {titleContent}
-                        <ProductCardList optionsList={optionsList} />
-                    </div>
-                )}
+                <div className={`${classPrefix}_details__wrapper`}>
+                    {titleContent}
+                    <ProductCardList optionsList={optionsList} />
+                    {isFunction(onDeleteClick) && (
+                        <div>
+                            <ButtonPrimary
+                                leftIcon={<IconTrash />}
+                                color={EButtonColor.transparent}
+                                onClick={onDeleteClick}
+                                isOpacity={true}
+                            >
+                                Delete
+                            </ButtonPrimary>
+                        </div>
+                    )}
+                </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
                     {price && (
                         <H5>
@@ -88,12 +100,6 @@ const ProductCartCard: FC<TProductCartCard> = ({
                         </H5>
                     )}
                     {isMobile && titleContent}
-                    {deliveryStatus && (
-                        <P>
-                            <IconBox opacity="0.36" />
-                            <span>{deliveryStatus}</span>
-                        </P>
-                    )}
                     <FormFieldInputNumber
                         name={"count"}
                         errorMessage={undefined}

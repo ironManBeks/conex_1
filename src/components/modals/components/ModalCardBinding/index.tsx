@@ -66,6 +66,10 @@ const ModalCardBinding: FC<TStore> = inject("store")(
                             notImplemented(`value: ${JSON.stringify(data)}`);
                             handleCloseModal();
                         }}
+                        subText={{
+                            top: "Something top text",
+                            bottom: "Something bottom text",
+                        }}
                     />
                 }
             />

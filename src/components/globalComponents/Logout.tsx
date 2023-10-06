@@ -1,16 +1,18 @@
-import React from "react";
+import { FC, cloneElement } from "react";
 import { useRouter } from "next/router";
 import { inject, observer } from "mobx-react";
+import cn from "classnames";
 
 import { TLogout } from "./types";
 import { PATH_HOME_PAGE } from "@consts/pathsConsts";
 import { IRoot } from "@store/store";
 
-const Logout: React.FC<TLogout> = inject("store")(
+const Logout: FC<TLogout> = inject("store")(
     observer(({ store, component, pageLink }) => {
         const { authStore } = store as IRoot;
         const { logOut } = authStore;
         const router = useRouter();
+
         const onClick = () => {
             logOut();
             if (pageLink) {
@@ -18,7 +20,10 @@ const Logout: React.FC<TLogout> = inject("store")(
             } else router.push(PATH_HOME_PAGE);
         };
 
-        return React.cloneElement(component, { onClick });
+        return cloneElement(component, {
+            onClick,
+            className: cn(component.props.className, "_logout"),
+        });
     }),
 );
 

@@ -6,7 +6,7 @@
       &:hover{
         .form-field_field{
           &:not([disabled]){
-            border-color: $icon-color-secondary-active;
+            border-color: $border-color-secondary-active;
           }
         }
       }
@@ -32,11 +32,11 @@
       &:hover, &:focus{
         box-shadow: none;
         &:not([disabled]){
-          border-color: $icon-color-secondary-active;
+          border-color: $border-color-secondary-active;
         }
       }
       &._activelabel{
-        border-color: $icon-color-secondary-active;
+        border-color: $border-color-secondary-active;
       }
     }
     &_label{

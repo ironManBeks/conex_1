@@ -1,7 +1,5 @@
 .product-cart-card{
   &_wrapper{
-    --left-side-mr: 20px;
-    --left-side-width: 100px;
     width: 100%;
   }
 
@@ -18,14 +16,16 @@
     }
   }
 
-  &_checkbox{
-    //position: absolute;
-  }
-
   &_image__wrapper{
     width: 170px;
     min-height: 100px;
     flex: 0 0 auto;
+  }
+
+  &_details__wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(4);
   }
 
   &_actions__wrapper{

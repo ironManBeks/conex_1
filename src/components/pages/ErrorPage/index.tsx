@@ -62,6 +62,7 @@ const ErrorPage: FC = () => {
                                 src="/images/svg/error-bg.png"
                                 wrapperClassName={`${classPrefix}_bg`}
                                 alt={"Error page background"}
+                                priority={true}
                             />
                         </MediaQuery>
                         <div className={`${classPrefix}_content__wrapper`}>
@@ -70,6 +71,7 @@ const ErrorPage: FC = () => {
                                     src="/images/svg/error-404-mobile.svg"
                                     height={isMobile ? 230 : 300}
                                     alt={"404 error"}
+                                    priority={true}
                                 />
                             </MediaQuery>
                             <MediaQuery minWidth={mediaBreakpoints.mdMedia}>
@@ -77,6 +79,7 @@ const ErrorPage: FC = () => {
                                     src="/images/svg/error-404.svg"
                                     height={390}
                                     alt={"404 error"}
+                                    priority={true}
                                 />
                             </MediaQuery>
                             <H2>Error 404</H2>

@@ -248,7 +248,7 @@
     }
     &__item{
       &._wrapper{
-        width: calc(50% - 6 * $space);
+        width: calc(50% - 6 * $space / 2);
       }
       &._inner-wrapper{
         display: flex;

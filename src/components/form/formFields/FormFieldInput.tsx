@@ -12,9 +12,8 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
         label,
         wrapperClassName,
         errorMessage,
-        icon,
-        iconPosition,
         showError,
+        isFloatingLabel,
         ...rest
     } = props;
 
@@ -24,11 +23,9 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
             errorMessage={errorMessage}
             showError={showError}
             label={label}
-            wrapperClassName={cn(
-                wrapperClassName,
-                iconPosition && `_icon-${iconPosition}`,
-                { _icon: icon },
-            )}
+            wrapperClassName={cn(wrapperClassName, {
+                _floatinglabel: isFloatingLabel && label,
+            })}
         >
             <Input
                 className={cn(
@@ -37,7 +34,6 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
                 )}
                 {...rest}
             />
-            {icon && icon}
         </FormItemWrapper>
     );
 };

@@ -32,7 +32,7 @@
       font-size: $font-size-xs;
       line-height: $line-height-bs;
       font-weight: 500;
-      color: $color-critical-strong;
+      color: $color-critical-strong !important;
       span{
         color: $color-critical-strong;
       }

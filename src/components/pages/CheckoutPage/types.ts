@@ -1,10 +1,6 @@
-export enum ECheckoutUserModes {
-    guest = "guest",
-    user = "user",
-    logIn = "logIn",
-}
+import { TSectionTypes } from "@globalTypes/sectionTypes";
 
-export enum ECheckoutStep {
-    delivery = "delivery",
-    payment = "payment",
-}
+export type TOrderSettings = {
+    className?: string;
+    placement: "cart" | "checkout";
+} & TSectionTypes;

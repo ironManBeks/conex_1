@@ -339,7 +339,7 @@
       border-radius: borderRadius(3);
       word-break: break-word;
       cursor: pointer;
-      transition: .2s;
+      transition: $transition;
       &:hover{
         box-shadow: $box-shadow-sm;
       }
@@ -360,7 +360,7 @@
         font-size: $font-size-md;
         line-height: $line-height-md;
         font-family: $font-family-primary;
-        transition: .2s;
+        transition: $transition;
         &._h4{
           margin-bottom: 10px;
           font-weight: 500;
@@ -382,7 +382,7 @@
       background-color: $color-primary-strong;
       border: 2px solid $border-color-secondary;
       border-radius: borderRadius(3);
-      transition: .2s;
+      transition: $transition;
       cursor: pointer;
       text-align: center;
       word-break: break-word;
@@ -400,7 +400,7 @@
       box-shadow: $box-shadow-bs;
       margin-bottom: 10px;
       border: 2px solid $color-grey-100;
-      transition: .2s;
+      transition: $transition;
     }
   }
 }

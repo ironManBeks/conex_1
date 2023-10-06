@@ -72,7 +72,7 @@
           box-shadow: -1px -1px 2px 0px rgba(107, 112, 114, 0.25), 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
           border-radius: $border-radius-lg;
           cursor: pointer;
-          transition: .2s;
+          transition: $transition;
           &:hover{
             box-shadow: -1px -1px 4px 0px rgba(107, 112, 114, 0.35), 0px 4px 6px 0px rgba(0, 0, 0, 0.35);
           }
@@ -110,7 +110,7 @@
     margin-bottom: 10px;
     cursor: pointer;
     text-align: center;
-    transition: .2s;
+    transition: $transition;
     &:hover{
       background-color: $color-grey-30;
     }

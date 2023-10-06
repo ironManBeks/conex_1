@@ -3,14 +3,13 @@ import cn from "classnames";
 import { isFunction } from "lodash";
 
 import { IconMapPoint } from "@components/Icons";
-import FieldAutoComplete from "@components/form/formControllers/FieldAutoComplete";
+import FieldAutoComplete from "src/components/form/formControllers/FieldAutoCompleteController";
 
 import { TAddressSelection } from "./types";
 
 const AddressSelection: FC<TAddressSelection> = ({
     className,
     onValueChange,
-    errorMessage,
     isFloatingLabel,
     name,
 }) => {
@@ -32,7 +31,6 @@ const AddressSelection: FC<TAddressSelection> = ({
             <FieldAutoComplete
                 name={name ?? "address"}
                 fieldPlaceholder="Address"
-                errorMessage={errorMessage}
                 icon={<IconMapPoint opacity="0.36" />}
                 onChange={(e) => {
                     const value = e.target.value;

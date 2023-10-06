@@ -33,8 +33,6 @@ export type TDefaultOption = {
 
 export type TFormFieldInput = {
     name: string;
-    icon?: JSX.Element;
-    iconPosition?: "left" | "right";
     onIconClick?: () => void;
 } & InputProps &
     TFormWrapperClassName &

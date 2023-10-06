@@ -36,12 +36,7 @@ const ModalCustomQuote: FC<TStore> = inject("store")(
             defaultValues: customQuoteDefaultValues,
         });
 
-        const {
-            handleSubmit,
-            formState: { errors },
-            setValue,
-            reset,
-        } = methods;
+        const { handleSubmit, setValue, reset } = methods;
 
         useEffect(() => {
             setValue(ECustomQuoteFieldsNames.address, addressValue);
@@ -91,10 +86,6 @@ const ModalCustomQuote: FC<TStore> = inject("store")(
                                     name={ECustomQuoteFieldsNames.address}
                                     onValueChange={(value) =>
                                         setAddressValue(value)
-                                    }
-                                    errorMessage={
-                                        errors[ECustomQuoteFieldsNames.address]
-                                            ?.message
                                     }
                                 />
                                 <FieldTextAreaController

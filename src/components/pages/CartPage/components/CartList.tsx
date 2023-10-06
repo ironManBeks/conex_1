@@ -6,6 +6,7 @@ import ModalConfirm from "@components/modals/components/ModalConfirm";
 import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
 import ProductCartCard from "@components/cards/ProductCartCard";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { IconPoint } from "@components/Icons";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
@@ -17,9 +18,10 @@ const CartList: FC<TSectionTypes> = inject("store")(
         const { builderStore, commonStore } = store as IRoot;
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
-
         const [selected, setSelected] = useState<string[]>([]);
-        const [selectAll, setSelectAll] = useState<boolean>();
+        const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
+
+        const cartElements = builderCartData?.elements;
 
         const handleSelect = (
             id: string | string[] | undefined,
@@ -39,13 +41,13 @@ const CartList: FC<TSectionTypes> = inject("store")(
         };
 
         const deleteElementFromCart = useCallback(() => {
-            if (selected) {
+            if (itemsToDelete) {
                 setElementsToBuilderCard(undefined, {
                     action: "remove",
-                    id: selected,
+                    id: itemsToDelete,
                 });
             }
-        }, [selected]);
+        }, [itemsToDelete]);
 
         const handleDelete = () => {
             setModalConfirmVisible(true);
@@ -55,43 +57,55 @@ const CartList: FC<TSectionTypes> = inject("store")(
             <>
                 <div className={`${classPrefix}__wrapper`}>
                     <div className={`${classPrefix}__head`}>
-                        <FormFieldCheckbox
-                            name={"selectAll"}
-                            errorMessage={undefined}
-                            className={`${classPrefix}_checkbox`}
-                            checked={selectAll}
-                            onChange={() => {
-                                if (
-                                    selected.length !==
-                                    builderCartData?.elements?.length
-                                ) {
-                                    setSelectAll(true);
-                                    handleSelect(
-                                        builderCartData?.elements.map(
-                                            (item) => item.doorId,
-                                        ),
-                                        "add",
-                                    );
-                                } else {
-                                    setSelectAll(false);
-                                    handleSelect(undefined, "clear");
-                                }
-                            }}
-                            label="Select all"
-                        />
-                        {!!selected.length && (
-                            <ButtonPrimary
-                                color={EButtonColor.transparent}
-                                onClick={() => {
-                                    handleDelete();
-                                }}
-                            >
-                                Delete selected
-                            </ButtonPrimary>
+                        {cartElements && (
+                            <div className={`${classPrefix}__weight`}>
+                                {cartElements?.length}{" "}
+                                {cartElements?.length > 1
+                                    ? "products"
+                                    : "product"}{" "}
+                                <IconPoint width={12} height={12} /> Weight -{" "}
+                                <span>36 kg</span>
+                            </div>
                         )}
+                        <div className={`${classPrefix}__select`}>
+                            <FormFieldCheckbox
+                                name={"selectAll"}
+                                errorMessage={undefined}
+                                className={`${classPrefix}_checkbox`}
+                                checked={
+                                    selected.length === cartElements?.length
+                                }
+                                onChange={() => {
+                                    if (
+                                        selected.length !== cartElements?.length
+                                    ) {
+                                        handleSelect(
+                                            cartElements?.map(
+                                                (item) => item.doorId,
+                                            ),
+                                            "add",
+                                        );
+                                    } else {
+                                        handleSelect(undefined, "clear");
+                                    }
+                                }}
+                                label="Select all"
+                            />
+                            {!!selected.length && (
+                                <ButtonPrimary
+                                    color={EButtonColor.transparent}
+                                    onClick={() => {
+                                        handleDelete();
+                                        setItemsToDelete(selected);
+                                    }}
+                                >
+                                    Delete selected
+                                </ButtonPrimary>
+                            )}
+                        </div>
                     </div>
                     <div className={`${classPrefix}__content`}>
-                        {builderCartData?.elements.map((item) => {
+                        {cartElements?.map((item) => {
                             const mainFieldData = item.doorData[0];
                             return (
                                 <ProductCartCard
@@ -106,8 +120,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                         mainFieldData.fields[0]?.elements[0]
                                             .image?.url
                                     }
-                                    deliveryStatus={"null"}
-                                    priceCurrency={"null"}
+                                    priceCurrency={"$."}
                                     select={{
                                         isSelect: !!selected?.includes(
                                             item.doorId,
@@ -119,6 +132,10 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                             );
                                         },
                                     }}
+                                    onDeleteClick={() => {
+                                        handleDelete();
+                                        setItemsToDelete([item.doorId]);
+                                    }}
                                 />
                             );
                         })}
@@ -126,9 +143,10 @@ const CartList: FC<TSectionTypes> = inject("store")(
                 </div>
                 <ModalConfirm
                     title={`Do you want to remove ${
-                        selected.length > 1 ? "doors" : "the door"
+                        itemsToDelete.length > 1 ? "doors" : "the door"
                     } from the cart?`}
                     onConfirm={() => deleteElementFromCart()}
+                    onClose={() => setItemsToDelete([])}
                 />
             </>
         );

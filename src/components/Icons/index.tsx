@@ -10,7 +10,7 @@ import IconEdit from "./common/IconEdit";
 import IconTrash from "./common/IconTrash";
 import IconArrowSingle from "./common/IconArrowSingle";
 import IconCross from "./common/IconCross";
-import IconBankDollar from "./common/IconBankDollar";
+import IconBank from "./common/IconBank";
 import IconCreditCard from "./common/IconCreditCard";
 import IconBurger from "./common/IconBurger";
 import IconEyeOpen from "./common/IconEyeOpen";
@@ -49,7 +49,7 @@ export {
     IconTrash,
     IconArrowSingle,
     IconCross,
-    IconBankDollar,
+    IconBank,
     IconCreditCard,
     IconMastercard,
     IconAmazonPay,

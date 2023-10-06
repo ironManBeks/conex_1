@@ -14,6 +14,7 @@ export type TButtonCommon = {
     value?: string;
     style?: CSSProperties;
     changeSizeOnMobile?: boolean;
+    isOpacity?: boolean;
 };
 
 export type TButtonTypes = {

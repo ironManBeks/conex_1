@@ -1,39 +1,248 @@
 .checkout-page{
-  &_layout__inner-wrapper{
-    padding: 20px 0 100px;
-    .common-title._h2{
-      margin-bottom: 28px;
-      padding-left: 30px;
-      font-size: $font-size-lg-plus;
-      line-height: $line-height-lg;
-      font-family: $font-family-primary;
-      font-weight: 500;
+  &_section{
+    &__wrapper {
+      padding: space(6) space(8);
+      background: $color-primary-strong;
+      border-radius: borderRadius(6);
+      display: flex;
+      flex-direction: column;
+      gap: space(6);
+      .common-title._h3{
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+      }
     }
   }
 
-  &_list{
-    &__wrapper{
-      width: 100%;
-      padding-right: 22px;
+  &_form{
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+
+    .form-field_wrapper{
+      margin-bottom: 0;
     }
-    &__content{
-      padding: 20px 0;
-      background: $color-white;
-      box-shadow: $box-shadow-bs;
-      border-radius: $border-radius-lg;
-      .product-cart-card_wrapper{
-        &:not(:last-of-type){
-          &:before{
-            opacity: 1;
+  }
+
+  &_details{
+    &__fields{
+      display: flex;
+      flex-wrap: wrap;
+      gap: space(5);
+      .form-field_wrapper{
+        width: calc(50% - $space * 5 / 2);
+      }
+    }
+  }
+
+  &_shipping-method{
+    &__select{
+      .form-field_wrapper._radiobuttonarray {
+        .form-field{
+          &_field-wrapper .ant-radio-group{
+            gap: space(5);
+          }
+          &_field{
+            > span:not(.ant-radio-button){
+              display: flex;
+              gap: space(2);
+              color: $text-color-secondary;
+              text-align: left;
+            }
+            .img-custom_wrapper{
+              display: flex;
+              align-items: center;
+              > div {
+                position: unset !important;
+              }
+            }
+            .img-custom_image{
+              width: 100% !important;
+              position: relative !important;
+              height: unset !important;
+              max-height: 24px;
+            }
+          }
+        }
+      }
+    }
+    &__fields{
+      display: flex;
+      flex-direction: column;
+      gap: space(5);
+      iframe{
+        border: 0;
+        border-radius: borderRadius(2);
+      }
+      ._row{
+        display: flex;
+        gap: space(5);
+        .form-field_wrapper{
+          width: calc(50% - $space * 5 / 2);
+        }
+      }
+    }
+  }
+
+  &_payment{
+    &__wrapper{
+      .form-field_wrapper._radiobuttonarray {
+        .form-field{
+          &_field{
+            min-width: auto;
+            > span:not(.ant-radio-button){
+              display: flex;
+              gap: space(2);
+            }
+          }
+        }
+      }
+    }
+
+    &__card-form{
+      margin: 0;
+      padding: 0;
+      background: 0;
+      box-shadow: none;
+      border-radius: 0;
+      .payment-card-form{
+        &_inner{
+          display: flex;
+          flex-direction: column;
+          padding: space(5);
+          border-radius: space(3);
+          border: 1px solid $color-accent-strong;
+          background: $color-accent-40;
+          max-width: 335px;
+          gap: space(3);
+          .form-field_wrapper{
+            margin-bottom: 0;
+          }
+        }
+        &_form{
+          &__sub-fields{
+            margin: 0;
+            .form-field_wrapper{
+              width: calc(50% - $space * 3 /2);
+            }
+          }
+        }
+      }
+    }
+
+    &__discount{
+      display: flex;
+      gap: space(4);
+      .form-field_wrapper{
+        max-width: 330px;
+        width: 100%;
+      }
+    }
+  }
+
+  &_pickup{
+    &__wrapper{
+      ._row{
+        display: flex;
+        gap: space(5);
+        .form-field_wrapper{
+          width: calc(50% - $space * 5 / 2);
+        }
+      }
+      .form-field_wrapper._radiobuttonarray{
+        .form-field_field{
+          width: 100%;
+          padding: space(6) space(8);
+          > span:not(.ant-radio-button){
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            gap: space(5);
+            .common-text{
+              color: $text-color-secondary;
+            }
+          }
+          .pickup{
+            &_info, &_title{
+              display: flex;
+              flex-direction: column;
+              gap: space(1);
+            }
+            &_title{
+              text-align: left;
+            }
+            &_info{
+              text-align: right;
+              flex: 0 0 auto;
+              .common-title{
+                display: flex;
+                align-items: center;
+                justify-content: flex-end;
+                gap: space(2);
+                font-weight: 500;
+              }
+            }
           }
         }
       }
     }
   }
 
-  &_settings{
-    .address-selection_wrapper{
-      margin-bottom: 25px;
+  &_get-mode__wrapper{
+    .form-field_wrapper._radiobuttonarray{
+      .form-field_field{
+        width: calc(50% - $space * 4 / 2);
+        padding: space(4) space(5);
+        > span:not(.ant-radio-button){
+          width: 100%;
+          display: flex;
+          gap: space(3);
+          text-align: left;
+          .icon{
+            position: relative;
+            width: 24px;
+            height: 24px;
+            border: 1px solid $border-color-secondary;
+            border-radius: $border-radius-circle;
+            background-color: transparent;
+            transition: $transition;
+            box-shadow: none;
+            &:after{
+              position: absolute;
+              content: "";
+              top: 50%;
+              left: 50%;
+              border-radius: $border-radius-circle;
+              transform: translate(-50%, -50%) scale(0);
+              margin: 0;
+              background-color: $color-primary-strong;
+              width: 10px;
+              height: 10px;
+              transition: all 0.2s cubic-bezier(0.78, 0.14, 0.15, 0.86);
+            }
+          }
+          .common-title{
+            font-size: $font-size-sm;
+            line-height: $line-height-md;
+          }
+          .common-text{
+            font-size: $font-size-xs;
+            line-height: $line-height-bs;
+            color: $text-color-secondary;
+          }
+        }
+        &._checked{
+          > span:not(.ant-radio-button){
+            .icon{
+              border-color: $color-accent-strong;
+              background-color: $color-accent-strong;
+              &:after{
+                transform: translate(-50%, -50%) scale(1);
+              }
+            }
+          }
+        }
+      }
     }
   }
 

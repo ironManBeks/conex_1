@@ -24,6 +24,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     onClick,
     value,
     changeSizeOnMobile = true,
+    isOpacity,
     style,
 }) => {
     const isMobile = useMediaQuery({
@@ -46,6 +47,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
                     __loading: isLoading,
                     __notText: !children || children === "",
                     __icon: leftIcon || rightIcon,
+                    __opacity: isOpacity,
                 },
             )}
             disabled={disabled}

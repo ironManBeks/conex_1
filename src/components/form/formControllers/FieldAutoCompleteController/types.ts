@@ -4,7 +4,6 @@ import {
     TFormItemLabel,
     TFormShowError,
     TFormWrapperClassName,
-    TFormWrapperErrorMessage,
 } from "@components/form/FormItemWrapper/types";
 
 export type TFieldAutoCompleteController = {
@@ -16,7 +15,6 @@ export type TFieldAutoCompleteController = {
     icon?: ReactNode;
     fieldLabel?: ReactNode;
 } & AutoCompleteProps &
-    TFormWrapperClassName &
     TFormItemLabel &
-    TFormWrapperErrorMessage &
+    TFormWrapperClassName &
     TFormShowError;

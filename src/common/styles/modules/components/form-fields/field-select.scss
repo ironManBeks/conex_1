@@ -24,7 +24,7 @@
           &:hover, &:focus{
             box-shadow: none;
             &:not([disabled]){
-              border-color: $icon-color-secondary-active;
+              border-color: $border-color-secondary-active;
             }
           }
           &:after{
@@ -102,7 +102,7 @@
       }
       &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
         box-shadow: none;
-        border-color: $icon-color-secondary-active;
+        border-color: $border-color-secondary-active;
       }
       &._disabled{
         .ant-select{
