@@ -23,6 +23,7 @@ const AccountPage: FC<TStore> = inject("store")(
         const { authStore } = store as IRoot;
         const { authRequestFetching, logOut } = authStore;
         const [tokenState, setTokenState] = useState<string>();
+        const [loading, setLoading] = useState(true);
         const classPrefix = "account-page";
 
         const token = getStorage(JWT_TOKEN) as string;
@@ -31,6 +32,7 @@ const AccountPage: FC<TStore> = inject("store")(
             if (token) {
                 setTokenState(token);
             }
+            setLoading(false);
         }, [token]);
 
         const wrapperStyles = {
@@ -42,18 +44,10 @@ const AccountPage: FC<TStore> = inject("store")(
         };
 
         const accountContent = useMemo(() => {
-            if (authRequestFetching) {
+            if (authRequestFetching || loading) {
                 return (
                     <div style={wrapperStyles}>
                         <Spin size="large" />
-                    </div>
-                );
-            }
-
-            if (isNil(tokenState)) {
-                return (
-                    <div style={wrapperStyles}>
-                        <AuthForm className={classPrefix} />
                     </div>
                 );
             }
@@ -64,6 +58,14 @@ const AccountPage: FC<TStore> = inject("store")(
                         <AccountMenu pageClassPrefix={classPrefix} />
                         <AccountContent pageClassPrefix={classPrefix} />
                     </>
+                );
+            }
+
+            if (isNil(tokenState)) {
+                return (
+                    <div style={wrapperStyles}>
+                        <AuthForm className={classPrefix} />
+                    </div>
                 );
             }
 
@@ -90,7 +92,7 @@ const AccountPage: FC<TStore> = inject("store")(
                     </div>
                 </div>
             );
-        }, [authRequestFetching, tokenState]);
+        }, [authRequestFetching, tokenState, loading]);
 
         return (
             <Layout pageClassPrefix={classPrefix}>

@@ -113,15 +113,15 @@
       }
       &__list{
         gap: space(5);
-      }
-      &__item {
-        &._wrapper {
-          width: 100%;
-          max-width: 100%;
-        }
-        &._info{
-          .common-text{
-            flex-wrap: wrap;
+        .payment-card{
+          &_wrapper{
+            width: 100%;
+            max-width: 100%;
+          }
+          &_info{
+            .common-text{
+              flex-wrap: wrap;
+            }
           }
         }
       }

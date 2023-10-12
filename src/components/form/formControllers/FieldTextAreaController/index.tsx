@@ -1,14 +1,12 @@
-import React, { FC, useRef, useState } from "react";
+import React, { FC, useEffect, useRef, useState } from "react";
 import { Input as AntInput } from "antd";
 import { TextAreaRef } from "antd/lib/input/TextArea";
-
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-
 import { EFormFieldType } from "@components/form/types";
 import { TFieldTextAreaController } from "./types";
 
@@ -31,12 +29,14 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
     const {
         control,
         formState: { errors },
+        watch,
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const fieldRef = useRef<TextAreaRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
     const [letterCount, setLetterCount] = useState(0);
+    const fieldValue = watch(name);
 
     const focusOnField = () => {
         if (fieldRef.current) {
@@ -44,24 +44,20 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
         }
     };
 
-    // useEffect(() => {
-    //     if (formState?.defaultValues) {
-    //         const currentValue = formState.defaultValues[name];
-    //         setLetterCount(currentValue?.length || 0);
-    //     }
-    // }, [formState?.defaultValues]);
+    useEffect(() => {
+        setLetterCount(fieldValue.length || 0);
+        if (fieldValue) {
+            setIsLabelActive(true);
+        } else if (!focus && !fieldValue) {
+            setIsLabelActive(false);
+        }
+    }, [fieldValue, focus]);
 
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                setLetterCount(field.value?.length || 0);
-                if (field.value) {
-                    setIsLabelActive(true);
-                } else if (!focus && !field.value) {
-                    setIsLabelActive(false);
-                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.textArea}

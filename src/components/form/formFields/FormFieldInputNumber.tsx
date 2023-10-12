@@ -20,19 +20,26 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
         min,
         max,
         isFloatingLabel,
+        defaultValue,
         ...rest
     } = props;
 
     const sideButtonContent = isObject(sideButtons) ? sideButtons : null;
     const [fieldValue, setFieldValue] = useState<number>(
-        isNumber(min) ? min : 0,
+        isNumber(defaultValue) ? defaultValue : isNumber(min) ? min : 0,
     );
 
-    useEffect(() => {
+    // useEffect(() => {
+    //     if (isFunction(onValueChange)) {
+    //         onValueChange(fieldValue);
+    //     }
+    // }, [fieldValue]);
+
+    const handleValueChange = (val: number) => {
         if (isFunction(onValueChange)) {
-            onValueChange(fieldValue);
+            onValueChange(val);
         }
-    }, [fieldValue]);
+    };
 
     return (
         <FormItemWrapper
@@ -47,7 +54,11 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
             {sideButtons && (
                 <button
                     onClick={() => {
-                        setFieldValue((oldVal) => oldVal - 1);
+                        setFieldValue((oldVal) => {
+                            const newValue = oldVal - 1;
+                            handleValueChange(newValue);
+                            return newValue;
+                        });
                         if (isFunction(sideButtonContent?.beforeButtonClick)) {
                             sideButtonContent?.beforeButtonClick();
                         }
@@ -76,7 +87,8 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
                 onChange={(val) => {
                     if (isNumber(val)) {
                         setFieldValue(val);
-                    } else setFieldValue(0);
+                        handleValueChange(val);
+                    } else handleValueChange(0);
                 }}
                 controls={
                     !sideButtons
@@ -98,7 +110,11 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
             {sideButtons && (
                 <button
                     onClick={() => {
-                        setFieldValue((oldVal) => oldVal + 1);
+                        setFieldValue((oldVal) => {
+                            const newValue = oldVal + 1;
+                            handleValueChange(newValue);
+                            return newValue;
+                        });
                         if (isFunction(sideButtonContent?.afterButtonClick)) {
                             sideButtonContent?.afterButtonClick();
                         }

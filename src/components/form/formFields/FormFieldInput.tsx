@@ -1,10 +1,11 @@
-import { FC } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Input } from "antd";
 
 import { EFormFieldType, TFormFieldInput } from "../types";
 import cn from "classnames";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import FormItemWrapper from "../FormItemWrapper";
+import { isFunction } from "lodash";
 
 const FormFieldInput: FC<TFormFieldInput> = (props) => {
     const {
@@ -14,8 +15,20 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
         errorMessage,
         showError,
         isFloatingLabel,
+        addonAfter,
+        onAddonClick,
+        minAddonWidth,
+        addonDisabled,
         ...rest
     } = props;
+    const addonAfterRef = useRef<HTMLDivElement>(null);
+    const [addonAfterWidth, setAddonAfterWidth] = useState<number>(0);
+
+    useEffect(() => {
+        if (addonAfterRef?.current?.clientHeight) {
+            setAddonAfterWidth(addonAfterRef.current.clientHeight);
+        }
+    }, [addonAfterRef?.current?.clientHeight]);
 
     return (
         <FormItemWrapper
@@ -28,12 +41,34 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
             })}
         >
             <Input
+                {...rest}
                 className={cn(
                     `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                     className,
                 )}
-                {...rest}
+                style={{
+                    paddingRight: addonAfterWidth
+                        ? `${addonAfterWidth + 10}px`
+                        : undefined,
+                }}
             />
+            {addonAfter && (
+                <div
+                    className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_addonafter`, {
+                        _click: isFunction(onAddonClick),
+                        _disable: addonDisabled,
+                    })}
+                    ref={addonAfterRef}
+                    onClick={(e) => {
+                        if (isFunction(onAddonClick) && !addonDisabled) {
+                            onAddonClick(e);
+                        }
+                    }}
+                    style={{ minWidth: minAddonWidth }}
+                >
+                    {addonAfter}
+                </div>
+            )}
         </FormItemWrapper>
     );
 };

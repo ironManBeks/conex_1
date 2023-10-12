@@ -1,0 +1,54 @@
+
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .checkout-page{
+    &_shipping-method__select{
+      .form-field_wrapper._radiobuttonarray .form-field_field{
+        width: max-content;
+        justify-content: flex-start;
+      }
+    }
+    &_payment__wrapper{
+      .form-field_wrapper._radiobuttonarray {
+        .form-field_field{
+          width: max-content;
+        }
+        .form-field_field-wrapper .ant-radio-group{
+          flex-direction: column;
+        }
+      }
+    }
+    &_additional-services__wrapper{
+      .form-field_wrapper._checkboxarray .form-field_field-wrapper .ant-checkbox-group{
+        flex-direction: column !important;
+      }
+    }
+  }
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .checkout-page{
+
+    &_section__wrapper{
+      padding: space(6) space(5);
+    }
+
+    &_get-mode__wrapper{
+      padding: 0 space(5);
+      .form-field_wrapper._radiobuttonarray .form-field_field{
+        width: 100%;
+      }
+    }
+
+    &_details__fields{
+      .form-field_wrapper{
+        width: 100%;
+      }
+    }
+
+
+  }
+
+}

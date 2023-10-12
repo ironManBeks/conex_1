@@ -1,0 +1,123 @@
+.modal-map-pickup{
+
+  .ant-modal{
+    &-body{
+      height: 100%;
+      .common-modal{
+        &_content__wrapper{
+          height: 100%;
+        }
+        &_body__wrapper{
+          height: 100%;
+        }
+        &_close{
+          z-index: 10;
+          width: space(12);
+          height: space(12);
+          opacity: 1;
+          background: $color-secondary-120;
+          .common-icon{
+            fill: $color-primary-strong;
+            width: space(9);
+            height: space(9);
+          }
+          &:hover{
+            background: $color-secondary-360;
+          }
+        }
+      }
+    }
+  }
+
+  &_sidebar{
+    &__wrapper{
+      position: relative;
+      width: 100%;
+      max-width: 440px;
+      background: $color-primary-strong;
+      border-radius: borderRadius(6);
+      height: 100%;
+      z-index: 3;
+      display: flex;
+      flex-direction: column;
+    }
+    &__header{
+      padding: space(8) space(7) space(0);
+      .common-title{
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+        margin-bottom: space(3);
+      }
+      .common-text{
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        color: $text-color-secondary;
+      }
+    }
+    &__form{
+      padding: space(5);
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: space(10);
+      .form-field_wrapper{
+        margin-bottom: 0;
+        &._input{
+          flex: 0 0 auto;
+        }
+        &._radiobuttonarray{
+          flex: 1 1 auto;
+          display: flex;
+          overflow-y: auto;
+          padding-right: space(5);
+          gap: 0;
+          .form-field{
+            &_field-wrapper{
+              .ant-radio-group{
+                gap: 0;
+              }
+            }
+            &_field{
+              border-left: 0;
+              border-right: 0;
+              border-radius: 0;
+              padding: space(5);
+              .pickup-point{
+                &_wrapper{
+                  flex-direction: column;
+                  gap: space(5);
+                }
+                &_details{
+                  flex-direction: row;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    &__actions{
+      flex: 0 0 auto;
+      margin-top: auto;
+      padding: space(5) space(7) space(7);
+      .common-btn{
+        width: 100%;
+      }
+    }
+  }
+
+  &_map__wrapper{
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 2;
+  }
+
+}
+
+.leaflet-container{
+  width: 100%;
+  height: 100%;
+}

@@ -5,6 +5,7 @@
     justify-content: center;
   }
   &_overlay{
+    max-width: 300px;
     &.ant-tooltip{
       &-placement-topLeft{
         .ant-tooltip {
@@ -18,18 +19,19 @@
     .ant-tooltip{
       &-inner{
         background: $color-primary-strong;
-        border-radius: $border-radius-bs;
-        padding: space(2) space(4);
+        border-radius: borderRadius(1);
+        padding: space(1) space(3);
         font-size: $font-size-sm;
-        line-height: $line-height-bs;
+        line-height: $line-height-md;
         color: $text-color-primary;
         font-weight: 500;
-        box-shadow: $box-shadow-bs;
+        box-shadow: 0px -2px 12px 0px rgba(18, 18, 18, 0.08);
+        max-width: 300px;
         .common-text{
           margin-top: 0;
         }
       }
-      &-arrow-content{
+      &-arrow{
         &:before{
           background: $color-primary-strong;
         }

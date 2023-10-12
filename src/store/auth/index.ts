@@ -12,9 +12,9 @@ import {
     IAuthStore,
     TAccountOrderItem,
     TAuthData,
-    TAuthPaymentCard,
     TEmailConfirmationResponse,
     TResetPasswordRequest,
+    TUserCartItem,
     TUserData,
 } from "./types";
 import { JWT_TOKEN, JWT_TOKEN_EXP } from "@consts/storageNamesContsts";
@@ -26,25 +26,34 @@ import {
     UserCardsDataMockup,
     UserDataMockup,
 } from "../../mockups/AuthDataMockup";
-import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
 import { AccountOrdersMockup } from "../../mockups/AccountOrdersListMockup";
+import { UserCartDataMockup } from "../../mockups/UserCartDataMockup";
+import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
+import { TPaymentCard } from "@components/globalComponents/types";
 
 export class AuthStore implements IAuthStore {
+    isAuthorized: boolean = false;
     authData: TNullable<TAuthData> = null;
     authRequestFetching = false;
     userData: TNullable<TUserData> = null;
     userDataFetching = false;
-    userCardsData: TNullable<TAuthPaymentCard[]> = null;
+    userCardsData: TNullable<TPaymentCard[]> = null;
     userCardsDataFetching = true;
-    selectedCard: TNullable<TAuthPaymentCard> = null;
+    selectedCard: TNullable<TPaymentCard> = null;
     userOrdersData: TNullable<TAccountOrderItem[]> = null;
     userOrdersDataFetching = true;
+    userCartData: TNullable<TUserCartItem[]> = null;
+    userCartDataFetching: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
     }
 
     ////////////////////////////////////
+    setIsAuthorized = (value: boolean) => {
+        this.isAuthorized = value;
+    };
+
     setAuthData = (data: TNullable<TAuthData>): void => {
         this.authData = data;
         if (!isNil(data)) {
@@ -61,6 +70,9 @@ export class AuthStore implements IAuthStore {
     };
 
     setUserData = (data: TNullable<TUserData>): void => {
+        if (data) {
+            this.setIsAuthorized(true);
+        } else this.setIsAuthorized(false);
         this.userData = data;
     };
 
@@ -68,11 +80,11 @@ export class AuthStore implements IAuthStore {
         this.userDataFetching = value;
     };
 
-    setSelectedCard = (data: TAuthPaymentCard | null): void => {
+    setSelectedCard = (data: TPaymentCard | null): void => {
         this.selectedCard = data;
     };
 
-    setUserCardsData = (data: TNullable<TAuthPaymentCard[]>): void => {
+    setUserCardsData = (data: TNullable<TPaymentCard[]>): void => {
         this.userCardsData = data;
     };
 
@@ -86,6 +98,14 @@ export class AuthStore implements IAuthStore {
 
     setUserOrdersDataFetching = (value: boolean): void => {
         this.userOrdersDataFetching = value;
+    };
+
+    setUserCartData = (data: TNullable<TUserCartItem[]>): void => {
+        this.userCartData = data;
+    };
+
+    setUserCartDataFetching = (value: boolean): void => {
+        this.userCartDataFetching = value;
     };
 
     ///
@@ -245,11 +265,11 @@ export class AuthStore implements IAuthStore {
             });
     };
 
-    getUserCardsData = (): Promise<AxiosResponse<TAuthPaymentCard[]>> => {
+    getUserCardsData = (): Promise<AxiosResponse<TPaymentCard[]>> => {
         this.setUserCardsDataFetching(true);
         return axiosInstance
             .get("/user/cards")
-            .then((response: AxiosResponse<TAuthPaymentCard[]>) => {
+            .then((response: AxiosResponse<TPaymentCard[]>) => {
                 // const { data } = response;
                 // this.setUserCardsData(data);
                 return response;
@@ -282,9 +302,30 @@ export class AuthStore implements IAuthStore {
                 throw err;
             })
             .finally(() => {
-                console.log("status", status);
                 this.setUserOrdersData(AccountOrdersMockup[status]);
                 this.setUserOrdersDataFetching(false);
+            });
+    };
+
+    getUserCartData = (): Promise<AxiosResponse<TUserCartItem[]>> => {
+        this.setUserCartDataFetching(true);
+        return axiosInstance
+            .get("/user/cart")
+            .then((response: AxiosResponse<TUserCartItem[]>) => {
+                // const { data } = response;
+                // this.setUserCartData(data);
+                return response;
+            })
+            .catch((err) => {
+                // ToDo turn on !
+                // showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setUserCartData(UserCartDataMockup);
+                setTimeout(() => {
+                    this.setUserCartDataFetching(false);
+                }, 300);
             });
     };
 

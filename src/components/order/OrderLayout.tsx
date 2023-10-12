@@ -1,15 +1,16 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 
 import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
 import { H2 } from "@components/Text";
+import Spin from "@components/globalComponents/Spin";
 import OrderEmpty from "./OrderEmpty";
+import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
-import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
-import Spin from "@components/globalComponents/Spin";
+import { ProductPriceParamsMockup } from "../../mockups/ProductPriceMockup";
 
 const OrderLayout: FC<
     {
@@ -26,9 +27,25 @@ const OrderLayout: FC<
             leftSideContent,
             rightSideContent,
         }) => {
-            const { builderStore, authStore } = store as IRoot;
+            const { builderStore, authStore, productsStore } = store as IRoot;
             const { builderCartData } = builderStore;
-            const { userDataFetching } = authStore;
+            const { getProductPrice } = productsStore;
+            const {
+                userDataFetching,
+                userCartDataFetching,
+                isAuthorized,
+                getUserCartData,
+            } = authStore;
+
+            useEffect(() => {
+                if (isAuthorized) {
+                    getUserCartData();
+                }
+            }, [isAuthorized]);
+
+            useEffect(() => {
+                getProductPrice(ProductPriceParamsMockup);
+            }, []);
 
             const content = (
                 <Container flexDirection="column">
@@ -61,7 +78,7 @@ const OrderLayout: FC<
                     pageClassPrefix={pageClassPrefix}
                     layoutClassName={ORDER_PAGE_CLASSPREFIX}
                 >
-                    {userDataFetching ? (
+                    {userDataFetching || userCartDataFetching ? (
                         <Container flexJustifyContent="center">
                             <Spin size="large" />
                         </Container>

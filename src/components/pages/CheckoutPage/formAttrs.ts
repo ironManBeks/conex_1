@@ -36,7 +36,6 @@ export enum ECheckoutFormFieldsNames {
     pickupPoints = "pickupPoints",
     // Payment
     paymentMethod = "paymentMethod",
-    discountCode = "discountCode",
     // Additional services
     additionalServices = "additionalServices",
 }
@@ -54,8 +53,8 @@ export type TCheckoutFormDetails = {
 };
 
 export type TCheckoutFormShipping = {
-    [ECheckoutFormFieldsNames.deliveryService]: string;
-    [ECheckoutFormFieldsNames.state]: string;
+    [ECheckoutFormFieldsNames.deliveryService]?: string;
+    [ECheckoutFormFieldsNames.state]?: string;
     [ECheckoutFormFieldsNames.city]: string;
     [ECheckoutFormFieldsNames.streetAddress]: string;
     [ECheckoutFormFieldsNames.commentsOrder]?: string;
@@ -63,7 +62,6 @@ export type TCheckoutFormShipping = {
 
 export type TCheckoutFormPayment = {
     [ECheckoutFormFieldsNames.paymentMethod]: string;
-    [ECheckoutFormFieldsNames.discountCode]?: string;
 };
 
 export type TCheckoutFormAdditionalServices = {
@@ -95,7 +93,6 @@ export const checkoutFormDefaultValues = (
         [ECheckoutFormFieldsNames.commentsOrder]: "",
         //
         [ECheckoutFormFieldsNames.paymentMethod]: "",
-        [ECheckoutFormFieldsNames.discountCode]: "",
         //
         [ECheckoutFormFieldsNames.additionalServices]: [],
     };
@@ -117,13 +114,11 @@ export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
             [ECheckoutFormFieldsNames.receiveNews]: yup
                 .boolean()
                 .required(requiredText),
-            [ECheckoutFormFieldsNames.deliveryService]: yup
-                .string()
-                .required(requiredText),
+            [ECheckoutFormFieldsNames.deliveryService]: yup.string(),
             [ECheckoutFormFieldsNames.state]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
-                .required(requiredText)
+                // .required(requiredText)
                 .trim(),
             [ECheckoutFormFieldsNames.city]: yup
                 .string()
@@ -146,8 +141,9 @@ export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
                     ),
                 )
                 .trim(),
-            [ECheckoutFormFieldsNames.paymentMethod]: yup.string().required(),
-            [ECheckoutFormFieldsNames.discountCode]: yup.string(),
+            [ECheckoutFormFieldsNames.paymentMethod]: yup
+                .string()
+                .required(requiredText),
             [ECheckoutFormFieldsNames.additionalServices]: yup
                 .array()
                 .of(yup.string().required(requiredText))

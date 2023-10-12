@@ -13,8 +13,7 @@ import ProductCardList from "../components/ProductCardList";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { PRODUCT_CARD_CLASSNAME } from "../consts";
-import { cutText } from "@helpers/textHelpers";
-import { TProductCartCard, TProductInfoListItem } from "../types";
+import { TProductCartCard } from "../types";
 import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
 import { EButtonColor } from "@components/buttons/types";
 
@@ -23,21 +22,14 @@ const ProductCartCard: FC<TProductCartCard> = ({
     className,
     title,
     price,
-    priceCurrency,
-    material,
-    size,
-    color,
-    imageSrc,
+    img,
     select,
     onDeleteClick,
+    options,
+    count,
+    onCountChange,
 }) => {
     const classPrefix = "product-cart-card";
-
-    const optionsList: TProductInfoListItem[] = [
-        { label: "Material", value: cutText(material, 12) },
-        { label: "Size", value: cutText(size, 12) },
-        { label: "Color", value: cutText(color, 12) },
-    ];
 
     const isMobile = useMediaQuery({
         minWidth: mediaBreakpoints.xsMedia,
@@ -45,6 +37,41 @@ const ProductCartCard: FC<TProductCartCard> = ({
     });
 
     const titleContent = <ProductCardTitle title={title} letterLimit={40} />;
+
+    const detailsActionsContent = isFunction(onDeleteClick) && (
+        <div className={`${classPrefix}_details__actions`}>
+            <ButtonPrimary
+                leftIcon={
+                    <IconTrash
+                        width={isMobile ? 24 : undefined}
+                        height={isMobile ? 24 : undefined}
+                    />
+                }
+                color={EButtonColor.transparent}
+                onClick={onDeleteClick}
+                isOpacity={true}
+            >
+                {!isMobile && "Delete"}
+            </ButtonPrimary>
+        </div>
+    );
+
+    const countFieldContent = (
+        <FormFieldInputNumber
+            name={"count"}
+            errorMessage={undefined}
+            isFloatingLabel={false}
+            sideButtons={true}
+            onValueChange={(val) => {
+                if (isFunction(onCountChange)) {
+                    onCountChange(val);
+                }
+            }}
+            defaultValue={count}
+            min={1}
+            max={100}
+        />
+    );
 
     return (
         <div
@@ -69,45 +96,24 @@ const ProductCartCard: FC<TProductCartCard> = ({
                         />
                     </div>
                 )}
-                {imageSrc && (
+                {img && (
                     <ImgWrapper
-                        src={imageSrc}
+                        src={img}
                         wrapperClassName={`${classPrefix}_image__wrapper`}
                         alt="Product image"
                     />
                 )}
                 <div className={`${classPrefix}_details__wrapper`}>
                     {titleContent}
-                    <ProductCardList optionsList={optionsList} />
-                    {isFunction(onDeleteClick) && (
-                        <div>
-                            <ButtonPrimary
-                                leftIcon={<IconTrash />}
-                                color={EButtonColor.transparent}
-                                onClick={onDeleteClick}
-                                isOpacity={true}
-                            >
-                                Delete
-                            </ButtonPrimary>
-                        </div>
-                    )}
+                    {isMobile && price && <H5>${price}</H5>}
+                    {!isMobile && <ProductCardList optionsList={options} />}
+                    {!isMobile && detailsActionsContent}
+                    {isMobile && countFieldContent}
                 </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
-                    {price && (
-                        <H5>
-                            {priceCurrency}
-                            {price}
-                        </H5>
-                    )}
-                    {isMobile && titleContent}
-                    <FormFieldInputNumber
-                        name={"count"}
-                        errorMessage={undefined}
-                        isFloatingLabel={false}
-                        sideButtons={true}
-                        min={1}
-                        max={100}
-                    />
+                    {!isMobile && price && <H5>${price}</H5>}
+                    {!isMobile && countFieldContent}
+                    {isMobile && detailsActionsContent}
                 </div>
             </div>
         </div>

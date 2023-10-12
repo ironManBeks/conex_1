@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { isString, uniq } from "lodash";
+import { debounce, isString, uniq } from "lodash";
 
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
@@ -11,17 +11,20 @@ import { IconPoint } from "@components/Icons";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
+import { TProductCartCard } from "@components/cards/types";
+import { ProductPriceParamsMockup } from "../../../../mockups/ProductPriceMockup";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_list`;
-        const { builderStore, commonStore } = store as IRoot;
+        const { builderStore, commonStore, authStore, productsStore } =
+            store as IRoot;
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
+        const { isAuthorized, userCartData } = authStore;
+        const { setProductPriceFetching, getProductPrice } = productsStore;
         const [selected, setSelected] = useState<string[]>([]);
         const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
-
-        const cartElements = builderCartData?.elements;
 
         const handleSelect = (
             id: string | string[] | undefined,
@@ -53,18 +56,64 @@ const CartList: FC<TSectionTypes> = inject("store")(
             setModalConfirmVisible(true);
         };
 
+        const getCartList = useCallback((): TProductCartCard[] => {
+            // ToDo turn on !
+            // if (isAuthorized && userCartData) {
+            //     return userCartData;
+            // }
+
+            if (builderCartData?.elements) {
+                return builderCartData.elements.map((item) => ({
+                    id: item.doorId,
+                    title: `title _id: ${item.doorId}`,
+                    price: 438,
+                    img:
+                        item.doorData[0].fields[0]?.elements[0].image?.url ||
+                        "",
+
+                    options: [
+                        {
+                            title: "Material",
+                            value: "wood",
+                        },
+                        {
+                            title: "Size",
+                            value: "20*20",
+                        },
+                        {
+                            title: "Color",
+                            value: "silver",
+                        },
+                    ],
+                    count: 1,
+                    createDate: "2023-08-30T09:34:14.281Z",
+                }));
+            }
+            return [];
+        }, [isAuthorized, builderCartData, userCartData]);
+
+        const cartList = getCartList();
+
+        const handleCountChange = (id: string, count: number) => {
+            console.log("id", count, "__________", id);
+            getProductPrice(ProductPriceParamsMockup);
+        };
+
+        const debounceLoadData = useCallback(
+            debounce(handleCountChange, 600),
+            [],
+        );
+
         return (
             <>
                 <div className={`${classPrefix}__wrapper`}>
                     <div className={`${classPrefix}__head`}>
-                        {cartElements && (
+                        {cartList && (
                             <div className={`${classPrefix}__weight`}>
-                                {cartElements?.length}{" "}
-                                {cartElements?.length > 1
-                                    ? "products"
-                                    : "product"}{" "}
+                                {cartList.length}{" "}
+                                {cartList.length > 1 ? "products" : "product"}{" "}
                                 <IconPoint width={12} height={12} /> Weight -{" "}
-                                <span>36 kg</span>
+                                <span>{cartList.length * 4} kg</span>
                             </div>
                         )}
                         <div className={`${classPrefix}__select`}>
@@ -72,17 +121,11 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                 name={"selectAll"}
                                 errorMessage={undefined}
                                 className={`${classPrefix}_checkbox`}
-                                checked={
-                                    selected.length === cartElements?.length
-                                }
+                                checked={selected.length === cartList.length}
                                 onChange={() => {
-                                    if (
-                                        selected.length !== cartElements?.length
-                                    ) {
+                                    if (selected.length !== cartList.length) {
                                         handleSelect(
-                                            cartElements?.map(
-                                                (item) => item.doorId,
-                                            ),
+                                            cartList?.map((item) => item.id),
                                             "add",
                                         );
                                     } else {
@@ -105,40 +148,29 @@ const CartList: FC<TSectionTypes> = inject("store")(
                         </div>
                     </div>
                     <div className={`${classPrefix}__content`}>
-                        {cartElements?.map((item) => {
-                            const mainFieldData = item.doorData[0];
-                            return (
-                                <ProductCartCard
-                                    key={item.doorId}
-                                    id={item.doorId}
-                                    title={`title _id: ${item.doorId}`}
-                                    material={"material"}
-                                    size={"size"}
-                                    color={"color"}
-                                    price={123}
-                                    imageSrc={
-                                        mainFieldData.fields[0]?.elements[0]
-                                            .image?.url
-                                    }
-                                    priceCurrency={"$."}
-                                    select={{
-                                        isSelect: !!selected?.includes(
-                                            item.doorId,
-                                        ),
-                                        onSelectChange: (id, val) => {
-                                            handleSelect(
-                                                id,
-                                                val ? "add" : "remove",
-                                            );
-                                        },
-                                    }}
-                                    onDeleteClick={() => {
-                                        handleDelete();
-                                        setItemsToDelete([item.doorId]);
-                                    }}
-                                />
-                            );
-                        })}
+                        {cartList.map((item) => (
+                            <ProductCartCard
+                                {...item}
+                                key={item.id}
+                                select={{
+                                    isSelect: !!selected?.includes(item.id),
+                                    onSelectChange: (id, value) => {
+                                        handleSelect(
+                                            id,
+                                            value ? "add" : "remove",
+                                        );
+                                    },
+                                }}
+                                onDeleteClick={() => {
+                                    handleDelete();
+                                    setItemsToDelete([item.id]);
+                                }}
+                                onCountChange={(value) => {
+                                    setProductPriceFetching(true);
+                                    debounceLoadData(item.id, value);
+                                }}
+                            />
+                        ))}
                     </div>
                 </div>
                 <ModalConfirm

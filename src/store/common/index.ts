@@ -7,12 +7,12 @@ export class CommonStore implements ICommonStore {
     headerHeight = 0;
     urlParams: TUrlParams = {};
     // Modals and Drawers
-    // ToDo remove type any
     confirmModalData: TNullable<unknown> = null;
     modalConfirmVisible = false;
     modalAuthVisible = false;
     modalCustomQuoteVisible = false;
     modalCardBindingVisible = false;
+    modalMapPickupVisible = false;
     headerDrawerVisible = false;
     builderDrawerVisible = false;
 
@@ -51,7 +51,6 @@ export class CommonStore implements ICommonStore {
     //  ***____***____***____
     //  ***____ Modals and Drawers
     // ***____***____***____
-    // ToDo remove type any
     setConfirmModalData = (confirmModalData: TNullable<unknown>): void => {
         this.confirmModalData = confirmModalData;
     };
@@ -70,6 +69,10 @@ export class CommonStore implements ICommonStore {
 
     setModalCardBindingVisible = (value: boolean): void => {
         this.modalCardBindingVisible = value;
+    };
+
+    setModalMapPickupVisible = (value: boolean): void => {
+        this.modalMapPickupVisible = value;
     };
 
     setHeaderDrawerVisible = (value: boolean): void => {

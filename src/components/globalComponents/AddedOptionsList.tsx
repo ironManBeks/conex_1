@@ -36,15 +36,18 @@ const AddedOptionsList: FC<TAddedOptionsList> = ({
                             </H4>
                         )}
                         <div className={`${classPrefix}_item__list`}>
-                            {item.list.map((subItem, subIndex) => (
-                                <div
-                                    key={subIndex}
-                                    className={`${classPrefix}_sub-item__wrapper`}
-                                >
-                                    <H5>{subItem.label}</H5>
-                                    <P>{subItem.value}</P>
-                                </div>
-                            ))}
+                            {item.list.map(
+                                (subItem, subIndex) =>
+                                    subItem && (
+                                        <div
+                                            key={subIndex}
+                                            className={`${classPrefix}_sub-item__wrapper`}
+                                        >
+                                            <H5>{subItem.label}</H5>
+                                            <P>{subItem.value}</P>
+                                        </div>
+                                    ),
+                            )}
                         </div>
                     </div>
                 ) : null;

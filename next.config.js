@@ -6,6 +6,10 @@ module.exports = withPlugins([], {
     swcMinify: true,
     forceSwcTransforms: true,
     optimizeFonts: true,
+    i18n: {
+        locales: ["en"],
+        defaultLocale: "en",
+    },
     images: {
         unoptimized: true,
         remotePatterns: [

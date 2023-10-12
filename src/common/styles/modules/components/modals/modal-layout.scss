@@ -30,23 +30,37 @@
 
   &_inner-wrapper.ant-modal{
     z-index: $z-index-modal-content;
+    margin: 0 auto;
+    width: 100% !important;
     &.size {
       &-sm {
-        width: 375px !important;
+        max-width: 375px !important;
       }
       &-md {
-        width: 420px !important;
+        max-width: 420px !important;
       }
       &-lg {
-        width: 600px !important;
+        max-width: 600px !important;
       }
       &-xl {
-        width: 800px !important;
+        max-width: 800px !important;
+      }
+      &-full{
+        width: 100% !important;
+        max-width: 100%;
+        margin: 0;
+        padding: 0;
+        .ant-modal-content{
+          height: 100%;
+          box-shadow: none;
+          border-radius: 0;
+          padding: space(10);
+        }
       }
     }
     .ant-modal-content{
       overflow: hidden;
-      border-radius: $border-radius-lg;
+      border-radius: borderRadius(4);
       box-shadow: $box-shadow-md;
       padding: space(5);
     }

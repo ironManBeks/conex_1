@@ -1,4 +1,5 @@
-import { TAuthPaymentCard, TUserData } from "@store/auth/types";
+import { TPaymentCard } from "@components/globalComponents/types";
+import { TUserData } from "@store/auth/types";
 
 export const UserDataMockup: TUserData = {
     name: "John",
@@ -11,7 +12,7 @@ export const UserDataMockup: TUserData = {
     index: "481001",
 };
 
-export const UserCardsDataMockup: TAuthPaymentCard[] = [
+export const UserCardsDataMockup: TPaymentCard[] = [
     {
         id: "id1",
         cvv: "333",

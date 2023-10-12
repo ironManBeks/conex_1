@@ -82,6 +82,11 @@
         }
       }
     }
+    &__actions{
+      .common-btn{
+        width: 100%;
+      }
+    }
   }
 
   &_payment{
@@ -96,6 +101,10 @@
             }
           }
         }
+      }
+      .payment-card-form_actions{
+        justify-content: flex-start;
+        gap: space(5);
       }
     }
 
@@ -162,28 +171,13 @@
               color: $text-color-secondary;
             }
           }
-          .pickup{
-            &_info, &_title{
-              display: flex;
-              flex-direction: column;
-              gap: space(1);
-            }
-            &_title{
-              text-align: left;
-            }
-            &_info{
-              text-align: right;
-              flex: 0 0 auto;
-              .common-title{
-                display: flex;
-                align-items: center;
-                justify-content: flex-end;
-                gap: space(2);
-                font-weight: 500;
-              }
-            }
-          }
         }
+      }
+    }
+
+    &__actions{
+      .common-btn{
+        width: 100%;
       }
     }
   }

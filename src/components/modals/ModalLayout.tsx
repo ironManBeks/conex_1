@@ -66,7 +66,7 @@ const ModalLayout: React.FC<TModalLayout> = ({
             className={cn(`${classPrefix}_inner-wrapper`, modalSize)}
             wrapClassName={cn(`${classPrefix}_wrapper`, wrapperClassName)}
             maskStyle={maskStyles}
-            style={wrapperStyles}
+            style={{ ...wrapperStyles }}
             forceRender={forceRender}
             closeIcon={<IconCross />}
         >

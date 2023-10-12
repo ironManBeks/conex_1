@@ -132,6 +132,9 @@
     svg path {
       fill: $icon-color-primary;
     }
+    .common-spin.ant-spin .ant-spin-dot-item{
+      background-color: $icon-color-primary;
+    }
     &.__disabled{
       &:not(.__loading){
         background: $color-secondary-40;

@@ -28,4 +28,5 @@ export enum EModalSize {
     md = "size-md",
     lg = "size-lg",
     xl = "size-xl",
+    full = "size-full",
 }
