@@ -8,7 +8,7 @@ export type TProductDoorData = {
     priceOld: number;
     priceNew: number;
     src: string;
-    deliveryStatus: string;
+    deliveryStatus?: string;
     options: {
         title: string;
         value: string;

@@ -22,7 +22,6 @@ export const ProductSearchListDataMockup: TProductDoorData[] = [
         priceOld: 1,
         priceNew: 1,
         src: "https://picsum.photos/id/9/300/300",
-        deliveryStatus: "Delivery tomorrow or later 123 123 123 123 123 123",
     },
     {
         id: "2",
@@ -46,7 +45,6 @@ export const ProductSearchListDataMockup: TProductDoorData[] = [
         priceOld: 123,
         priceNew: 123,
         src: "https://picsum.photos/id/10/400/800",
-        deliveryStatus: "Delivery tomorrow or later",
     },
     {
         id: "3",
@@ -70,7 +68,6 @@ export const ProductSearchListDataMockup: TProductDoorData[] = [
         priceOld: 1234,
         priceNew: 1234,
         src: "https://picsum.photos/id/121/300/200",
-        deliveryStatus: "Delivery tomorrow or later",
     },
     {
         id: "4",
@@ -94,6 +91,5 @@ export const ProductSearchListDataMockup: TProductDoorData[] = [
         priceOld: 12345,
         priceNew: 12345,
         src: "https://picsum.photos/id/101/250/300",
-        deliveryStatus: "Delivery tomorrow or later",
     },
 ];
