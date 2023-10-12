@@ -11,7 +11,6 @@ import {
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
-import { showAxiosNotificationError } from "@helpers/errorsHelper";
 import { ProductSearchListDataMockup } from "../../mockups/ProductSearchListDataMockup";
 import { ProductAdditionalServicesMockup } from "../../mockups/ProductAdditionalServicesMockup";
 import { ProductPriceMockup } from "../../mockups/ProductPriceMockup";

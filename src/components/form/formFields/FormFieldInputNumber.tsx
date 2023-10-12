@@ -1,4 +1,4 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { InputNumber } from "antd";
 import cn from "classnames";
 

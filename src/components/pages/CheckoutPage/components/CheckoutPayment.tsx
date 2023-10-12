@@ -16,7 +16,6 @@ import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
 import { notImplemented } from "@helpers/notImplemented";
 import { TPaymentCard } from "@components/globalComponents/types";
-import { toJS } from "mobx";
 
 enum ETPaymentMethodValues {
     // paypal = "paypal",

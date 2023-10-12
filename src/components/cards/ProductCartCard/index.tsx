@@ -33,7 +33,7 @@ const ProductCartCard: FC<TProductCartCard> = ({
 
     const isMobile = useMediaQuery({
         minWidth: mediaBreakpoints.xsMedia,
-        maxWidth: mediaBreakpoints.smMediaEnd,
+        maxWidth: mediaBreakpoints.xsMediaEnd,
     });
 
     const titleContent = <ProductCardTitle title={title} letterLimit={40} />;
