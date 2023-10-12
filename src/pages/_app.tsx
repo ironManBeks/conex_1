@@ -4,7 +4,9 @@ import { Fragment, JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
 
 // import "antd/dist/antd.css";
+// import "leaflet/dist/leaflet.css";
 import "@common/styles/main.scss";
+
 import { observer } from "mobx-react";
 import { getStorage } from "@services/storage.service";
 import initializeStore from "@store/index";

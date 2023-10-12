@@ -73,13 +73,17 @@
     width: auto;
     min-width: 38px;
     padding: 0;
-    border-radius: 0 $border-radius-bs $border-radius-bs 0;
+    border-radius: 0  borderRadius(2)  borderRadius(2) 0;
     transition: $transition;
     &._click{
       cursor: pointer;
       &:hover{
-        background-color: $color-grey-100;
+        background-color: $color-secondary-120;
       }
+    }
+    &._disable{
+      background-color: $color-secondary-120;
+      cursor: not-allowed;
     }
   }
 

@@ -1,0 +1,27 @@
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .order-page{
+    &_content{
+      flex-direction: column;
+    }
+
+    &_right-side{
+      max-width: 100%;
+    }
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .order-page{
+    .common-title._h2{
+      padding: 0 space(5);
+    }
+
+    .container{
+      padding: 0;
+    }
+  }
+
+}

@@ -12,7 +12,7 @@ const ProductCardList: FC<TProductCardList> = ({ className, optionsList }) => {
             {optionsList.map((item, index) => (
                 <ProductCardListItem
                     key={index}
-                    label={item.label}
+                    title={item.title}
                     value={item.value}
                 />
             ))}
@@ -22,11 +22,11 @@ const ProductCardList: FC<TProductCardList> = ({ className, optionsList }) => {
 
 export default ProductCardList;
 
-const ProductCardListItem: FC<TProductInfoListItem> = ({ label, value }) => {
+const ProductCardListItem: FC<TProductInfoListItem> = ({ title, value }) => {
     if (isNil(value)) return null;
     return (
         <li>
-            <span className="label">{label}:</span>
+            <span className="label">{title}:</span>
             <span className="value">{value}</span>
         </li>
     );

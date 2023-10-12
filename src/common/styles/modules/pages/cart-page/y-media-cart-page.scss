@@ -1,4 +1,43 @@
-@media (min-width: $md-media) and (max-width: $lg-media-end) {
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
 
+  .cart-page{
+    &_layout__inner-wrapper{
+      .product-cart-card{
+        &_wrapper{
+          .form-field_wrapper{
+            margin-bottom: 0;
+          }
+        }
+        &_inner-wrapper{
+          gap: space(3);
+          padding: space(5);
+        }
+        &_image__wrapper{
+          width: 120px;
+          min-height: 120px;
+        }
+        &_actions__wrapper{
+          width: auto;
+        }
+        &_details__wrapper{
+          gap: space(3);
+          .common-title{
+            &._h5{
+              font-size: $font-size-bs;
+              line-height: $line-height-lg;
+            }
+          }
+        }
+        &_details__actions{
+          margin-top: space(-3);
+          margin-right: space(-3);
+        }
+      }
+    }
+    &_list__head{
+      padding: 0 space(5);
+    }
+
+  }
 
 }

@@ -1,7 +1,8 @@
-import { FC } from "react";
+import { FC, useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
 import cn from "classnames";
 import { useRouter } from "next/router";
+import { isNil } from "lodash";
 
 import { H3, P } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
@@ -9,20 +10,74 @@ import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
 import FormFieldInput from "@components/form/formFields/FormFieldInput";
 
-import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
+import {
+    ORDER_PAGE_CLASSPREFIX,
+    ProductPriceLabels,
+} from "@components/order/consts";
 import { PATH_CHECKOUT_PAGE } from "@consts/pathsConsts";
-import { notImplemented } from "@helpers/notImplemented";
 import { TOrderSettings } from "../pages/CheckoutPage/types";
 import { EButtonColor } from "@components/buttons/types";
 
 import { IRoot } from "@store/store";
+import { IconArrowSingle, IconCross } from "@components/Icons";
+import { EArrowDirection } from "@components/Icons/types";
+import { ProductPriceParamsMockup } from "../../mockups/ProductPriceMockup";
+import { TOptionsListItem } from "@components/globalComponents/types";
+import { EProductPriceNames } from "@store/products/types";
+import { CHECKOUT_SUBMIT_BUTTON_ID } from "@components/pages/CheckoutPage/consts";
 
 const OrderSettings: FC<TOrderSettings> = inject("store")(
     observer(({ store, placement }) => {
+        const { commonStore, productsStore } = store as IRoot;
+        const { headerHeight } = commonStore;
+        const { productPrice, productPriceFetching, getProductPrice } =
+            productsStore;
         const classPrefix = `${ORDER_PAGE_CLASSPREFIX}_settings`;
         const router = useRouter();
-        const { commonStore } = store as IRoot;
-        const { headerHeight } = commonStore;
+        const [discountCode, setDiscountCode] = useState<string>();
+        const [isDiscountApply, setIsDiscountApply] = useState(false);
+
+        if (!productPrice) {
+            return null;
+        }
+
+        const handleDiscountCode = useCallback(() => {
+            let discountParams = discountCode;
+            if (isDiscountApply) {
+                setDiscountCode("");
+                setIsDiscountApply(false);
+                discountParams = undefined;
+            }
+            getProductPrice({
+                ...ProductPriceParamsMockup,
+                discountCode: discountParams,
+            }).finally(() => {
+                if (!isDiscountApply) {
+                    setIsDiscountApply(true);
+                }
+            });
+        }, [isDiscountApply, discountCode]);
+
+        const renderPriceValue = useCallback(
+            (
+                fieldName: EProductPriceNames,
+                valuePrefix?: string,
+            ): TOptionsListItem | undefined => {
+                if (!isNil(productPrice[fieldName])) {
+                    return {
+                        label: ProductPriceLabels[fieldName],
+                        value: `${valuePrefix ?? ""}$${
+                            productPrice[fieldName]
+                        }`,
+                    };
+                }
+            },
+            [productPrice],
+        );
+
+        const handlePlaceOrder = () => {
+            router.push(PATH_CHECKOUT_PAGE);
+        };
 
         return (
             <div
@@ -37,48 +92,77 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                 <AddedOptionsList
                     optionsList={[
                         {
+                            // list: renderOptionsList(),
                             list: [
-                                { label: "Goods (2)", value: "$202.40" },
-                                {
-                                    label: "Additional charges",
-                                    value: "$33.00",
-                                },
-                                {
-                                    label: "Shipping cost",
-                                    value: "$60.00",
-                                },
-                                {
-                                    label: "TAX",
-                                    value: "$33.46",
-                                },
+                                renderPriceValue(EProductPriceNames.total),
+                                renderPriceValue(
+                                    EProductPriceNames.additionalCharges,
+                                ),
+                                renderPriceValue(
+                                    EProductPriceNames.shippingCost,
+                                ),
+                                renderPriceValue(EProductPriceNames.tax),
+                                renderPriceValue(
+                                    EProductPriceNames.discountCode,
+                                    "- ",
+                                ),
                             ],
                         },
                     ]}
                 />
-                <AdditionalServices
-                    options={[]}
-                    totalOption={{
-                        label: "Grand Total",
-                        value: `$308.86`,
-                    }}
-                />
-                <FormFieldInput
-                    name={"discountCode"}
-                    isFloatingLabel={false}
-                    errorMessage={undefined}
-                    placeholder="Discount code"
-                />
-                <div className={cn(`${classPrefix}__actions`)}>
-                    <ButtonPrimary
-                        color={EButtonColor.primary}
-                        onClick={() => {
-                            if (placement === "cart") {
-                                router.push(PATH_CHECKOUT_PAGE);
-                            } else notImplemented();
+                {productPrice && (
+                    <AdditionalServices
+                        options={[]}
+                        totalOption={{
+                            label: ProductPriceLabels[
+                                EProductPriceNames.grandTotal
+                            ],
+                            value: `$${
+                                productPrice[EProductPriceNames.grandTotal]
+                            }`,
                         }}
-                    >
-                        Place an order
-                    </ButtonPrimary>
+                    />
+                )}
+                {placement === "checkout" && (
+                    <FormFieldInput
+                        name={"discountCode"}
+                        isFloatingLabel={false}
+                        errorMessage={undefined}
+                        placeholder="Discount code"
+                        readOnly={isDiscountApply}
+                        addonAfter={
+                            isDiscountApply ? (
+                                <IconCross />
+                            ) : (
+                                <IconArrowSingle
+                                    direction={EArrowDirection.right}
+                                    opacity={"0.36"}
+                                />
+                            )
+                        }
+                        value={discountCode}
+                        onChange={(e) => {
+                            const val = e.target.value;
+                            setDiscountCode(val);
+                        }}
+                        onAddonClick={handleDiscountCode}
+                        addonDisabled={!discountCode || productPriceFetching}
+                    />
+                )}
+                <div className={cn(`${classPrefix}__actions`)}>
+                    {placement === "cart" && (
+                        <ButtonPrimary
+                            color={EButtonColor.primary}
+                            onClick={handlePlaceOrder}
+                            disabled={productPriceFetching}
+                            isLoading={productPriceFetching}
+                        >
+                            Place an order
+                        </ButtonPrimary>
+                    )}
+                    {placement === "checkout" && (
+                        <div id={CHECKOUT_SUBMIT_BUTTON_ID} />
+                    )}
                     <P>
                         The date and cost of delivery or pickup are determined
                         at checkout
@@ -89,3 +173,27 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
     }),
 );
 export default OrderSettings;
+
+// ToDo Remove
+// const renderOptionsList = useCallback((): TOptionsListItem[] => {
+//     const result: TOptionsListItem[] = [];
+//     if (!productPrice) {
+//         return result;
+//     }
+//
+//     const exceptions = [EProductPriceNames.grandTotal];
+//
+//     for (const key in productPrice) {
+//         const curKey = key as keyof TProductPrice;
+//         if (
+//             !isNil(productPrice[curKey]) &&
+//             !exceptions.includes(curKey)
+//         ) {
+//             result.push({
+//                 label: ProductPriceLabels[curKey],
+//                 value: `$${productPrice[curKey]}`,
+//             });
+//         }
+//     }
+//     return result;
+// }, [productPrice]);

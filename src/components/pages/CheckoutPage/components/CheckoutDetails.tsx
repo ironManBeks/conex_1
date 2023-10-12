@@ -18,7 +18,7 @@ const CheckoutDetails: FC<TSectionTypes> = inject("store")(
             <CheckoutSectionWrapper
                 pageClassPrefix={pageClassPrefix}
                 className={`${classPrefix}__wrapper`}
-                title="Billing details"
+                title="Billing details*"
             >
                 <div className={`${classPrefix}__fields`}>
                     <FieldInputController

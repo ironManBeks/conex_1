@@ -95,10 +95,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
 
     return (
         <FormProvider {...methods}>
-            <form
-                onSubmit={handleSubmit(onSubmit)}
-                className={cn(`${classPrefix}_form`, className)}
-            >
+            <div className={cn(`${classPrefix}_form`, className)}>
                 <div className={`${classPrefix}_inner`}>
                     {/*<FieldInputController*/}
                     {/*    name={EPaymentCardFromFieldsNames.nameOnCard}*/}
@@ -164,7 +161,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                             addonAfter={
                                 <Tooltip
                                     placement="top"
-                                    title={"Something text"}
+                                    title="The last digits on the back of the card"
                                 >
                                     <span>
                                         <IconQuestionCircle opacity={"0.36"} />
@@ -198,9 +195,9 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                     <div className={`${classPrefix}_actions`}>
                         {actionsContent && actionsContent}
                         <ButtonPrimary
-                            type="submit"
                             color={EButtonColor.secondary}
                             size={EButtonSize.md}
+                            onClick={handleSubmit(onSubmit)}
                         >
                             {submitText}
                         </ButtonPrimary>
@@ -209,7 +206,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                 {subText?.bottom && (
                     <P className="_bottom-text">{subText?.bottom}</P>
                 )}
-            </form>
+            </div>
         </FormProvider>
     );
 };

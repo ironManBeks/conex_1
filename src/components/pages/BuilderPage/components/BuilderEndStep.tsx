@@ -30,12 +30,15 @@ const BuilderEndStep: FC<TBuilderCompProps> = inject("store")(
                         <div key={index} className={cn(`${classPrefix}__item`)}>
                             <H4>{item.title}:</H4>
                             <ul>
-                                {item.list.map((listItem, listItemIndex) => (
-                                    <li key={listItemIndex}>
-                                        <b>{listItem.label}</b>
-                                        <span>{listItem.value}</span>
-                                    </li>
-                                ))}
+                                {item.list.map(
+                                    (listItem, listItemIndex) =>
+                                        listItem && (
+                                            <li key={listItemIndex}>
+                                                <b>{listItem.label}</b>
+                                                <span>{listItem.value}</span>
+                                            </li>
+                                        ),
+                                )}
                             </ul>
                             <br />
                         </div>

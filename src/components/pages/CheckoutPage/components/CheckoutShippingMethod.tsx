@@ -2,7 +2,6 @@ import { FC } from "react";
 import { inject, observer } from "mobx-react";
 
 import CheckoutSectionWrapper from "./CheckoutSectionWrapper";
-import FieldInputController from "@components/form/formControllers/FieldInputController";
 import FieldAutoCompleteController from "@components/form/formControllers/FieldAutoCompleteController";
 import FieldTextAreaController from "@components/form/formControllers/FieldTextAreaController";
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
@@ -14,6 +13,10 @@ import {
     COMMENT_ORDER_MAX_MESSAGE_LENGTH,
     ECheckoutFormFieldsNames,
 } from "@components/pages/CheckoutPage/formAttrs";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
+import { EButtonColor } from "@components/buttons/types";
+import { IRoot } from "@store/store";
+import { IconMapPoint } from "@components/Icons";
 
 type TShippingMethodDTO = {
     name: string;
@@ -60,69 +63,79 @@ const ShippingMethodsMockup: TShippingMethodDTO[] = [
 ];
 
 const CheckoutShippingMethod: FC<TSectionTypes> = inject("store")(
-    observer(({ pageClassPrefix }) => {
+    observer(({ store, pageClassPrefix }) => {
+        const { commonStore } = store as IRoot;
+        const { setModalMapPickupVisible } = commonStore;
         const classPrefix = `${pageClassPrefix}_shipping-method`;
 
         return (
             <CheckoutSectionWrapper
                 pageClassPrefix={pageClassPrefix}
                 className={`${classPrefix}__wrapper`}
-                title="Shipping method"
+                title="Shipping method *"
             >
-                <div className={`${classPrefix}__select`}>
-                    <FieldRadioButtonArrayController
-                        name={ECheckoutFormFieldsNames.deliveryService}
-                        options={ShippingMethodsMockup.map((item) => ({
-                            value: item.value,
-                            label: (
-                                <>
-                                    <ImgWrapper
-                                        src={item.imgSrc}
-                                        alt={"Logo"}
-                                    />
-                                    <P>
-                                        {item.showTitle && (
-                                            <span>{item.name} </span>
-                                        )}
-                                        <span>
-                                            {item.currency}
-                                            {item.price}
-                                        </span>{" "}
-                                        <span>
-                                            {item.deliveryFrom}-
-                                            {item.deliveryTo} business days
-                                        </span>
-                                    </P>
-                                </>
-                            ),
-                        }))}
-                    />
-                </div>
                 <div className={`${classPrefix}__fields`}>
-                    <iframe
-                        width="100%"
-                        height="510"
-                        className="gmap_iframe"
-                        src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=University of Oxford&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"
-                    />
-                    <div className="_row">
-                        <FieldInputController
-                            name={ECheckoutFormFieldsNames.state}
-                            label="State"
-                            placeholder="State"
-                            className={""}
-                        />
-                        <FieldInputController
-                            name={ECheckoutFormFieldsNames.city}
-                            label="Town / City"
-                            placeholder="Town / City"
-                        />
-                    </div>
+                    {/*<iframe*/}
+                    {/*    width="100%"*/}
+                    {/*    height="510"*/}
+                    {/*    className="gmap_iframe"*/}
+                    {/*    src="https://maps.google.com/maps?width=600&amp;height=400&amp;hl=en&amp;q=University of Oxford&amp;t=&amp;z=14&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"*/}
+                    {/*/>*/}
+                    {/*<div className="_row">*/}
+                    {/*    <FieldInputController*/}
+                    {/*        name={ECheckoutFormFieldsNames.state}*/}
+                    {/*        label="State"*/}
+                    {/*        placeholder="State"*/}
+                    {/*    />*/}
+                    {/*    <FieldInputController*/}
+                    {/*        name={ECheckoutFormFieldsNames.city}*/}
+                    {/*        label="Town / City"*/}
+                    {/*        placeholder="Town / City"*/}
+                    {/*    />*/}
+                    {/*</div>*/}
                     <FieldAutoCompleteController
                         name={ECheckoutFormFieldsNames.streetAddress}
                         fieldLabel="Street address"
                         placeholder="Street address"
                     />
+                    <div className={`${classPrefix}__actions`}>
+                        <ButtonPrimary
+                            color={EButtonColor.secondary}
+                            onClick={() => setModalMapPickupVisible(true)}
+                            rightIcon={<IconMapPoint />}
+                        >
+                            Mark a point on the map
+                        </ButtonPrimary>
+                    </div>
+                    <div className={`${classPrefix}__select`}>
+                        <FieldRadioButtonArrayController
+                            name={ECheckoutFormFieldsNames.deliveryService}
+                            options={ShippingMethodsMockup.map((item) => ({
+                                value: item.value,
+                                label: (
+                                    <>
+                                        <ImgWrapper
+                                            src={item.imgSrc}
+                                            alt={"Logo"}
+                                        />
+                                        <P>
+                                            {item.showTitle && (
+                                                <span>{item.name} </span>
+                                            )}
+                                            <span>
+                                                {item.currency}
+                                                {item.price}
+                                            </span>{" "}
+                                            <span>
+                                                {item.deliveryFrom}-
+                                                {item.deliveryTo} business days
+                                            </span>
+                                        </P>
+                                    </>
+                                ),
+                            }))}
+                        />
+                    </div>
                     <FieldTextAreaController
                         name={ECheckoutFormFieldsNames.commentsOrder}
                         label="Comments on the order"

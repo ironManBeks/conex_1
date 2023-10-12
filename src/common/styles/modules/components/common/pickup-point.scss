@@ -1,0 +1,26 @@
+.pickup-point{
+  &_wrapper{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  &_title, &_details{
+    display: flex;
+    flex-direction: column;
+    gap: space(1);
+  }
+  &_title{
+    text-align: left;
+  }
+  &_details{
+    text-align: right;
+    flex: 0 0 auto;
+    .common-title{
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      gap: space(2);
+      font-weight: 500;
+    }
+  }
+}

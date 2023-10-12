@@ -8,6 +8,7 @@ import { TChangePasswordForm } from "@components/globalComponents/AuthForm/compo
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 import { TNullable } from "@globalTypes/commonTypes";
 import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
+import { TPaymentCard } from "@components/globalComponents/types";
 
 export enum EAccountOrderStatus {
     processed = "processed",
@@ -35,14 +36,6 @@ export type TUserData = {
     city: string;
     address: string;
     index: string;
-};
-
-export type TAuthPaymentCard = {
-    id: string;
-    cvv: string;
-    cardNumber: string;
-    expMonth: string;
-    expYear: string;
 };
 
 export type TAuthData = {
@@ -85,17 +78,35 @@ export type TAccountOrderItem = {
     statusTimelapse: TOrderStatusTimelapse[];
 };
 
+export type TUserCartItem = {
+    id: string;
+    title: string;
+    price: number;
+    img: string;
+    options: {
+        title: string;
+        value: string;
+    }[];
+    createDate: string;
+    count: number;
+};
+
 export interface IAuthStore {
+    isAuthorized: boolean;
     authData: TNullable<TAuthData>;
     authRequestFetching: boolean;
     userData: TNullable<TUserData>;
     userDataFetching: boolean;
-    userCardsData: TNullable<TAuthPaymentCard[]>;
+    userCardsData: TNullable<TPaymentCard[]>;
     userCardsDataFetching: boolean;
-    selectedCard: TNullable<TAuthPaymentCard>;
+    selectedCard: TNullable<TPaymentCard>;
     userOrdersData: TNullable<TAccountOrderItem[]>;
     userOrdersDataFetching: boolean;
+    userCartData: TNullable<TUserCartItem[]>;
+    userCartDataFetching: boolean;
+
     // functions
+    setIsAuthorized: (value: boolean) => void;
     setAuthData: (data: TNullable<TAuthData>) => void;
     setAuthRequestFetching: (value: boolean) => void;
     authSignUpRequest: (data: TSignUpForm) => Promise<void>;
@@ -109,8 +120,8 @@ export interface IAuthStore {
     setUserData: (data: TNullable<TUserData>) => void;
     setUserDataFetching: (value: boolean) => void;
     //
-    getUserCardsData: () => Promise<AxiosResponse<TAuthPaymentCard[]>>;
-    setUserCardsData: (data: TNullable<TAuthPaymentCard[]>) => void;
+    getUserCardsData: () => Promise<AxiosResponse<TPaymentCard[]>>;
+    setUserCardsData: (data: TNullable<TPaymentCard[]>) => void;
     setUserCardsDataFetching: (value: boolean) => void;
     //
     getUserOrdersData: (
@@ -119,7 +130,11 @@ export interface IAuthStore {
     setUserOrdersData: (data: TNullable<TAccountOrderItem[]>) => void;
     setUserOrdersDataFetching: (value: boolean) => void;
     //
-    setSelectedCard: (data: TNullable<TAuthPaymentCard>) => void;
+    getUserCartData: () => Promise<AxiosResponse<TUserCartItem[]>>;
+    setUserCartData: (data: TNullable<TUserCartItem[]>) => void;
+    setUserCartDataFetching: (value: boolean) => void;
+    //
+    setSelectedCard: (data: TNullable<TPaymentCard>) => void;
     resetUserData: () => void;
     logOut: () => void;
 }

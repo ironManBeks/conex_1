@@ -1,34 +1,18 @@
-import { FC, ReactNode } from "react";
+import { FC } from "react";
 import { inject, observer } from "mobx-react";
+import { Empty } from "antd";
 
 import CheckoutSectionWrapper from "./CheckoutSectionWrapper";
 import FieldCheckboxArrayController from "@components/form/formControllers/FieldCheckboxArrayController";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { ECheckoutFormFieldsNames } from "@components/pages/CheckoutPage/formAttrs";
-
-type TAdditionalService = {
-    value: string;
-    label: ReactNode;
-};
-
-const AdditionalServicesMockup: TAdditionalService[] = [
-    {
-        value: "liftToTheFloor",
-        label: "Lift to the floor",
-    },
-    {
-        value: "unloading",
-        label: "Unloading",
-    },
-    {
-        value: "equipmentRental",
-        label: "Equipment rental",
-    },
-];
+import { IRoot } from "@store/store";
 
 const CheckoutAdditionalServices: FC<TSectionTypes> = inject("store")(
-    observer(({ pageClassPrefix }) => {
+    observer(({ store, pageClassPrefix }) => {
+        const { productsStore } = store as IRoot;
+        const { productService, productServiceFetching } = productsStore;
         const classPrefix = `${pageClassPrefix}_additional-services`;
 
         return (
@@ -36,11 +20,19 @@ const CheckoutAdditionalServices: FC<TSectionTypes> = inject("store")(
                 pageClassPrefix={pageClassPrefix}
                 className={`${classPrefix}__wrapper`}
                 title="Additional services"
+                fetching={productServiceFetching}
             >
-                <FieldCheckboxArrayController
-                    name={ECheckoutFormFieldsNames.additionalServices}
-                    options={AdditionalServicesMockup}
-                />
+                {productService?.length ? (
+                    <FieldCheckboxArrayController
+                        name={ECheckoutFormFieldsNames.additionalServices}
+                        options={productService.map((item) => ({
+                            value: item.value,
+                            label: item.title,
+                        }))}
+                    />
+                ) : (
+                    <Empty />
+                )}
             </CheckoutSectionWrapper>
         );
     }),

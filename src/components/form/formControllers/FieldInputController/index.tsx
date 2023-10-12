@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Input as AntInput, InputRef } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
@@ -23,11 +23,13 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     const {
         control,
         formState: { errors },
+        watch,
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const fieldRef = useRef<InputRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
+    const fieldValue = watch(name);
 
     const focusOnField = () => {
         if (fieldRef.current) {
@@ -35,16 +37,19 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (fieldValue) {
+            setIsLabelActive(true);
+        } else if (!focus && !fieldValue) {
+            setIsLabelActive(false);
+        }
+    }, [fieldValue, focus]);
+
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                if (field.value) {
-                    setIsLabelActive(true);
-                } else if (!focus && !field.value) {
-                    setIsLabelActive(false);
-                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}

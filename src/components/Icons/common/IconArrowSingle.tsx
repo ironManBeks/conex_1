@@ -15,6 +15,7 @@ const IconArrowSingle: FC<TIconArrow> = ({
     width,
     height,
     direction = EArrowDirection.top,
+    opacity,
 }) => {
     return (
         <svg
@@ -29,6 +30,7 @@ const IconArrowSingle: FC<TIconArrow> = ({
             )}
             viewBox="0 0 24 24"
             xmlns="http://www.w3.org/2000/svg"
+            fillOpacity={opacity}
         >
             <path
                 fillRule="evenodd"

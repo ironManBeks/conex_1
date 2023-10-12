@@ -26,6 +26,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     changeSizeOnMobile = true,
     isOpacity,
     style,
+    id,
 }) => {
     const isMobile = useMediaQuery({
         minWidth: mediaBreakpoints.xsMedia,
@@ -53,6 +54,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
             disabled={disabled}
             onClick={onClick}
             value={value}
+            id={id}
         >
             <>
                 {leftIcon && (

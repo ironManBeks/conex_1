@@ -1,15 +1,14 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import { Input as AntInput, InputRef } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import { IconEyeOpen, IconEyeClose } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-
 import { EFormFieldType } from "@components/form/types";
 import { TFieldPasswordController } from "./types";
-import { IconEyeOpen, IconEyeClose } from "@components/Icons";
 
 const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
     const {
@@ -25,12 +24,14 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
     const {
         control,
         formState: { errors },
+        watch,
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const fieldRef = useRef<InputRef | null>(null);
     const [passwordVisible, setPasswordVisible] = useState(false);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
+    const fieldValue = watch(name);
 
     const focusOnField = () => {
         if (fieldRef.current) {
@@ -38,16 +39,19 @@ const FieldPasswordController: FC<TFieldPasswordController> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (fieldValue) {
+            setIsLabelActive(true);
+        } else if (!focus && !fieldValue) {
+            setIsLabelActive(false);
+        }
+    }, [fieldValue, focus]);
+
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                if (field.value) {
-                    setIsLabelActive(true);
-                } else if (!focus && !field.value) {
-                    setIsLabelActive(false);
-                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.password}

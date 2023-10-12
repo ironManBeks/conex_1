@@ -1,4 +1,4 @@
-import { FC, useRef, useState } from "react";
+import { FC, useEffect, useRef, useState } from "react";
 import cn from "classnames";
 import { AutoComplete, Input, InputRef } from "antd";
 import { isFunction } from "lodash";
@@ -32,12 +32,14 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
     const {
         control,
         formState: { errors },
+        watch,
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const [options, setOptions] = useState<DefaultOptionType[]>([]);
     const fieldRef = useRef<InputRef | null>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
+    const fieldValue = watch(name);
 
     const handleSearch = (value: string) => {
         setOptions(
@@ -66,16 +68,19 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
         }
     };
 
+    useEffect(() => {
+        if (fieldValue) {
+            setIsLabelActive(true);
+        } else if (!focus && !fieldValue) {
+            setIsLabelActive(false);
+        }
+    }, [fieldValue, focus]);
+
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                if (field.value) {
-                    setIsLabelActive(true);
-                } else if (!focus && !field.value) {
-                    setIsLabelActive(false);
-                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.autocomplete}
@@ -104,7 +109,6 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
                                 handleSelect(value, option);
                             }}
                             onSearch={handleSearch}
-                            size="large"
                             popupClassName={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_dropdown`,
                                 `_${EFormFieldType.autocomplete}`,

@@ -77,9 +77,13 @@ export type TAddressSelection = {
     name?: string;
 } & TFormItemLabel;
 
+export type TOptionsListItem =
+    | { label: string; value: string | number }
+    | undefined;
+
 export type TAddedOptionsListItem = {
     title?: string;
-    list: { label: string; value: string | number }[];
+    list: TOptionsListItem[];
     onClick?: () => void;
     isActive?: boolean;
 };
@@ -93,3 +97,20 @@ export type TLogout = {
     component: JSX.Element;
     pageLink?: string;
 } & TStore;
+
+export type TPickupPoint = {
+    id: string;
+    title: string;
+    description: string;
+    deliveryDate: string;
+    deliveryTimeFrom: string;
+    deliveryTimeTo: string;
+};
+
+export type TPaymentCard = {
+    id: string;
+    cvv: string;
+    cardNumber: string;
+    expMonth: string;
+    expYear: string;
+};

@@ -1,15 +1,18 @@
-import { FC } from "react";
+import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import cn from "classnames";
+import { isNil } from "lodash";
+import { useRouter } from "next/router";
 
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import CheckoutGetMode from "./CheckoutGetMode";
 import CheckoutShippingMethod from "./CheckoutShippingMethod";
 import CheckoutDetails from "./CheckoutDetails";
 import CheckoutPayment from "./CheckoutPayment";
 import CheckoutAdditionalServices from "./CheckoutAdditionalServices";
 import CheckoutPickup from "./CheckoutPickupPoint";
+import CheckoutFormActions from "@components/pages/CheckoutPage/components/CheckoutFormActions";
+import ModalMapPickup from "@components/modals/components/ModalMapPickup";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import {
@@ -20,11 +23,19 @@ import {
     TCheckoutForm,
 } from "@components/pages/CheckoutPage/formAttrs";
 import { IRoot } from "@store/store";
+import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
+import {
+    AccountTabKey,
+    EAccountTabsPaths,
+} from "@components/pages/AccountPage/consts";
+import { showNotification } from "@helpers/notificarionHelper";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const { authStore } = store as IRoot;
-        const { userData } = authStore;
+        const { authStore, productsStore } = store as IRoot;
+        const { userData, userCardsData, getUserCardsData } = authStore;
+        const { getProductServiceRequest, productService } = productsStore;
+        const router = useRouter();
 
         const methods = useForm<TCheckoutForm>({
             resolver: checkoutFormResolver(),
@@ -32,11 +43,33 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
         });
 
         const { handleSubmit, watch } = methods;
+
         const getModeValue = watch(ECheckoutFormFieldsNames.getMode);
 
-        const onSubmit: SubmitHandler<TCheckoutForm> = (data) => {
-            console.log("data", data);
+        const onSubmit: SubmitHandler<TCheckoutForm> = () => {
+            router
+                .push({
+                    pathname: PATH_MY_ACCOUNT_PAGE,
+                    query: { [AccountTabKey]: EAccountTabsPaths.orders },
+                })
+                .finally(() => {
+                    showNotification({
+                        mainProps: {
+                            message: `Your order has being shipped`,
+                            description: `You can view your orders on this page`,
+                        },
+                    });
+                });
         };
+
+        useEffect(() => {
+            if (!userCardsData) {
+                getUserCardsData();
+            }
+            if (isNil(productService)) {
+                getProductServiceRequest();
+            }
+        }, []);
 
         return (
             <FormProvider {...methods}>
@@ -57,9 +90,11 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                     <CheckoutAdditionalServices
                         pageClassPrefix={pageClassPrefix}
                     />
-                    <div>
-                        <ButtonPrimary type="submit">submit</ButtonPrimary>
-                    </div>
+                    <CheckoutFormActions
+                        pageClassPrefix={pageClassPrefix}
+                        onSubmitClick={handleSubmit(onSubmit)}
+                    />
+                    <ModalMapPickup />
                 </form>
             </FormProvider>
         );

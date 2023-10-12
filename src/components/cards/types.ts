@@ -1,6 +1,7 @@
 import { ReactNode } from "react";
-import { TNullable } from "@globalTypes/commonTypes";
+
 import { TProductDoorData } from "@store/products/types";
+import { TUserCartItem } from "@store/auth/types";
 
 export type TProductSearchCard = {
     className?: string;
@@ -8,23 +9,16 @@ export type TProductSearchCard = {
 
 export type TProductCartCard = {
     className?: string;
-    id: string;
-    title: string;
-    price: number;
-    priceCurrency: string;
-    material: string;
-    size: string;
-    color: string;
-    imageSrc: TNullable<string> | undefined;
     select?: {
         isSelect: boolean;
         onSelectChange: (id: string, value: boolean) => void;
     };
     onDeleteClick?: () => void;
-};
+    onCountChange?: (value: number) => void;
+} & TUserCartItem;
 
 export type TProductInfoListItem = {
-    label: string;
+    title: string;
     value: ReactNode;
 };
 

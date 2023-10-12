@@ -18,14 +18,19 @@
 
   &_image__wrapper{
     width: 170px;
-    min-height: 100px;
+    min-height: 150px;
     flex: 0 0 auto;
   }
 
-  &_details__wrapper{
-    display: flex;
-    flex-direction: column;
-    gap: space(4);
+  &_details{
+    &__wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(4);
+    }
+    &__actions{
+      margin-top: auto;
+    }
   }
 
   &_actions__wrapper{

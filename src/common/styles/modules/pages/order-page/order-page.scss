@@ -7,11 +7,16 @@
     margin-bottom: space(10);
     font-size: $font-size-xl;
     line-height: $line-height-xl;
+    display: flex;
+    gap: space(2);
+    .common-btn{
+      min-width: space(8);
+    }
   }
 
   &_content{
     display: flex;
-    gap:  space(10);
+    gap: space(10);
     width: 100%;
   }
 
@@ -60,9 +65,6 @@
       display: flex;
       flex-direction: column;
       gap: space(4);
-      .common-title._h3{
-        margin-bottom: space(4);
-      }
       .added-options-list{
         &_item__list{
           gap: space(4);

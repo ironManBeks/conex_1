@@ -33,11 +33,13 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const {
         control,
         formState: { errors },
+        watch,
     } = useFormContext();
     const errorMessage = errors[name]?.message;
     const fieldRef = useRef<MaskedInput>(null);
     const [isLabelActive, setIsLabelActive] = useState(false);
     const [focus, setFocus] = useState(false);
+    const fieldValue = watch(name);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
@@ -51,16 +53,19 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
         }
     };
 
+    useEffect(() => {
+        if (fieldValue) {
+            setIsLabelActive(true);
+        } else if (!focus && !fieldValue) {
+            setIsLabelActive(false);
+        }
+    }, [fieldValue, focus]);
+
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                if (field.value) {
-                    setIsLabelActive(true);
-                } else if (!focus && !field.value) {
-                    setIsLabelActive(false);
-                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}

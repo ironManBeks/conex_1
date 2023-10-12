@@ -1,4 +1,4 @@
-import { JSX, ReactNode } from "react";
+import { JSX, ReactNode, MouseEvent } from "react";
 import { SelectProps } from "antd/lib/select";
 import { InputProps } from "antd/lib/input/Input";
 import { CheckboxProps } from "antd/lib/checkbox";
@@ -34,6 +34,9 @@ export type TDefaultOption = {
 export type TFormFieldInput = {
     name: string;
     onIconClick?: () => void;
+    addonDisabled?: boolean;
+    onAddonClick?: (e: MouseEvent<HTMLDivElement>) => void;
+    minAddonWidth?: number;
 } & InputProps &
     TFormWrapperClassName &
     TFormItemLabel &

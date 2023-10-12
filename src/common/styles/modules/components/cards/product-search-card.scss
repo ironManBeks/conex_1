@@ -18,6 +18,12 @@
     }
   }
 
+  &_details__wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(5);
+  }
+
   &_image__wrapper{
     width: 170px;
     min-height: 100px;

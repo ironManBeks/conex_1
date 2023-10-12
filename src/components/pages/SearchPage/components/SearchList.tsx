@@ -58,15 +58,12 @@ const SearchList: FC<TSectionTypes> = inject("store")(
                             key={item.id}
                             id={item.id}
                             title={item.title}
-                            material={item.material}
-                            size={item.size}
-                            color={item.color}
                             description={item.description}
                             priceOld={item.priceOld}
                             priceNew={item.priceNew}
                             src={item.src}
                             deliveryStatus={item.deliveryStatus}
-                            priceCurrency={item.priceCurrency}
+                            options={item.options}
                         />
                     ))}
                 </div>

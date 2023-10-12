@@ -22,6 +22,8 @@ export interface ICommonStore {
     setModalCustomQuoteVisible: TSetElementVisible;
     modalCardBindingVisible: boolean;
     setModalCardBindingVisible: TSetElementVisible;
+    modalMapPickupVisible: boolean;
+    setModalMapPickupVisible: TSetElementVisible;
     headerDrawerVisible: boolean;
     setHeaderDrawerVisible: TSetElementVisible;
     builderDrawerVisible: boolean;

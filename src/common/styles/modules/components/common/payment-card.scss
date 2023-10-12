@@ -1,0 +1,81 @@
+.payment-card{
+  &_wrapper{
+    position: relative;
+    max-width: 360px;
+    width: 100%;
+    &._active{
+      .payment-card{
+        &_inner-wrapper{
+          background: $color-accent-400;
+        }
+      }
+    }
+  }
+
+  &_inner-wrapper{
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: space(4);
+    padding: space(5) space(6);
+    background: $color-accent-40;
+    border-radius: borderRadius(2);
+    border: 1px solid $color-accent-strong;
+    transition: $transition;
+    cursor: pointer;
+    .img-custom_wrapper{
+      height: 100%;
+    }
+    &:hover{
+      background: $color-accent-400;
+      .payment-card{
+        &_actions{
+          .common-btn{
+            .common-icon path{
+              fill: $icon-color-primary;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  &_content{
+    display: flex;
+    gap: space(4);
+  }
+
+  &_icon{
+    display: flex;
+    align-items: center;
+    flex: 0 0 auto;
+  }
+
+  &_info{
+    .common-text, span{
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      font-weight: 500;
+      b{
+        margin-right: space(3);
+      }
+      .common-icon{
+        margin-right: space(1);
+      }
+    }
+  }
+
+  &_actions{
+    .common-btn{
+      padding: 0;
+      .common-icon path{
+        fill: $icon-color-secondary;
+      }
+    }
+  }
+
+}
