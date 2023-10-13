@@ -57,25 +57,24 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
                         label={label}
                         isFloatingLabel={isFloatingLabel}
                         wrapperClassName={wrapperClassName}
+                        fieldValue={field.value}
                     >
-                        {isFloatingLabel && label && (
-                            <label
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: isLabelActive },
-                                    { _disabled: disabled },
-                                )}
-                                onClick={focusOnField}
-                                // htmlFor={selectorId}
-                            >
-                                {label}
-                            </label>
-                        )}
+                        {/*{isFloatingLabel && label && (*/}
+                        {/*    <label*/}
+                        {/*        className={cn(*/}
+                        {/*            `${FORM_FIELD_CLASSNAME_PREFIX}_label`,*/}
+                        {/*            { _activelabel: isLabelActive },*/}
+                        {/*            { _disabled: disabled },*/}
+                        {/*        )}*/}
+                        {/*        onClick={focusOnField}*/}
+                        {/*    >*/}
+                        {/*        {label}*/}
+                        {/*    </label>*/}
+                        {/*)}*/}
                         <AntInput
                             {...field}
                             {...rest}
                             ref={fieldRef}
-                            // id={selectorId}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {

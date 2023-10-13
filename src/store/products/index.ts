@@ -1,8 +1,9 @@
-import { makeAutoObservable } from "mobx";
+import { makeAutoObservable, toJS } from "mobx";
 import { AxiosResponse } from "axios";
 
 import {
     IProductsStore,
+    TProductDelivery,
     TProductDoorData,
     TProductPrice,
     TProductPriceParams,
@@ -11,9 +12,11 @@ import {
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
+
 import { ProductSearchListDataMockup } from "../../mockups/ProductSearchListDataMockup";
 import { ProductAdditionalServicesMockup } from "../../mockups/ProductAdditionalServicesMockup";
 import { ProductPriceMockup } from "../../mockups/ProductPriceMockup";
+import { ProductDeliveryCompanyMockup } from "src/mockups/ProductDeliveryCompanyMockup";
 
 export class ProductsStore implements IProductsStore {
     productList: TProductDoorData[] = [];
@@ -23,6 +26,8 @@ export class ProductsStore implements IProductsStore {
     productServiceFetching = true;
     productPrice: TNullable<TProductPrice> = null;
     productPriceFetching = true;
+    productDelivery: TNullable<TProductDelivery[]> = null;
+    productDeliveryFetching = true;
 
     constructor() {
         makeAutoObservable(this);
@@ -51,8 +56,17 @@ export class ProductsStore implements IProductsStore {
     setProductPrice = (data: TNullable<TProductPrice>): void => {
         this.productPrice = data;
     };
+
     setProductPriceFetching = (value: boolean): void => {
         this.productPriceFetching = value;
+    };
+
+    setProductDelivery = (data: TNullable<TProductDelivery[]>): void => {
+        this.productDelivery = data;
+    };
+
+    setProductDeliveryFetching = (value: boolean): void => {
+        this.productDeliveryFetching = value;
     };
 
     //---------------------------------------------------------------------
@@ -99,10 +113,12 @@ export class ProductsStore implements IProductsStore {
             });
     };
 
-    getProductPrice = (
+    getProductPriceRequest = (
         params: TProductPriceParams,
     ): Promise<AxiosResponse<TProductPrice>> => {
         this.setProductPriceFetching(true);
+
+        console.log("params", toJS(params));
         return axiosInstance
             .get("/product/price", { params })
             .then((response: AxiosResponse<TProductPrice>) => {
@@ -115,7 +131,6 @@ export class ProductsStore implements IProductsStore {
                 throw err;
             })
             .finally(() => {
-                console.log("getProductPrice finally", params);
                 const data = { ...ProductPriceMockup };
                 if (params.discountCode) {
                     data.discountCode = 20;
@@ -125,6 +140,29 @@ export class ProductsStore implements IProductsStore {
                 }
                 this.setProductPrice(data);
                 this.setProductPriceFetching(false);
+            });
+    };
+
+    getProductDeliveryRequest = (
+        params?: string,
+    ): Promise<AxiosResponse<TProductDelivery[]>> => {
+        this.setProductDeliveryFetching(true);
+        return axiosInstance
+            .get("/product/deliver-company", { params })
+            .then((response: AxiosResponse<TProductDelivery[]>) => {
+                // const { data } = response;
+                // this.setProductService(data);
+                return response;
+            })
+            .catch((err) => {
+                // showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setProductDelivery(ProductDeliveryCompanyMockup);
+                setTimeout(() => {
+                    this.setProductDeliveryFetching(false);
+                }, 300);
             });
     };
 }

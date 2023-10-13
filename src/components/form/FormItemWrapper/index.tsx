@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useState } from "react";
 import cn from "classnames";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
@@ -13,7 +13,10 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
     wrapperClassName,
     isFloatingLabel = false,
     showError = true,
+    fieldValue,
 }) => {
+    const [focus, setFocus] = useState(false);
+
     return (
         <div
             className={cn(
@@ -43,8 +46,22 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                         className={cn(
                             `${FORM_FIELD_CLASSNAME_PREFIX}_field-wrapper`,
                         )}
+                        onBlur={() => setFocus(false)}
+                        onFocus={() => setFocus(true)}
                     >
                         {children}
+                        {label && isFloatingLabel && (
+                            <label
+                                className={cn(
+                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
+                                    { _activelabel: focus || fieldValue },
+                                    // { _activelabel: isLabelActive },
+                                    // { _disabled: disabled },
+                                )}
+                            >
+                                {label}
+                            </label>
+                        )}
                     </div>
                     {errorMessage && showError && (
                         <div

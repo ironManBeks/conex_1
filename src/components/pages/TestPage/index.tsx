@@ -19,18 +19,19 @@ import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import {
     EFieldNames,
     formDefaultValues,
-    formResolver,
+    // formResolver,
     optionsMockup,
     TFormFields,
 } from "./formAttrs";
 import { EDirection } from "@globalTypes/commonTypes";
 import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
 import { IconMapPoint } from "@components/Icons";
+import FieldSliderController from "@components/form/formControllers/FieldSliderController";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
     const methods = useForm<TFormFields>({
-        resolver: formResolver(),
+        // resolver: formResolver(),
         defaultValues: formDefaultValues,
     });
 
@@ -58,6 +59,27 @@ const TestPage: FC = () => {
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            <FieldInputController
+                                name={EFieldNames.input}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                                isFloatingLabel={true}
+                            />
+                            <FieldInputController
+                                name={EFieldNames.input + "123"}
+                                placeholder={EFieldNames.input}
+                                label={EFieldNames.input}
+                                disabled={true}
+                                isFloatingLabel={true}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                            <FieldSliderController
+                                name={EFieldNames.slider}
+                                // placeholder={EFieldNames.select}
+                                label={EFieldNames.slider}
+                            />
                             <FieldSelectController
                                 name={EFieldNames.select}
                                 placeholder={EFieldNames.select}
@@ -78,22 +100,6 @@ const TestPage: FC = () => {
                             {/*    options={optionsMockup}*/}
                             {/*    disabled={true}*/}
                             {/*/>*/}
-                            <br />
-                            <br />
-                            <br />
-                            <FieldInputController
-                                name={EFieldNames.input}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                                isFloatingLabel={true}
-                            />
-                            <FieldInputController
-                                name={EFieldNames.input + "123"}
-                                placeholder={EFieldNames.input}
-                                label={EFieldNames.input}
-                                disabled={true}
-                                isFloatingLabel={true}
-                            />
                             <br />
                             <br />
                             <br />

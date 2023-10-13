@@ -11,6 +11,7 @@ export enum EFieldNames {
     checkboxArray = "CheckboxArray",
     textArea = "TextArea",
     inputNumber = "InputNumber",
+    slider = "Slider",
 }
 
 export type TFormFields = {
@@ -22,6 +23,7 @@ export type TFormFields = {
     [EFieldNames.textArea]: string;
     [EFieldNames.inputNumber]: number;
     [EFieldNames.checkboxArray]: string[];
+    [EFieldNames.slider]: number;
 };
 
 export const formResolver = (): Resolver<TFormFields> => {
@@ -48,6 +50,7 @@ export const formResolver = (): Resolver<TFormFields> => {
                 .min(1, oneFieldRequiredText)
                 .of(yup.string().required())
                 .required(requiredText),
+            [EFieldNames.slider]: yup.number().required(requiredText),
         }),
     );
 };
@@ -61,6 +64,7 @@ export const formDefaultValues: TFormFields = {
     [EFieldNames.textArea]: "",
     [EFieldNames.inputNumber]: 0,
     [EFieldNames.checkboxArray]: [],
+    [EFieldNames.slider]: 0,
 };
 
 export const optionsMockup = [

@@ -9,6 +9,7 @@ import FormItemWrapper from "@components/form/FormItemWrapper";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldTextAreaController } from "./types";
+import { isNil } from "lodash";
 
 const { TextArea } = AntInput;
 
@@ -45,11 +46,13 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
     };
 
     useEffect(() => {
-        setLetterCount(fieldValue.length || 0);
-        if (fieldValue) {
-            setIsLabelActive(true);
-        } else if (!focus && !fieldValue) {
-            setIsLabelActive(false);
+        if (!isNil(fieldValue?.length)) {
+            setLetterCount(fieldValue.length || 0);
+            if (fieldValue) {
+                setIsLabelActive(true);
+            } else if (!focus && !fieldValue) {
+                setIsLabelActive(false);
+            }
         }
     }, [fieldValue, focus]);
 

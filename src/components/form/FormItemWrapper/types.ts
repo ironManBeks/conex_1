@@ -21,6 +21,7 @@ export type TFormItemWrapper = {
     children: ReactNode;
     fieldType: EFormFieldType;
     required?: boolean;
+    fieldValue?: string | number;
 } & TFormItemLabel &
     TFormWrapperClassName &
     TFormWrapperErrorMessage &

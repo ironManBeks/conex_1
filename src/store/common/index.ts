@@ -48,9 +48,10 @@ export class CommonStore implements ICommonStore {
         }
     };
 
-    //  ***____***____***____
+    //---------------------------------------------------------------------
     //  ***____ Modals and Drawers
-    // ***____***____***____
+    //  ***____***____***____
+
     setConfirmModalData = (confirmModalData: TNullable<unknown>): void => {
         this.confirmModalData = confirmModalData;
     };
@@ -85,5 +86,5 @@ export class CommonStore implements ICommonStore {
 
     //  ***____***____***____
     //  ***____ END Modals and Drawers
-    // ***____***____***____
+    //---------------------------------------------------------------------
 }

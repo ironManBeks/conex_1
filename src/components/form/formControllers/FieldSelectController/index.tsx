@@ -64,23 +64,24 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                         label={label}
                         isFloatingLabel={isFloatingLabel}
                         wrapperClassName={wrapperClassName}
+                        fieldValue={field.value}
                     >
-                        {isFloatingLabel && label && (
-                            <label
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: isLabelActive },
-                                    { _disabled: disabled },
-                                )}
-                                onClick={(e) => {
-                                    e.stopPropagation();
-                                    focusOnField();
-                                    setDropdownOpen((val) => !val);
-                                }}
-                            >
-                                {label}
-                            </label>
-                        )}
+                        {/*{isFloatingLabel && label && (*/}
+                        {/*    <label*/}
+                        {/*        className={cn(*/}
+                        {/*            `${FORM_FIELD_CLASSNAME_PREFIX}_label`,*/}
+                        {/*            { _activelabel: isLabelActive },*/}
+                        {/*            { _disabled: disabled },*/}
+                        {/*        )}*/}
+                        {/*        onClick={(e) => {*/}
+                        {/*            e.stopPropagation();*/}
+                        {/*            focusOnField();*/}
+                        {/*            setDropdownOpen((val) => !val);*/}
+                        {/*        }}*/}
+                        {/*    >*/}
+                        {/*        {label}*/}
+                        {/*    </label>*/}
+                        {/*)}*/}
                         <AntSelect
                             {...field}
                             {...rest}

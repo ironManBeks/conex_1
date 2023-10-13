@@ -22,7 +22,8 @@ const CartList: FC<TSectionTypes> = inject("store")(
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
         const { isAuthorized, userCartData } = authStore;
-        const { setProductPriceFetching, getProductPrice } = productsStore;
+        const { setProductPriceFetching, getProductPriceRequest } =
+            productsStore;
         const [selected, setSelected] = useState<string[]>([]);
         const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
 
@@ -96,7 +97,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
 
         const handleCountChange = (id: string, count: number) => {
             console.log("id", count, "__________", id);
-            getProductPrice(ProductPriceParamsMockup);
+            getProductPriceRequest(ProductPriceParamsMockup);
         };
 
         const debounceLoadData = useCallback(

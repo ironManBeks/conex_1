@@ -19,6 +19,8 @@ export class ContactStore implements IContactStore {
         this.createFeedbackFetching = value;
     };
 
+    //---------------------------------------------------------------------
+
     createFeedbackRequest = (data: TContactsUsForm): Promise<void> => {
         this.setCreateFeedbackFetching(true);
         return axiosInstance

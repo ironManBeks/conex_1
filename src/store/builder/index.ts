@@ -59,25 +59,6 @@ export class BuilderStore implements IBuilderStore {
         makeAutoObservable(this);
     }
 
-    getBuilderSettings = (): Promise<
-        AxiosResponse<TGetBuilderSettingsResponse>
-    > => {
-        this.setBuilderSettingsFetching(true);
-        return axiosInstance
-            .get("/setting")
-            .then((data: AxiosResponse<TGetBuilderSettingsResponse>) => {
-                this.setBuilderSettings(data.data);
-                return data;
-            })
-            .catch((err) => {
-                showAxiosNotificationError(err);
-                throw err;
-            })
-            .finally(() => {
-                this.setBuilderSettingsFetching(false);
-            });
-    };
-
     setBuilderSettings = (
         data: TNullable<TGetBuilderSettingsResponse>,
     ): void => {
@@ -88,50 +69,12 @@ export class BuilderStore implements IBuilderStore {
         this.builderSettingsFetching = value;
     };
 
-    getBuilderAllData = (): Promise<
-        AxiosResponse<TGetBuilderAllDataResponse>
-    > => {
-        this.setBuilderAllDataFetching(true);
-        return axiosInstance
-            .get("/quiz-questions")
-            .then((data: AxiosResponse<TGetBuilderAllDataResponse>) => {
-                this.setBuilderAllData(data.data);
-                return data;
-            })
-            .catch((err) => {
-                showAxiosNotificationError(err);
-                throw err;
-            })
-            .finally(() => {
-                this.setBuilderAllDataFetching(false);
-            });
-    };
-
     setBuilderAllData = (data: TNullable<TGetBuilderAllDataResponse>): void => {
         this.builderAllData = data;
     };
 
     setBuilderAllDataFetching = (value: boolean): void => {
         this.builderAllDataFetching = value;
-    };
-
-    getBuilderParamsData = (
-        params: TGetBuilderParamsDataParams,
-    ): Promise<AxiosResponse<TGetBuilderParamsDataResponse>> => {
-        this.setBuilderParamsDataFetching(true);
-        return axiosInstance
-            .get("/quiz-questions", { params })
-            .then((data: AxiosResponse<TGetBuilderParamsDataResponse>) => {
-                this.setBuilderParamsData(data.data);
-                return data;
-            })
-            .catch((err) => {
-                showAxiosNotificationError(err);
-                throw err;
-            })
-            .finally(() => {
-                this.setBuilderParamsDataFetching(false);
-            });
     };
 
     setBuilderParamsData = (
@@ -143,10 +86,6 @@ export class BuilderStore implements IBuilderStore {
     setBuilderParamsDataFetching = (value: boolean): void => {
         this.builderParamsDataFetching = value;
     };
-
-    //-------------------------------------------------------------------------------
-    // functions
-    //-------------------------------------------------------------------------------
 
     setStepHistory = (
         stepId: TStepPath,
@@ -247,6 +186,87 @@ export class BuilderStore implements IBuilderStore {
         this.setCurrentStepId(data?.id ?? null);
     };
 
+    setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
+        setStorage(BUILDER_RESUlT_DATA, data);
+        this.resultDoorData = data;
+    };
+
+    setEndDoorData = (data: TNullable<TResultDoorData[]>): void => {
+        this.endDoorData = data;
+    };
+
+    setBuilderCartData = (data: TNullable<TBuilderCartData>): void => {
+        setStorage(BUILDER_CART, data);
+        this.builderCartData = data;
+    };
+
+    setEditBuilderCartItemData = (
+        data: TNullable<TEditBuilderCartItemData>,
+    ): void => {
+        this.editBuilderCartItemData = data;
+    };
+
+    //-------------------------------------------------------------------------------
+
+    getBuilderSettings = (): Promise<
+        AxiosResponse<TGetBuilderSettingsResponse>
+    > => {
+        this.setBuilderSettingsFetching(true);
+        return axiosInstance
+            .get("/setting")
+            .then((data: AxiosResponse<TGetBuilderSettingsResponse>) => {
+                this.setBuilderSettings(data.data);
+                return data;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setBuilderSettingsFetching(false);
+            });
+    };
+
+    getBuilderAllData = (): Promise<
+        AxiosResponse<TGetBuilderAllDataResponse>
+    > => {
+        this.setBuilderAllDataFetching(true);
+        return axiosInstance
+            .get("/quiz-questions")
+            .then((data: AxiosResponse<TGetBuilderAllDataResponse>) => {
+                this.setBuilderAllData(data.data);
+                return data;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setBuilderAllDataFetching(false);
+            });
+    };
+
+    getBuilderParamsData = (
+        params: TGetBuilderParamsDataParams,
+    ): Promise<AxiosResponse<TGetBuilderParamsDataResponse>> => {
+        this.setBuilderParamsDataFetching(true);
+        return axiosInstance
+            .get("/quiz-questions", { params })
+            .then((data: AxiosResponse<TGetBuilderParamsDataResponse>) => {
+                this.setBuilderParamsData(data.data);
+                return data;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setBuilderParamsDataFetching(false);
+            });
+    };
+
+    //---------------------------------------------------------------------
+
     updateCurrentStepData = (
         way: TUpdateCurrentStepWay,
         changeQueue = true,
@@ -342,15 +362,6 @@ export class BuilderStore implements IBuilderStore {
         }
     };
 
-    setResultDoorData = (data: TNullable<TResultDoorData[]>): void => {
-        setStorage(BUILDER_RESUlT_DATA, data);
-        this.resultDoorData = data;
-    };
-
-    setEndDoorData = (data: TNullable<TResultDoorData[]>): void => {
-        this.endDoorData = data;
-    };
-
     setDefaultValuesToBuilder = (
         history: number[],
         queue: number[],
@@ -366,11 +377,6 @@ export class BuilderStore implements IBuilderStore {
             parentId: parentId,
             nextStep: stepId,
         });
-    };
-
-    setBuilderCartData = (data: TNullable<TBuilderCartData>): void => {
-        setStorage(BUILDER_CART, data);
-        this.builderCartData = data;
     };
 
     setElementsToBuilderCard = (
@@ -435,12 +441,6 @@ export class BuilderStore implements IBuilderStore {
                 elements: [...data, ...newResult.elements],
             });
         }
-    };
-
-    setEditBuilderCartItemData = (
-        data: TNullable<TEditBuilderCartItemData>,
-    ): void => {
-        this.editBuilderCartItemData = data;
     };
 
     resetBuilderFormData = (withUpdateData = false): void => {

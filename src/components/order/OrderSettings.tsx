@@ -30,7 +30,7 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
     observer(({ store, placement }) => {
         const { commonStore, productsStore } = store as IRoot;
         const { headerHeight } = commonStore;
-        const { productPrice, productPriceFetching, getProductPrice } =
+        const { productPrice, productPriceFetching, getProductPriceRequest } =
             productsStore;
         const classPrefix = `${ORDER_PAGE_CLASSPREFIX}_settings`;
         const router = useRouter();
@@ -41,14 +41,14 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
             return null;
         }
 
-        const handleDiscountCode = useCallback(() => {
+        const handleDiscountCode = () => {
             let discountParams = discountCode;
             if (isDiscountApply) {
                 setDiscountCode("");
                 setIsDiscountApply(false);
                 discountParams = undefined;
             }
-            getProductPrice({
+            getProductPriceRequest({
                 ...ProductPriceParamsMockup,
                 discountCode: discountParams,
             }).finally(() => {
@@ -56,24 +56,19 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                     setIsDiscountApply(true);
                 }
             });
-        }, [isDiscountApply, discountCode]);
+        };
 
-        const renderPriceValue = useCallback(
-            (
-                fieldName: EProductPriceNames,
-                valuePrefix?: string,
-            ): TOptionsListItem | undefined => {
-                if (!isNil(productPrice[fieldName])) {
-                    return {
-                        label: ProductPriceLabels[fieldName],
-                        value: `${valuePrefix ?? ""}$${
-                            productPrice[fieldName]
-                        }`,
-                    };
-                }
-            },
-            [productPrice],
-        );
+        const renderPriceValue = (
+            fieldName: EProductPriceNames,
+            valuePrefix?: string,
+        ): TOptionsListItem | undefined => {
+            if (!isNil(productPrice[fieldName])) {
+                return {
+                    label: ProductPriceLabels[fieldName],
+                    value: `${valuePrefix ?? ""}$${productPrice[fieldName]}`,
+                };
+            }
+        };
 
         const handlePlaceOrder = () => {
             router.push(PATH_CHECKOUT_PAGE);

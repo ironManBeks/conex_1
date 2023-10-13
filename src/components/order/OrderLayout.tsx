@@ -29,7 +29,7 @@ const OrderLayout: FC<
         }) => {
             const { builderStore, authStore, productsStore } = store as IRoot;
             const { builderCartData } = builderStore;
-            const { getProductPrice } = productsStore;
+            const { getProductPriceRequest } = productsStore;
             const {
                 userDataFetching,
                 userCartDataFetching,
@@ -44,7 +44,7 @@ const OrderLayout: FC<
             }, [isAuthorized]);
 
             useEffect(() => {
-                getProductPrice(ProductPriceParamsMockup);
+                getProductPriceRequest(ProductPriceParamsMockup);
             }, []);
 
             const content = (
