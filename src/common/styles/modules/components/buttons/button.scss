@@ -84,7 +84,7 @@
     &.__opacity{
       color: $text-color-secondary;
       .common-icon{
-        opacity: 0.36;
+        opacity: $iconOpacity;
       }
     }
     &:hover {

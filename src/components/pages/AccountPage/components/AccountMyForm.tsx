@@ -15,7 +15,6 @@ import {
     TAccountMyForm,
 } from "../formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { notImplemented } from "@helpers/notImplemented";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";

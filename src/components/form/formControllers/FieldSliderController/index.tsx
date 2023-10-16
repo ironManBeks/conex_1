@@ -1,5 +1,5 @@
-import { FC, useRef, cloneElement } from "react";
-import Slider, { SliderProps, SliderRef } from "rc-slider";
+import { FC, cloneElement } from "react";
+import Slider, { SliderProps } from "rc-slider";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
 import "rc-slider/assets/index.css";
@@ -12,7 +12,14 @@ import { EFormFieldType } from "@components/form/types";
 import { TFieldSliderController } from "./types";
 
 const handleRender: SliderProps["handleRender"] = (node, props) => {
-    return cloneElement(node, props, <IconDrag />);
+    return cloneElement(
+        node,
+        props,
+        <>
+            <span className="tooltip-wrapper">{props.value}</span>
+            <IconDrag />
+        </>,
+    );
 };
 
 const FieldSliderController: FC<TFieldSliderController> = (props) => {
@@ -29,8 +36,6 @@ const FieldSliderController: FC<TFieldSliderController> = (props) => {
         control,
         formState: { errors },
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
-    const fieldRef = useRef<SliderRef>(null);
 
     return (
         <Controller
@@ -40,10 +45,11 @@ const FieldSliderController: FC<TFieldSliderController> = (props) => {
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.slider}
-                        errorMessage={errorMessage}
+                        errorMessage={errors[name]?.message}
+                        wrapperClassName={wrapperClassName}
                         label={label}
                         isFloatingLabel={false}
-                        wrapperClassName={wrapperClassName}
+                        disabled={!!disabled}
                     >
                         {innerLabel && (
                             <span
@@ -56,7 +62,6 @@ const FieldSliderController: FC<TFieldSliderController> = (props) => {
                             {...field}
                             {...rest}
                             max={125}
-                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                             )}

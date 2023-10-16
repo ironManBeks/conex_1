@@ -1,9 +1,8 @@
-import { FC, useRef, useState } from "react";
+import { FC } from "react";
 import cn from "classnames";
 import { Select as AntSelect } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import { isFunction } from "lodash";
-import { BaseSelectRef } from "rc-select";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
 import { IconArrowSingle, IconCross } from "@components/Icons";
@@ -21,9 +20,10 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
         wrapperClassName,
         disabled,
         showSearch = true,
-        allowClear = true,
+        allowClear,
         isFloatingLabel = true,
         placeholder,
+        showError,
         mode,
         ...rest
     } = props;
@@ -31,70 +31,30 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
         control,
         formState: { errors },
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
-    const fieldRef = useRef<BaseSelectRef | null>(null);
-    const [isLabelActive, setIsLabelActive] = useState(false);
-    const [focus, setFocus] = useState(false);
-    const [dropdownOpen, setDropdownOpen] = useState(false);
-
-    const focusOnField = () => {
-        if (fieldRef.current) {
-            fieldRef.current.focus();
-        }
-    };
-
-    const focusHandler = (val: boolean) => {
-        setFocus(val);
-    };
 
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                if (field.value) {
-                    setIsLabelActive(true);
-                } else if (!focus && !field.value) {
-                    setIsLabelActive(false);
-                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.select}
-                        errorMessage={errorMessage}
+                        errorMessage={errors[name]?.message}
+                        wrapperClassName={wrapperClassName}
+                        showError={showError}
                         label={label}
                         isFloatingLabel={isFloatingLabel}
-                        wrapperClassName={wrapperClassName}
                         fieldValue={field.value}
+                        disabled={!!disabled}
                     >
-                        {/*{isFloatingLabel && label && (*/}
-                        {/*    <label*/}
-                        {/*        className={cn(*/}
-                        {/*            `${FORM_FIELD_CLASSNAME_PREFIX}_label`,*/}
-                        {/*            { _activelabel: isLabelActive },*/}
-                        {/*            { _disabled: disabled },*/}
-                        {/*        )}*/}
-                        {/*        onClick={(e) => {*/}
-                        {/*            e.stopPropagation();*/}
-                        {/*            focusOnField();*/}
-                        {/*            setDropdownOpen((val) => !val);*/}
-                        {/*        }}*/}
-                        {/*    >*/}
-                        {/*        {label}*/}
-                        {/*    </label>*/}
-                        {/*)}*/}
                         <AntSelect
                             {...field}
                             {...rest}
-                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                                 {
                                     _disabled: disabled,
-                                    _floatinglabel: isFloatingLabel && label,
-                                    _activelabel:
-                                        isFloatingLabel &&
-                                        label &&
-                                        isLabelActive,
                                 },
                             )}
                             popupClassName={cn(
@@ -103,43 +63,22 @@ const FieldSelectController: FC<TFieldSelectController> = (props) => {
                             )}
                             onChange={(val) => {
                                 field.onChange(val);
-                                focusHandler(false);
                                 if (isFunction(onChangeValue))
                                     onChangeValue(val);
                             }}
-                            onFocus={() => {
-                                focusHandler(true);
-                                setIsLabelActive(true);
-                            }}
-                            onBlur={() => {
-                                focusHandler(false);
-                                setIsLabelActive(false);
-                                setDropdownOpen(false);
-                            }}
                             onClick={(e) => {
                                 e.stopPropagation();
-                                setDropdownOpen((val) => !val);
                             }}
                             suffixIcon={
                                 <IconArrowSingle
-                                    direction={
-                                        dropdownOpen
-                                            ? EArrowDirection.top
-                                            : EArrowDirection.bottom
-                                    }
+                                    direction={EArrowDirection.bottom}
                                 />
                             }
-                            onSearch={(val) => {
-                                if (val) {
-                                    focusHandler(true);
-                                    setIsLabelActive(true);
-                                }
-                            }}
-                            clearIcon={<IconCross />}
-                            open={dropdownOpen}
+                            allowClear={
+                                allowClear || { clearIcon: <IconCross /> }
+                            }
                             disabled={disabled}
                             showSearch={showSearch}
-                            allowClear={allowClear}
                             placeholder={
                                 isFloatingLabel && label
                                     ? undefined

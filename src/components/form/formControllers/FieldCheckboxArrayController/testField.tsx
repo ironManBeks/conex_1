@@ -92,6 +92,7 @@ const TestFieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                         wrapperClassName={cn(wrapperClassName, {
                             _disabled: disabled,
                         })}
+                        disabled={!!disabled}
                     >
                         <Checkbox.Group
                             style={{

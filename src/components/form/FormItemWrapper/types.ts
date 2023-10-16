@@ -20,6 +20,7 @@ export type TFormWrapperErrorMessage = TFormItemError;
 export type TFormItemWrapper = {
     children: ReactNode;
     fieldType: EFormFieldType;
+    disabled: boolean;
     required?: boolean;
     fieldValue?: string | number;
 } & TFormItemLabel &

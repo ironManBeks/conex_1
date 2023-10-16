@@ -42,15 +42,11 @@
     padding-left: 10px;
     font-size: $font-size-lg;
     line-height: $line-height-lg;
-    color: $color-grey-800;
+    color: $color-secondary-strong;
   }
 
   &_sub-label{
     cursor: pointer;
-  }
-
-  &_label{
-    pointer-events: none;
   }
 
   &_content-wrapper{
@@ -114,7 +110,7 @@
     z-index: 1;
     &._disabled{
       cursor: not-allowed;
-      background-color: $color-disabled-selection-bg;
+      background-color: transparent;
       color: $color-black;
     }
     &._error{

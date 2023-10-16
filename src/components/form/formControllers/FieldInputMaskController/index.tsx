@@ -21,7 +21,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
         onAddonClick,
         minAddonWidth,
         style,
-        showError = true,
+        showError,
         saveOnlyNumber = true,
         readOnly: propsReadOnly = false,
         isFloatingLabel = true,
@@ -33,33 +33,13 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
     const {
         control,
         formState: { errors },
-        watch,
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
-    const fieldRef = useRef<MaskedInput>(null);
-    const [isLabelActive, setIsLabelActive] = useState(false);
-    const [focus, setFocus] = useState(false);
-    const fieldValue = watch(name);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
             setAddonAfterWidth(addonAfterRef.current.clientHeight);
         }
     }, [addonAfterRef?.current?.clientHeight]);
-
-    const focusOnField = () => {
-        if (fieldRef.current) {
-            fieldRef?.current?.inputElement.focus();
-        }
-    };
-
-    useEffect(() => {
-        if (fieldValue) {
-            setIsLabelActive(true);
-        } else if (!focus && !fieldValue) {
-            setIsLabelActive(false);
-        }
-    }, [fieldValue, focus]);
 
     return (
         <Controller
@@ -69,56 +49,30 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}
-                        errorMessage={errorMessage}
+                        errorMessage={errors[name]?.message}
                         showError={showError}
-                        label={label}
-                        isFloatingLabel={isFloatingLabel}
                         wrapperClassName={cn(wrapperClassName, {
                             _addonafter: addonAfter,
                         })}
+                        label={label}
+                        isFloatingLabel={isFloatingLabel}
+                        fieldValue={field.value}
+                        disabled={!!disabled}
                     >
-                        {isFloatingLabel && label && (
-                            <label
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: isLabelActive },
-                                    { _disabled: disabled },
-                                )}
-                                onClick={focusOnField}
-                            >
-                                {label}
-                            </label>
-                        )}
                         <MaskedInput
                             {...field}
                             {...rest}
-                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                {
-                                    _floatinglabel: isFloatingLabel && label,
-                                    _activelabel:
-                                        isFloatingLabel &&
-                                        label &&
-                                        isLabelActive,
-                                },
                             )}
                             value={field.value}
                             onChange={(e) => {
                                 const val = saveOnlyNumber
                                     ? e.target.value.replace(/[^0-9]/g, "")
                                     : e.target.value;
+                                console.log(`bbb${e.target.value}bbb`);
                                 field.onChange(val);
-                                if (val) setIsLabelActive(true);
                                 if (onChangeValue) onChangeValue(val);
-                            }}
-                            onFocus={() => {
-                                setFocus(true);
-                                setIsLabelActive(true);
-                            }}
-                            onBlur={() => {
-                                setFocus(false);
-                                setIsLabelActive(false);
                             }}
                             style={{
                                 ...style,

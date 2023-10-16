@@ -64,19 +64,19 @@
         span{
           &:not(.ant-checkbox){
             background-color: $color-secondary-40;
-            border-color: $color-disabled-border;
+            border-color: $border-color-disabled;
             svg{
               display: none;
             }
             &:hover{
               background-color: $color-secondary-40;
-              border-color: $color-disabled-border;
+              border-color: $border-color-disabled;
             }
           }
         }
       }
       &_sub-label{
-        color: $color-disabled-text;
+        color: $text-color-disabled;
         cursor: not-allowed;
       }
     }

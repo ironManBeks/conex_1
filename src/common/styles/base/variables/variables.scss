@@ -2,6 +2,7 @@
 
 $space: 4px;
 $transition: .2s;
+$iconOpacity: 0.36;
 
 $color-white: #FFFFFF;
 $color-black: #000000;
@@ -12,7 +13,6 @@ $color-primary-200: rgba($color-primary-strong, 0.2);
 $color-primary-400: rgba($color-primary-strong, 0.4);
 $color-primary-600: rgba($color-primary-strong, 0.6);
 $color-primary-800: rgba($color-primary-strong, 0.8);
-
 
 $color-secondary-strong: rgba(44, 44, 53, 1);
 $color-secondary-40: rgba($color-secondary-strong, 0.04);
@@ -71,18 +71,23 @@ $border-color-primary: $color-secondary-200;
 $border-color-secondary: $color-secondary-120;
 $border-color-secondary-active: $color-secondary-strong;
 $border-color-critical: $color-critical-strong;
+$border-color-disabled: $color-secondary-40;
 
+// Disabled-color
+$color-disabled-bg: $color-secondary-40;
+$color-disabled-selection-bg: $color-secondary-40;
 
+// -----------------------------------------------------------------------------
 // Fonts
 $font-family-primary: 'HelveticaNeue';
 $font-family-secondary: 'Manrope';
 
-
+// -----------------------------------------------------------------------------
 // Border-radius
 $border-radius-circle: 50%;
 $border-radius-round: 55px;
 
-
+// -----------------------------------------------------------------------------
 // Font-size
 $font-size-xs: 0.75rem;
 $font-size-sm: 0.875rem;
@@ -100,6 +105,7 @@ $secondary-banner-font-size-sm: 2.75rem;
 $builder-form-title-font-size: 2.25rem;
 $contacts-us-title-font-size: 3.125rem;
 
+// -----------------------------------------------------------------------------
 // Line-height
 $line-height-xs: 0.75rem;
 $line-height-sm: 0.875rem;
@@ -113,109 +119,11 @@ $line-height-xxl: 3.5rem;
 $line-height-remove: 0;
 $line-height-static: 1;
 
+// -----------------------------------------------------------------------------
 // Letter-spacing
 $letter-spacing-bs: 0.02em;
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-//////////////// OLD
-
-$color-yellow-100: #F3E9B2;
-$color-yellow-400: #F5D734;
-$color-yellow-500: #FFD700;
-$color-yellow-700: #EFB333;
-$color-yellow-800: #F4AC12;
-
-$color-orange-300: #F9B872;
-$color-orange-400: #E08C62;
-$color-orange-500: #E18450;
-$color-orange-550: #F2A755;
-$color-orange-600: #F79225;
-$color-orange-800: #D98D3B;
-
-$color-grey-30: #F5F4F4;
-$color-grey-40: #FAFBFB;
-$color-grey-50: #EFF3FA;
-$color-grey-100: #D2C9BA;
-$color-grey-200: #D9D9D9;
-$color-grey-250: #C8C5C5;
-$color-grey-275: #E0D7B7;
-$color-grey-300: #979797;
-$color-grey-400: #929191;
-$color-grey-450: #908F8F;
-$color-grey-500: #8D8D8D;
-$color-grey-550: #858181;
-$color-grey-600: #797A7C;
-$color-grey-700: #636161;
-$color-grey-800: #5E5E5E;
-$color-grey-850: #5E5D5D;
-$color-grey-900: #5C5A5A;
-
-$color-blue-400: #5084A0;
-$color-blue-700: #204459;
-$color-blue-800: #1B1841;
-
-$color-green-200: #8FB48C;
-$color-green-300: #72BE6B;
-$color-green-500: #5D9A57;
-
-$color-red-200: #E29292;
-$color-red-250: #ED8989;
-$color-red-300: #DA6D6E;
-$color-red-500: #BE5253;
-$color-red-800: #D62343;
-
-
-// Project Colors
-$color-primary: $color-yellow-500;
-$color-primary-hover: $color-yellow-400;
-
-$color-secondary: $color-yellow-800;
-$color-secondary-hover: $color-yellow-700;
-
-$color-success: $color-green-300;
-$color-success-hover: $color-green-500;
-
-$color-danger: $color-red-300;
-$color-danger-hover: $color-red-500;
-
-$color-disabled-bg: $color-grey-250;
-$color-disabled-text: $color-grey-900;
-$color-disabled-border: $color-grey-250;
-$color-disabled-selection-bg: $color-grey-200;
-
-$color-text-default: $color-black;
-
-$color-default-link: #1890ff;
-
-$layout-bg-color: #f0f2f1;
-
-// Border-radius
-$border-radius-sm: 4px;
-$border-radius-md: 12px;
-$border-radius-lg: 16px;
-$border-radius-xl: 20px;
-
+// -----------------------------------------------------------------------------
 //// Box-shadow
 $box-shadow-sm:  0 0 10px 0 rgba(87, 110, 124, 0.23), 0 0 10px 0 rgba(250, 187, 30, 0.12);
 $box-shadow-sm-hover:  0 0 10px 0 rgba(87, 110, 124, 0.3), 0 0 10px 0 rgba(250, 187, 30, 0.2);
@@ -226,23 +134,7 @@ $box-shadow-bs-hover: 0 0 20px 2px rgba(87, 110, 124, 0.3), 0 0 20px 2px rgba(25
 $box-shadow-md: 0 0 20px 0 rgba(87, 110, 124, 0.23), 0 0 20px 0 rgba(250, 187, 30, 0.17);
 $box-shadow-md-hover: 0 0 22px 0 rgba(87, 110, 124, 0.53), 0 0 22px 0 rgba(250, 187, 30, 0.37);
 
-
-$box-shadow-active-builder-form-item: -1px -1px 5px 0px rgba(250, 187, 30, 0.38), 1px 1px 3px 0px rgba(250, 187, 30, 0.56);
-
-//// Code variables
-$border-bs-default: 1px solid $color-grey-500;
-$border-bs-default-light: 1px solid rgba($color-primary, 0.7);
-$border-bs-primary: 1px solid $color-primary;
-
-$border-mb-default: 2px solid $color-primary;
-$border-lg-default: 3px solid $color-primary;
-
-//Blocks
-$main-filter-height: 80px;
-$main-filter-item-height: 50px;
-$header-filter-item-height: 36px;
-
-
+// -----------------------------------------------------------------------------
 // Z-indexes
 $z-index-header: 1100;
 $z-index-header-dropdown: 1101;

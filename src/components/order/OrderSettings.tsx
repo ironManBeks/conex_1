@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useState } from "react";
 import { inject, observer } from "mobx-react";
 import cn from "classnames";
 import { useRouter } from "next/router";

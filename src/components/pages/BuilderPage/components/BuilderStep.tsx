@@ -72,13 +72,6 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
             }
         }, [currentStepData.id]);
 
-        useEffect(() => {
-            console.log(
-                "editBuilderCartItemData",
-                toJS(editBuilderCartItemData),
-            );
-        }, [editBuilderCartItemData]);
-
         return (
             <div
                 className={cn(`${classPrefix}_wrapper`, className, {

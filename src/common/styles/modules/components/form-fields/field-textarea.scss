@@ -27,7 +27,8 @@
       min-height: 120px;
       max-height: 320px;
       &[disabled]{
-        background-color: $color-secondary-40;
+        background-color: $color-disabled-bg;
+        border-color: $border-color-disabled;
       }
       &:hover, &:focus{
         box-shadow: none;
@@ -39,6 +40,7 @@
         border-color: $border-color-secondary-active;
       }
     }
+
     &_label{
       position: absolute;
       left: 0;

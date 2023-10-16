@@ -1,16 +1,4 @@
 import { TPaymentCard } from "@components/globalComponents/types";
-import { TUserData } from "@store/auth/types";
-
-export const UserDataMockup: TUserData = {
-    name: "John",
-    surname: "Wick",
-    email: "john.wick1@gmail.com",
-    phone: "18881234567",
-    country: "Australia",
-    city: "Townsville",
-    address: "98 Shirley Street PIMPAMA QLD 4209",
-    index: "481001",
-};
 
 export const UserCardsDataMockup: TPaymentCard[] = [
     {

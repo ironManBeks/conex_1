@@ -1,6 +1,6 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useState } from "react";
 import cn from "classnames";
-import { AutoComplete, Input, InputRef } from "antd";
+import { AutoComplete, Input } from "antd";
 import { isFunction } from "lodash";
 import { Controller, useFormContext } from "react-hook-form";
 
@@ -32,14 +32,8 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
     const {
         control,
         formState: { errors },
-        watch,
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
     const [options, setOptions] = useState<DefaultOptionType[]>([]);
-    const fieldRef = useRef<InputRef | null>(null);
-    const [isLabelActive, setIsLabelActive] = useState(false);
-    const [focus, setFocus] = useState(false);
-    const fieldValue = watch(name);
 
     const handleSearch = (value: string) => {
         setOptions(
@@ -56,25 +50,11 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
         );
     };
 
-    const focusOnField = () => {
-        if (fieldRef.current) {
-            fieldRef.current.focus();
-        }
-    };
-
     const handleSelect = (value: string, option: DefaultOptionType) => {
         if (isFunction(onSelect)) {
             onSelect(value, option);
         }
     };
-
-    useEffect(() => {
-        if (fieldValue) {
-            setIsLabelActive(true);
-        } else if (!focus && !fieldValue) {
-            setIsLabelActive(false);
-        }
-    }, [fieldValue, focus]);
 
     return (
         <Controller
@@ -84,24 +64,14 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.autocomplete}
-                        errorMessage={errorMessage}
-                        label={fieldLabel}
-                        isFloatingLabel={isFloatingLabel}
+                        errorMessage={errors[name]?.message}
                         wrapperClassName={wrapperClassName}
                         showError={showError}
+                        label={fieldLabel}
+                        isFloatingLabel={isFloatingLabel}
+                        fieldValue={field.value}
+                        disabled={!!disabled}
                     >
-                        {isFloatingLabel && fieldLabel && (
-                            <label
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: isLabelActive },
-                                    { _disabled: disabled },
-                                )}
-                                onClick={focusOnField}
-                            >
-                                {fieldLabel}
-                            </label>
-                        )}
                         <AutoComplete
                             options={options}
                             onSelect={(value, option) => {
@@ -115,14 +85,6 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
                             )}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                {
-                                    _floatinglabel:
-                                        isFloatingLabel && fieldLabel,
-                                    _activelabel:
-                                        isFloatingLabel &&
-                                        fieldLabel &&
-                                        isLabelActive,
-                                },
                             )}
                             value={field.value}
                         >
@@ -130,7 +92,6 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
                                 {...field}
                                 {...rest}
                                 allowClear={false}
-                                ref={fieldRef}
                                 placeholder={
                                     isFloatingLabel && fieldLabel
                                         ? undefined
@@ -141,14 +102,6 @@ const FieldAutoCompleteController: FC<TFieldAutoCompleteController> = (
                                     const val = e.target.value;
                                     field.onChange(val);
                                     if (onChangeValue) onChangeValue(val);
-                                }}
-                                onFocus={() => {
-                                    setFocus(true);
-                                    setIsLabelActive(true);
-                                }}
-                                onBlur={() => {
-                                    setFocus(false);
-                                    setIsLabelActive(false);
                                 }}
                                 disabled={disabled}
                                 addonBefore={

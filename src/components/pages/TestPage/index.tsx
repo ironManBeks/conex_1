@@ -18,7 +18,7 @@ import { H1 } from "@components/Text";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import {
     EFieldNames,
-    formDefaultValues,
+    // formDefaultValues,
     // formResolver,
     optionsMockup,
     TFormFields,
@@ -32,7 +32,7 @@ const TestPage: FC = () => {
     const classPrefix = "test-page";
     const methods = useForm<TFormFields>({
         // resolver: formResolver(),
-        defaultValues: formDefaultValues,
+        // defaultValues: formDefaultValues,
     });
 
     const { handleSubmit } = methods;
@@ -80,6 +80,9 @@ const TestPage: FC = () => {
                                 // placeholder={EFieldNames.select}
                                 label={EFieldNames.slider}
                             />
+                            <br />
+                            <br />
+                            <br />
                             <FieldSelectController
                                 name={EFieldNames.select}
                                 placeholder={EFieldNames.select}
@@ -92,6 +95,14 @@ const TestPage: FC = () => {
                                 label={EFieldNames.select + 321}
                                 options={optionsMockup}
                                 showSearch={false}
+                            />
+                            <FieldSelectController
+                                name={EFieldNames.select + 123}
+                                placeholder={EFieldNames.select + 123}
+                                label={EFieldNames.select + 123}
+                                options={optionsMockup}
+                                showSearch={false}
+                                disabled={true}
                             />
                             {/*<FieldSelectController*/}
                             {/*    name={EFieldNames.select + 123}*/}

@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useMemo, useState } from "react";
 import cn from "classnames";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
@@ -13,9 +13,38 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
     wrapperClassName,
     isFloatingLabel = false,
     showError = true,
+    disabled,
     fieldValue,
 }) => {
     const [focus, setFocus] = useState(false);
+
+    const errorContent = useMemo(() => {
+        if (errorMessage && showError) {
+            return (
+                <div
+                    className={cn(
+                        `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
+                    )}
+                >
+                    <span>{errorMessage.toString()}</span>
+                </div>
+            );
+        }
+    }, [errorMessage, showError]);
+
+    const simpleLabelContent = useMemo(() => {
+        if (label && !isFloatingLabel) {
+            return (
+                <div
+                    className={cn(
+                        `${FORM_FIELD_CLASSNAME_PREFIX}_label-wrapper`,
+                    )}
+                >
+                    <span>{label}</span>
+                </div>
+            );
+        }
+    }, [label, isFloatingLabel]);
 
     return (
         <div
@@ -25,18 +54,12 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                 wrapperClassName,
                 { _error: errorMessage },
                 { _floatinglabel: isFloatingLabel && label },
+                { _focus: focus },
+                { _disabled: disabled },
             )}
         >
             <div className={cn(`${FORM_FIELD_CLASSNAME_PREFIX}_inner-wrapper`)}>
-                {label && !isFloatingLabel && (
-                    <div
-                        className={cn(
-                            `${FORM_FIELD_CLASSNAME_PREFIX}_label-wrapper`,
-                        )}
-                    >
-                        <span>{label}</span>
-                    </div>
-                )}
+                {simpleLabelContent}
                 <div
                     className={cn(
                         `${FORM_FIELD_CLASSNAME_PREFIX}_content-wrapper`,
@@ -52,26 +75,25 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                         {children}
                         {label && isFloatingLabel && (
                             <label
+                                onClick={() => {
+                                    setFocus(true);
+                                }}
                                 className={cn(
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: focus || fieldValue },
-                                    // { _activelabel: isLabelActive },
-                                    // { _disabled: disabled },
+                                    {
+                                        _activelabel:
+                                            focus ||
+                                            fieldValue ||
+                                            fieldValue === 0,
+                                        _disabled: disabled,
+                                    },
                                 )}
                             >
                                 {label}
                             </label>
                         )}
                     </div>
-                    {errorMessage && showError && (
-                        <div
-                            className={cn(
-                                `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
-                            )}
-                        >
-                            <span>{errorMessage.toString()}</span>
-                        </div>
-                    )}
+                    {errorContent}
                 </div>
             </div>
         </div>

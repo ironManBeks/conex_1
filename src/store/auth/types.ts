@@ -97,6 +97,10 @@ export type TAccountOrderItem = {
     statusTimelapse: TOrderStatusTimelapse[];
 };
 
+export type TUserCartId = {
+    id: string;
+};
+
 export type TUserCartItem = {
     title: string;
     price: number;
@@ -107,7 +111,7 @@ export type TUserCartItem = {
     }[];
     createDate: string;
     count: number;
-};
+} & TUserCartId;
 
 export type TUpdateUserDataParams = {
     first_name: string;

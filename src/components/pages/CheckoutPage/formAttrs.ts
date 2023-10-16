@@ -80,8 +80,8 @@ export const checkoutFormDefaultValues = (
     return {
         [ECheckoutFormFieldsNames.getMode]: ECheckoutGetMode.delivery,
         //
-        [ECheckoutFormFieldsNames.firstName]: data?.name ?? "",
-        [ECheckoutFormFieldsNames.lastName]: data?.surname ?? "",
+        [ECheckoutFormFieldsNames.firstName]: data?.first_name ?? "",
+        [ECheckoutFormFieldsNames.lastName]: data?.last_name ?? "",
         [ECheckoutFormFieldsNames.email]: data?.email ?? "",
         [ECheckoutFormFieldsNames.phone]: data?.phone ?? "",
         [ECheckoutFormFieldsNames.receiveNews]: true,

@@ -9,6 +9,7 @@ const Tooltip: FC<TTooltip> = (props) => {
     return (
         <AntTooltip
             {...rest}
+            defaultVisible={true}
             overlayClassName={cn(overlayClassName, "common-tooltip_overlay")}
             className={cn(className, "common-tooltip_wrapper")}
         >

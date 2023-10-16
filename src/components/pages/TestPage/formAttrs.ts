@@ -55,14 +55,14 @@ export const formResolver = (): Resolver<TFormFields> => {
     );
 };
 
-export const formDefaultValues: TFormFields = {
+export const formDefaultValues = {
     [EFieldNames.input]: "",
     [EFieldNames.select]: "",
     [EFieldNames.radioArray]: "",
     [EFieldNames.radioButtonArray]: "",
     [EFieldNames.checkbox]: false,
     [EFieldNames.textArea]: "",
-    [EFieldNames.inputNumber]: 0,
+    [EFieldNames.inputNumber]: null,
     [EFieldNames.checkboxArray]: [],
     [EFieldNames.slider]: 0,
 };

@@ -1,5 +1,4 @@
 @import "buttons/z-main-buttons";
-@import "form-fields/z-main-form-fields";
 
 @import "notification";
 @import "common/spin";
@@ -12,7 +11,6 @@
 @import "common/segmented";
 @import "common/tooltip";
 @import "common/additional-services";
-@import "common/choice-mode";
 @import "common/auth-form";
 @import "common/address-selection";
 @import "common/copy-text";
@@ -20,6 +18,9 @@
 @import "common/added-options-list";
 @import "common/pickup-point";
 @import "common/payment-card";
+
+@import "form-fields/z-main-form-fields";
+
 
 @import "cards/product-card";
 @import "cards/product-search-card";

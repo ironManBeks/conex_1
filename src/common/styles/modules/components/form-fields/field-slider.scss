@@ -21,6 +21,7 @@
         }
         &-step{
           height: 100%;
+          cursor: pointer;
         }
         &-handle{
           display: flex;
@@ -41,8 +42,37 @@
             opacity: 0.36;
             transition: $transition;
           }
+          .tooltip-wrapper{
+            position: absolute;
+            bottom: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 1;
+            transition: $transition;
+            @include tooltipInner;
+            &:after{
+              content: "";
+              position: absolute;
+              width: 8px;
+              height: 8px;
+              bottom: 0;
+              margin: auto;
+              border-radius: 2px;
+              transform: translateY(50%) rotate(-45deg);
+              z-index: 0;
+              background: $color-primary-strong;
+            }
+          }
           &:hover{
             .common-icon{
+              opacity: 1;
+            }
+            .tooltip-wrapper{
+              opacity: 1;
+            }
+          }
+          &-dragging{
+            .tooltip-wrapper{
               opacity: 1;
             }
           }
@@ -67,6 +97,7 @@
       text-align: center;
       background: $color-accent-strong;
       border-radius: borderRadius(2) 0 0 borderRadius(2);
+      cursor: default;
     }
   }
 

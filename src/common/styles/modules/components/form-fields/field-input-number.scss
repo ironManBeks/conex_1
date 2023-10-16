@@ -25,7 +25,8 @@
           border-color: $border-color-secondary-active;
         }
         &-disabled{
-          background-color: $color-secondary-40;
+          background-color: $color-disabled-bg;
+          border-color: $border-color-disabled;
         }
       }
       .ant-input-number{
@@ -38,10 +39,13 @@
           color: $text-color-primary;
           font-weight: 500;
         }
+        &-input-wrap{
+          width: 100%;
+        }
         &-handler{
           border: 0;
           &:hover{
-            background: $color-grey-200;
+            background: $color-secondary-200;
           }
           &-wrap{
             opacity: 1;
@@ -56,13 +60,6 @@
           }
           &-up-inner, &-down-inner{
             right: 6px;
-          }
-        }
-      }
-      &._floatinglabel{
-        .ant-input-number{
-          &-input{
-            padding: space(6) space(4) space(2);
           }
         }
       }
@@ -94,8 +91,8 @@
       }
       &[disabled]{
         cursor: not-allowed;
-        background-color: $color-secondary-40;
-        border-color: $color-secondary-40;
+        background-color: $color-disabled-bg;
+        border-color: $border-color-disabled;
         .common-icon{
           opacity: 0.12;
         }
@@ -126,6 +123,14 @@
       &._disabled{
         cursor: not-allowed;
         color: $text-color-disabled;
+      }
+    }
+  }
+
+  &._floatinglabel{
+    .ant-input-number{
+      &-input{
+        padding: space(6) space(4) space(2);
       }
     }
   }
