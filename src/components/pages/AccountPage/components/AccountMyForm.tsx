@@ -15,16 +15,17 @@ import {
     TAccountMyForm,
 } from "../formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { notImplemented } from "@helpers/notImplemented";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
+import { TUpdateUserDataParams } from "@store/auth/types";
+import { showNotification } from "@helpers/notificarionHelper";
 
 const AccountMyForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_my-form`;
         const { authStore } = store as IRoot;
-        const { userData } = authStore;
+        const { userData, updateUserData } = authStore;
 
         const methods = useForm<TAccountMyForm>({
             resolver: accountMyFormResolver(),
@@ -34,7 +35,28 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
         const { handleSubmit, reset } = methods;
 
         const onSubmit: SubmitHandler<TAccountMyForm> = (data) => {
-            notImplemented(`changedValue: ${JSON.stringify(data)}`);
+            if (!userData) {
+                showNotification({
+                    mainProps: {
+                        type: "warning",
+                        message: "Error",
+                        description: "Try to reload the page",
+                    },
+                });
+                return;
+            }
+            const params: TUpdateUserDataParams = {
+                ...data,
+                id: userData.id,
+            };
+            updateUserData(params).then(() => {
+                showNotification({
+                    mainProps: {
+                        type: "success",
+                        message: "Data updated successfully",
+                    },
+                });
+            });
         };
 
         const handleCancel = () => {
@@ -54,12 +76,12 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                             <H4>Main info</H4>
                             <div className={`${classPrefix}__fields`}>
                                 <FieldInputController
-                                    name={EAccountMyFormFieldsNames.name}
+                                    name={EAccountMyFormFieldsNames.first_name}
                                     placeholder="Name"
                                     label="Name"
                                 />
                                 <FieldInputController
-                                    name={EAccountMyFormFieldsNames.surname}
+                                    name={EAccountMyFormFieldsNames.last_name}
                                     placeholder="Surname"
                                     label="Surname"
                                 />
@@ -101,7 +123,7 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                                     label="Address"
                                 />
                                 <FieldInputController
-                                    name={EAccountMyFormFieldsNames.index}
+                                    name={EAccountMyFormFieldsNames.zip}
                                     placeholder="Index"
                                     label="Index"
                                 />

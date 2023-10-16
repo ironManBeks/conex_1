@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC } from "react";
 import { InputNumber as AntInputNumber } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
@@ -11,7 +11,6 @@ import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldInputNumberController } from "./types";
 import { EArrowDirection } from "@components/Icons/types";
-import { isNil } from "lodash";
 
 const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
     const {
@@ -22,32 +21,13 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
         disabled,
         isFloatingLabel = true,
         placeholder,
+        showError,
         ...rest
     } = props;
     const {
         control,
         formState: { errors },
-        watch,
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
-    const fieldRef = useRef<HTMLInputElement | null>(null);
-    const [isLabelActive, setIsLabelActive] = useState(false);
-    const [focus, setFocus] = useState(false);
-    const fieldValue = watch(name);
-
-    const focusOnField = () => {
-        if (fieldRef.current) {
-            fieldRef.current.focus();
-        }
-    };
-
-    useEffect(() => {
-        if (!isNil(fieldValue)) {
-            setIsLabelActive(true);
-        } else if (!focus && !fieldValue) {
-            setIsLabelActive(false);
-        }
-    }, [fieldValue, focus]);
 
     return (
         <Controller
@@ -57,49 +37,24 @@ const FieldInputNumberController: FC<TFieldInputNumberController> = (props) => {
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.inputnumber}
-                        errorMessage={errorMessage}
+                        errorMessage={errors[name]?.message}
+                        wrapperClassName={cn(wrapperClassName)}
+                        showError={showError}
                         label={label}
                         isFloatingLabel={isFloatingLabel}
-                        wrapperClassName={cn(wrapperClassName)}
+                        fieldValue={field.value}
+                        disabled={!!disabled}
                     >
-                        {isFloatingLabel && label && (
-                            <label
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: isLabelActive },
-                                    { _disabled: disabled },
-                                )}
-                                onClick={focusOnField}
-                            >
-                                {label}
-                            </label>
-                        )}
                         <AntInputNumber
                             {...field}
                             {...rest}
-                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                {
-                                    _floatinglabel: isFloatingLabel && label,
-                                    _activelabel:
-                                        isFloatingLabel &&
-                                        label &&
-                                        isLabelActive,
-                                },
                             )}
                             value={field.value}
                             onChange={(value) => {
                                 field.onChange(value);
                                 if (onChangeValue) onChangeValue(value);
-                            }}
-                            onFocus={() => {
-                                setFocus(true);
-                                setIsLabelActive(true);
-                            }}
-                            onBlur={() => {
-                                setFocus(false);
-                                setIsLabelActive(false);
                             }}
                             placeholder={
                                 isFloatingLabel && label

@@ -27,16 +27,35 @@ export enum EAccountOrderStatusTimelapse {
     failure = "failure",
 }
 
-export type TUserData = {
-    name: string;
-    surname: string;
-    email: string;
-    phone: string;
-    country: string;
-    city: string;
-    address: string;
-    index: string;
+export type TUserDataId = {
+    id: number;
 };
+
+export type TUserData = {
+    blocked: boolean;
+    confirmed: boolean;
+    credit_cards: [];
+    username: string;
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    provider: string; // "local"
+    city: string;
+    country: string;
+    address: string;
+    zip: string;
+    createdAt: string;
+    updatedAt: string;
+    // name: string;
+    // surname: string;
+    // email: string;
+    // phone: string;
+    // country: string;
+    // city: string;
+    // address: string;
+    // index: string;
+} & TUserDataId;
 
 export type TAuthData = {
     jwt: string;
@@ -78,8 +97,11 @@ export type TAccountOrderItem = {
     statusTimelapse: TOrderStatusTimelapse[];
 };
 
-export type TUserCartItem = {
+export type TUserCartId = {
     id: string;
+};
+
+export type TUserCartItem = {
     title: string;
     price: number;
     img: string;
@@ -89,7 +111,18 @@ export type TUserCartItem = {
     }[];
     createDate: string;
     count: number;
-};
+} & TUserCartId;
+
+export type TUpdateUserDataParams = {
+    first_name: string;
+    last_name: string;
+    phone: string;
+    email: string;
+    city: string;
+    country: string;
+    address: string;
+    zip: string;
+} & TUserDataId;
 
 export interface IAuthStore {
     isAuthorized: boolean;
@@ -119,6 +152,7 @@ export interface IAuthStore {
     getUserData: () => Promise<AxiosResponse<TUserData>>;
     setUserData: (data: TNullable<TUserData>) => void;
     setUserDataFetching: (value: boolean) => void;
+    updateUserData: (params: TUpdateUserDataParams) => Promise<void>;
     //
     getUserCardsData: () => Promise<AxiosResponse<TPaymentCard[]>>;
     setUserCardsData: (data: TNullable<TPaymentCard[]>) => void;

@@ -59,6 +59,7 @@ const FormFieldAutoComplete: FC<
             label={fieldLabel}
             wrapperClassName={wrapperClassName}
             showError={showError}
+            disabled={!!disabled}
         >
             <AutoComplete
                 options={options}

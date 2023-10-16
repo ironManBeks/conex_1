@@ -1,6 +1,7 @@
 import { InputProps } from "antd/lib/input/Input";
 import {
     TFormItemLabel,
+    TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
 
@@ -9,4 +10,5 @@ export type TFieldPasswordController = {
     onChangeValue?: (value: unknown) => void;
 } & InputProps &
     TFormItemLabel &
-    TFormWrapperClassName;
+    TFormWrapperClassName &
+    TFormShowError;

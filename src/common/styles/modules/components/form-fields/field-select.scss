@@ -3,6 +3,13 @@
   .form-field{
     &_field.ant-select{
       height: auto;
+      &:hover{
+        .ant-select{
+          &-selector{
+            border-color: $border-color-secondary-active;
+          }
+        }
+      }
       &:not(.ant-select-show-search){
         .ant-select-selector {
           min-height: 58px;
@@ -109,16 +116,21 @@
           &-selector{
             cursor: not-allowed;
             background-color: $color-disabled-bg;
-            border-color: $color-disabled-border;
-            color: $color-disabled-text;
+            border-color: $border-color-disabled;
+            color: $text-color-disabled;
             &:hover, &:focus{
               box-shadow: none;
-              border-color: $color-disabled-border;
+              border-color: $border-color-disabled;
+            }
+          }
+          &-arrow{
+            .common-icon{
+              opacity: $iconOpacity;
             }
           }
           &-focused:not(.ant-select-disabled).ant-select:not(.ant-select-customize-input) .ant-select-selector {
             box-shadow: none;
-            background-color: $color-grey-500;
+            background-color: $color-secondary-200;
           }
         }
       }

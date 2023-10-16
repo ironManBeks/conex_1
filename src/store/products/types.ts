@@ -59,6 +59,16 @@ export type TProductPriceParams = {
     address?: string;
 };
 
+export type TProductDelivery = {
+    id: string;
+    title: string;
+    img: string;
+    price: number;
+    deliveryFrom: number;
+    deliveryTo: number;
+    showTitle: boolean;
+};
+
 export interface IProductsStore {
     productList: TProductDoorData[];
     productListFetching: boolean;
@@ -67,6 +77,8 @@ export interface IProductsStore {
     productServiceFetching: boolean;
     productPrice: TNullable<TProductPrice>;
     productPriceFetching: boolean;
+    productDelivery: TNullable<TProductDelivery[]>;
+    productDeliveryFetching: boolean;
     //
     setProductList: (data: TProductDoorData[]) => void;
     setProductListFetching: (value: boolean) => void;
@@ -80,9 +92,15 @@ export interface IProductsStore {
     //
     setProductPrice: (data: TNullable<TProductPrice>) => void;
     setProductPriceFetching: (value: boolean) => void;
-    getProductPrice: (
+    getProductPriceRequest: (
         params: TProductPriceParams,
     ) => Promise<AxiosResponse<TProductPrice>>;
+    //
+    setProductDelivery: (data: TNullable<TProductDelivery[]>) => void;
+    setProductDeliveryFetching: (value: boolean) => void;
+    getProductDeliveryRequest: (
+        params?: string,
+    ) => Promise<AxiosResponse<TProductDelivery[]>>;
     //
     setSearchParams: (value: TNullable<TSearchParams>) => void;
 }

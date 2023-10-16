@@ -1,9 +1,5 @@
 .form-field_wrapper._checkboxarray{
-  --wrapper-mb: 20px;
-  --item-mb: 10px;
-
-  margin-bottom: calc(var(--wrapper-mb) - var(--item-mb));
-
+  margin-bottom: space(3);
 
   .form-field{
     &_field-wrapper{
@@ -16,7 +12,7 @@
     &_field{
       display: flex;
       align-items: center;
-      margin-bottom: var(--item-mb);
+      margin-bottom: space(2);
       &._checked{
         span{
           &:not(.ant-checkbox){
@@ -36,18 +32,18 @@
         span{
           &:not(.ant-checkbox){
             background-color: $color-secondary-40;
-            border-color: $color-disabled-border;
+            border-color: $border-color-disabled;
             svg{
               display: none;
             }
             &:hover{
               background-color: $color-secondary-40;
-              border-color: $color-disabled-border;
+              border-color: $border-color-disabled;
             }
           }
         }
         .form-field_sub-label{
-          color: $color-disabled-text;
+          color: $text-color-disabled;
           cursor: not-allowed;
         }
       }

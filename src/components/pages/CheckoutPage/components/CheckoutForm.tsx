@@ -34,7 +34,11 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { authStore, productsStore } = store as IRoot;
         const { userData, userCardsData, getUserCardsData } = authStore;
-        const { getProductServiceRequest, productService } = productsStore;
+        const {
+            getProductServiceRequest,
+            getProductDeliveryRequest,
+            productService,
+        } = productsStore;
         const router = useRouter();
 
         const methods = useForm<TCheckoutForm>({
@@ -68,6 +72,9 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             }
             if (isNil(productService)) {
                 getProductServiceRequest();
+            }
+            if (isNil(productService)) {
+                getProductDeliveryRequest();
             }
         }, []);
 

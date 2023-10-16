@@ -61,16 +61,6 @@ export type TAdditionalServices = {
     totalOption?: TAdditionalServicesOption;
 };
 
-export type TChoiceMode = {
-    className?: string;
-    options: {
-        label: string;
-        value: string;
-        isActive: boolean;
-        onClick?: () => void;
-    }[];
-};
-
 export type TAddressSelection = {
     className?: string;
     onValueChange?: (value: string) => void;

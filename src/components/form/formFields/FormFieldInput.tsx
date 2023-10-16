@@ -15,6 +15,7 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
         errorMessage,
         showError,
         isFloatingLabel,
+        disabled,
         addonAfter,
         onAddonClick,
         minAddonWidth,
@@ -35,10 +36,10 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
             fieldType={EFormFieldType.input}
             errorMessage={errorMessage}
             showError={showError}
+            wrapperClassName={wrapperClassName}
             label={label}
-            wrapperClassName={cn(wrapperClassName, {
-                _floatinglabel: isFloatingLabel && label,
-            })}
+            isFloatingLabel={isFloatingLabel}
+            disabled={!!disabled}
         >
             <Input
                 {...rest}
@@ -51,6 +52,7 @@ const FormFieldInput: FC<TFormFieldInput> = (props) => {
                         ? `${addonAfterWidth + 10}px`
                         : undefined,
                 }}
+                disabled={!!disabled}
             />
             {addonAfter && (
                 <div

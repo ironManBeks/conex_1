@@ -21,6 +21,7 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
         max,
         isFloatingLabel,
         defaultValue,
+        disabled,
         ...rest
     } = props;
 
@@ -50,6 +51,7 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
             wrapperClassName={cn(wrapperClassName, {
                 _sidebuttons: sideButtons,
             })}
+            disabled={!!disabled}
         >
             {sideButtons && (
                 <button
@@ -106,6 +108,7 @@ const FormFieldInputNumber: FC<TFormFieldInputNumber> = (props) => {
                           }
                         : false
                 }
+                disabled={disabled}
             />
             {sideButtons && (
                 <button

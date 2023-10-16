@@ -21,7 +21,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
         disabled,
         options,
         direction,
-        showError = true,
+        showError,
         ...rest
     } = props;
     const {
@@ -55,6 +55,7 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                         wrapperClassName={cn(wrapperClassName, {
                             _disabled: disabled,
                         })}
+                        disabled={!!disabled}
                     >
                         <Checkbox.Group
                             value={field.value}

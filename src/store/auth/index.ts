@@ -14,6 +14,7 @@ import {
     TAuthData,
     TEmailConfirmationResponse,
     TResetPasswordRequest,
+    TUpdateUserDataParams,
     TUserCartItem,
     TUserData,
 } from "./types";
@@ -22,14 +23,12 @@ import { TForgotPasswordForm } from "@components/globalComponents/AuthForm/compo
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 import { TNullable } from "@globalTypes/commonTypes";
-import {
-    UserCardsDataMockup,
-    UserDataMockup,
-} from "../../mockups/AuthDataMockup";
+import { UserCardsDataMockup } from "../../mockups/AuthDataMockup";
 import { AccountOrdersMockup } from "../../mockups/AccountOrdersListMockup";
 import { UserCartDataMockup } from "../../mockups/UserCartDataMockup";
 import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
 import { TPaymentCard } from "@components/globalComponents/types";
+import { copyWithout } from "@helpers/objectHelper";
 
 export class AuthStore implements IAuthStore {
     isAuthorized: boolean = false;
@@ -49,7 +48,6 @@ export class AuthStore implements IAuthStore {
         makeAutoObservable(this);
     }
 
-    ////////////////////////////////////
     setIsAuthorized = (value: boolean) => {
         this.isAuthorized = value;
     };
@@ -108,7 +106,10 @@ export class AuthStore implements IAuthStore {
         this.userCartDataFetching = value;
     };
 
-    ///
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+    //---------------------------------------------------------------------
+
     authSignUpRequest = (formValues: TSignUpForm): Promise<void> => {
         this.setAuthRequestFetching(true);
         return axiosInstance
@@ -248,19 +249,36 @@ export class AuthStore implements IAuthStore {
     getUserData = (): Promise<AxiosResponse<TUserData>> => {
         this.setUserDataFetching(true);
         return axiosInstance
-            .get("/user")
+            .get("/users/me")
             .then((response: AxiosResponse<TUserData>) => {
-                // const { data } = response;
-                // this.setUserData(data);
+                const { data } = response;
+                this.setUserData(data);
                 return response;
             })
             .catch((err) => {
-                // ToDo turn on !
-                // showAxiosNotificationError(err);
+                showAxiosNotificationError(err);
                 throw err;
             })
             .finally(() => {
-                this.setUserData(UserDataMockup);
+                this.setUserDataFetching(false);
+            });
+    };
+
+    updateUserData = (params: TUpdateUserDataParams): Promise<void> => {
+        this.setUserDataFetching(true);
+        return axiosInstance
+            .put(`/users/${params.id}`, copyWithout(params, "id"))
+            .then((response: AxiosResponse<TUserData>) => {
+                // const { data } = response;
+                console.log("updateUserData", response);
+                // this.setUserData(data);
+                return;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
                 this.setUserDataFetching(false);
             });
     };

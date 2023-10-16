@@ -26,6 +26,7 @@ import IconBox from "./common/IconBox";
 import IconQuestionCircle from "./common/IconQuestionCircle";
 import IconPlus from "./common/IconPlus";
 import IconMinus from "./common/IconMinus";
+import IconDrag from "./common/IconDrag";
 
 //---Social
 import IconMastercard from "./social/IconMastercard";
@@ -68,4 +69,5 @@ export {
     IconQuestionCircle,
     IconPlus,
     IconMinus,
+    IconDrag,
 };

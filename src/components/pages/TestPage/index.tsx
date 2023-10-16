@@ -18,20 +18,21 @@ import { H1 } from "@components/Text";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import {
     EFieldNames,
-    formDefaultValues,
-    formResolver,
+    // formDefaultValues,
+    // formResolver,
     optionsMockup,
     TFormFields,
 } from "./formAttrs";
 import { EDirection } from "@globalTypes/commonTypes";
 import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
 import { IconMapPoint } from "@components/Icons";
+import FieldSliderController from "@components/form/formControllers/FieldSliderController";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
     const methods = useForm<TFormFields>({
-        resolver: formResolver(),
-        defaultValues: formDefaultValues,
+        // resolver: formResolver(),
+        // defaultValues: formDefaultValues,
     });
 
     const { handleSubmit } = methods;
@@ -58,29 +59,6 @@ const TestPage: FC = () => {
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
-                            <FieldSelectController
-                                name={EFieldNames.select}
-                                placeholder={EFieldNames.select}
-                                label={EFieldNames.select}
-                                options={optionsMockup}
-                            />
-                            <FieldSelectController
-                                name={EFieldNames.select + 321}
-                                placeholder={EFieldNames.select + 321}
-                                label={EFieldNames.select + 321}
-                                options={optionsMockup}
-                                showSearch={false}
-                            />
-                            {/*<FieldSelectController*/}
-                            {/*    name={EFieldNames.select + 123}*/}
-                            {/*    placeholder={EFieldNames.select + 123}*/}
-                            {/*    label={EFieldNames.select + 123}*/}
-                            {/*    options={optionsMockup}*/}
-                            {/*    disabled={true}*/}
-                            {/*/>*/}
-                            <br />
-                            <br />
-                            <br />
                             <FieldInputController
                                 name={EFieldNames.input}
                                 placeholder={EFieldNames.input}
@@ -94,6 +72,45 @@ const TestPage: FC = () => {
                                 disabled={true}
                                 isFloatingLabel={true}
                             />
+                            <br />
+                            <br />
+                            <br />
+                            <FieldSliderController
+                                name={EFieldNames.slider}
+                                // placeholder={EFieldNames.select}
+                                label={EFieldNames.slider}
+                            />
+                            <br />
+                            <br />
+                            <br />
+                            <FieldSelectController
+                                name={EFieldNames.select}
+                                placeholder={EFieldNames.select}
+                                label={EFieldNames.select}
+                                options={optionsMockup}
+                            />
+                            <FieldSelectController
+                                name={EFieldNames.select + 321}
+                                placeholder={EFieldNames.select + 321}
+                                label={EFieldNames.select + 321}
+                                options={optionsMockup}
+                                showSearch={false}
+                            />
+                            <FieldSelectController
+                                name={EFieldNames.select + 123}
+                                placeholder={EFieldNames.select + 123}
+                                label={EFieldNames.select + 123}
+                                options={optionsMockup}
+                                showSearch={false}
+                                disabled={true}
+                            />
+                            {/*<FieldSelectController*/}
+                            {/*    name={EFieldNames.select + 123}*/}
+                            {/*    placeholder={EFieldNames.select + 123}*/}
+                            {/*    label={EFieldNames.select + 123}*/}
+                            {/*    options={optionsMockup}*/}
+                            {/*    disabled={true}*/}
+                            {/*/>*/}
                             <br />
                             <br />
                             <br />

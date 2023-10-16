@@ -15,7 +15,8 @@
         flex: 0 0 auto;
         outline: none !important;
         &[disabled]{
-          background-color: $color-secondary-40;
+          background-color: $color-disabled-bg;
+          border-color: $border-color-disabled;
         }
         &:hover, &:focus{
           box-shadow: none;

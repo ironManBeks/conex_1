@@ -20,13 +20,12 @@ const FieldRadioArrayController: FC<TFieldRadioArrayController> = (props) => {
         options,
         onChangeValue,
         direction,
-        showError = true,
+        showError,
     } = props;
     const {
         control,
         formState: { errors },
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
 
     return (
         <Controller
@@ -36,10 +35,11 @@ const FieldRadioArrayController: FC<TFieldRadioArrayController> = (props) => {
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.radioArray}
-                        errorMessage={errorMessage}
+                        errorMessage={errors[name]?.message}
                         label={label}
                         showError={showError}
                         wrapperClassName={wrapperClassName}
+                        disabled={!!disabled}
                     >
                         <AntRadio.Group
                             onChange={(e) => {

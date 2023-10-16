@@ -1,7 +1,7 @@
 import { ReactNode } from "react";
 
 import { TProductDoorData } from "@store/products/types";
-import { TUserCartItem } from "@store/auth/types";
+import { TUserCartId, TUserCartItem } from "@store/auth/types";
 
 export type TProductSearchCard = {
     className?: string;
@@ -11,7 +11,7 @@ export type TProductCartCard = {
     className?: string;
     select?: {
         isSelect: boolean;
-        onSelectChange: (id: string, value: boolean) => void;
+        onSelectChange: (id: TUserCartId["id"], value: boolean) => void;
     };
     onDeleteClick?: () => void;
     onCountChange?: (value: number) => void;

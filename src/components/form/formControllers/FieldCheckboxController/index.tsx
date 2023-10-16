@@ -18,7 +18,7 @@ const FieldCheckboxController: FC<TFieldCheckboxController> = (props) => {
         label,
         disabled,
         onChangeValue,
-        showError = true,
+        showError,
         ...rest
     } = props;
     const {
@@ -42,6 +42,7 @@ const FieldCheckboxController: FC<TFieldCheckboxController> = (props) => {
                             _checked: field.value,
                             _disabled: disabled,
                         })}
+                        disabled={!!disabled}
                     >
                         <AntCheckbox
                             {...rest}

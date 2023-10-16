@@ -3,11 +3,11 @@
   line-height: $line-height-bs;
   .ant-progress{
     &-inner{
-      background-color: $color-yellow-100;
+      background-color: $color-accent-strong;
     }
     &-bg{
       height: 20px !important;
-      background: linear-gradient(90deg, #F79225 0%, $color-yellow-500 45.31%);
+      background: linear-gradient(90deg, #F79225 0%, $color-accent-strong 45.31%);
       border-radius: $border-radius-round 0 0 $border-radius-round;
     }
   }

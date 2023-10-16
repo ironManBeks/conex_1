@@ -1,24 +1,35 @@
-import { FC } from "react";
-import { Input as AntInput } from "antd";
+import { FC, cloneElement } from "react";
+import Slider, { SliderProps } from "rc-slider";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
+import "rc-slider/assets/index.css";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import { IconDrag } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
-import { TFieldInputController } from "./types";
+import { TFieldSliderController } from "./types";
 
-const FieldInputController: FC<TFieldInputController> = (props) => {
+const handleRender: SliderProps["handleRender"] = (node, props) => {
+    return cloneElement(
+        node,
+        props,
+        <>
+            <span className="tooltip-wrapper">{props.value}</span>
+            <IconDrag />
+        </>,
+    );
+};
+
+const FieldSliderController: FC<TFieldSliderController> = (props) => {
     const {
         name,
         onChangeValue,
         label,
-        isFloatingLabel = true,
+        innerLabel = true,
         wrapperClassName,
-        placeholder,
         disabled,
-        showError,
         ...rest
     } = props;
     const {
@@ -33,33 +44,37 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
             render={({ field }) => {
                 return (
                     <FormItemWrapper
-                        fieldType={EFormFieldType.input}
+                        fieldType={EFormFieldType.slider}
                         errorMessage={errors[name]?.message}
                         wrapperClassName={wrapperClassName}
-                        showError={showError}
                         label={label}
-                        isFloatingLabel={isFloatingLabel}
-                        fieldValue={field.value}
+                        isFloatingLabel={false}
                         disabled={!!disabled}
                     >
-                        <AntInput
+                        {innerLabel && (
+                            <span
+                                className={`${FORM_FIELD_CLASSNAME_PREFIX}_sub-label`}
+                            >
+                                {field.value} inch
+                            </span>
+                        )}
+                        <Slider
                             {...field}
                             {...rest}
+                            max={125}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                             )}
                             value={field.value}
-                            onChange={(e) => {
-                                const val = e.target.value;
+                            onChange={(val) => {
                                 field.onChange(val);
                                 if (onChangeValue) onChangeValue(val);
                             }}
-                            placeholder={
-                                isFloatingLabel && label
-                                    ? undefined
-                                    : placeholder
-                            }
+                            handleRender={handleRender}
                             disabled={disabled}
+                            dotStyle={{
+                                background: "red",
+                            }}
                         />
                     </FormItemWrapper>
                 );
@@ -68,4 +83,4 @@ const FieldInputController: FC<TFieldInputController> = (props) => {
     );
 };
 
-export default FieldInputController;
+export default FieldSliderController;

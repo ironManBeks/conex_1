@@ -25,13 +25,11 @@ import {
 import { TBuilderStepBase } from "../types";
 import { IRoot } from "@store/store";
 import { BUILDER_VALUE_NONE } from "@components/pages/BuilderPage/consts";
-import { toJS } from "mobx";
 
 const BuilderStep: FC<TBuilderStepBase> = inject("store")(
     observer(({ store, className }) => {
         const { builderStore } = store as IRoot;
-        const { resultDoorData, currentStepData, editBuilderCartItemData } =
-            builderStore;
+        const { resultDoorData, currentStepData } = builderStore;
         if (isEmpty(currentStepData) || !currentStepData) return null;
         const {
             fieldType,
@@ -71,13 +69,6 @@ const BuilderStep: FC<TBuilderStepBase> = inject("store")(
                 }
             }
         }, [currentStepData.id]);
-
-        useEffect(() => {
-            console.log(
-                "editBuilderCartItemData",
-                toJS(editBuilderCartItemData),
-            );
-        }, [editBuilderCartItemData]);
 
         return (
             <div

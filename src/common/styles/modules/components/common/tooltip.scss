@@ -1,3 +1,16 @@
+@mixin tooltipInner {
+  background: $color-primary-strong;
+  border-radius: borderRadius(1);
+  padding: space(1) space(3);
+  font-size: $font-size-sm;
+  line-height: $line-height-md;
+  color: $text-color-primary;
+  font-weight: 500;
+  box-shadow: 0px -2px 12px 0px rgba(18, 18, 18, 0.08);
+  max-width: 300px;
+}
+
+
 .common-tooltip{
   &_wrapper{
     cursor: pointer;
@@ -18,15 +31,7 @@
 
     .ant-tooltip{
       &-inner{
-        background: $color-primary-strong;
-        border-radius: borderRadius(1);
-        padding: space(1) space(3);
-        font-size: $font-size-sm;
-        line-height: $line-height-md;
-        color: $text-color-primary;
-        font-weight: 500;
-        box-shadow: 0px -2px 12px 0px rgba(18, 18, 18, 0.08);
-        max-width: 300px;
+        @include tooltipInner;
         .common-text{
           margin-top: 0;
         }

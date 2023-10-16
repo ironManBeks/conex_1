@@ -26,8 +26,7 @@ export type TGetDefaultValuesResult =
 export type TResultValuesParams = {
     stepId: number;
     fieldName: string;
-    /* eslint-disable  @typescript-eslint/no-explicit-any */
-    fieldValue: any;
+    fieldValue: unknown;
 };
 
 export const getSelectedElementByFormValues = (
@@ -265,7 +264,7 @@ export const convertBuilderFieldName = (
 };
 
 export const getResultFieldsParams = (
-    fieldValues: Record<string, any>,
+    fieldValues: Record<string, unknown>,
 ): TResultValuesParams[] => {
     if (isEmpty(fieldValues)) return [];
     const result: TResultValuesParams[] = [];

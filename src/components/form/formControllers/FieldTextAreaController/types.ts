@@ -2,6 +2,7 @@ import { TextAreaProps } from "antd/lib/input/TextArea";
 
 import {
     TFormItemLabel,
+    TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
 
@@ -13,4 +14,5 @@ export type TFieldTextAreaController = {
     minHeight?: number;
 } & TextAreaProps &
     TFormItemLabel &
-    TFormWrapperClassName;
+    TFormWrapperClassName &
+    TFormShowError;

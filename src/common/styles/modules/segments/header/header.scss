@@ -88,7 +88,7 @@
               }
             }
             .common-icon {
-              opacity: .36;
+              opacity: $iconOpacity;
               transition: $transition;
               path{
                 transition: $transition;

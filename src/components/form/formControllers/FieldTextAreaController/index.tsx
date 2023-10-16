@@ -1,8 +1,8 @@
-import React, { FC, useEffect, useRef, useState } from "react";
+import React, { FC, useState } from "react";
 import { Input as AntInput } from "antd";
-import { TextAreaRef } from "antd/lib/input/TextArea";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
+import { isNil } from "lodash";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
 
@@ -23,74 +23,40 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
         maxSymbolLength = 500,
         minHeight,
         isFloatingLabel = true,
+        showError,
         placeholder,
         ...rest
     } = props;
     const {
         control,
         formState: { errors },
-        watch,
     } = useFormContext();
-    const errorMessage = errors[name]?.message;
-    const fieldRef = useRef<TextAreaRef | null>(null);
-    const [isLabelActive, setIsLabelActive] = useState(false);
-    const [focus, setFocus] = useState(false);
     const [letterCount, setLetterCount] = useState(0);
-    const fieldValue = watch(name);
-
-    const focusOnField = () => {
-        if (fieldRef.current) {
-            fieldRef.current.focus();
-        }
-    };
-
-    useEffect(() => {
-        setLetterCount(fieldValue.length || 0);
-        if (fieldValue) {
-            setIsLabelActive(true);
-        } else if (!focus && !fieldValue) {
-            setIsLabelActive(false);
-        }
-    }, [fieldValue, focus]);
 
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
+                if (!isNil(field.value?.length)) {
+                    setLetterCount(field.value.length || 0);
+                }
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.textArea}
-                        errorMessage={errorMessage}
+                        errorMessage={errors[name]?.message}
+                        wrapperClassName={wrapperClassName}
+                        showError={showError}
                         label={label}
                         isFloatingLabel={isFloatingLabel}
-                        wrapperClassName={wrapperClassName}
+                        fieldValue={field.value}
+                        disabled={!!disabled}
                     >
-                        {isFloatingLabel && label && (
-                            <label
-                                className={cn(
-                                    `${FORM_FIELD_CLASSNAME_PREFIX}_label`,
-                                    { _activelabel: isLabelActive },
-                                    { _disabled: disabled },
-                                )}
-                                onClick={focusOnField}
-                            >
-                                {label}
-                            </label>
-                        )}
                         <TextArea
                             {...field}
                             {...rest}
-                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                {
-                                    _floatinglabel: isFloatingLabel && label,
-                                    _activelabel:
-                                        isFloatingLabel &&
-                                        label &&
-                                        isLabelActive,
-                                },
                             )}
                             value={field.value}
                             onChange={(e) => {
@@ -101,14 +67,6 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
                             }}
                             disabled={disabled}
                             maxLength={maxSymbolLength}
-                            onFocus={() => {
-                                setFocus(true);
-                                setIsLabelActive(true);
-                            }}
-                            onBlur={() => {
-                                setFocus(false);
-                                setIsLabelActive(false);
-                            }}
                             placeholder={
                                 isFloatingLabel && label
                                     ? undefined

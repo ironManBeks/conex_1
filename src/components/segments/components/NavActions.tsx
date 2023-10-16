@@ -113,9 +113,9 @@ const NavActions: FC<TNavTypes> = inject("store")(
                         <IconUser />
                         <P>
                             {!isEmpty(userData)
-                                ? userData?.name.length > 6
-                                    ? `${userData?.name.slice(0, 6)}...`
-                                    : userData?.name
+                                ? userData?.username.length > 6
+                                    ? `${userData?.username.slice(0, 6)}...`
+                                    : userData?.username
                                 : "Log In"}
                         </P>
                     </Link>

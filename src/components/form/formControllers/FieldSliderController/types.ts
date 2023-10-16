@@ -1,17 +1,15 @@
-import { SelectProps } from "antd/lib/select";
-
 import {
     TFormItemLabel,
     TFormShowError,
     TFormWrapperClassName,
 } from "@components/form/FormItemWrapper/types";
-import { TDefaultOption } from "@components/form/types";
+import { SliderProps } from "rc-slider";
 
-export type TFieldSelectController = {
+export type TFieldSliderController = {
     name: string;
-    options: TDefaultOption[];
     onChangeValue?: (value: unknown) => void;
-} & SelectProps &
+    innerLabel?: boolean;
+} & SliderProps &
     TFormItemLabel &
     TFormWrapperClassName &
     TFormShowError;

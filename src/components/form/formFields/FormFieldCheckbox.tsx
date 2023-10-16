@@ -28,8 +28,8 @@ const FormFieldCheckbox: FC<TFormFieldCheckbox> = (props) => {
             showError={false}
             wrapperClassName={cn(wrapperClassName, "_simple-field", {
                 _checked: checked,
-                _disabled: disabled,
             })}
+            disabled={!!disabled}
         >
             <label
                 className={cn(

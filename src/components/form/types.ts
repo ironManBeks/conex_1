@@ -23,6 +23,7 @@ export enum EFormFieldType {
     inputnumber = "inputnumber",
     password = "password",
     autocomplete = "autocomplete",
+    slider = "slider",
 }
 
 export type TDefaultOption = {

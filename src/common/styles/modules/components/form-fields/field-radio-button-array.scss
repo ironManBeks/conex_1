@@ -34,7 +34,7 @@
         }
       }
       &:active{
-        border-color: $color-primary;
+        border-color: $color-accent-strong;
       }
       > span {
         transition: $transition;
@@ -48,14 +48,14 @@
           }
           &:hover, &:active, &:focus{
             background-color: $color-primary-strong;
-            border-color: $color-primary;
+            border-color: $color-accent-strong;
             color: $text-color-primary;
           }
         }
         &-disabled{
           background-color: $color-disabled-bg;
-          border-color: $color-disabled-border;
-          color: $color-disabled-text;
+          border-color: $border-color-disabled;
+          color: $text-color-disabled;
           box-shadow: none;
         }
       }

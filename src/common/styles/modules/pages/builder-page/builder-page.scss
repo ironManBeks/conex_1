@@ -134,7 +134,7 @@
         background: rgba(239, 243, 250, 0.31);
         font-size: $font-size-bs;
         line-height: $line-height-bs;
-        color: $color-grey-700;
+        color: $text-color-secondary;
         font-weight: 300;
         text-align: center;
       }
@@ -246,7 +246,7 @@
         &.price{
           font-size: $font-size-md;
           line-height: $line-height-md;
-          color: $color-text-default;
+          color: $text-color-primary;
         }
       }
     }
@@ -289,7 +289,7 @@
               left: 0;
               width: 100%;
               height: 100%;
-              background-color: $color-grey-200;
+              background-color: $color-secondary-400;
               opacity: 0.3;
               z-index: 2;
             }
@@ -399,7 +399,7 @@
       border-radius: 30px;
       box-shadow: $box-shadow-bs;
       margin-bottom: 10px;
-      border: 2px solid $color-grey-100;
+      border: 2px solid $color-primary-200;
       transition: $transition;
     }
   }

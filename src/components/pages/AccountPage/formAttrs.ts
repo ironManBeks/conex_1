@@ -11,39 +11,39 @@ import { TNullable } from "@globalTypes/commonTypes";
 import { renderValidationText } from "@helpers/formHelpers";
 
 export enum EAccountMyFormFieldsNames {
-    name = "name",
-    surname = "surname",
+    first_name = "first_name",
+    last_name = "last_name",
     email = "email",
     phone = "phone",
     country = "country",
     city = "city",
     address = "address",
-    index = "index",
+    zip = "zip",
 }
 
 export type TAccountMyForm = {
-    [EAccountMyFormFieldsNames.name]: string;
-    [EAccountMyFormFieldsNames.surname]: string;
+    [EAccountMyFormFieldsNames.first_name]: string;
+    [EAccountMyFormFieldsNames.last_name]: string;
     [EAccountMyFormFieldsNames.email]: string;
     [EAccountMyFormFieldsNames.phone]: string;
     [EAccountMyFormFieldsNames.country]: string;
     [EAccountMyFormFieldsNames.city]: string;
     [EAccountMyFormFieldsNames.address]: string;
-    [EAccountMyFormFieldsNames.index]: string;
+    [EAccountMyFormFieldsNames.zip]: string;
 };
 
 export const accountMyFormDefaultValues = (
     data?: TNullable<TUserData>,
 ): TAccountMyForm => {
     return {
-        [EAccountMyFormFieldsNames.name]: data?.name ?? "",
-        [EAccountMyFormFieldsNames.surname]: data?.surname ?? "",
-        [EAccountMyFormFieldsNames.email]: data?.email ?? "",
-        [EAccountMyFormFieldsNames.phone]: data?.phone ?? "",
-        [EAccountMyFormFieldsNames.country]: data?.country ?? "",
-        [EAccountMyFormFieldsNames.city]: data?.city ?? "",
-        [EAccountMyFormFieldsNames.address]: data?.address ?? "",
-        [EAccountMyFormFieldsNames.index]: data?.index ?? "",
+        [EAccountMyFormFieldsNames.first_name]: data?.first_name ?? "name",
+        [EAccountMyFormFieldsNames.last_name]: data?.last_name ?? "surname",
+        [EAccountMyFormFieldsNames.email]: data?.email ?? "email",
+        [EAccountMyFormFieldsNames.phone]: data?.phone ?? "12312312312",
+        [EAccountMyFormFieldsNames.country]: data?.country ?? "country",
+        [EAccountMyFormFieldsNames.city]: data?.city ?? "city",
+        [EAccountMyFormFieldsNames.address]: data?.address ?? "address",
+        [EAccountMyFormFieldsNames.zip]: data?.zip ?? "zip",
     };
 };
 
@@ -52,8 +52,8 @@ export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
 
     return yupResolver(
         yup.object().shape({
-            [EAccountMyFormFieldsNames.name]: yupNameRequired(),
-            [EAccountMyFormFieldsNames.surname]: yupNameRequired(true),
+            [EAccountMyFormFieldsNames.first_name]: yupNameRequired(),
+            [EAccountMyFormFieldsNames.last_name]: yupNameRequired(true),
             [EAccountMyFormFieldsNames.email]: yupEmailRequired(),
             [EAccountMyFormFieldsNames.phone]: yupPhoneRequired(),
             [EAccountMyFormFieldsNames.country]: yup
@@ -71,7 +71,7 @@ export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
                 .max(100, renderValidationText("max", undefined, 100))
                 .required(requiredText)
                 .trim(),
-            [EAccountMyFormFieldsNames.index]: yup
+            [EAccountMyFormFieldsNames.zip]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
                 .required(requiredText)

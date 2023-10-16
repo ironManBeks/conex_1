@@ -80,7 +80,6 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                         editBuilderCartItemData.history[currentStepIndex - 1];
                     updateCurrentStepData(prevStepId, false, false);
                 }
-
                 return;
             }
 
