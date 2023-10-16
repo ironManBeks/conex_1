@@ -1,6 +1,5 @@
 import Container from "@components/globalComponents/Container";
 import { Layout } from "@components/segments/Layout";
-import { H1, H2, P } from "@components/Text";
 
 const PolicyPage = () => {
     const classPrefix = "policy-page";
