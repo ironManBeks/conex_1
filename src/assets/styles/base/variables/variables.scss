@@ -79,8 +79,12 @@ $color-disabled-selection-bg: $color-secondary-40;
 
 // -----------------------------------------------------------------------------
 // Fonts
-$font-family-primary: 'HelveticaNeue';
-$font-family-secondary: 'Manrope';
+$font-family-primary: var(--font-helvetica);
+$font-family-secondary: var(--font-manrope);
+
+.main-font{
+  font-family: $font-family-secondary;
+}
 
 // -----------------------------------------------------------------------------
 // Border-radius

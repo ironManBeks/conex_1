@@ -14,7 +14,7 @@ import {
     getTotalPriceByResultData,
     renderResultDataToOptionsList,
 } from "@helpers/builderHelper";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import DrawerBuilder from "@components/drawers/components/DrawerBuilder";
 import { IconArrowSingle } from "@components/Icons";
 import { EArrowDirection } from "@components/Icons/types";

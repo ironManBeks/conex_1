@@ -9,7 +9,7 @@ import ImgWrapper from "@components/globalComponents/ImgWrapper";
 
 import { PATH_HOME_PAGE } from "@consts/pathsConsts";
 import { EButtonColor } from "@components/buttons/types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 
 const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });
 import { useMediaQuery } from "react-responsive";

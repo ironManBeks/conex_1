@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 
 import SkeletonLayout from "./SkeletonLayout";
 
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import { TSkeleton } from "./types";
 
 const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });

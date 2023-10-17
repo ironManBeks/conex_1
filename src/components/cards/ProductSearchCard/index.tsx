@@ -13,7 +13,7 @@ import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import { TProductSearchCard } from "../types";
 import { notImplemented } from "@helpers/notImplemented";
 import { useMediaQuery } from "react-responsive";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 
 const ProductSearchCard: FC<TProductSearchCard> = ({
     className,

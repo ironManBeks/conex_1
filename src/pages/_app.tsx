@@ -1,11 +1,13 @@
 import { AppProps } from "next/app";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { Fragment, JSX, ReactNode, useEffect } from "react";
+import { JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
+
+import localFont from "next/font/local";
 
 // import "antd/dist/antd.css";
 // import "leaflet/dist/leaflet.css";
-import "@common/styles/main.scss";
+import "../assets/styles/main.scss";
 
 import { observer } from "mobx-react";
 import { getStorage } from "@services/storage.service";
@@ -14,6 +16,55 @@ import { JWT_TOKEN, JWT_TOKEN_EXP } from "@consts/storageNamesContsts";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
 import { showNotification } from "@helpers/notificarionHelper";
+import Head from "next/head";
+
+const manrope = localFont({
+    src: [
+        {
+            path: "../assets/fonts/Manrope-Light/Manrope-Light.woff2",
+            weight: "300",
+        },
+        {
+            path: "../assets/fonts/Manrope-Regular/Manrope-Regular.woff2",
+            weight: "400",
+        },
+        {
+            path: "../assets/fonts/Manrope-Medium/Manrope-Medium.woff2",
+            weight: "500",
+        },
+        {
+            path: "../assets/fonts/Manrope-SemiBold/Manrope-SemiBold.woff2",
+            weight: "600",
+        },
+        {
+            path: "../assets/fonts/Manrope-Bold/Manrope-Bold.woff2",
+            weight: "700",
+        },
+    ],
+    variable: "--font-manrope",
+});
+
+const helvetica = localFont({
+    src: [
+        {
+            path: "../assets/fonts/HelveticaNeue-Light/HelveticaNeue-Light.woff2",
+            weight: "300",
+        },
+        {
+            path: "../assets/fonts/HelveticaNeue-Regular/HelveticaNeue-Regular.woff2",
+            weight: "400",
+        },
+        {
+            path: "../assets/fonts/HelveticaNeue-Medium/HelveticaNeue-Medium.woff2",
+            weight: "500",
+        },
+        {
+            path: "../assets/fonts/HelveticaNeue-Bold/HelveticaNeue-Bold.woff2",
+            weight: "700",
+        },
+    ],
+    variable: "--font-helvetica",
+});
 
 const CustomAppWrapper = inject("store")(
     observer(
@@ -53,7 +104,16 @@ const CustomAppWrapper = inject("store")(
                 tokenVerification();
             }, []);
 
-            return <>{children}</>;
+            return (
+                <>
+                    <Head>
+                        <body
+                            className={`${manrope.variable} ${helvetica.variable} font-sans`}
+                        />
+                    </Head>
+                    {children}
+                </>
+            );
         },
     ),
 );
@@ -62,7 +122,7 @@ function CustomApp({ Component, pageProps }: AppProps): JSX.Element {
     const mobxStore = initializeStore();
 
     return (
-        <Fragment>
+        <div className={"red123"}>
             <Provider store={mobxStore}>
                 <GoogleOAuthProvider clientId="<your_client_id>">
                     <CustomAppWrapper>
@@ -70,7 +130,7 @@ function CustomApp({ Component, pageProps }: AppProps): JSX.Element {
                     </CustomAppWrapper>
                 </GoogleOAuthProvider>
             </Provider>
-        </Fragment>
+        </div>
     );
 }
 

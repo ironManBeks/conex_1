@@ -12,8 +12,8 @@ import NavActions from "../components/NavActions";
 import { PATH_HOME_PAGE } from "@consts/pathsConsts";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor } from "@components/buttons/types";
-import { ColorTheme } from "@common/theme/colorTheme";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { ColorTheme } from "@assets/theme/colorTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import { IRoot } from "@store/store";
 import { THeader } from "./types";
 

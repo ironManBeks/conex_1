@@ -49,11 +49,11 @@
       "@helpers": [
         "src/helpers/index"
       ],
-      "@common/*": [
-        "src/common/*"
+      "@assets/*": [
+        "src/assets/*"
       ],
-      "@common": [
-        "src/common/index"
+      "@assets": [
+        "src/assets/index"
       ],
       "@store/*": [
         "src/store/*"

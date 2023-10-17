@@ -7,7 +7,7 @@ import Spin from "@components/globalComponents/Spin";
 
 import { commonButtonClassPrefix } from "./consts";
 import { EButtonColor, EButtonSize, TButtonPrimary } from "./types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 
 const ButtonPrimary: React.FC<TButtonPrimary> = ({
     children,
