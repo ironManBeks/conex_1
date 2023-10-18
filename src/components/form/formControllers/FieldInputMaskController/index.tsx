@@ -70,7 +70,6 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                                 const val = saveOnlyNumber
                                     ? e.target.value.replace(/[^0-9]/g, "")
                                     : e.target.value;
-                                console.log(`bbb${e.target.value}bbb`);
                                 field.onChange(val);
                                 if (onChangeValue) onChangeValue(val);
                             }}

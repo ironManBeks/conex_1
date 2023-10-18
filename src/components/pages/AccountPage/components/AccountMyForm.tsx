@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
@@ -18,21 +18,26 @@ import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
-import { TUpdateUserDataParams } from "@store/auth/types";
+import { TUpdateUserRequest } from "@store/auth/types";
 import { showNotification } from "@helpers/notificarionHelper";
 
 const AccountMyForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_my-form`;
         const { authStore } = store as IRoot;
-        const { userData, updateUserData } = authStore;
+        const { userData, updateUserRequest, updateUserRequestFetching } =
+            authStore;
 
         const methods = useForm<TAccountMyForm>({
             resolver: accountMyFormResolver(),
             defaultValues: accountMyFormDefaultValues(userData),
         });
 
-        const { handleSubmit, reset } = methods;
+        const {
+            handleSubmit,
+            reset,
+            formState: { isDirty },
+        } = methods;
 
         const onSubmit: SubmitHandler<TAccountMyForm> = (data) => {
             if (!userData) {
@@ -45,23 +50,46 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                 });
                 return;
             }
-            const params: TUpdateUserDataParams = {
+            const params: TUpdateUserRequest = {
                 ...data,
                 id: userData.id,
             };
-            updateUserData(params).then(() => {
+            updateUserRequest(params).then(() => {
                 showNotification({
                     mainProps: {
                         type: "success",
-                        message: "Data updated successfully",
+                        message: "Your information updated successfully",
                     },
                 });
+                reset({}, { keepValues: true });
             });
         };
 
         const handleCancel = () => {
             reset();
         };
+
+        const actionsContent = useMemo(() => {
+            return (
+                <div className={`${classPrefix}__actions`}>
+                    <ButtonPrimary
+                        onClick={handleCancel}
+                        color={EButtonColor.secondary}
+                        disabled={!isDirty}
+                    >
+                        Cancel
+                    </ButtonPrimary>
+                    <ButtonPrimary
+                        color={EButtonColor.primary}
+                        type="submit"
+                        isLoading={updateUserRequestFetching}
+                        // disabled={!isDirty || updateUserRequestFetching}
+                    >
+                        Save changes
+                    </ButtonPrimary>
+                </div>
+            );
+        }, [isDirty, updateUserRequestFetching]);
 
         return (
             <div className={`${classPrefix}__wrapper`}>
@@ -124,27 +152,12 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                                 />
                                 <FieldInputController
                                     name={EAccountMyFormFieldsNames.zip}
-                                    placeholder="Index"
-                                    label="Index"
+                                    placeholder="ZIP code"
+                                    label="ZIP code"
                                 />
                             </div>
                         </AccountSectionWrapper>
-                        <div className={`${classPrefix}__actions`}>
-                            <ButtonPrimary
-                                onClick={handleCancel}
-                                color={EButtonColor.secondary}
-                            >
-                                Cancel
-                            </ButtonPrimary>
-                            <ButtonPrimary
-                                color={EButtonColor.primary}
-                                type="submit"
-                                // isLoading={}
-                                // disabled={}
-                            >
-                                Save changes
-                            </ButtonPrimary>
-                        </div>
+                        {actionsContent}
                     </form>
                 </FormProvider>
             </div>

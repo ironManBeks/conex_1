@@ -38,7 +38,7 @@ const Header: FC<THeader> = inject("store")(
                     Math.ceil(headerRef.current.getBoundingClientRect().height),
                 );
             }
-        }, [headerRef?.current?.getBoundingClientRect().height]);
+        }, [headerRef?.current]);
 
         return (
             <header

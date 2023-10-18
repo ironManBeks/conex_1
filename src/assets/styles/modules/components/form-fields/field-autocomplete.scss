@@ -58,13 +58,6 @@
           }
         }
       }
-
-      &._floatinglabel{
-        .ant-input{
-          padding:  calc($space * 6 - 2px) space(4) space(2) space(12);
-        }
-      }
-
       &._activelabel{
         .ant-input {
           border-color: $border-color-secondary-active;
@@ -100,6 +93,15 @@
       }
     }
   }
+
+  &._floatinglabel{
+    .form-field_field{
+      .ant-input{
+        padding: calc($space * 6 - 2px) space(4) space(2) space(12);
+      }
+    }
+  }
+
 }
 
 .form-field_dropdown._autocomplete{

@@ -12,6 +12,7 @@ export enum EFieldNames {
     textArea = "TextArea",
     inputNumber = "InputNumber",
     slider = "Slider",
+    password = "Password",
 }
 
 export type TFormFields = {

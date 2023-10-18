@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, memo } from "react";
 
 import { H3, P } from "@components/Text";
 import ButtonLink from "@components/buttons/ButtonLink";
@@ -28,4 +28,4 @@ const OrderEmpty: FC = () => {
     );
 };
 
-export default OrderEmpty;
+export default memo(OrderEmpty);

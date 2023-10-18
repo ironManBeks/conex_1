@@ -309,10 +309,6 @@ export const renderResultDataToOptionsList = (
     currentStepData?: TNullable<TBuilderStepDataDTO>,
     renderMainTitle = false,
 ): TAddedOptionsListItem[] => {
-    // console.log("resultDoorData", toJS(resultDoorData));
-    // console.log("stepHistory", toJS(stepHistory));
-    // console.log("currentStepData", toJS(currentStepData));
-
     const result: TAddedOptionsListItem[] = [];
     if (!resultDoorData?.length) return result;
 
@@ -326,12 +322,11 @@ export const renderResultDataToOptionsList = (
             for (let j = 0; j < field.elements.length; j++) {
                 const element = field.elements[j];
                 if (element.value.toLowerCase() !== BUILDER_VALUE_NONE) {
+                    console.log("field.fieldTitle", field.fieldTitle);
                     list.push({
-                        label: isMulti
-                            ? `${field.fieldTitle ? field.fieldTitle : ""} ${
-                                  element.mainTitle
-                              }`
-                            : element.mainTitle,
+                        label: `${
+                            field.fieldTitle ? field.fieldTitle + ": " : ""
+                        }${element.mainTitle}`,
                         value: element.priceCurrency + element.price,
                     });
                 }

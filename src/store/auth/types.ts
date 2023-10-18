@@ -113,7 +113,7 @@ export type TUserCartItem = {
     count: number;
 } & TUserCartId;
 
-export type TUpdateUserDataParams = {
+export type TUpdateUserRequest = {
     first_name: string;
     last_name: string;
     phone: string;
@@ -137,6 +137,7 @@ export interface IAuthStore {
     userOrdersDataFetching: boolean;
     userCartData: TNullable<TUserCartItem[]>;
     userCartDataFetching: boolean;
+    updateUserRequestFetching: boolean;
 
     // functions
     setIsAuthorized: (value: boolean) => void;
@@ -152,7 +153,8 @@ export interface IAuthStore {
     getUserData: () => Promise<AxiosResponse<TUserData>>;
     setUserData: (data: TNullable<TUserData>) => void;
     setUserDataFetching: (value: boolean) => void;
-    updateUserData: (params: TUpdateUserDataParams) => Promise<void>;
+    updateUserRequest: (params: TUpdateUserRequest) => Promise<AxiosResponse>;
+    setUpdateUserRequestFetching: (value: boolean) => void;
     //
     getUserCardsData: () => Promise<AxiosResponse<TPaymentCard[]>>;
     setUserCardsData: (data: TNullable<TPaymentCard[]>) => void;

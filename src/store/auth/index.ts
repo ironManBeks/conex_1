@@ -14,7 +14,7 @@ import {
     TAuthData,
     TEmailConfirmationResponse,
     TResetPasswordRequest,
-    TUpdateUserDataParams,
+    TUpdateUserRequest,
     TUserCartItem,
     TUserData,
 } from "./types";
@@ -43,6 +43,7 @@ export class AuthStore implements IAuthStore {
     userOrdersDataFetching = true;
     userCartData: TNullable<TUserCartItem[]> = null;
     userCartDataFetching: boolean = false;
+    updateUserRequestFetching: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -104,6 +105,10 @@ export class AuthStore implements IAuthStore {
 
     setUserCartDataFetching = (value: boolean): void => {
         this.userCartDataFetching = value;
+    };
+
+    setUpdateUserRequestFetching = (value: boolean): void => {
+        this.updateUserRequestFetching = value;
     };
 
     //---------------------------------------------------------------------
@@ -264,22 +269,21 @@ export class AuthStore implements IAuthStore {
             });
     };
 
-    updateUserData = (params: TUpdateUserDataParams): Promise<void> => {
-        this.setUserDataFetching(true);
+    updateUserRequest = (
+        params: TUpdateUserRequest,
+    ): Promise<AxiosResponse> => {
+        this.setUpdateUserRequestFetching(true);
         return axiosInstance
             .put(`/users/${params.id}`, copyWithout(params, "id"))
-            .then((response: AxiosResponse<TUserData>) => {
-                // const { data } = response;
-                console.log("updateUserData", response);
-                // this.setUserData(data);
-                return;
+            .then((response: AxiosResponse) => {
+                return response;
             })
             .catch((err) => {
                 showAxiosNotificationError(err);
                 throw err;
             })
             .finally(() => {
-                this.setUserDataFetching(false);
+                this.setUpdateUserRequestFetching(false);
             });
     };
 

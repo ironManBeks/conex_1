@@ -45,6 +45,7 @@ export class BuilderStore implements IBuilderStore {
     builderParamsDataFetching = false;
     builderSettings: TNullable<TGetBuilderSettingsResponse> = null;
     builderSettingsFetching = true;
+    // -------------------------------------------------------------------------------
     // not request
     currentStepData: TBuilderStepDataDTO | null = null;
     currentStepId: TNullable<number> = null;
@@ -54,7 +55,6 @@ export class BuilderStore implements IBuilderStore {
     endDoorData: TNullable<TResultDoorData[]> = null;
     builderCartData: TNullable<TBuilderCartData> = null;
     editBuilderCartItemData: TNullable<TEditBuilderCartItemData> = null;
-
     constructor() {
         makeAutoObservable(this);
     }

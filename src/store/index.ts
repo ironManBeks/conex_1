@@ -6,6 +6,7 @@ import { AuthStore } from "./auth";
 import { ProductsStore } from "./products";
 import { BuilderStore } from "./builder";
 import { ContactStore } from "./contact";
+import { OrderStore } from "./order";
 
 const isServer = typeof window === "undefined";
 enableStaticRendering(isServer);
@@ -20,6 +21,7 @@ export default function initializeStore(): IRoot {
             authStore: new AuthStore(),
             builderStore: new BuilderStore(),
             contactStore: new ContactStore(),
+            orderStore: new OrderStore(),
         };
     }
     if (store === null) {
@@ -29,6 +31,7 @@ export default function initializeStore(): IRoot {
             authStore: new AuthStore(),
             builderStore: new BuilderStore(),
             contactStore: new ContactStore(),
+            orderStore: new OrderStore(),
         };
     }
 

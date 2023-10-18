@@ -33,6 +33,11 @@
       .additional-services_wrapper{
         margin-top: auto;
       }
+      .added-options-list_wrapper{
+        height: 300px;
+        overflow-y: auto;
+        padding: 0 space(1);
+      }
     }
     &__inner-wrapper{
       display: flex;

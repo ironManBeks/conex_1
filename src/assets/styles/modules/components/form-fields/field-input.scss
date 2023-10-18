@@ -24,6 +24,7 @@
       &[disabled]{
         background-color: $color-disabled-bg;
         border-color: $border-color-disabled;
+        cursor: not-allowed;
       }
       &:hover, &:focus{
         box-shadow: none;

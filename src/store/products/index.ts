@@ -3,6 +3,7 @@ import { AxiosResponse } from "axios";
 
 import {
     IProductsStore,
+    TGetProductDeliveryResponse,
     TProductDelivery,
     TProductDoorData,
     TProductPrice,
@@ -17,6 +18,7 @@ import { ProductSearchListDataMockup } from "../../mockups/ProductSearchListData
 import { ProductAdditionalServicesMockup } from "../../mockups/ProductAdditionalServicesMockup";
 import { ProductPriceMockup } from "../../mockups/ProductPriceMockup";
 import { ProductDeliveryCompanyMockup } from "src/mockups/ProductDeliveryCompanyMockup";
+import { showAxiosNotificationError } from "@helpers/errorsHelper";
 
 export class ProductsStore implements IProductsStore {
     productList: TProductDoorData[] = [];
@@ -143,19 +145,19 @@ export class ProductsStore implements IProductsStore {
             });
     };
 
-    getProductDeliveryRequest = (
-        params?: string,
-    ): Promise<AxiosResponse<TProductDelivery[]>> => {
+    getProductDeliveryRequest = (): Promise<
+        AxiosResponse<TGetProductDeliveryResponse>
+    > => {
         this.setProductDeliveryFetching(true);
         return axiosInstance
-            .get("/product/deliver-company", { params })
-            .then((response: AxiosResponse<TProductDelivery[]>) => {
-                // const { data } = response;
-                // this.setProductService(data);
+            .get("/delivery-companies")
+            .then((response: AxiosResponse<TGetProductDeliveryResponse>) => {
+                const { data } = response;
+                this.setProductDelivery(data.data);
                 return response;
             })
             .catch((err) => {
-                // showAxiosNotificationError(err);
+                showAxiosNotificationError(err);
                 throw err;
             })
             .finally(() => {

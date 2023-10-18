@@ -95,7 +95,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
 
     return (
         <FormProvider {...methods}>
-            <div className={cn(`${classPrefix}_form`, className)}>
+            <form className={cn(`${classPrefix}_form`, className)}>
                 <div className={`${classPrefix}_inner`}>
                     {/*<FieldInputController*/}
                     {/*    name={EPaymentCardFromFieldsNames.nameOnCard}*/}
@@ -206,7 +206,7 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                 {subText?.bottom && (
                     <P className="_bottom-text">{subText?.bottom}</P>
                 )}
-            </div>
+            </form>
         </FormProvider>
     );
 };

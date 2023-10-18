@@ -18,6 +18,13 @@ export enum ECheckoutGetMode {
     storePickup = "storePickup",
 }
 
+export enum EPaymentMethodValues {
+    // paypal = "paypal",
+    // amazonPay = "amazonPay",
+    bankTransfer = "bankTransfer",
+    creditDebitCard = "creditDebitCard",
+}
+
 export enum ECheckoutFormFieldsNames {
     // Delivery
     getMode = "getMode",
