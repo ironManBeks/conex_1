@@ -14,7 +14,7 @@ import cn from "classnames";
 import { Checkbox as AntCheckbox, Checkbox } from "antd";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { IconCheck } from "@components/Icons";
-import { COLOR_WHITE } from "@common/theme/colorTheme";
+import { COLOR_WHITE } from "@assets/theme/colorTheme";
 import { CheckboxChangeEvent } from "antd/lib/checkbox";
 import { EDirection } from "@globalTypes/commonTypes";
 

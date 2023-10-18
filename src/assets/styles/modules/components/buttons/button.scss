@@ -14,7 +14,7 @@
   box-shadow: none;
   border: 0;
   cursor: pointer;
-  transition:$transition;
+  transition: background $transition;
   svg, .common-icon, span{
     transition: $transition;
     path{
@@ -48,9 +48,6 @@
     background: $color-secondary-40;
     svg path {
       fill: $icon-color-disabled !important;
-    }
-    &:hover{
-      background-color: $color-secondary-40;
     }
   }
 
@@ -87,7 +84,7 @@
         opacity: $iconOpacity;
       }
     }
-    &:hover {
+    &:hover:not(.__disabled) {
       color: $color-accent-strong;
       .common-icon{
         opacity: 1;
@@ -96,7 +93,7 @@
         fill: $color-accent-strong
       }
     }
-    &:active{
+    &:active:not(.__disabled){
       color: $color-accent-800;
       svg path {
         fill: $color-accent-800
@@ -123,10 +120,10 @@
 
   &.__primary{
     background-color: $color-accent-strong;
-    &:hover{
+    &:hover:not(.__disabled){
       background-color: $color-accent-400;
     }
-    &:active{
+    &:active:not(.__disabled){
       background-color: $color-accent-600;
     }
     svg path {
@@ -144,21 +141,21 @@
 
   &.__secondary{
     background-color: $color-secondary-40;
-    &:hover{
+    &:hover:not(.__disabled){
       background-color: $color-accent-strong;
     }
-    &:active{
+    &:active:not(.__disabled){
       background-color: $color-accent-800;
     }
     svg path {
       fill: $icon-color-primary;
     }
+    .common-spin.ant-spin .ant-spin-dot-item{
+      background-color: $icon-color-primary;
+    }
     &.__disabled{
       &:not(.__loading){
         background: $color-secondary-40;
-      }
-      &:hover{
-        background-color: $color-secondary-40;
       }
     }
   }

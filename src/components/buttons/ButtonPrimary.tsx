@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef } from "react";
 import cn from "classnames";
 import { useMediaQuery } from "react-responsive";
 
@@ -7,7 +7,7 @@ import Spin from "@components/globalComponents/Spin";
 
 import { commonButtonClassPrefix } from "./consts";
 import { EButtonColor, EButtonSize, TButtonPrimary } from "./types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 
 const ButtonPrimary: React.FC<TButtonPrimary> = ({
     children,
@@ -28,6 +28,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     style,
     id,
 }) => {
+    const buttonRef = useRef<HTMLButtonElement>(null);
     const isMobile = useMediaQuery({
         minWidth: mediaBreakpoints.xsMedia,
         maxWidth: mediaBreakpoints.smMediaEnd,
@@ -35,7 +36,13 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
 
     const buttonContent = (
         <button
-            style={style}
+            ref={buttonRef}
+            style={{
+                ...style,
+                minWidth: isLoading
+                    ? buttonRef?.current?.getBoundingClientRect().width
+                    : 0,
+            }}
             type={type}
             className={cn(
                 `${commonButtonClassPrefix}`,

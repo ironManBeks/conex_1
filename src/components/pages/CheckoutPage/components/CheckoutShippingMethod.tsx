@@ -49,19 +49,18 @@ const CheckoutShippingMethod: FC<TSectionTypes> = inject("store")(
                                 value: item.id,
                                 label: (
                                     <>
-                                        <ImgWrapper
-                                            src={item.img}
-                                            alt={"Logo"}
-                                        />
+                                        {item.icon?.url && (
+                                            <ImgWrapper
+                                                src={item.icon.url}
+                                                alt={item.icon.alt}
+                                            />
+                                        )}
                                         <P>
-                                            {item.showTitle && item.title && (
-                                                <span>{item.title} </span>
+                                            {item.name && (
+                                                <span>{item.name} </span>
                                             )}
                                             <span>${item.price}</span>{" "}
-                                            <span>
-                                                {item.deliveryFrom}-
-                                                {item.deliveryTo} business days
-                                            </span>
+                                            <span>{item.period}</span>
                                         </P>
                                     </>
                                 ),

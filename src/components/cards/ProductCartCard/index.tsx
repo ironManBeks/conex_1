@@ -14,7 +14,7 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { PRODUCT_CARD_CLASSNAME } from "../consts";
 import { TProductCartCard } from "../types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import { EButtonColor } from "@components/buttons/types";
 
 const ProductCartCard: FC<TProductCartCard> = ({

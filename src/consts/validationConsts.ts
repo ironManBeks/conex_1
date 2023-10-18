@@ -46,5 +46,6 @@ export const yupEmailRequired = (
         .string()
         .required(requiredText || renderValidationText("required"))
         .max(100, emailMaxText)
-        .email(emailNotValid);
+        .email(emailNotValid)
+        .matches(/^[^\s@]+@[^\s@]+\.[^\s@]+$/, emailNotValid);
 };

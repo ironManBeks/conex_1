@@ -1,5 +1,6 @@
 import { TNullable } from "@globalTypes/commonTypes";
 import { AxiosResponse } from "axios";
+import { TResponseMeta } from "@globalTypes/requestTypes";
 
 export type TProductDoorData = {
     id: string;
@@ -60,14 +61,19 @@ export type TProductPriceParams = {
 };
 
 export type TProductDelivery = {
-    id: string;
-    title: string;
-    img: string;
+    id: number;
+    name: string;
+    period: string;
     price: number;
-    deliveryFrom: number;
-    deliveryTo: number;
-    showTitle: boolean;
+    icon: {
+        alt: string;
+        url: string;
+    };
 };
+
+export type TGetProductDeliveryResponse = {
+    data: TProductDelivery[];
+} & TResponseMeta;
 
 export interface IProductsStore {
     productList: TProductDoorData[];
@@ -98,9 +104,9 @@ export interface IProductsStore {
     //
     setProductDelivery: (data: TNullable<TProductDelivery[]>) => void;
     setProductDeliveryFetching: (value: boolean) => void;
-    getProductDeliveryRequest: (
-        params?: string,
-    ) => Promise<AxiosResponse<TProductDelivery[]>>;
+    getProductDeliveryRequest: () => Promise<
+        AxiosResponse<TGetProductDeliveryResponse>
+    >;
     //
     setSearchParams: (value: TNullable<TSearchParams>) => void;
 }

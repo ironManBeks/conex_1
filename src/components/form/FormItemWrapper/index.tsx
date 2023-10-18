@@ -1,5 +1,7 @@
-import { FC, useMemo, useState } from "react";
+import { FC, useEffect, useMemo, useRef, useState } from "react";
 import cn from "classnames";
+import { Transition, TransitionStatus } from "react-transition-group";
+import CSS from "csstype";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 
@@ -16,19 +18,22 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
     disabled,
     fieldValue,
 }) => {
+    const errorRef = useRef<HTMLDivElement>(null);
     const [focus, setFocus] = useState(false);
+    const [errorHeight, setErrorHeight] = useState<number>(0);
 
-    const errorContent = useMemo(() => {
-        if (errorMessage && showError) {
-            return (
-                <div
-                    className={cn(
-                        `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
-                    )}
-                >
-                    <span>{errorMessage.toString()}</span>
-                </div>
-            );
+    const errorTransitionStyles: Partial<
+        Record<TransitionStatus, CSS.Properties>
+    > = {
+        entering: { height: `${errorHeight}px`, opacity: 1 },
+        entered: { height: `${errorHeight}px`, opacity: 1 },
+        exiting: { height: 0, opacity: 0 },
+        exited: { height: 0, opacity: 0 },
+    };
+
+    useEffect(() => {
+        if (errorRef?.current && showError) {
+            setErrorHeight(errorRef?.current?.getBoundingClientRect().height);
         }
     }, [errorMessage, showError]);
 
@@ -45,6 +50,20 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
             );
         }
     }, [label, isFloatingLabel]);
+
+    // const errorContent = useMemo(() => {
+    //     if (errorMessage && showError) {
+    //         return (
+    //             <div
+    //                 className={cn(
+    //                     `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
+    //                 )}
+    //             >
+    //                 <span>{errorMessage.toString()}</span>
+    //             </div>
+    //         );
+    //     }
+    // }, [errorMessage, showError]);
 
     return (
         <div
@@ -93,7 +112,28 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                             </label>
                         )}
                     </div>
-                    {errorContent}
+                    {showError && (
+                        <Transition in={!!errorMessage} timeout={0}>
+                            {(state) => (
+                                <div
+                                    style={{
+                                        transition: "all 0.2s ease",
+                                        transitionProperty: "height",
+                                        ...errorTransitionStyles[state],
+                                    }}
+                                >
+                                    <div
+                                        ref={errorRef}
+                                        className={cn(
+                                            `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
+                                        )}
+                                    >
+                                        <span>{errorMessage?.toString()}</span>
+                                    </div>
+                                </div>
+                            )}
+                        </Transition>
+                    )}
                 </div>
             </div>
         </div>

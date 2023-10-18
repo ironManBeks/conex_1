@@ -27,8 +27,10 @@ const OrderLayout: FC<
             leftSideContent,
             rightSideContent,
         }) => {
-            const { builderStore, authStore, productsStore } = store as IRoot;
+            const { builderStore, authStore, productsStore, orderStore } =
+                store as IRoot;
             const { builderCartData } = builderStore;
+            const { getDoorsData } = orderStore;
             const { getProductPriceRequest } = productsStore;
             const {
                 userDataFetching,
@@ -39,6 +41,7 @@ const OrderLayout: FC<
 
             useEffect(() => {
                 if (isAuthorized) {
+                    getDoorsData();
                     getUserCartData();
                 }
             }, [isAuthorized]);

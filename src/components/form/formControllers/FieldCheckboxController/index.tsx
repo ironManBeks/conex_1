@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
+import { Checkbox as AntCheckbox } from "antd";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
+import { IconCheck } from "@components/Icons";
 
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EFormFieldType } from "@components/form/types";
+import { COLOR_WHITE } from "@assets/theme/colorTheme";
 import { TFieldCheckboxController } from "./types";
-import { IconCheck } from "@components/Icons";
-import { Checkbox as AntCheckbox } from "antd";
-import { COLOR_WHITE } from "@common/theme/colorTheme";
 
 const FieldCheckboxController: FC<TFieldCheckboxController> = (props) => {
     const {

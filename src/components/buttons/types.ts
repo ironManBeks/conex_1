@@ -30,7 +30,6 @@ export enum EButtonColor {
     success = "success",
     danger = "danger",
     transparent = "transparent",
-    orange = "orange",
 }
 
 export enum EButtonSize {

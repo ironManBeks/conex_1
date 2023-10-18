@@ -34,16 +34,16 @@ export type TAccountMyForm = {
 
 export const accountMyFormDefaultValues = (
     data?: TNullable<TUserData>,
-): TAccountMyForm => {
+): Record<EAccountMyFormFieldsNames, string> => {
     return {
-        [EAccountMyFormFieldsNames.first_name]: data?.first_name ?? "name",
-        [EAccountMyFormFieldsNames.last_name]: data?.last_name ?? "surname",
-        [EAccountMyFormFieldsNames.email]: data?.email ?? "email",
-        [EAccountMyFormFieldsNames.phone]: data?.phone ?? "12312312312",
-        [EAccountMyFormFieldsNames.country]: data?.country ?? "country",
-        [EAccountMyFormFieldsNames.city]: data?.city ?? "city",
-        [EAccountMyFormFieldsNames.address]: data?.address ?? "address",
-        [EAccountMyFormFieldsNames.zip]: data?.zip ?? "zip",
+        [EAccountMyFormFieldsNames.first_name]: data?.first_name ?? "",
+        [EAccountMyFormFieldsNames.last_name]: data?.last_name ?? "",
+        [EAccountMyFormFieldsNames.email]: data?.email ?? "",
+        [EAccountMyFormFieldsNames.phone]: data?.phone ?? "",
+        [EAccountMyFormFieldsNames.country]: data?.country ?? "",
+        [EAccountMyFormFieldsNames.city]: data?.city ?? "",
+        [EAccountMyFormFieldsNames.address]: data?.address ?? "",
+        [EAccountMyFormFieldsNames.zip]: data?.zip ?? "",
     };
 };
 
@@ -73,9 +73,8 @@ export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
                 .trim(),
             [EAccountMyFormFieldsNames.zip]: yup
                 .string()
-                .max(50, renderValidationText("max", undefined, 50))
                 .required(requiredText)
-                .trim(),
+                .matches(/^\d{5}(?:[-\s]\d{4})?$/, "Invalid ZIP code format"),
         }),
     );
 };

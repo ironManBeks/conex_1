@@ -38,6 +38,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             getProductServiceRequest,
             getProductDeliveryRequest,
             productService,
+            productDelivery,
         } = productsStore;
         const router = useRouter();
 
@@ -73,7 +74,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             if (isNil(productService)) {
                 getProductServiceRequest();
             }
-            if (isNil(productService)) {
+            if (isNil(productDelivery)) {
                 getProductDeliveryRequest();
             }
         }, []);

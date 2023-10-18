@@ -7,7 +7,7 @@ import Tooltip from "@components/globalComponents/Tooltip";
 import { commonButtonClassPrefix } from "@components/buttons/consts";
 
 import { EButtonColor, EButtonSize, TButtonLink } from "./types";
-import { mediaBreakpoints } from "@common/theme/mediaBreakpointsTheme";
+import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 
 const ButtonLink: React.FC<TButtonLink> = ({
     children,

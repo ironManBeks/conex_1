@@ -27,6 +27,7 @@ import { EDirection } from "@globalTypes/commonTypes";
 import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
 import { IconMapPoint } from "@components/Icons";
 import FieldSliderController from "@components/form/formControllers/FieldSliderController";
+import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
@@ -59,6 +60,22 @@ const TestPage: FC = () => {
                 <div style={{ paddingTop: "70px" }}>
                     <FormProvider {...methods}>
                         <form onSubmit={handleSubmit(onSubmit)}>
+                            <FieldPasswordController
+                                name={EFieldNames.password}
+                                placeholder={EFieldNames.password}
+                                label={EFieldNames.password}
+                                isFloatingLabel={true}
+                            />
+                            <FieldPasswordController
+                                name={EFieldNames.password + "123"}
+                                placeholder={EFieldNames.password}
+                                label={EFieldNames.password}
+                                disabled={true}
+                                isFloatingLabel={true}
+                            />
+                            <br />
+                            <br />
+                            <br />
                             <FieldInputController
                                 name={EFieldNames.input}
                                 placeholder={EFieldNames.input}

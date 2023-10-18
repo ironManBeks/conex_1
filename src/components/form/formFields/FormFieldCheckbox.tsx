@@ -7,7 +7,7 @@ import { IconCheck } from "@components/Icons";
 
 import { EFormFieldType, TFormFieldCheckbox } from "../types";
 import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
-import { COLOR_WHITE } from "@common/theme/colorTheme";
+import { COLOR_WHITE } from "@assets/theme/colorTheme";
 
 const FormFieldCheckbox: FC<TFormFieldCheckbox> = (props) => {
     const {

@@ -1,9 +1,8 @@
-import React, { FC, ReactNode, useEffect, useState } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
 
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
-import { IconBank, IconCreditCard } from "@components/Icons";
 import CheckoutSectionWrapper from "./CheckoutSectionWrapper";
 import PaymentCardForm from "@components/globalComponents/PaymentCardForm";
 import PaymentCard from "@components/globalComponents/PaymentCard";
@@ -11,50 +10,15 @@ import ModalConfirm from "@components/modals/components/ModalConfirm";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { ECheckoutFormFieldsNames } from "@components/pages/CheckoutPage/formAttrs";
+import {
+    ECheckoutFormFieldsNames,
+    EPaymentMethodValues,
+} from "@components/pages/CheckoutPage/formAttrs";
 import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
 import { notImplemented } from "@helpers/notImplemented";
 import { TPaymentCard } from "@components/globalComponents/types";
-
-enum ETPaymentMethodValues {
-    // paypal = "paypal",
-    // amazonPay = "amazonPay",
-    bankTransfer = "bankTransfer",
-    creditDebitCard = "creditDebitCard",
-}
-
-type TPaymentMethod = {
-    value: ETPaymentMethodValues;
-    label: ReactNode;
-};
-
-const PaymentMethodsMockup: TPaymentMethod[] = [
-    // {
-    //     value: ETPaymentMethodValues.paypal,
-    //     label: <IconPaypal />,
-    // },
-    // {
-    //     value: ETPaymentMethodValues.amazonPay,
-    //     label: <IconAmazonPay />,
-    // },
-    {
-        value: ETPaymentMethodValues.bankTransfer,
-        label: (
-            <>
-                <IconBank /> Bank Transfer
-            </>
-        ),
-    },
-    {
-        value: ETPaymentMethodValues.creditDebitCard,
-        label: (
-            <>
-                <IconCreditCard /> Credit/Debit Card
-            </>
-        ),
-    },
-];
+import { PaymentMethodsMockup } from "@components/pages/CheckoutPage/consts";
 
 const CheckoutPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -85,7 +49,7 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
                     options={PaymentMethodsMockup}
                 />
 
-                {selectedService === ETPaymentMethodValues.creditDebitCard && (
+                {selectedService === EPaymentMethodValues.creditDebitCard && (
                     <>
                         {userCardsData?.length && !cardFormVisible && (
                             <>

@@ -6,7 +6,7 @@ import { IconCross } from "@components/Icons";
 import { H3, H4 } from "@components/Text";
 
 import disableBodyScroll from "@helpers/disableBodyScroll";
-import { COLOR_BLACK } from "@common/theme/colorTheme";
+import { COLOR_BLACK } from "@assets/theme/colorTheme";
 import { EModalSize, TModalLayout } from "./types";
 
 const ModalLayout: React.FC<TModalLayout> = ({
