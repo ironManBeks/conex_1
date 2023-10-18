@@ -1,4 +1,4 @@
-import { FC } from "react";
+import React, { FC } from "react";
 import { inject, observer } from "mobx-react";
 
 import ModalCardBinding from "@components/modals/components/ModalCardBinding";

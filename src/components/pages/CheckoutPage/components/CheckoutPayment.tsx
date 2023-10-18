@@ -48,6 +48,7 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
                     name={ECheckoutFormFieldsNames.paymentMethod}
                     options={PaymentMethodsMockup}
                 />
+
                 {selectedService === EPaymentMethodValues.creditDebitCard && (
                     <>
                         {userCardsData?.length && !cardFormVisible && (
@@ -99,6 +100,7 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
 
                         {cardFormVisible && (
                             <PaymentCardForm
+                                // reference={formRef}
                                 className={`${classPrefix}__card-form`}
                                 actionsContent={
                                     <ButtonPrimary

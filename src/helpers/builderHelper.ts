@@ -315,7 +315,7 @@ export const renderResultDataToOptionsList = (
     return resultDoorData?.map((stepItem) => {
         const list: { label: string; value: string | number }[] = [];
 
-        const isMulti = stepItem.stepType === EBuilderFieldTypes.multiple;
+        // const isMulti = stepItem.stepType === EBuilderFieldTypes.multiple;
 
         for (let i = 0; i < stepItem.fields.length; i++) {
             const field = stepItem.fields[i];

@@ -62,13 +62,6 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
     const cardNumberValue = watch(EPaymentCardFromFieldsNames.cardNumber);
     const expDateValue = watch(EPaymentCardFromFieldsNames.expDate);
 
-    const onSubmit: SubmitHandler<TPaymentCardForm> = (data) => {
-        if (onSuccessfulSubmit) {
-            onSuccessfulSubmit(data);
-        }
-        reset();
-    };
-
     useImperativeHandle(reference, () => ({
         reset: (newData?: TPaymentCardForm) => {
             reset(
@@ -76,6 +69,13 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
             );
         },
     }));
+
+    const onSubmit: SubmitHandler<TPaymentCardForm> = (data) => {
+        if (onSuccessfulSubmit) {
+            onSuccessfulSubmit(data);
+        }
+        reset();
+    };
 
     useEffect(() => {
         setCardType(findDebitCardType(cardNumberValue));
@@ -126,18 +126,6 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                                 ? CARD_AMERICAN_EXPRESS_REGEX
                                 : CARDS_REGEX
                         }
-                        // minAddonWidth={60}
-                        // addonAfter={
-                        //     cardType && CARDS_LIST.includes(cardType) ? (
-                        //         <ImgWrapper
-                        //             src={CARD_ICON[cardType]}
-                        //             width={50}
-                        //             height={24}
-                        //         />
-                        //     ) : (
-                        //         <IconCreditCard />
-                        //     )
-                        // }
                         guide={false}
                         saveOnlyNumber={false}
                     />
@@ -191,18 +179,16 @@ const PaymentCardForm: FC<TPaymentCardFormSection> = ({
                     )}
                 </div>
                 {subText?.top && <P className="_top-text">{subText?.top}</P>}
-                {submitText && (
-                    <div className={`${classPrefix}_actions`}>
-                        {actionsContent && actionsContent}
-                        <ButtonPrimary
-                            color={EButtonColor.secondary}
-                            size={EButtonSize.md}
-                            onClick={handleSubmit(onSubmit)}
-                        >
-                            {submitText}
-                        </ButtonPrimary>
-                    </div>
-                )}
+                <div className={`${classPrefix}_actions`}>
+                    {actionsContent && actionsContent}
+                    <ButtonPrimary
+                        color={EButtonColor.secondary}
+                        size={EButtonSize.md}
+                        onClick={handleSubmit(onSubmit)}
+                    >
+                        {submitText}
+                    </ButtonPrimary>
+                </div>
                 {subText?.bottom && (
                     <P className="_bottom-text">{subText?.bottom}</P>
                 )}

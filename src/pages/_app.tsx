@@ -1,7 +1,8 @@
 import { AppProps } from "next/app";
 import { GoogleOAuthProvider } from "@react-oauth/google";
-import { JSX, ReactNode, useEffect } from "react";
+import { Fragment, JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
+import Head from "next/head";
 
 import localFont from "next/font/local";
 
@@ -16,7 +17,6 @@ import { JWT_TOKEN, JWT_TOKEN_EXP } from "@consts/storageNamesContsts";
 import { IRoot } from "@store/store";
 import { TStore } from "@globalTypes/storeTypes";
 import { showNotification } from "@helpers/notificarionHelper";
-import Head from "next/head";
 
 const manrope = localFont({
     src: [
@@ -122,7 +122,7 @@ function CustomApp({ Component, pageProps }: AppProps): JSX.Element {
     const mobxStore = initializeStore();
 
     return (
-        <div className={"red123"}>
+        <Fragment>
             <Provider store={mobxStore}>
                 <GoogleOAuthProvider clientId="<your_client_id>">
                     <CustomAppWrapper>
@@ -130,7 +130,7 @@ function CustomApp({ Component, pageProps }: AppProps): JSX.Element {
                     </CustomAppWrapper>
                 </GoogleOAuthProvider>
             </Provider>
-        </div>
+        </Fragment>
     );
 }
 

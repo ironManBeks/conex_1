@@ -21,7 +21,7 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
         onAddonClick,
         minAddonWidth,
         style,
-        showError,
+        showError = true,
         saveOnlyNumber = true,
         readOnly: propsReadOnly = false,
         isFloatingLabel = true,
@@ -34,6 +34,8 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
         control,
         formState: { errors },
     } = useFormContext();
+    const errorMessage = errors[name]?.message;
+    const fieldRef = useRef<MaskedInput>(null);
 
     useEffect(() => {
         if (addonAfterRef?.current?.clientHeight) {
@@ -49,19 +51,20 @@ const FieldInputMaskController: FC<TFieldInputMaskController> = (props) => {
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.input}
-                        errorMessage={errors[name]?.message}
+                        errorMessage={errorMessage}
                         showError={showError}
+                        label={label}
+                        isFloatingLabel={isFloatingLabel}
                         wrapperClassName={cn(wrapperClassName, {
                             _addonafter: addonAfter,
                         })}
-                        label={label}
-                        isFloatingLabel={isFloatingLabel}
                         fieldValue={field.value}
                         disabled={!!disabled}
                     >
                         <MaskedInput
                             {...field}
                             {...rest}
+                            ref={fieldRef}
                             className={cn(
                                 `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
                             )}

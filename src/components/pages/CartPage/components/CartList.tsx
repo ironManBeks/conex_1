@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { debounce, isString, uniq } from "lodash";
 
@@ -13,6 +13,7 @@ import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { TProductCartCard } from "@components/cards/types";
 import { ProductPriceParamsMockup } from "../../../../mockups/ProductPriceMockup";
+import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -56,6 +57,17 @@ const CartList: FC<TSectionTypes> = inject("store")(
         const handleDelete = () => {
             setModalConfirmVisible(true);
         };
+
+        useEffect(() => {
+            if (builderCartData?.elements.length) {
+                console.log(
+                    "request",
+                    convertDoorDataToCreateDoorRequest(
+                        builderCartData?.elements[0],
+                    ),
+                );
+            }
+        }, [builderCartData]);
 
         const getCartList = useCallback((): TProductCartCard[] => {
             // ToDo turn on !
