@@ -83,7 +83,7 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                         color={EButtonColor.primary}
                         type="submit"
                         isLoading={updateUserRequestFetching}
-                        // disabled={!isDirty || updateUserRequestFetching}
+                        disabled={!isDirty || updateUserRequestFetching}
                     >
                         Save changes
                     </ButtonPrimary>
