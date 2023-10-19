@@ -1,4 +1,4 @@
-import { FC } from "react";
+import { FC, useMemo } from "react";
 import { isNil } from "lodash";
 import { inject, observer } from "mobx-react";
 
@@ -17,7 +17,7 @@ const AccountMyFormLayout: FC<TSectionTypes> = inject("store")(
         const { userData, userDataFetching } = authStore;
         const classPrefix = `${pageClassPrefix}_my-form`;
 
-        const content = () => {
+        const content = useMemo(() => {
             if (userDataFetching) {
                 return (
                     <AccountSectionWrapper pageClassPrefix={pageClassPrefix}>
@@ -35,12 +35,12 @@ const AccountMyFormLayout: FC<TSectionTypes> = inject("store")(
                     <AccountNoData pageClassPrefix={pageClassPrefix} />
                 </AccountSectionWrapper>
             );
-        };
+        }, [userDataFetching, userData]);
 
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <H2>Your account</H2>
-                {content()}
+                {content}
             </div>
         );
     }),

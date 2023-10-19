@@ -2,7 +2,6 @@ import { AppProps } from "next/app";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 import { Fragment, JSX, ReactNode, useEffect } from "react";
 import { inject, Provider } from "mobx-react";
-import Head from "next/head";
 
 import localFont from "next/font/local";
 
@@ -106,11 +105,15 @@ const CustomAppWrapper = inject("store")(
 
             return (
                 <>
-                    <Head>
-                        <body
-                            className={`${manrope.variable} ${helvetica.variable} font-sans`}
-                        />
-                    </Head>
+                    <style
+                        dangerouslySetInnerHTML={{
+                            __html: `
+        :root {
+          --font-manrope: ${manrope.style.fontFamily};
+          --font-helvetica: ${helvetica.style.fontFamily};
+        }`,
+                        }}
+                    />
                     {children}
                 </>
             );
