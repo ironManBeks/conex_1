@@ -193,6 +193,9 @@
       .form-field_field{
         width: calc(50% - $space * 4 / 2);
         padding: space(4) space(5);
+        &:hover{
+          border: 1px solid $border-color-accent;
+        }
         > span:not(.ant-radio-button){
           width: 100%;
           display: flex;

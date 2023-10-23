@@ -109,4 +109,5 @@ export interface IProductsStore {
     >;
     //
     setSearchParams: (value: TNullable<TSearchParams>) => void;
+    adyenSession: any;
 }
