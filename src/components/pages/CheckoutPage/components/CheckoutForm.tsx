@@ -24,11 +24,9 @@ import {
 } from "@components/pages/CheckoutPage/formAttrs";
 import { IRoot } from "@store/store";
 import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
-import {
-    AccountTabKey,
-    EAccountTabsPaths,
-} from "@components/pages/AccountPage/consts";
+import { AccountTabKey } from "@components/pages/AccountPage/consts";
 import { showNotification } from "@helpers/notificarionHelper";
+import { EAccountTabsPaths } from "@components/pages/AccountPage/types";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {

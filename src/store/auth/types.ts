@@ -88,13 +88,27 @@ export type TOrderStatusTimelapse = {
 };
 
 export type TAccountOrderItem = {
-    id: string;
+    id: number;
     orderNumber: string;
     dateOfOrder: string;
     orderAddress: string;
     orderStatus?: EAccountOrderStatus;
     moneyStatus?: EAccountOrderMoneyStatus;
     statusTimelapse: TOrderStatusTimelapse[];
+};
+
+export type TSingleOrderData = {
+    paymentMethod: string;
+    total: number;
+    subtotal: number;
+    details: {
+        label: string;
+        value: string;
+    }[];
+} & TAccountOrderItem;
+
+export type TGetUserSingleOrderRequest = {
+    id: number;
 };
 
 export type TUserCartId = {
@@ -138,6 +152,8 @@ export interface IAuthStore {
     userCartData: TNullable<TUserCartItem[]>;
     userCartDataFetching: boolean;
     updateUserRequestFetching: boolean;
+    userSingleOrderData: TNullable<TSingleOrderData>;
+    userSingleOrderDataFetching: boolean;
 
     // functions
     setIsAuthorized: (value: boolean) => void;
@@ -169,6 +185,12 @@ export interface IAuthStore {
     getUserCartData: () => Promise<AxiosResponse<TUserCartItem[]>>;
     setUserCartData: (data: TNullable<TUserCartItem[]>) => void;
     setUserCartDataFetching: (value: boolean) => void;
+    //
+    getUserSingleOrderData: (
+        params: TGetUserSingleOrderRequest,
+    ) => Promise<AxiosResponse<TSingleOrderData>>;
+    setUserSingleOrderData: (data: TNullable<TSingleOrderData>) => void;
+    setUserSingleOrderDataFetching: (value: boolean) => void;
     //
     setSelectedCard: (data: TNullable<TPaymentCard>) => void;
     resetUserData: () => void;

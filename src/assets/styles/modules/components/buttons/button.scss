@@ -23,6 +23,7 @@
   }
 
   &._link{
+    transition: $transition;
     &:hover{
       color: $text-color-primary;
     }

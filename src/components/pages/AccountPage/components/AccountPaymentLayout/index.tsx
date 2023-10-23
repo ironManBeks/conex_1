@@ -4,10 +4,10 @@ import { inject, observer } from "mobx-react";
 
 import { H2 } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import AccountSectionWrapper from "./AccountSectionWrapper";
-import AccountPayment from "./AccountPayment";
-import AccountNoData from "./AccountNoData";
-import AccountLoader from "./AccountLoader";
+import AccountSectionWrapper from "../AccountSectionWrapper";
+import AccountNoData from "../AccountNoData";
+import AccountLoader from "../AccountLoader";
+import AccountPayment from "./components/AccountPayment";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";

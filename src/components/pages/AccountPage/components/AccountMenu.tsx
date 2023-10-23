@@ -13,11 +13,8 @@ import Logout from "@components/globalComponents/Logout";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { PATH_HOME_PAGE, PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
-import { TAccountMenuItem } from "../types";
-import {
-    AccountTabKey,
-    EAccountTabsPaths,
-} from "@components/pages/AccountPage/consts";
+import { EAccountTabsPaths, TAccountMenuItem } from "../types";
+import { AccountTabKey } from "../consts";
 
 const AccountMenu: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const router = useRouter();

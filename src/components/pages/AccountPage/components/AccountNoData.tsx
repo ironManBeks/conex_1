@@ -9,8 +9,10 @@ import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 
-const AccountNoData: FC<TSectionTypes> = inject("store")(
-    observer(({ store, pageClassPrefix }) => {
+const AccountNoData: FC<
+    TSectionTypes & { title?: string; isButton?: boolean }
+> = inject("store")(
+    observer(({ store, pageClassPrefix, title, isButton = true }) => {
         const { authStore } = store as IRoot;
         const { logOut } = authStore;
         const router = useRouter();
@@ -31,17 +33,25 @@ const AccountNoData: FC<TSectionTypes> = inject("store")(
                 }}
             >
                 <Empty />
-                <br />
-                <br />
-                <div>Please reload the page</div>
-                <div className={`${pageClassPrefix}_error__actions`}>
-                    <ButtonPrimary
-                        color={EButtonColor.primary}
-                        onClick={handleReset}
-                    >
-                        Reset and reload
-                    </ButtonPrimary>
-                </div>
+                {title ? (
+                    <div>{title}</div>
+                ) : (
+                    <>
+                        <br />
+                        <br />
+                        <div>Please reload the page</div>
+                    </>
+                )}
+                {isButton && (
+                    <div className={`${pageClassPrefix}_error__actions`}>
+                        <ButtonPrimary
+                            color={EButtonColor.primary}
+                            onClick={handleReset}
+                        >
+                            Reset and reload
+                        </ButtonPrimary>
+                    </div>
+                )}
             </div>
         );
     }),

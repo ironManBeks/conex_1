@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+import { TOrderStatusTimelapse } from "@store/auth/types";
 
 export enum ESegmentedOptionsNames {
     all = "all",
@@ -6,6 +7,14 @@ export enum ESegmentedOptionsNames {
     inProgress = "inProgress",
     completed = "completed",
 }
+
+export enum EAccountTabsPaths {
+    account = "account",
+    orders = "orders",
+    paymentMethods = "paymentMethods",
+}
+
+export type TStepsStatus = "wait" | "process" | "finish" | "error";
 
 export type TAccountMenuItem = {
     icon: ReactNode;
@@ -15,4 +24,10 @@ export type TAccountMenuItem = {
     isActive?: boolean;
     className?: string;
     onClick?: () => void;
+};
+
+export type TAccountOrderStatus = {
+    wrapperClassName?: string;
+    statusTimelapse: TOrderStatusTimelapse[];
+    onOpenChange?: (value: boolean) => void;
 };

@@ -1,3 +1,4 @@
+import { Url } from "next/dist/shared/lib/router/router";
 import { CSSProperties, MouseEvent, ReactNode } from "react";
 
 export type TButtonCommon = {
@@ -41,7 +42,7 @@ export enum EButtonSize {
 export type TButtonPrimary = TButtonCommon & TButtonTypes;
 
 export type TButtonLink = {
-    href: string;
+    href: Url;
     target?: "_blank" | "_self" | "_parent" | "_top";
     style?: CSSProperties;
     isLinkSimple?: boolean;

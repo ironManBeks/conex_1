@@ -13,7 +13,9 @@ import {
     TAccountOrderItem,
     TAuthData,
     TEmailConfirmationResponse,
+    TGetUserSingleOrderRequest,
     TResetPasswordRequest,
+    TSingleOrderData,
     TUpdateUserRequest,
     TUserCartItem,
     TUserData,
@@ -29,6 +31,7 @@ import { UserCartDataMockup } from "../../mockups/UserCartDataMockup";
 import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { copyWithout } from "@helpers/objectHelper";
+import { AccountSingleOrderMockup } from "../../mockups/AccountSingleOrderMockup";
 
 export class AuthStore implements IAuthStore {
     isAuthorized: boolean = false;
@@ -44,6 +47,8 @@ export class AuthStore implements IAuthStore {
     userCartData: TNullable<TUserCartItem[]> = null;
     userCartDataFetching: boolean = false;
     updateUserRequestFetching: boolean = false;
+    userSingleOrderData: TNullable<TSingleOrderData> = null;
+    userSingleOrderDataFetching: boolean = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -109,6 +114,14 @@ export class AuthStore implements IAuthStore {
 
     setUpdateUserRequestFetching = (value: boolean): void => {
         this.updateUserRequestFetching = value;
+    };
+
+    setUserSingleOrderData = (data: TNullable<TSingleOrderData>): void => {
+        this.userSingleOrderData = data;
+    };
+
+    setUserSingleOrderDataFetching = (value: boolean): void => {
+        this.userSingleOrderDataFetching = value;
     };
 
     //---------------------------------------------------------------------
@@ -347,6 +360,30 @@ export class AuthStore implements IAuthStore {
                 this.setUserCartData(UserCartDataMockup);
                 setTimeout(() => {
                     this.setUserCartDataFetching(false);
+                }, 300);
+            });
+    };
+
+    getUserSingleOrderData = (
+        params: TGetUserSingleOrderRequest,
+    ): Promise<AxiosResponse<TSingleOrderData>> => {
+        this.setUserSingleOrderDataFetching(true);
+        return axiosInstance
+            .get(`/user/oreder/${params.id}`)
+            .then((response: AxiosResponse<TSingleOrderData>) => {
+                // const { data } = response;
+                // this.setUserSingleOrderData(data);
+                return response;
+            })
+            .catch((err) => {
+                // ToDo turn on !
+                // showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setUserSingleOrderData(AccountSingleOrderMockup);
+                setTimeout(() => {
+                    this.setUserSingleOrderDataFetching(false);
                 }, 300);
             });
     };

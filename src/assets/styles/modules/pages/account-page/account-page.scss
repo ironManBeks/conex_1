@@ -18,8 +18,9 @@
       font-size: $font-size-xl;
       line-height: $line-height-xl;
       display: flex;
-      align-items: center;
-      justify-content: space-between;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: space(2);
     }
   }
 
@@ -262,112 +263,244 @@
           }
         }
       }
-      &._status{
-        .common-title._h4{
-          display: flex;
-          align-items: center;
+    }
+  }
+
+  &_single-order{
+    &__wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(6);
+      .common-title._h3{
+        font-size: $font-size-lg-plus;
+        line-height: $line-height-lg-plus;
+      }
+    }
+
+    &__section-wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(8);
+    }
+
+    &__head{
+      display: flex;
+      padding-left: space(3);
+      padding-right: space(3);
+      .single-order_head__item{
+        width: 33%;
+        position: relative;
+        padding: 0 space(10);
+        &:not(:last-child){
+          &:before{
+            position: absolute;
+            content: "";
+            width: 2px;
+            max-height: 32px;
+            height: 100%;
+            top: 50%;
+            transform: translateY(-50%);
+            right: -1px;
+            background: $border-color-secondary;
+            border-radius: borderRadius(1);
+          }
+        }
+        .common-title, .common-text{
           font-size: $font-size-bs;
           line-height: $line-height-lg;
-          font-weight: 700;
-          transition: $transition;
-          cursor: pointer;
-          .common-icon{
-            margin-left: space(2);
-            transition: $transition;
-            path{
-              transition: $transition;
+        }
+        .common-text{
+          margin-bottom: space(1);
+          color: $text-color-secondary;
+        }
+      }
+    }
+
+    &__details{
+      .common-title{
+        margin-bottom: space(4);
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+      }
+
+      .single-order_details__item{
+        display: flex;
+        gap: space(2);
+      }
+    }
+
+    &__list{
+      display: flex;
+      flex-direction: column;
+      gap: space(3);
+      .single-order_details__item{
+        display: flex;
+        gap: space(2);
+        font-size: $font-size-sm;
+        line-height: $line-height-md;
+      }
+    }
+
+    &__images{
+      display: flex;
+      flex-wrap: wrap;
+      gap: space(5);
+      .img-custom_wrapper{
+        width: 80px;
+        height: 80px;
+      }
+    }
+
+    &__services{
+      border-top: 0;
+      .additional-services{
+        &_list{
+          .additional-services_item{
+            &:not(:last-child){
+              margin-bottom: space(2);
             }
           }
-          &:hover{
+        }
+        &_item{
+          .common-title, .common-text{
+            font-size: $font-size-sm;
+            line-height: $line-height-md;
+            color: $text-color-primary;
+          }
+        }
+        &_total{
+          border-top: 1px solid $border-color-primary;
+          padding-top: space(3);
+          .common-title, .common-text {
+            font-size: $font-size-lg;
+            line-height: $line-height-lg;
+            font-weight: 700;
+          }
+        }
+      }
+    }
+
+  }
+
+}
+
+
+.order-status{
+  &_wrapper{
+    .common-title._h4{
+      display: flex;
+      align-items: center;
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+      font-weight: 700;
+      transition: $transition;
+      cursor: pointer;
+      .common-icon{
+        margin-left: space(2);
+        transition: $transition;
+        path{
+          transition: $transition;
+        }
+      }
+      &:hover{
+        color: $text-color-secondary;
+        .common-icon path{
+          fill: $icon-color-secondary;
+        }
+      }
+    }
+    &._open{
+      .common-title._h4{
+        color: $text-color-secondary;
+        .common-icon path{
+          fill: $icon-color-secondary;
+        }
+      }
+    }
+  }
+
+  &_timelapse.ant-steps.ant-steps-vertical{
+    padding: space(2) 0;
+    gap: space(10);
+    .ant-steps-item{
+      &-content{
+        min-height: auto;
+      }
+      &-container{
+        display: flex;
+        align-items: center;
+        .ant-steps-item{
+          &-tail{
+            width: 2px;
+            height: 24px;
+            padding: 0;
+            top: calc(100% + 2 * $space);
+            left: 12px;
+            background: $color-secondary-120;
+            &:after{
+              width: 2px;
+              background: $color-secondary-120;
+              display: none;
+            }
+          }
+        }
+      }
+      &-content{
+        display: flex;
+        flex-direction: column;
+        gap: space(1);
+      }
+      &-icon{
+        display: flex;
+        align-items: center;
+        float: none;
+        .ant-steps-icon{
+          display: flex;
+          align-items: center;
+        }
+      }
+      &-title, &-description{
+        padding: 0;
+        font-size: $font-size-sm;
+        line-height: $line-height-md;
+        font-weight: 500;
+      }
+      &-finish{
+        .ant-steps-item{
+          &-title{
+            color: $text-color-success;
+          }
+          &-description{
             color: $text-color-secondary;
+          }
+        }
+      }
+      &-process{
+        .ant-steps-item{
+          &-title{
+            font-weight: 700;
+          }
+        }
+      }
+      &-error{
+        .ant-steps-item{
+          &-title{
+            color: $text-color-critical;
+          }
+        }
+      }
+      &-wait{
+        .ant-steps-item{
+          &-icon{
             .common-icon path{
               fill: $icon-color-secondary;
             }
           }
-        }
-        .order-status-timelapse{
-          padding: space(2) 0;
-          gap: space(10);
-          .ant-steps-item{
-            &-content{
-              min-height: auto;
-            }
-            &-container{
-              display: flex;
-              align-items: center;
-            }
-            &-content{
-              display: flex;
-              flex-direction: column;
-              gap: space(1);
-            }
-            &-tail{
-              width: 2px;
-              height: 24px;
-              padding: 0;
-              top: calc(100% + 2 * $space);
-              left: 12px;
-              background: $color-secondary-120;
-              &:after{
-                width: 2px;
-                background: $color-secondary-120;
-                display: none;
-              }
-            }
-            &-icon{
-              display: flex;
-              align-items: center;
-              float: none;
-              .ant-steps-icon{
-                display: flex;
-                align-items: center;
-              }
-            }
-            &-title, &-description{
-              padding: 0;
-              font-size: $font-size-sm;
-              line-height: $line-height-md;
-              font-weight: 500;
-            }
-            &-finish{
-              .ant-steps-item{
-                &-title{
-                  color: $text-color-success;
-                }
-                &-description{
-                  color: $text-color-secondary;
-                }
-              }
-            }
-            &-process{
-              .ant-steps-item{
-                &-title{
-                  font-weight: 700;
-                }
-              }
-            }
-            &-error{
-              .ant-steps-item{
-                &-title{
-                  color: $text-color-critical;
-                }
-              }
-            }
-            &-wait{
-              .ant-steps-item{
-                &-icon{
-                  .common-icon path{
-                    fill: $icon-color-secondary;
-                  }
-                }
-                &-title{
-                  color: $text-color-secondary;
-                }
-                &-description{
-                  color: $text-color-disabled;
-                }
-              }
-            }
+          &-title{
+            color: $text-color-secondary;
+          }
+          &-description{
+            color: $text-color-disabled;
           }
         }
       }

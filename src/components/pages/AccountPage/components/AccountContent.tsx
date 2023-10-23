@@ -4,16 +4,20 @@ import { useRouter } from "next/router";
 
 import AccountMyFormLayout from "./AccountMyFormLayout";
 import AccountPaymentLayout from "./AccountPaymentLayout";
+import AccountOrdersLayout from "./AccountOrdersLayout";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
-import { AccountTabKey, EAccountTabsPaths } from "../consts";
-import AccountOrdersLayout from "@components/pages/AccountPage/components/AccountOrdersLayout";
+import { AccountOrderIdKey, AccountTabKey } from "../consts";
+import { EAccountTabsPaths } from "../types";
+import AccountSingleOrderLayout from "@components/pages/AccountPage/components/AccountSingleOrderLayout";
 
 const AccountContent: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const router = useRouter();
     const tabValue = router.query[AccountTabKey] as
         | EAccountTabsPaths
         | undefined;
+
+    const orderIdValue = router.query[AccountOrderIdKey] as string | undefined;
 
     const content = useMemo(() => {
         switch (tabValue) {
@@ -22,15 +26,24 @@ const AccountContent: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                     <AccountPaymentLayout pageClassPrefix={pageClassPrefix} />
                 );
             case EAccountTabsPaths.orders:
-                return (
-                    <AccountOrdersLayout pageClassPrefix={pageClassPrefix} />
-                );
+                if (orderIdValue) {
+                    return (
+                        <AccountSingleOrderLayout
+                            pageClassPrefix={pageClassPrefix}
+                        />
+                    );
+                } else
+                    return (
+                        <AccountOrdersLayout
+                            pageClassPrefix={pageClassPrefix}
+                        />
+                    );
             default:
                 return (
                     <AccountMyFormLayout pageClassPrefix={pageClassPrefix} />
                 );
         }
-    }, [tabValue]);
+    }, [tabValue, orderIdValue]);
 
     return (
         <div className={cn(`${pageClassPrefix}_content__wrapper`)}>
