@@ -52,8 +52,8 @@
             pointer-events: none;
             @include tooltipInner;
             &:after{
-              content: "";
               position: absolute;
+              content: "";
               width: 8px;
               height: 8px;
               bottom: 0;

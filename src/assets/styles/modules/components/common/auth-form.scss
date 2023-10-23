@@ -40,6 +40,10 @@
       line-height: $line-height-lg;
       font-weight: 500;
       color: $text-color-blue;
+      cursor: pointer;
+      &:hover{
+        color: $color-blue-600;
+      }
     }
   }
 
@@ -72,7 +76,6 @@
 
   &_footer{
     &__wrapper{
-
     }
   }
 

@@ -13,7 +13,7 @@ import {
     accountMyFormResolver,
     EAccountMyFormFieldsNames,
     TAccountMyForm,
-} from "../formAttrs";
+} from "../../../formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";

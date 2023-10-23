@@ -51,20 +51,6 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
         }
     }, [label, isFloatingLabel]);
 
-    // const errorContent = useMemo(() => {
-    //     if (errorMessage && showError) {
-    //         return (
-    //             <div
-    //                 className={cn(
-    //                     `${FORM_FIELD_CLASSNAME_PREFIX}_error-wrapper`,
-    //                 )}
-    //             >
-    //                 <span>{errorMessage.toString()}</span>
-    //             </div>
-    //         );
-    //     }
-    // }, [errorMessage, showError]);
-
     return (
         <div
             className={cn(
@@ -118,7 +104,7 @@ const FormItemWrapper: FC<TFormItemWrapper> = ({
                                 <div
                                     style={{
                                         transition: "all 0.2s ease",
-                                        transitionProperty: "height",
+                                        transitionProperty: "height, opacity",
                                         ...errorTransitionStyles[state],
                                     }}
                                 >

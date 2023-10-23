@@ -12,7 +12,7 @@ export const AccountOrdersMockup: Record<
 > = {
     [ESegmentedOptionsNames.all]: [
         {
-            id: "1",
+            id: 1,
             orderNumber: "XR-685069050596",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
@@ -44,7 +44,7 @@ export const AccountOrdersMockup: Record<
             ],
         },
         {
-            id: "12",
+            id: 12,
             orderNumber: "XR-685069051230596123",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
@@ -67,7 +67,7 @@ export const AccountOrdersMockup: Record<
             ],
         },
         {
-            id: "13",
+            id: 13,
             orderNumber: "XR-123",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
@@ -92,7 +92,7 @@ export const AccountOrdersMockup: Record<
     ],
     [ESegmentedOptionsNames.transit]: [
         {
-            id: "21",
+            id: 14,
             orderNumber: "XR-11111111",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",
@@ -115,7 +115,7 @@ export const AccountOrdersMockup: Record<
             ],
         },
         {
-            id: "212",
+            id: 212,
             orderNumber: "XR-22222qwdwqeq",
             dateOfOrder: "8 august",
             orderAddress: "Brooklyn, NY 23409",

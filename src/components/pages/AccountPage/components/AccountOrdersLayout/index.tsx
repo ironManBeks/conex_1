@@ -7,15 +7,15 @@ import { SegmentedLabeledOption } from "antd/lib/segmented";
 import { H2 } from "@components/Text";
 import Segmented from "@components/globalComponents/Segmented";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import AccountSectionWrapper from "./AccountSectionWrapper";
-import AccountLoader from "./AccountLoader";
-import AccountNoData from "./AccountNoData";
-import AccountOrders from "./AccountOrders";
+import AccountSectionWrapper from "../AccountSectionWrapper";
+import AccountLoader from "../AccountLoader";
+import AccountNoData from "../AccountNoData";
+import AccountOrders from "./components/AccountOrders";
 
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
-import { ESegmentedOptionsNames } from "./../types";
+import { ESegmentedOptionsNames } from "./../../types";
 
 const AccountOrdersLayout: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {

@@ -3,10 +3,10 @@ import { isNil } from "lodash";
 import { inject, observer } from "mobx-react";
 
 import { H2 } from "@components/Text";
-import AccountSectionWrapper from "./AccountSectionWrapper";
-import AccountMyForm from "./AccountMyForm";
-import AccountNoData from "./AccountNoData";
-import AccountLoader from "./AccountLoader";
+import AccountSectionWrapper from "../AccountSectionWrapper";
+import AccountNoData from "../AccountNoData";
+import AccountLoader from "../AccountLoader";
+import AccountMyForm from "./components/AccountMyForm";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
