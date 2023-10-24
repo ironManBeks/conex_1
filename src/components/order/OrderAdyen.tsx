@@ -36,14 +36,16 @@ const Checkout = () => {
 
         // If you need to refer to the dropin externaly, you can save this inside a variable:
         // const dropin = checkout.create...
-        checkout
-            .create("dropin", {
-                onSubmit: (state, dropin) => {
-                    dropin.setStatus("loading");
-                    console.log(state.data);
-                },
-            })
-            .mount(dropinRef.current || ADYEN_WRAPPER_ID);
+        if (dropinRef.current) {
+            checkout
+                .create("dropin", {
+                    onSubmit: (state, dropin) => {
+                        dropin.setStatus("loading");
+                        console.log(state.data);
+                    },
+                })
+                .mount(dropinRef.current);
+        }
     }
 
     useEffect(() => {

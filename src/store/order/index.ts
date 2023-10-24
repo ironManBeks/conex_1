@@ -5,6 +5,7 @@ import {
     IOrderStore,
     TCreateDoorRequest,
     TCreateDoorResponse,
+    TCreateOrderRequest,
     TGetDoorsDataResponse,
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
@@ -16,6 +17,7 @@ export class OrderStore implements IOrderStore {
     doorsDataFetching = true;
     createDoorRequestFetching = false;
     deleteDoorRequestFetching = false;
+    createOrderRequestFetching = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -35,6 +37,10 @@ export class OrderStore implements IOrderStore {
 
     setDeleteDoorRequestFetching = (value: boolean): void => {
         this.deleteDoorRequestFetching = value;
+    };
+
+    setCreateOrderRequestFetching = (value: boolean): void => {
+        this.createOrderRequestFetching = value;
     };
 
     // -------------------------------------------------------------------------------
@@ -87,6 +93,23 @@ export class OrderStore implements IOrderStore {
             })
             .finally(() => {
                 this.setDeleteDoorRequestFetching(false);
+            });
+    };
+
+    createOrderRequest = (data: TCreateOrderRequest) => {
+        this.setCreateOrderRequestFetching(true);
+        return axiosInstance
+            .post("/orders", { data: data })
+            .then((data: AxiosResponse) => {
+                console.log("data", data);
+                return data;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setCreateOrderRequestFetching(false);
             });
     };
 }

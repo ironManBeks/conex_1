@@ -1,6 +1,5 @@
 import { makeAutoObservable, toJS } from "mobx";
 import { AxiosResponse } from "axios";
-import type { NextApiRequest, NextApiResponse } from "next";
 
 import {
     IProductsStore,
@@ -100,7 +99,7 @@ export class ProductsStore implements IProductsStore {
     > => {
         this.setProductServiceFetching(true);
         return axiosInstance
-            .get("/product/service")
+            .get("/extras")
             .then((response: AxiosResponse<TProductService[]>) => {
                 // const { data } = response;
                 // this.setProductService(data);
@@ -167,9 +166,5 @@ export class ProductsStore implements IProductsStore {
                     this.setProductDeliveryFetching(false);
                 }, 300);
             });
-    };
-
-    adyenSession = () => {
-        //
     };
 }

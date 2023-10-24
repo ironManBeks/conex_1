@@ -28,11 +28,29 @@ export type TCreateDoorResponse = {
     title: string;
 };
 
+export type TCreateOrderRequest = {
+    userInfo: {
+        firstName: string;
+        lastName: string;
+        email: string;
+        phone: string;
+        promo: true;
+    };
+    shipping: {
+        address: string;
+        delivery_company: number;
+    };
+    extras: { extra: number }[];
+    items: { item: number }[];
+};
+
 export interface IOrderStore {
     doorsData: TNullable<TGetDoorsDataResponse>;
     doorsDataFetching: boolean;
     createDoorRequestFetching: boolean;
     deleteDoorRequestFetching: boolean;
+    //
+    createOrderRequestFetching: boolean;
     //-------------------------------------------------------------------------------
     getDoorsData: () => Promise<AxiosResponse<TGetDoorsDataResponse>>;
     setDoorsData: (data: TNullable<TGetDoorsDataResponse>) => void;
@@ -43,4 +61,7 @@ export interface IOrderStore {
     setCreateDoorRequestFetching: (value: boolean) => void;
     deleteDoorRequest: (id: number) => Promise<AxiosResponse>;
     setDeleteDoorRequestFetching: (value: boolean) => void;
+    //
+    createOrderRequest: (data: TCreateOrderRequest) => Promise<AxiosResponse>;
+    setCreateOrderRequestFetching: (value: boolean) => void;
 }
