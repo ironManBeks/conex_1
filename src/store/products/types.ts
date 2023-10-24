@@ -30,10 +30,13 @@ export type TSearchParams = {
 };
 
 export type TProductService = {
-    id: string;
-    value: string;
-    title: string;
-    price?: string;
+    id: number;
+    attributes: {
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+    };
 };
 
 export enum EProductPriceNames {

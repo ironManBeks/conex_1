@@ -10,6 +10,8 @@
     "prettier": "prettier --write '**/*.{js,jsx,ts,tsx}'"
   },
   "dependencies": {
+    "@adyen/adyen-web": "^5.53.1",
+    "@adyen/api-library": "^14.4.0",
     "@ant-design/icons": "^4.4.0",
     "@hookform/resolvers": "^3.1.1",
     "@react-oauth/google": "^0.11.1",
@@ -39,6 +41,7 @@
     "react-text-mask": "^5.5.0",
     "react-transition-group": "^4.4.5",
     "sass": "^1.68.0",
+    "swr": "^2.2.4",
     "yup": "^1.3.2"
   },
   "devDependencies": {

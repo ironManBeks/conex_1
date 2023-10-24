@@ -27,10 +27,11 @@ import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
 import { AccountTabKey } from "@components/pages/AccountPage/consts";
 import { showNotification } from "@helpers/notificarionHelper";
 import { EAccountTabsPaths } from "@components/pages/AccountPage/types";
+import { TCreateOrderRequest } from "@store/order/types";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const { authStore, productsStore } = store as IRoot;
+        const { authStore, productsStore, orderStore } = store as IRoot;
         const { userData, userCardsData, getUserCardsData } = authStore;
         const {
             getProductServiceRequest,
@@ -38,6 +39,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             productService,
             productDelivery,
         } = productsStore;
+        const { createOrderRequest } = orderStore;
         const router = useRouter();
 
         const methods = useForm<TCheckoutForm>({
@@ -50,19 +52,41 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
         const getModeValue = watch(ECheckoutFormFieldsNames.getMode);
 
         const onSubmit: SubmitHandler<TCheckoutForm> = () => {
-            router
-                .push({
-                    pathname: PATH_MY_ACCOUNT_PAGE,
-                    query: { [AccountTabKey]: EAccountTabsPaths.orders },
-                })
-                .finally(() => {
-                    showNotification({
-                        mainProps: {
-                            message: `Your order has being shipped`,
-                            description: `You can view your orders on this page`,
-                        },
-                    });
+            if (userData) {
+                const params: TCreateOrderRequest = {
+                    userInfo: {
+                        firstName: userData.first_name,
+                        lastName: userData.last_name,
+                        email: userData.email,
+                        phone: userData.phone,
+                        promo: true,
+                    },
+                    shipping: {
+                        address: "address 1",
+                        delivery_company: 1,
+                    },
+                    extras: [{ extra: 1 }],
+                    items: [{ item: 1 }],
+                };
+
+                createOrderRequest(params).then(() => {
+                    router
+                        .push({
+                            pathname: PATH_MY_ACCOUNT_PAGE,
+                            query: {
+                                [AccountTabKey]: EAccountTabsPaths.orders,
+                            },
+                        })
+                        .finally(() => {
+                            showNotification({
+                                mainProps: {
+                                    message: `Your order has being shipped`,
+                                    description: `You can view your orders on this page`,
+                                },
+                            });
+                        });
                 });
+            }
         };
 
         useEffect(() => {

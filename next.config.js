@@ -23,6 +23,16 @@ module.exports = withPlugins([], {
             },
         ],
     },
+    webpack: (config) => {
+        config.resolve.fallback = {
+            fs: false,
+            net: false,
+            dns: false,
+            child_process: false,
+            tls: false,
+        };
+        return config;
+    },
     syntax: "postcss-scss",
     plugins: [colorConverter({ outputColorFormat: "rgb" })],
 });

@@ -99,7 +99,7 @@ export class ProductsStore implements IProductsStore {
     > => {
         this.setProductServiceFetching(true);
         return axiosInstance
-            .get("/product/service")
+            .get("/extras")
             .then((response: AxiosResponse<TProductService[]>) => {
                 // const { data } = response;
                 // this.setProductService(data);

@@ -9,6 +9,7 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
 import FormFieldInput from "@components/form/formFields/FormFieldInput";
+import OrderAdyen from "./OrderAdyen";
 
 import {
     ORDER_PAGE_CLASSPREFIX,
@@ -163,6 +164,9 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                         at checkout
                     </P>
                 </div>
+                <OrderAdyen />
+
+                {/*{placement === "checkout" && <OrderAdyen />}*/}
             </div>
         );
     }),

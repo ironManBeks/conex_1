@@ -7,6 +7,7 @@ import localFont from "next/font/local";
 
 // import "antd/dist/antd.css";
 // import "leaflet/dist/leaflet.css";
+import "@adyen/adyen-web/dist/adyen.css";
 import "../assets/styles/main.scss";
 
 import { observer } from "mobx-react";
@@ -108,10 +109,10 @@ const CustomAppWrapper = inject("store")(
                     <style
                         dangerouslySetInnerHTML={{
                             __html: `
-        :root {
-          --font-manrope: ${manrope.style.fontFamily};
-          --font-helvetica: ${helvetica.style.fontFamily};
-        }`,
+                                :root {
+                                  --font-manrope: ${manrope.style.fontFamily};
+                                  --font-helvetica: ${helvetica.style.fontFamily};
+                                }`,
                         }}
                     />
                     {children}
