@@ -1,0 +1,58 @@
+.lightbox{
+  &_wrapper{
+    .yarl{
+      &__container{
+        background: $color-secondary-400;
+      }
+    }
+    .yarl{
+      &__thumbnails{
+        &_container{
+          background: $color-secondary-400;
+        }
+        &_vignette{
+          display: none;
+        }
+        &_thumbnail{
+          border: 1px solid $color-secondary-400;
+          background: $color-primary-strong;
+          border-radius: borderRadius(1);
+          &:hover:not(.yarl__thumbnails_thumbnail_active) {
+            border-color: $border-color-secondary-active;
+          }
+          &_active{
+            border-color: $border-color-accent;
+          }
+        }
+      }
+      &__button{
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        filter: unset;
+        background: transparent;
+        min-width: calc($carousel-arrow-size);
+        min-height: calc($carousel-arrow-size);
+        border-radius: borderRadius(2);
+        &:hover:not([disabled]){
+          background: $color-secondary-120;
+        }
+        &[disabled]{
+          .common-icon{
+            opacity: $iconOpacity;
+          }
+        }
+        &[aria-label="Close"]{
+          margin-left: space(5);
+        }
+        &.yarl{
+          &__navigation_prev, &__navigation_next{
+            width: 10vw;
+            height: 50vh;
+            border-radius: borderRadius(4);
+          }
+        }
+      }
+    }
+  }
+}

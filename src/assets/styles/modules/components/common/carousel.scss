@@ -1,0 +1,62 @@
+.carousel{
+  &_wrapper{
+    width: 100%;
+    &.swiper-vertical{
+      .carousel_arrow{
+        left: 50%;
+        top: unset;
+        transform: translateX(-50%);
+        background: 0;
+        box-shadow: none;
+        border: 0;
+        width: 100%;
+        border-radius: borderRadius(1);
+        background: transparent;
+        &._prev{
+          top: 0;
+        }
+        &._next{
+          bottom: 0;
+        }
+      }
+    }
+  }
+
+  &_arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $carousel-arrow-size;
+    height: $carousel-arrow-size;
+    padding: 0;
+    background: $color-primary-strong;
+    box-shadow: 0 0 8px 0 $color-secondary-120;
+    border-radius: $border-radius-circle;
+    border: 1px solid $border-color-secondary;
+    z-index: 2;
+    cursor: pointer;
+    transition: $transition;
+    &:hover:not(.swiper-button-disabled){
+      border-color: $border-color-accent;
+    }
+
+    &.swiper-button-disabled{
+      cursor: not-allowed;
+      .common-icon{
+        fill: $icon-color-disabled;
+      }
+    }
+
+    &._prev{
+      left: 0;
+    }
+
+    &._next{
+      right: 0;
+    }
+  }
+
+}

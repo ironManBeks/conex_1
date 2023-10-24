@@ -17,6 +17,16 @@ export type TProductCartCard = {
     onCountChange?: (value: number) => void;
 } & TUserCartItem;
 
+export type TProductCarouselCard = {
+    className?: string;
+    id: number;
+    title: string;
+    price: number;
+    onButtonClick?: () => void;
+    src: string;
+    deliveryStatus: string;
+};
+
 export type TProductInfoListItem = {
     title: string;
     value: ReactNode;

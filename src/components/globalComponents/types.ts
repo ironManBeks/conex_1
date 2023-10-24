@@ -2,6 +2,9 @@ import { ReactNode, MouseEvent, JSX } from "react";
 import { ImageProps } from "next/image";
 import { ProgressProps } from "antd/lib/progress/progress";
 import { TooltipProps } from "antd/lib/tooltip";
+import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
+import { SegmentedRawOption } from "rc-segmented";
+import { SwiperProps } from "swiper/swiper-react";
 
 import {
     TFlexAlignItems,
@@ -11,8 +14,7 @@ import {
 } from "@globalTypes/stylesTypes";
 import { TFormItemLabel } from "@components/form/FormItemWrapper/types";
 import { TStore } from "@globalTypes/storeTypes";
-import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
-import { SegmentedRawOption } from "rc-segmented";
+import { TAdditionalProductsCarousel } from "@components/pages/CatalogItemPage/types";
 
 export type TContainer = {
     children: ReactNode;
@@ -103,4 +105,14 @@ export type TPaymentCard = {
     cardNumber: string;
     expMonth: string;
     expYear: string;
+};
+
+export type TCarousel = {
+    wrapperClassName?: string;
+} & SwiperProps;
+
+export type TProductsCarousel = {
+    title: string;
+    wrapperClassName?: string;
+    list: TAdditionalProductsCarousel;
 };
