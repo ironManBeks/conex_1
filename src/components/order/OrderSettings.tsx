@@ -3,7 +3,6 @@ import { inject, observer } from "mobx-react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { isNil } from "lodash";
-import dynamic from "next/dynamic";
 
 import { H3, P } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
