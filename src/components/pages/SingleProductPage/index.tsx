@@ -1,4 +1,4 @@
-import { FC, useEffect, useMemo } from "react";
+import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
 import { useRouter } from "next/router";
 import { isArray } from "lodash";

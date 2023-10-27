@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import cn from "classnames";
 
 import NavLinkItem from "./NavLinkItem";
-import { IconBurger } from "@components/Icons";
 
 import {
     PATH_BUILDER_PAGE,
