@@ -1,11 +1,9 @@
 .products-carousel{
   &_wrapper{
-    width: calc(100% + $carousel-arrow-size);
+    width: 100%;
     padding: space(10) 0;
-    margin: 0 calc($carousel-arrow-size / -2);
 
     .carousel_wrapper{
-      padding: 0 calc($carousel-arrow-size / 2);
       border-radius: borderRadius(4);
     }
 
@@ -13,7 +11,6 @@
       font-size: $font-size-xl;
       line-height: $line-height-xl;
       margin-bottom: space(10);
-      padding-left: calc($carousel-arrow-size / 2);
     }
 
     .swiper-slide{

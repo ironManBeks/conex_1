@@ -15,20 +15,28 @@ const axiosInstance = axios.create({
 
 /* eslint-disable  @typescript-eslint/no-explicit-any */
 axiosInstance.interceptors.request.use((request: any) => {
-    const { url } = request;
+    const { url, headers } = request;
     if (url !== PATH_LOGIN) {
         const token = getStorage(JWT_TOKEN);
+
+        const authorizationParams = () => {
+            if (headers.Authorization === "false") return undefined;
+            if (token) return `Bearer ${token}`;
+            return undefined;
+        };
+
         const authorization = token
             ? {
-                  Authorization: token ? `Bearer ${token}` : "",
+                  Authorization: authorizationParams(),
               }
             : {};
 
         request.headers = {
-            ...request.headers,
+            ...headers,
             ...authorization,
         };
     }
+
     return request;
 });
 

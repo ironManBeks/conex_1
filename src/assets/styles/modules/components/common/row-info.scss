@@ -1,0 +1,25 @@
+.row-info{
+  &_wrapper{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: space(2);
+    font-size: $font-size-sm;
+    line-height: $line-height-md;
+    font-weight: 500;
+  }
+  &_line{
+    flex: 1;
+    width: 100%;
+    border-bottom: 2px dotted #ddd;
+    min-width: space(5);
+  }
+  &_label{
+    color: $text-color-secondary;
+  }
+  &_value{
+    flex: 0 0 auto;
+    max-width: 60%;
+  }
+}

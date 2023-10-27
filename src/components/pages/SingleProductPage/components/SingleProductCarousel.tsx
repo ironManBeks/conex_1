@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import { FreeMode, Navigation, Thumbs } from "swiper/modules";
 import { SwiperSlide } from "swiper/react";
 import { Swiper as SwiperClass } from "swiper/types";
@@ -9,7 +9,7 @@ import Zoom from "yet-another-react-lightbox/plugins/zoom";
 import Carousel from "@components/globalComponents/Carousel";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 
-import { TCatalogCarousel } from "../types";
+import { TSingleProductCarouselProps } from "../types";
 import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import {
     IconArrowSingle,
@@ -20,15 +20,21 @@ import {
 import { EArrowDirection } from "@components/Icons/types";
 import { COLOR_WHITE } from "@assets/theme/colorTheme";
 
-const CatalogCarousel: FC<TCatalogCarousel> = ({ pageClassPrefix, images }) => {
+const SingleProductCarousel: FC<TSingleProductCarouselProps> = ({
+    pageClassPrefix,
+    images,
+}) => {
     const classPrefix = `${pageClassPrefix}_carousel`;
+    const thumbnailsRef = useRef(null);
     const [thumbsSwiper, setThumbsSwiper] = useState<SwiperClass | null>(null);
     const [isLightboxOpen, setIsLightboxOpen] = useState(false);
-    const thumbnailsRef = useRef(null);
+    const [activeSlide, setActiveSlide] = useState<number>(0);
 
-    useEffect(() => {
-        console.log("thumbsSwiper", thumbsSwiper);
-    }, [thumbsSwiper]);
+    const iconProps = {
+        color: COLOR_WHITE,
+        width: 36,
+        height: 36,
+    };
 
     return (
         <div className={`${classPrefix}__wrapper`}>
@@ -49,27 +55,29 @@ const CatalogCarousel: FC<TCatalogCarousel> = ({ pageClassPrefix, images }) => {
                 freeMode={true}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
-                className={`${classPrefix}__thumb`}
+                wrapperClassName={`${classPrefix}__thumb`}
                 navigation={true}
+                initialSlide={2}
+                onSlideChange={(state) => setActiveSlide(state.activeIndex)}
                 direction={"vertical"}
             >
                 {images.map((item, index) => (
                     <SwiperSlide key={index}>
-                        <ImgWrapper src={item} alt={"Product image"} />
+                        <ImgWrapper src={item.src} alt={"Product image"} />
                     </SwiperSlide>
                 ))}
             </Carousel>
             <Carousel
                 modules={[FreeMode, Navigation, Thumbs]}
                 thumbs={{ swiper: thumbsSwiper }}
-                className={`${classPrefix}__main`}
+                wrapperClassName={`${classPrefix}__main`}
             >
                 {images.map((item, index) => (
                     <SwiperSlide
                         key={index}
                         onClick={() => setIsLightboxOpen(true)}
                     >
-                        <ImgWrapper src={item} alt={"Product image"} />
+                        <ImgWrapper src={item.src} alt={"Product image"} />
                     </SwiperSlide>
                 ))}
             </Carousel>
@@ -77,48 +85,34 @@ const CatalogCarousel: FC<TCatalogCarousel> = ({ pageClassPrefix, images }) => {
                 plugins={[Thumbnails, Zoom]}
                 thumbnails={{ ref: thumbnailsRef }}
                 open={isLightboxOpen}
-                index={3}
                 close={() => setIsLightboxOpen(false)}
+                index={activeSlide}
                 render={{
                     iconPrev: () => (
                         <IconArrowSingle
                             direction={EArrowDirection.left}
-                            color={COLOR_WHITE}
-                            width={36}
-                            height={36}
+                            {...iconProps}
                         />
                     ),
                     iconNext: () => (
                         <IconArrowSingle
                             direction={EArrowDirection.right}
-                            color={COLOR_WHITE}
-                            width={36}
-                            height={36}
+                            {...iconProps}
                         />
                     ),
-                    iconClose: () => (
-                        <IconCross color={COLOR_WHITE} width={36} height={36} />
-                    ),
+                    iconClose: () => <IconCross {...iconProps} />,
                     iconZoomIn: () => (
-                        <IconZoomIn
-                            color={COLOR_WHITE}
-                            width={24}
-                            height={24}
-                        />
+                        <IconZoomIn {...iconProps} width={24} height={24} />
                     ),
                     iconZoomOut: () => (
-                        <IconZoomOut
-                            color={COLOR_WHITE}
-                            width={24}
-                            height={24}
-                        />
+                        <IconZoomOut {...iconProps} width={24} height={24} />
                     ),
                 }}
                 slides={images.map((item) => ({
-                    src: item,
+                    src: item.src,
                 }))}
                 zoom={{
-                    maxZoomPixelRatio: 2,
+                    maxZoomPixelRatio: 3,
                 }}
                 className={"lightbox_wrapper"}
             />
@@ -126,4 +120,4 @@ const CatalogCarousel: FC<TCatalogCarousel> = ({ pageClassPrefix, images }) => {
     );
 };
 
-export default CatalogCarousel;
+export default SingleProductCarousel;

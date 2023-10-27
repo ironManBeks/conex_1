@@ -22,10 +22,10 @@ const CheckoutAdditionalServices: FC<TSectionTypes> = inject("store")(
                 title="Additional services"
                 fetching={productServiceFetching}
             >
-                {productService?.length ? (
+                {productService?.data?.length ? (
                     <FieldCheckboxArrayController
                         name={ECheckoutFormFieldsNames.additionalServices}
-                        options={productService.map((item) => ({
+                        options={productService.data.map((item) => ({
                             value: item.id,
                             label: item.attributes.name,
                         }))}

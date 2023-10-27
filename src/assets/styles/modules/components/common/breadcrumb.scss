@@ -1,0 +1,32 @@
+.breadcrumb{
+  &_wrapper{
+    margin-bottom: space(10);
+    ol {
+      li{
+        display: flex;
+        align-items: center;
+        font-size: $font-size-sm;
+        line-height: $line-height-md;
+        font-weight: 500;
+        color: $text-color-primary;
+        a{
+          display: flex;
+          align-items: center;
+          color: $text-color-primary;
+          height: auto;
+          margin-inline: 0;
+          padding: space(1);
+        }
+        span{
+          color: $text-color-primary;
+        }
+        &.ant-breadcrumb-separator{
+          width: 16px;
+          justify-content: center;
+          margin-inline: 0;
+          margin-right: space(1);
+        }
+      }
+    }
+  }
+}

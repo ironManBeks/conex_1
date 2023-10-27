@@ -8,7 +8,12 @@ import Tooltip from "./Tooltip";
 
 import { TCopyText } from "./types";
 
-const CopyText: FC<TCopyText> = ({ className, text, onCopy: onCopyText }) => {
+const CopyText: FC<TCopyText> = ({
+    className,
+    text,
+    onCopy: onCopyText,
+    iconProps,
+}) => {
     const [copied, setCopied] = useState(false);
 
     const onCopy = useCallback((text: string, result: boolean) => {
@@ -34,7 +39,7 @@ const CopyText: FC<TCopyText> = ({ className, text, onCopy: onCopyText }) => {
                         e.stopPropagation();
                     }}
                 >
-                    <IconCopy />
+                    <IconCopy {...iconProps} />
                 </span>
             </Tooltip>
         </CopyToClipboard>

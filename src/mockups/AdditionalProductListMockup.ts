@@ -1,6 +1,6 @@
-import { TAdditionalProductsCarousel } from "@components/pages/CatalogItemPage/types";
+import { TAdditionalProductList } from "@store/products/types";
 
-export const AdditionalProductsCarouselMockup: TAdditionalProductsCarousel = [
+export const AdditionalProductListMockup: TAdditionalProductList = [
     {
         id: 1,
         price: 1,

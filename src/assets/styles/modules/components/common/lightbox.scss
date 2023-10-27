@@ -2,13 +2,13 @@
   &_wrapper{
     .yarl{
       &__container{
-        background: $color-secondary-400;
+        background: $color-secondary-600;
       }
     }
     .yarl{
       &__thumbnails{
         &_container{
-          background: $color-secondary-400;
+          background: $color-secondary-600;
         }
         &_vignette{
           display: none;
@@ -44,6 +44,7 @@
         }
         &[aria-label="Close"]{
           margin-left: space(5);
+          z-index: 10;
         }
         &.yarl{
           &__navigation_prev, &__navigation_next{

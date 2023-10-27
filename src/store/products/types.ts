@@ -39,6 +39,10 @@ export type TProductService = {
     };
 };
 
+export type TProductServiceResponse = {
+    data: TProductService[];
+} & TResponseMeta;
+
 export enum EProductPriceNames {
     additionalCharges = "additionalCharges",
     tax = "tax",
@@ -78,16 +82,82 @@ export type TGetProductDeliveryResponse = {
     data: TProductDelivery[];
 } & TResponseMeta;
 
+export type TSingleProductCharacteristics = {
+    title: string;
+    list: { title: string; value: string | number }[];
+};
+
+export enum ESingleProductOptionTypes {
+    radio = "radio",
+    colorPicker = "colorPicker",
+    radioImage = "radioImage",
+}
+
+export type TReferenceProductOption<T extends ESingleProductOptionTypes, E> = {
+    title: string;
+    optionsName: string;
+    type: T;
+    list: E[];
+};
+
+export type TProductOptionBase = {
+    label: string;
+    value: string;
+    disabled?: boolean;
+};
+
+export type TSingleProductOptions =
+    | TReferenceProductOption<
+          ESingleProductOptionTypes.radio,
+          TProductOptionBase
+      >
+    | TReferenceProductOption<
+          ESingleProductOptionTypes.colorPicker,
+          TProductOptionBase & { color: string }
+      >
+    | TReferenceProductOption<
+          ESingleProductOptionTypes.radioImage,
+          TProductOptionBase & { src: string }
+      >;
+
+export type TSingleProduct = {
+    id: number;
+    title: string;
+    article: number;
+    description: string;
+    images: { src: string }[];
+    price: number;
+    priceOld?: number;
+    priceDiscount?: number;
+    characteristics: TSingleProductCharacteristics[];
+    isAvailable: boolean;
+    options: TSingleProductOptions[];
+};
+
+export type TAdditionalProduct = {
+    id: number;
+    img: string;
+    price: number;
+    title: string;
+    deliveryTime: string;
+};
+
+export type TAdditionalProductList = TAdditionalProduct[];
+
 export interface IProductsStore {
     productList: TProductDoorData[];
     productListFetching: boolean;
     searchParams: TNullable<TSearchParams>;
-    productService: TNullable<TProductService[]>;
+    productService: TNullable<TProductServiceResponse>;
     productServiceFetching: boolean;
     productPrice: TNullable<TProductPrice>;
     productPriceFetching: boolean;
     productDelivery: TNullable<TProductDelivery[]>;
     productDeliveryFetching: boolean;
+    singleProduct: TNullable<TSingleProduct>;
+    singleProductFetching: boolean;
+    additionalProductList: TNullable<TAdditionalProductList>;
+    additionalProductsListFetching: boolean;
     //
     setProductList: (data: TProductDoorData[]) => void;
     setProductListFetching: (value: boolean) => void;
@@ -95,9 +165,11 @@ export interface IProductsStore {
         value: TNullable<TSearchParams>,
     ) => Promise<AxiosResponse<TProductDoorData[]>>;
     //
-    setProductService: (data: TNullable<TProductService[]>) => void;
+    setProductService: (data: TNullable<TProductServiceResponse>) => void;
     setProductServiceFetching: (value: boolean) => void;
-    getProductServiceRequest: () => Promise<AxiosResponse<TProductService[]>>;
+    getProductServiceRequest: () => Promise<
+        AxiosResponse<TProductServiceResponse>
+    >;
     //
     setProductPrice: (data: TNullable<TProductPrice>) => void;
     setProductPriceFetching: (value: boolean) => void;
@@ -110,6 +182,16 @@ export interface IProductsStore {
     getProductDeliveryRequest: () => Promise<
         AxiosResponse<TGetProductDeliveryResponse>
     >;
+    //
+    setSingleProduct: (data: TNullable<TSingleProduct>) => void;
+    getSingleProduct: (id: string) => Promise<AxiosResponse<TSingleProduct>>;
+    setSingleProductFetching: (value: boolean) => void;
+    //
+    setAdditionalProductList: (data: TNullable<TAdditionalProductList>) => void;
+    getAdditionalProductList: (
+        id: string,
+    ) => Promise<AxiosResponse<TAdditionalProductList>>;
+    setAdditionalProductListFetching: (value: boolean) => void;
     //
     setSearchParams: (value: TNullable<TSearchParams>) => void;
 }
