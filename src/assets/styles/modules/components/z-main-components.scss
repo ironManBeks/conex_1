@@ -18,6 +18,11 @@
 @import "common/added-options-list";
 @import "common/pickup-point";
 @import "common/payment-card";
+@import "common/carousel";
+@import "common/products-carousel";
+@import "common/lightbox";
+@import "common/breadcrumb";
+@import "common/row-info";
 
 @import "form-fields/z-main-form-fields";
 
@@ -25,6 +30,7 @@
 @import "cards/product-card";
 @import "cards/product-search-card";
 @import "cards/product-cart-card";
+@import "cards/product-carousel-card";
 
 @import "skeletons/z-main-skeleton";
 @import "modals/z-main-modals";

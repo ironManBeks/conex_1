@@ -13,3 +13,7 @@ export const addZeroBefore = (text: number | string): string => {
     }
     return (text < 10 ? "0" : "") + text;
 };
+
+export const firstLetterToUpperCase = (str: string) => {
+    return str.charAt(0).toUpperCase() + str.slice(1);
+};

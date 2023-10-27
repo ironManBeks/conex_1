@@ -9,3 +9,6 @@ export const PATH_CHECKOUT_PAGE = "/checkout";
 export const PATH_LOGIN = "/auth/login";
 export const PATH_POLICY_PAGE = "/policy";
 export const PATH_TERMS_PAGE = "/terms";
+export const PATH_CATALOG_PAGE = "/catalog";
+export const toSingleProductPageId = (id: string) =>
+    `${PATH_CATALOG_PAGE}/${id}`;

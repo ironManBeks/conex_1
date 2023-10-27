@@ -10,6 +10,7 @@ const H3: FC<ITitlesProps> = ({
     className,
     ref,
     dangerouslySetInnerHTML,
+    title,
 }) => {
     const classNames = cn(commonTitleClassName, "_h3", className);
     return dangerouslySetInnerHTML ? (
@@ -17,9 +18,10 @@ const H3: FC<ITitlesProps> = ({
             ref={ref}
             className={classNames}
             dangerouslySetInnerHTML={{ __html: dangerouslySetInnerHTML }}
+            title={title}
         />
     ) : (
-        <h3 ref={ref} className={classNames}>
+        <h3 ref={ref} className={classNames} title={title}>
             <>{children}</>
         </h3>
     );

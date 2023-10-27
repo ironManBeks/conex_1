@@ -2,6 +2,10 @@ import { ReactNode, MouseEvent, JSX } from "react";
 import { ImageProps } from "next/image";
 import { ProgressProps } from "antd/lib/progress/progress";
 import { TooltipProps } from "antd/lib/tooltip";
+import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
+import { SegmentedRawOption } from "rc-segmented";
+import { SwiperProps } from "swiper/swiper-react";
+import { BreadcrumbProps } from "antd/es/breadcrumb/Breadcrumb";
 
 import {
     TFlexAlignItems,
@@ -11,8 +15,8 @@ import {
 } from "@globalTypes/stylesTypes";
 import { TFormItemLabel } from "@components/form/FormItemWrapper/types";
 import { TStore } from "@globalTypes/storeTypes";
-import { SegmentedLabeledOption, SegmentedProps } from "antd/lib/segmented";
-import { SegmentedRawOption } from "rc-segmented";
+import { TAdditionalProductsCarousel } from "@components/pages/SingleProductPage/types";
+import { IIcon } from "@components/Icons/types";
 
 export type TContainer = {
     children: ReactNode;
@@ -48,6 +52,7 @@ export type TSegmented = {
 export type TCopyText = {
     text: string;
     className?: string;
+    iconProps?: IIcon;
     onCopy?(text: string, result: boolean): void;
 };
 
@@ -103,4 +108,23 @@ export type TPaymentCard = {
     cardNumber: string;
     expMonth: string;
     expYear: string;
+};
+
+export type TCarousel = {
+    wrapperClassName?: string;
+} & SwiperProps;
+
+export type TProductsCarousel = {
+    title: string;
+    wrapperClassName?: string;
+    list: TAdditionalProductsCarousel;
+};
+
+export type TBreadcrumbProps = BreadcrumbProps;
+
+export type TRowInfoProps = {
+    wrapperClassName?: string;
+    label: ReactNode;
+    value: ReactNode;
+    isBottomLine?: boolean;
 };

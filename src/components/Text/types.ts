@@ -7,6 +7,7 @@ export interface ITitlesProps {
     className?: string;
     style?: CSSProperties;
     onClick?: (e?: MouseEvent<HTMLHeadingElement> | undefined) => void;
+    title?: string;
 }
 
 export interface ITextProps {

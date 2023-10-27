@@ -1,0 +1,77 @@
+.carousel{
+  &_main-wrapper{
+    position: relative;
+    width: 100%;
+    &._vertical{
+      .carousel{
+        &_wrapper{
+          height: 100%;
+        }
+        &_arrow{
+          left: 50%;
+          top: unset;
+          transform: translateX(-50%);
+          background: 0;
+          box-shadow: none;
+          border: 0;
+          width: 100%;
+          border-radius: borderRadius(1);
+          background: transparent;
+          &:hover:not([disabled]){
+            background: $color-secondary-40;
+          }
+          &._prev{
+            top: -$carousel-arrow-size;
+          }
+          &._next{
+            bottom: -$carousel-arrow-size;
+          }
+        }
+      }
+    }
+  }
+
+  &_wrapper{
+    width: 100%;
+    height: 100%;
+  }
+
+  &_arrow{
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: $carousel-arrow-size;
+    height: $carousel-arrow-size;
+    padding: 0;
+    background: $color-primary-strong;
+    box-shadow: 0 0 8px 0 $color-secondary-120;
+    border-radius: $border-radius-circle;
+    border: 1px solid $border-color-secondary;
+    z-index: 3;
+    cursor: pointer;
+    transition: $transition;
+    &:hover:not(.swiper-button-disabled){
+      background: $border-color-accent;
+      border-color: $border-color-secondary;
+    }
+
+    &.swiper-button-disabled{
+      cursor: not-allowed;
+      .common-icon{
+        fill: $icon-color-disabled;
+      }
+    }
+
+    &._prev{
+      left: calc($carousel-arrow-size / -2);
+    }
+
+    &._next{
+      right: calc($carousel-arrow-size / -2);
+    }
+  }
+
+}

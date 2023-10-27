@@ -14,7 +14,7 @@
   box-shadow: none;
   border: 0;
   cursor: pointer;
-  transition: background $transition;
+  transition: background $transition, color $transition;
   svg, .common-icon, span{
     transition: $transition;
     path{

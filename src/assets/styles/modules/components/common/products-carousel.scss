@@ -1,0 +1,24 @@
+.products-carousel{
+  &_wrapper{
+    width: 100%;
+    padding: space(10) 0;
+
+    .carousel_wrapper{
+      border-radius: borderRadius(4);
+    }
+
+    .common-title._h2{
+      font-size: $font-size-xl;
+      line-height: $line-height-xl;
+      margin-bottom: space(10);
+    }
+
+    .swiper-slide{
+      height: unset;
+      .product-carousel-card_wrapper{
+        height: 100%;
+      }
+    }
+
+  }
+}

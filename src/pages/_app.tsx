@@ -8,6 +8,9 @@ import localFont from "next/font/local";
 // import "antd/dist/antd.css";
 // import "leaflet/dist/leaflet.css";
 import "@adyen/adyen-web/dist/adyen.css";
+import "yet-another-react-lightbox/styles.css";
+import "yet-another-react-lightbox/plugins/thumbnails.css";
+
 import "../assets/styles/main.scss";
 
 import { observer } from "mobx-react";

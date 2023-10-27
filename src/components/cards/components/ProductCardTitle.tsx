@@ -13,7 +13,10 @@ const ProductCardTitle: FC<TProductCardTitle> = ({
 }) => {
     if (!title) return null;
     return (
-        <H3 className={cn(`${PRODUCT_CARD_CLASSNAME}_title`, className)}>
+        <H3
+            className={cn(`${PRODUCT_CARD_CLASSNAME}_title`, className)}
+            title={title}
+        >
             {cutText(title, letterLimit)}
         </H3>
     );

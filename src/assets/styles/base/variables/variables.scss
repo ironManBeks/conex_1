@@ -82,10 +82,6 @@ $color-disabled-selection-bg: $color-secondary-40;
 $font-family-primary: var(--font-helvetica);
 $font-family-secondary: var(--font-manrope);
 
-.main-font{
-  font-family: $font-family-secondary;
-}
-
 // -----------------------------------------------------------------------------
 // Border-radius
 $border-radius-circle: 50%;
@@ -151,3 +147,7 @@ $z-index-modal-content: 1106;
 $z-index-drawer-root: 1112;
 $z-index-drawer-mask: 1111;
 $z-index-drawer-content: 1113;
+
+// -----------------------------------------------------------------------------
+// Blocks
+$carousel-arrow-size: 40px;
