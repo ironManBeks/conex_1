@@ -322,7 +322,6 @@ export const renderResultDataToOptionsList = (
             for (let j = 0; j < field.elements.length; j++) {
                 const element = field.elements[j];
                 if (element.value.toLowerCase() !== BUILDER_VALUE_NONE) {
-                    console.log("field.fieldTitle", field.fieldTitle);
                     list.push({
                         label: `${
                             field.fieldTitle ? field.fieldTitle + ": " : ""

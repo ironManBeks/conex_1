@@ -27,6 +27,7 @@ const ButtonPrimary: React.FC<TButtonPrimary> = ({
     isOpacity,
     style,
     id,
+    ref,
 }) => {
     const buttonRef = useRef<HTMLButtonElement>(null);
     const isMobile = useMediaQuery({

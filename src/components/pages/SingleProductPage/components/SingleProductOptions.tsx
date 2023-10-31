@@ -22,8 +22,8 @@ const SingleProductOptions: FC<TSingleProductOptionsProps> = ({
         return (
             <div className={`${classPrefix}__wrapper`}>
                 <div className={`${classPrefix}__form`}>
-                    {options.map((item) => (
-                        <OptionRow {...item} />
+                    {options.map((item, index) => (
+                        <OptionRow key={index} {...item} />
                     ))}
                 </div>
             </div>

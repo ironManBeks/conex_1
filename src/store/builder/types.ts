@@ -149,7 +149,7 @@ export interface IBuilderStore {
     //
     builderSettings: TNullable<TGetBuilderSettingsResponse>;
     builderSettingsFetching: boolean;
-    //-------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     // not request
     currentStepData: TNullable<TBuilderStepDataDTO>;
     currentStepId: TNullable<number>;
@@ -159,7 +159,7 @@ export interface IBuilderStore {
     endDoorData: TNullable<TResultDoorData[]>;
     builderCartData: TNullable<TBuilderCartData>;
     editBuilderCartItemData: TNullable<TEditBuilderCartItemData>;
-    //-------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     // functions
     getBuilderAllData: () => Promise<AxiosResponse<TGetBuilderAllDataResponse>>;
     setBuilderAllData: (data: TNullable<TGetBuilderAllDataResponse>) => void;
@@ -178,7 +178,7 @@ export interface IBuilderStore {
     >;
     setBuilderSettings: (data: TNullable<TGetBuilderSettingsResponse>) => void;
     setBuilderSettingsFetching: (value: boolean) => void;
-    //-------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     // not request
     setCurrentStepData: (data: TNullable<TBuilderStepDataDTO>) => void;
     setCurrentStepId: (value: TNullable<number>) => void;

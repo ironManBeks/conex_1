@@ -6,15 +6,16 @@ import {
     useForm,
 } from "react-hook-form";
 
-import { H2, H4, P } from "@components/Text";
+import { H2, P } from "@components/Text";
 import CopyText from "@components/globalComponents/CopyText";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import SingleProductOptions from "@components/pages/SingleProductPage/components/SingleProductOptions";
+import SingleProductOptions from "./SingleProductOptions";
+import SingleProductPrice from "./SingleProductPrice";
+import SingleProductHeader from "./SingleProductHeader";
+import SingleProductOrderInfo from "./SingleProductOrderInfo";
 
 import { notImplemented } from "@helpers/notImplemented";
 import { TSingleProductDetailsProps } from "../types";
-import { EButtonColor } from "@components/buttons/types";
-import { singleProductOptionsFormDefaultValues } from "@components/pages/SingleProductPage/utils";
+import { singleProductOptionsFormDefaultValues } from "../utils";
 
 const SingleProductDetails: FC<TSingleProductDetailsProps> = ({
     pageClassPrefix,
@@ -25,6 +26,9 @@ const SingleProductDetails: FC<TSingleProductDetailsProps> = ({
     priceDiscount,
     isAvailable,
     options,
+    images,
+    delivery,
+    payment,
 }) => {
     const classPrefix = `${pageClassPrefix}_details`;
     const methods = useForm({
@@ -64,36 +68,28 @@ const SingleProductDetails: FC<TSingleProductDetailsProps> = ({
                     pageClassPrefix={pageClassPrefix}
                     options={options}
                 />
-                <div className={`${classPrefix}__total`}>
-                    <H4>
-                        ${price}
-                        {priceOld && (
-                            <>
-                                {priceDiscount && (
-                                    <span>
-                                        <span className="discount">
-                                            -{priceDiscount}%
-                                        </span>
-                                    </span>
-                                )}
-                                <span>
-                                    <span className="old">${priceOld}</span>
-                                </span>
-                            </>
-                        )}
-                    </H4>
-                    <ButtonPrimary
-                        color={
-                            isAvailable
-                                ? EButtonColor.primary
-                                : EButtonColor.secondary
-                        }
-                        type="submit"
-                        disabled={!isAvailable}
-                    >
-                        {isAvailable ? "To cart" : "Notify us when it arrives"}
-                    </ButtonPrimary>
-                </div>
+                <SingleProductPrice
+                    pageClassPrefix={pageClassPrefix}
+                    price={price}
+                    priceOld={priceOld}
+                    priceDiscount={priceDiscount}
+                    isAvailable={isAvailable}
+                    changeHeaderVisible={true}
+                />
+                <SingleProductOrderInfo
+                    pageClassPrefix={pageClassPrefix}
+                    delivery={delivery}
+                    payment={payment}
+                />
+                <SingleProductHeader
+                    title={title}
+                    price={price}
+                    priceOld={priceOld}
+                    priceDiscount={priceDiscount}
+                    isAvailable={isAvailable}
+                    pageClassPrefix={pageClassPrefix}
+                    images={images}
+                />
             </form>
         </FormProvider>
     );

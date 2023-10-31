@@ -1,0 +1,21 @@
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .single-product-page{
+    &_main-info{
+      flex-wrap: wrap;
+    }
+    &_carousel{
+      &__wrapper{
+        position: relative;
+        top: unset;
+        width: 100%;
+      }
+    }
+    &_characteristics__list{
+      .characteristics_list .row-info_wrapper{
+        width: 100%;
+      }
+    }
+  }
+
+}

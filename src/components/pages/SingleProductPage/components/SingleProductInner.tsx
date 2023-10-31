@@ -12,18 +12,7 @@ const SingleProductInner: FC<TSingleProductInnerProps> = ({
     pageClassPrefix,
     singleProduct,
 }) => {
-    const {
-        images,
-        description,
-        characteristics,
-        title,
-        article,
-        price,
-        priceOld,
-        priceDiscount,
-        isAvailable,
-        options,
-    } = singleProduct;
+    const { images, description, characteristics } = singleProduct;
     return (
         <div className={`${pageClassPrefix}_inner__wrapper`}>
             <Breadcrumb />
@@ -34,13 +23,7 @@ const SingleProductInner: FC<TSingleProductInnerProps> = ({
                 />
                 <SingleProductDetails
                     pageClassPrefix={pageClassPrefix}
-                    title={title}
-                    article={article}
-                    price={price}
-                    priceOld={priceOld}
-                    priceDiscount={priceDiscount}
-                    isAvailable={isAvailable}
-                    options={options}
+                    {...singleProduct}
                 />
             </div>
             <SingleProductDescription

@@ -20,9 +20,10 @@ import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
 import { getStorage } from "@services/storage.service";
 import { BUILDER_CART } from "@consts/storageNamesContsts";
-import { SEARCH_QUERY } from "@consts/queryNamesConsts";
+import { AUTH_FORM_QUERY, SEARCH_QUERY } from "@consts/queryNamesConsts";
 import { TNullable } from "@globalTypes/commonTypes";
 import { TBuilderCartData } from "@store/builder/types";
+import { EAuthFormType } from "@components/globalComponents/AuthForm/types";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
@@ -105,7 +106,10 @@ const NavActions: FC<TNavTypes> = inject("store")(
                 ) : (
                     <Link
                         color={EButtonColor.transparent}
-                        href={PATH_MY_ACCOUNT_PAGE}
+                        href={{
+                            pathname: PATH_MY_ACCOUNT_PAGE,
+                            query: { [AUTH_FORM_QUERY]: EAuthFormType.login },
+                        }}
                         className={cn(`${classPrefix}_item__wrapper`, {
                             _active: router.pathname === PATH_MY_ACCOUNT_PAGE,
                         })}

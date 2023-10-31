@@ -4,7 +4,7 @@ import { JWT_TOKEN } from "@consts/storageNamesContsts";
 import { PATH_LOGIN } from "@consts/pathsConsts";
 import { getStorage } from "@services/storage.service";
 
-// Test api URL
+// ? "https://conexwest-doors-test.opserver.store/api"
 const baseURL = process.env.NEXT_PUBLIC_ENV_DEV_API
     ? "https://conexwest-doors.opserver.store/api"
     : "https://conexwest-doors.opserver.store/api";

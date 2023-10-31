@@ -1,4 +1,4 @@
-import { FC, useEffect } from "react";
+import { FC, useEffect, useMemo } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 import { inject, observer } from "mobx-react";
 
@@ -9,7 +9,7 @@ import BuilderActions from "./BuilderActions";
 import { TBuilderCompProps } from "../types";
 import { IRoot } from "@store/store";
 import { builderFormResolver } from "../utils";
-import { isNil } from "lodash";
+import { isEmpty, isNil } from "lodash";
 import { setStorage } from "@services/storage.service";
 import {
     BUILDER_CURRENT_STEP_ID,
@@ -26,6 +26,8 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             stepQueue,
             stepHistory,
             builderSettings,
+            endDoorData,
+            resultDoorData,
         } = builderStore;
 
         const methods = useForm({
@@ -57,6 +59,18 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
             }
         }, [currentStepId]);
 
+        const actionsContent = useMemo(() => {
+            if (
+                isEmpty(resultDoorData) &&
+                isEmpty(endDoorData) &&
+                isEmpty(currentStepData)
+            ) {
+                return null;
+            }
+
+            return <BuilderActions pageClassPrefix={pageClassPrefix} />;
+        }, [resultDoorData, endDoorData, currentStepData]);
+
         return (
             <FormProvider {...methods}>
                 <form action="">
@@ -71,7 +85,7 @@ const BuilderForm: FC<TBuilderCompProps> = inject("store")(
                         </div>
                         <BuilderRightSide pageClassPrefix={pageClassPrefix} />
                     </div>
-                    <BuilderActions pageClassPrefix={pageClassPrefix} />
+                    {actionsContent}
                 </form>
             </FormProvider>
         );

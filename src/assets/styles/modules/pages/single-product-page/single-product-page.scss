@@ -161,43 +161,45 @@
         line-height: $line-height-lg-plus;
       }
     }
-    &__total{
+  }
+
+  &_price__wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(3);
+    .common-title{
       display: flex;
-      flex-direction: column;
       gap: space(3);
-      .common-title{
-        display: flex;
-        gap: space(3);
-        font-size: $font-size-xl;
-        line-height: $line-height-xl;
-        .discount{
-          font-size: $font-size-sm;
-          line-height: $line-height-md;
-          font-weight: 500;
-          padding: space(1) space(2);
-          border-radius: borderRadius(2);
-          background: $color-accent-strong
-        }
-        .old{
-          position: relative;
-          font-size: $font-size-bs;
-          line-height: $line-height-lg;
-          color: $text-color-secondary;
-          &:before{
-            position: absolute;
-            content: "";
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            height: 1px;
-            width: calc(100% + 4px);
-            background: $border-color-secondary-active;
-          }
+      font-size: $font-size-xl;
+      line-height: $line-height-xl;
+      .discount{
+        font-size: $font-size-sm;
+        line-height: $line-height-md;
+        font-weight: 500;
+        padding: space(1) space(2);
+        border-radius: borderRadius(2);
+        background: $color-accent-strong
+      }
+      .old{
+        position: relative;
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        color: $text-color-secondary;
+        &:before{
+          position: absolute;
+          content: "";
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          height: 1px;
+          width: calc(100% + 4px);
+          background: $border-color-secondary-active;
         }
       }
-      .common-btn{
-        max-width: 280px;
-      }
+    }
+    .common-btn{
+      width: 100%;
+      max-width: 280px;
     }
   }
 
@@ -224,6 +226,94 @@
       display: flex;
       flex-direction: column;
       gap: space(7);
+    }
+  }
+
+  &_sub-header{
+    &__wrapper{
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      background-color: $color-white;
+      z-index: $z-index-header;
+      padding: space(5) 0;
+      box-shadow: 0 2px 8px 0 rgba(18, 18, 18, 0.12);
+      transition: all .4s;
+      transition-property: all;
+      opacity: 0;
+      &._visible{
+        opacity: 1;
+      }
+    }
+    &__main-info{
+      display: flex;
+      gap: space(5);
+      .img-custom_wrapper{
+        width: 64px;
+        height: 64px;
+        flex: 0 0 auto;
+      }
+      .common-title{
+        font-size: $font-size-lg;
+        line-height: $line-height-lg-plus;
+        max-width: 510px;
+      }
+    }
+    &__price{
+      flex-direction: row;
+      align-items: center;
+      gap: space(7);
+      .common-title{
+        font-size: $font-size-lg;
+        line-height: $line-height-lg-plus;
+      }
+    }
+  }
+
+  &_order-info{
+    &__wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(4);
+      .collapsible-block_wrapper{
+        border-bottom: 1px solid transparent;
+        &._open{
+          border-bottom-color: $border-color-secondary;
+          padding-bottom: space(4);
+        }
+        &._delivery{
+          .collapsible-block_content{
+            display: flex;
+            flex-direction: column;
+            gap: space(3);
+            .delivery-item_wrapper{
+              display: flex;
+              align-items: center;
+              min-height: 24px;
+              .img-custom_wrapper{
+                display: flex;
+                align-items: center;
+                > div {
+                  position: unset !important;
+                }
+              }
+              .img-custom_image{
+                width: 100% !important;
+                position: relative !important;
+                height: 24px;
+              }
+            }
+          }
+        }
+        &._payment{
+          .collapsible-block_content {
+            display: flex;
+            flex-wrap: wrap;
+            gap: space(3);
+          }
+        }
+      }
     }
   }
 

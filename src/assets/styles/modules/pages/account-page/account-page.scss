@@ -379,7 +379,6 @@
         }
       }
     }
-
   }
 
 }
@@ -387,33 +386,20 @@
 
 .order-status{
   &_wrapper{
-    .common-title._h4{
-      display: flex;
-      align-items: center;
-      font-size: $font-size-bs;
-      line-height: $line-height-lg;
-      font-weight: 700;
-      transition: $transition;
-      cursor: pointer;
-      .common-icon{
-        margin-left: space(2);
-        transition: $transition;
-        path{
-          transition: $transition;
-        }
-      }
-      &:hover{
-        color: $text-color-secondary;
-        .common-icon path{
-          fill: $icon-color-secondary;
-        }
-      }
-    }
-    &._open{
-      .common-title._h4{
-        color: $text-color-secondary;
-        .common-icon path{
-          fill: $icon-color-secondary;
+    .collapsible-block_wrapper{
+      &._open{
+        .collapsible-block_title{
+          color: $text-color-secondary;
+          margin-bottom: space(2);
+          &:hover{
+            color: $text-color-secondary;
+            .common-icon path{
+              fill: $icon-color-secondary;
+            }
+          }
+          .common-icon path{
+            fill: $icon-color-secondary;
+          }
         }
       }
     }

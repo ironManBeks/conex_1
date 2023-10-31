@@ -5,9 +5,18 @@
     left: 0;
     width: 100%;
     background-color: $color-white;
-    box-shadow: $box-shadow-md;
+    box-shadow: 0 0 0 0 rgba(18, 18, 18, 0.12);
     z-index: $z-index-header;
     padding: space(5) 0;
+    transition: all .4s;
+    transition-property: all;
+    opacity: 1;
+    &._scrolled{
+      box-shadow: 0 2px 8px 0 rgba(18, 18, 18, 0.12);
+    }
+    &._hidden{
+      opacity: 0;
+    }
   }
 
   &_left-side{

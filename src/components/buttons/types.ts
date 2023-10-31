@@ -1,5 +1,5 @@
 import { Url } from "next/dist/shared/lib/router/router";
-import { CSSProperties, MouseEvent, ReactNode } from "react";
+import { CSSProperties, MouseEvent, ReactNode, RefObject } from "react";
 
 export type TButtonCommon = {
     children?: ReactNode;
@@ -22,6 +22,7 @@ export type TButtonCommon = {
 export type TButtonTypes = {
     type?: "button" | "submit" | "reset";
     onClick?: (e?: MouseEvent<HTMLButtonElement>) => void;
+    ref?: RefObject<HTMLButtonElement>;
 };
 
 export enum EButtonColor {

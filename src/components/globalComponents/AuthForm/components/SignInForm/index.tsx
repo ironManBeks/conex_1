@@ -19,10 +19,12 @@ import {
     TSignInForm,
 } from "./formAttrs";
 import { IRoot } from "@store/store";
+import { useSelectAuthForm } from "@hooks/useSelectAuthForm";
 
 const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
-    observer(({ store, className, onAuth, setFormType }) => {
+    observer(({ store, className, onAuth }) => {
         const { authStore } = store as IRoot;
+        const { setForm } = useSelectAuthForm();
 
         const {
             authRequestFetching,
@@ -68,11 +70,7 @@ const SignInForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
                         placeholder="Password"
                         label="Password"
                     />
-                    <a
-                        onClick={() =>
-                            setFormType(EAuthFormType.forgotPassword)
-                        }
-                    >
+                    <a onClick={() => setForm(EAuthFormType.forgotPassword)}>
                         Forgot password?
                     </a>
                     <AuthActions>
