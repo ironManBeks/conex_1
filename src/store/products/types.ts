@@ -132,6 +132,14 @@ export type TSingleProduct = {
     characteristics: TSingleProductCharacteristics[];
     isAvailable: boolean;
     options: TSingleProductOptions[];
+    delivery: TProductDelivery[];
+    payment: {
+        name: string;
+        icon: {
+            alt: string;
+            url: string;
+        };
+    }[];
 };
 
 export type TAdditionalProduct = {
@@ -154,11 +162,12 @@ export interface IProductsStore {
     productPriceFetching: boolean;
     productDelivery: TNullable<TProductDelivery[]>;
     productDeliveryFetching: boolean;
-    singleProduct: TNullable<TSingleProduct>;
-    singleProductFetching: boolean;
     additionalProductList: TNullable<TAdditionalProductList>;
     additionalProductsListFetching: boolean;
     //
+    singleProduct: TNullable<TSingleProduct>;
+    singleProductFetching: boolean;
+    // -------------------------------------------------------------------------------
     setProductList: (data: TProductDoorData[]) => void;
     setProductListFetching: (value: boolean) => void;
     getProductListRequest: (

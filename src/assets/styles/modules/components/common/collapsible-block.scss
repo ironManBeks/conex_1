@@ -1,0 +1,28 @@
+.collapsible-block{
+  &_wrapper{
+    transition: $transition;
+    &._open{
+      .collapsible-block_title{
+        margin-bottom: space(3);
+      }
+    }
+  }
+
+  &_title{
+    display: flex;
+    align-items: center;
+    font-size: $font-size-bs;
+    line-height: $line-height-lg;
+    font-weight: 700;
+    transition: $transition;
+    cursor: pointer;
+    margin-bottom: 0;
+    .common-icon{
+      margin-left: space(2);
+      transition: $transition;
+      path{
+        transition: $transition;
+      }
+    }
+  }
+}

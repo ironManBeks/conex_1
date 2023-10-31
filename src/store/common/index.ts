@@ -5,6 +5,7 @@ import { TNullable } from "@globalTypes/commonTypes";
 
 export class CommonStore implements ICommonStore {
     headerHeight = 0;
+    headerVisible = true;
     urlParams: TUrlParams = {};
     // Modals and Drawers
     confirmModalData: TNullable<unknown> = null;
@@ -22,6 +23,10 @@ export class CommonStore implements ICommonStore {
 
     setHeaderHeight = (value: number): void => {
         this.headerHeight = value;
+    };
+
+    setHeaderVisible = (value: boolean): void => {
+        this.headerVisible = value;
     };
 
     // ToDo доработать
@@ -48,7 +53,7 @@ export class CommonStore implements ICommonStore {
         }
     };
 
-    //---------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     //  ***____ Modals and Drawers
     //  ***____***____***____
 
@@ -86,5 +91,5 @@ export class CommonStore implements ICommonStore {
 
     //  ***____***____***____
     //  ***____ END Modals and Drawers
-    //---------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 }

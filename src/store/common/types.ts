@@ -6,8 +6,12 @@ type TSetElementVisible = (value: boolean) => void;
 
 export interface ICommonStore {
     headerHeight: number;
-    setHeaderHeight: (value: number) => void;
+    headerVisible: boolean;
     urlParams: TUrlParams;
+    //
+    setHeaderHeight: (value: number) => void;
+    setHeaderVisible: (value: boolean) => void;
+    //
     setUrlParams: (value: TUrlParams) => void;
     getUrlParams: (value: string[]) => TUrlParams;
     removeUrlParams: (value: string[]) => void;

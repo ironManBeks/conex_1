@@ -206,7 +206,7 @@ export class BuilderStore implements IBuilderStore {
         this.editBuilderCartItemData = data;
     };
 
-    //-------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 
     getBuilderSettings = (): Promise<
         AxiosResponse<TGetBuilderSettingsResponse>
@@ -265,7 +265,7 @@ export class BuilderStore implements IBuilderStore {
             });
     };
 
-    //---------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 
     updateCurrentStepData = (
         way: TUpdateCurrentStepWay,

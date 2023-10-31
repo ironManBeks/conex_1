@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef, useState } from "react";
+import { FC, useRef, useState } from "react";
 import CSS from "csstype";
 import { Transition, TransitionStatus } from "react-transition-group";
 import cn from "classnames";
@@ -10,6 +10,7 @@ import { H2 } from "@components/Text";
 import { EButtonColor } from "@components/buttons/types";
 import { EArrowDirection } from "@components/Icons/types";
 import { TSingleProductDescriptionProps } from "../types";
+import { useElementSize } from "@hooks/useElementSize";
 
 const SingleProductDescription: FC<TSingleProductDescriptionProps> = ({
     pageClassPrefix,
@@ -18,8 +19,9 @@ const SingleProductDescription: FC<TSingleProductDescriptionProps> = ({
     const classPrefix = `${pageClassPrefix}_description`;
     const contentRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [contentHeight, setContentHeight] = useState<number>(0);
+    const { size } = useElementSize({ ref: contentRef });
     const MIN_HEIGHT = 300;
+    const contentHeight = size.height ?? 0;
 
     const listTransitionStyles: Partial<
         Record<TransitionStatus, CSS.Properties>
@@ -33,14 +35,6 @@ const SingleProductDescription: FC<TSingleProductDescriptionProps> = ({
             height: contentHeight < MIN_HEIGHT ? "auto" : `${MIN_HEIGHT}px`,
         },
     };
-
-    useEffect(() => {
-        if (contentRef?.current) {
-            setContentHeight(
-                contentRef?.current?.getBoundingClientRect().height,
-            );
-        }
-    }, [contentRef]);
 
     return (
         <div className={`${classPrefix}__wrapper`}>

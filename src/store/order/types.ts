@@ -44,24 +44,46 @@ export type TCreateOrderRequest = {
     items: { item: number }[];
 };
 
+export type TGetOrderPriceRequest = {
+    items: { id: number; quantity: number }[];
+    code: string;
+};
+
+export type TGetOrderPriceResponse = {
+    amount: number;
+};
+
+export type TOrderPrice = {
+    amount: number;
+};
+
 export interface IOrderStore {
     doorsData: TNullable<TGetDoorsDataResponse>;
     doorsDataFetching: boolean;
     createDoorRequestFetching: boolean;
     deleteDoorRequestFetching: boolean;
+    orderPrice: TNullable<TOrderPrice>;
+    orderPriceFetching: boolean;
     //
     createOrderRequestFetching: boolean;
-    //-------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     getDoorsData: () => Promise<AxiosResponse<TGetDoorsDataResponse>>;
     setDoorsData: (data: TNullable<TGetDoorsDataResponse>) => void;
     setDoorsDataFetching: (value: boolean) => void;
+    //
+    getOrderPrice: (
+        params: TGetOrderPriceRequest,
+    ) => Promise<AxiosResponse<TGetOrderPriceResponse>>;
+    setOrderPrice: (params: TNullable<TGetOrderPriceResponse>) => void;
+    setOrderPriceFetching: (value: boolean) => void;
+    //
     createDoorRequest: (
-        data: TCreateDoorRequest,
+        params: TCreateDoorRequest,
     ) => Promise<AxiosResponse<TCreateDoorResponse>>;
     setCreateDoorRequestFetching: (value: boolean) => void;
     deleteDoorRequest: (id: number) => Promise<AxiosResponse>;
     setDeleteDoorRequestFetching: (value: boolean) => void;
     //
-    createOrderRequest: (data: TCreateOrderRequest) => Promise<AxiosResponse>;
+    createOrderRequest: (params: TCreateOrderRequest) => Promise<AxiosResponse>;
     setCreateOrderRequestFetching: (value: boolean) => void;
 }

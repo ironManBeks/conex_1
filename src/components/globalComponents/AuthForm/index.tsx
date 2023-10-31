@@ -1,6 +1,5 @@
 import cn from "classnames";
-import React, { FC, useMemo, useState } from "react";
-import { observer } from "mobx-react";
+import React, { FC } from "react";
 
 import { P } from "@components/Text";
 import SignInForm from "./components/SignInForm";
@@ -10,78 +9,17 @@ import ResetPasswordForm from "./components/ResetPasswordForm";
 import ChangePasswordForm from "./components/ChangePasswordForm";
 import EmailConfirmationForm from "./components/EmailConfirmationForm";
 
+import AuthHead from "./components/AuthHead";
 import AuthFooter from "./components/AuthFooter";
 
 import { AUTH_FORM_CLASSNAME_PREFIX } from "./consts";
 import { EAuthFormType, TAuthFormProps } from "./types";
-import AuthHead from "@components/globalComponents/AuthForm/components/AuthHead";
+import { useSelectAuthForm } from "@hooks/useSelectAuthForm";
 
-const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
-    const [formType, setFormType] = useState<EAuthFormType>(
-        EAuthFormType.login,
-    );
-
-    // const onAuthSuccess = () => {
-    //     if (isFunction(onAuth)) {
-    //         onAuth();
-    //     }
-    // };
-
-    const formContent = useMemo(() => {
-        if (formType === EAuthFormType.login) {
-            return <SignInForm setFormType={setFormType} formType={formType} />;
-        }
-
-        if (formType === EAuthFormType.register) {
-            return <SignUpForm />;
-        }
-
-        if (formType === EAuthFormType.forgotPassword) {
-            return (
-                <ForgotPasswordForm
-                    setFormType={setFormType}
-                    formType={formType}
-                />
-            );
-        }
-
-        if (formType === EAuthFormType.resetPassword) {
-            return (
-                <ResetPasswordForm
-                    setFormType={setFormType}
-                    formType={formType}
-                />
-            );
-        }
-
-        if (formType === EAuthFormType.changePassword) {
-            return (
-                <ChangePasswordForm
-                    setFormType={setFormType}
-                    formType={formType}
-                />
-            );
-        }
-
-        if (formType === EAuthFormType.sendEmailConfirmation) {
-            return (
-                <EmailConfirmationForm
-                    setFormType={setFormType}
-                    formType={formType}
-                />
-            );
-        }
-
-        return (
-            <P style={{ textAlign: "center" }}>
-                Form not found. <br /> Try to reload the page or report an error
-                to the site administration
-            </P>
-        );
-    }, [formType, onAuth]);
+const AuthForm: FC<TAuthFormProps> = ({ className }) => {
+    const { setForm } = useSelectAuthForm();
 
     return (
-        // ToDo remove wrapper with styles
         <div
             style={{
                 width: "100%",
@@ -96,26 +34,47 @@ const AuthForm: FC<TAuthFormProps> = observer(({ className, onAuth }) => {
                     className,
                 )}
             >
-                <AuthHead formType={formType} setFormType={setFormType} />
-                {formContent}
-                <AuthFooter formType={formType} setFormType={setFormType} />
+                <AuthHead />
+                <Content />
+                <AuthFooter />
                 {/*<LoginWithGoogle />*/}
                 {/*<LoginWithApple />*/}
             </div>
             <br />
-            <a onClick={() => setFormType(EAuthFormType.resetPassword)}>
+            <a onClick={() => setForm(EAuthFormType.resetPassword)}>
                 Reset password? (remove)
             </a>
             <br />
-            <a onClick={() => setFormType(EAuthFormType.changePassword)}>
+            <a onClick={() => setForm(EAuthFormType.changePassword)}>
                 Change password? (remove)
             </a>
             <br />
-            <a onClick={() => setFormType(EAuthFormType.sendEmailConfirmation)}>
+            <a onClick={() => setForm(EAuthFormType.sendEmailConfirmation)}>
                 Email confirmation? (remove)
             </a>
         </div>
     );
-});
+};
 
 export default AuthForm;
+
+const Content = () => {
+    const { currentForm } = useSelectAuthForm();
+
+    switch (currentForm) {
+        case EAuthFormType.login:
+            return <SignInForm />;
+        case EAuthFormType.register:
+            return <SignUpForm />;
+        case EAuthFormType.forgotPassword:
+            return <ForgotPasswordForm />;
+        case EAuthFormType.resetPassword:
+            return <ResetPasswordForm />;
+        case EAuthFormType.changePassword:
+            return <ChangePasswordForm />;
+        case EAuthFormType.sendEmailConfirmation:
+            return <EmailConfirmationForm />;
+        default:
+            return <P style={{ textAlign: "center" }}>Form not found.</P>;
+    }
+};

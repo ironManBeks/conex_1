@@ -1,0 +1,14 @@
+.payment-icon_wrapper{
+  width: 56px;
+  height: 32px;
+  display: flex;
+  align-items: center;
+  border-radius: borderRadius(2);
+  border: 1px solid $border-color-secondary;
+  background: $color-primary-strong;
+  padding: space(1);
+  .img-custom_wrapper{
+    width: 100%;
+    height: 100%;
+  }
+}

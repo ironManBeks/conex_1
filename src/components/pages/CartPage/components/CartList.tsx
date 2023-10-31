@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { debounce, isString, uniq } from "lodash";
 
@@ -13,18 +13,24 @@ import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { TProductCartCard } from "@components/cards/types";
 import { ProductPriceParamsMockup } from "../../../../mockups/ProductPriceMockup";
-import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
+// import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_list`;
-        const { builderStore, commonStore, authStore, productsStore } =
-            store as IRoot;
+        const {
+            builderStore,
+            commonStore,
+            authStore,
+            productsStore,
+            // orderStore,
+        } = store as IRoot;
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
         const { isAuthorized, userCartData } = authStore;
         const { setProductPriceFetching, getProductPriceRequest } =
             productsStore;
+        // const { createDoorRequest } = orderStore;
         const [selected, setSelected] = useState<string[]>([]);
         const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
 
@@ -54,20 +60,19 @@ const CartList: FC<TSectionTypes> = inject("store")(
             }
         }, [itemsToDelete]);
 
-        const handleDelete = () => {
+        const handleDelete = useCallback(() => {
             setModalConfirmVisible(true);
-        };
+        }, []);
 
-        useEffect(() => {
-            if (builderCartData?.elements.length) {
-                console.log(
-                    "request",
-                    convertDoorDataToCreateDoorRequest(
-                        builderCartData?.elements[0],
-                    ),
-                );
-            }
-        }, [builderCartData]);
+        // useEffect(() => {
+        //     if (builderCartData?.elements.length) {
+        //         createDoorRequest(
+        //             convertDoorDataToCreateDoorRequest(
+        //                 builderCartData?.elements[0],
+        //             ),
+        //         );
+        //     }
+        // }, [builderCartData]);
 
         const getCartList = useCallback((): TProductCartCard[] => {
             // ToDo turn on !
@@ -81,7 +86,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                     title: `title _id: ${item.doorId}`,
                     price: 438,
                     img:
-                        item.doorData[0].fields[0]?.elements[0].image?.url ||
+                        item.doorData[0]?.fields[0]?.elements[0].image?.url ||
                         "",
 
                     options: [

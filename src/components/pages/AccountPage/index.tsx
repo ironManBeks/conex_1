@@ -92,7 +92,7 @@ const AccountPage: FC<TStore> = inject("store")(
                     </div>
                 </div>
             );
-        }, [authRequestFetching, tokenState, loading]);
+        }, [authRequestFetching, loading, tokenState]);
 
         return (
             <Layout pageClassPrefix={classPrefix}>

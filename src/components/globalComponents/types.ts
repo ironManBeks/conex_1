@@ -128,3 +128,17 @@ export type TRowInfoProps = {
     value: ReactNode;
     isBottomLine?: boolean;
 };
+
+export type TCollapsibleBlockWithTitleProps = {
+    title: string;
+    wrapperClassName?: string;
+    defaultOpen?: boolean;
+    onOpenChange?: (value: boolean) => void;
+};
+
+export type TPaymentIconProps = {
+    wrapperClassName?: string;
+    title: string;
+    src: string;
+    alt: string;
+};

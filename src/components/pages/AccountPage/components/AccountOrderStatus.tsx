@@ -1,20 +1,17 @@
-import { FC, ReactNode, memo, useEffect, useRef, useState } from "react";
-import { Transition, TransitionStatus } from "react-transition-group";
-import CSS from "csstype";
+import { FC, ReactNode, memo, useState } from "react";
 import cn from "classnames";
 import { Steps } from "antd";
 import { StepProps } from "antd/lib/steps";
+import { isFunction } from "lodash";
 
 import {
-    IconArrowSingle,
     IconCheck,
     IconCross,
     IconLinePoint,
     IconPoint,
 } from "@components/Icons";
-import { H4 } from "@components/Text";
+import CollapsibleBlockWithTitle from "@components/globalComponents/CollapsibleBlockWithTitle";
 
-import { EArrowDirection } from "@components/Icons/types";
 import {
     TAccountOrderStatus,
     TStepsStatus,
@@ -23,16 +20,13 @@ import {
     EAccountOrderStatusTimelapse,
     TOrderStatusTimelapse,
 } from "@store/auth/types";
-import { isFunction } from "lodash";
 
 const AccountOrderStatus: FC<TAccountOrderStatus> = ({
     wrapperClassName,
     statusTimelapse,
     onOpenChange,
 }) => {
-    const timelapseRef = useRef<HTMLDivElement>(null);
     const [isOpen, setIsOpen] = useState(false);
-    const [timelapseHeight, setTimelapseHeight] = useState<number>(0);
 
     const handleStatusOpen = (val: boolean) => {
         setIsOpen(val);
@@ -41,59 +35,18 @@ const AccountOrderStatus: FC<TAccountOrderStatus> = ({
         }
     };
 
-    const listTransitionStyles: Partial<
-        Record<TransitionStatus, CSS.Properties>
-    > = {
-        entering: { height: `${timelapseHeight}px` },
-        entered: { height: `${timelapseHeight}px` },
-        exiting: { height: 0 },
-        exited: { height: 0 },
-    };
-
-    useEffect(() => {
-        if (timelapseRef?.current) {
-            setTimelapseHeight(
-                timelapseRef?.current?.getBoundingClientRect().height,
-            );
-        }
-    }, [timelapseRef]);
-
     return (
         <div
             className={cn(`order-status_wrapper`, wrapperClassName, {
                 _open: isOpen,
             })}
         >
-            <H4
-                onClick={() => {
-                    handleStatusOpen(!isOpen);
-                }}
+            <CollapsibleBlockWithTitle
+                title="Status"
+                onOpenChange={(val) => handleStatusOpen(val)}
             >
-                Status
-                <IconArrowSingle
-                    direction={
-                        isOpen ? EArrowDirection.top : EArrowDirection.bottom
-                    }
-                />
-            </H4>
-            <Transition in={isOpen} timeout={0}>
-                {(state) => (
-                    <div
-                        style={{
-                            transition: "all 0.2s",
-                            transitionProperty: "height",
-                            overflow: "hidden",
-                            ...listTransitionStyles[state],
-                        }}
-                    >
-                        <div ref={timelapseRef}>
-                            <OrderStatusTimelapse
-                                statusTimelapse={statusTimelapse}
-                            />
-                        </div>
-                    </div>
-                )}
-            </Transition>
+                <OrderStatusTimelapse statusTimelapse={statusTimelapse} />
+            </CollapsibleBlockWithTitle>
         </div>
     );
 };

@@ -1,7 +1,7 @@
 .products-carousel{
   &_wrapper{
     width: 100%;
-    padding: space(10) 0;
+    padding: space(10) space(1);
 
     .carousel_wrapper{
       border-radius: borderRadius(4);

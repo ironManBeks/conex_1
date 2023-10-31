@@ -1,4 +1,4 @@
-import React, { FC, useMemo } from "react";
+import React, { FC } from "react";
 
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 import { LogoMain } from "@components/Icons";
@@ -7,6 +7,7 @@ import Segmented from "@components/globalComponents/Segmented";
 
 import { AUTH_FORM_CLASSNAME_PREFIX } from "../consts";
 import { EAuthFormType, TAuthHeader } from "../types";
+import { useSelectAuthForm } from "@hooks/useSelectAuthForm";
 
 const image = (
     <ImgWrapper
@@ -17,8 +18,9 @@ const image = (
     />
 );
 
-const AuthHead: FC<TAuthHeader> = ({ formType, setFormType }) => {
+const AuthHead: FC<TAuthHeader> = () => {
     const classPrefix = `${AUTH_FORM_CLASSNAME_PREFIX}_header`;
+    const { currentForm, setForm } = useSelectAuthForm();
 
     const segmentedOptions = [
         {
@@ -32,19 +34,19 @@ const AuthHead: FC<TAuthHeader> = ({ formType, setFormType }) => {
     ];
 
     const handleSegmentedChange = (val: EAuthFormType) => {
-        setFormType(val);
+        setForm(val);
     };
 
-    const content = useMemo(() => {
+    const content = () => {
         if (
-            formType === EAuthFormType.login ||
-            formType === EAuthFormType.register
+            currentForm === EAuthFormType.login ||
+            currentForm === EAuthFormType.register
         ) {
             return (
                 <>
                     <Segmented
                         options={segmentedOptions}
-                        value={formType}
+                        value={currentForm}
                         onChange={(val) => {
                             handleSegmentedChange(val as EAuthFormType);
                         }}
@@ -57,7 +59,7 @@ const AuthHead: FC<TAuthHeader> = ({ formType, setFormType }) => {
             );
         }
 
-        if (formType === EAuthFormType.resetPassword) {
+        if (currentForm === EAuthFormType.resetPassword) {
             return (
                 <P>
                     Fill in your new password and we'll send you a link to
@@ -67,14 +69,14 @@ const AuthHead: FC<TAuthHeader> = ({ formType, setFormType }) => {
         }
 
         return null;
-    }, [formType]);
+    };
 
     return (
         <div className={`${classPrefix}__wrapper`}>
             <div className={`${classPrefix}__logo`}>
                 <LogoMain />
             </div>
-            {content}
+            {content()}
         </div>
     );
 };

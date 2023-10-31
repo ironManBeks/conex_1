@@ -41,7 +41,7 @@ export class ProductsStore implements IProductsStore {
         makeAutoObservable(this);
     }
 
-    //---------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
     setProductList = (data: TProductDoorData[]): void => {
         this.productList = data;
     };
@@ -95,7 +95,7 @@ export class ProductsStore implements IProductsStore {
         this.additionalProductsListFetching = value;
     };
 
-    //---------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 
     getProductListRequest = (
         params: TNullable<TSearchParams>,

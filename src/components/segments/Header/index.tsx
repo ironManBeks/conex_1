@@ -1,21 +1,24 @@
-import { FC, RefObject, useEffect, useRef } from "react";
+import { FC, useEffect, useRef } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
 import dynamic from "next/dynamic";
+import { isNil } from "lodash";
 
 import Container from "@components/globalComponents/Container";
 import { IconBurger, LogoMain } from "@components/Icons";
 import NavLinks from "../components/NavLinks";
 import NavActions from "../components/NavActions";
+import ButtonPrimary from "@components/buttons/ButtonPrimary";
 
 import { PATH_HOME_PAGE } from "@consts/pathsConsts";
-import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor } from "@components/buttons/types";
 import { ColorTheme } from "@assets/theme/colorTheme";
 import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import { IRoot } from "@store/store";
 import { THeader } from "./types";
+import { useScrollPosition } from "@hooks/useScrollPosition";
+import { useElementSize } from "@hooks/useElementSize";
 
 const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });
 
@@ -24,8 +27,16 @@ const Header: FC<THeader> = inject("store")(
         const { commonStore } = store as IRoot;
         const classPrefix = `header`;
         const headerRef = useRef<HTMLElement>(null);
-        const { setHeaderHeight, setHeaderDrawerVisible, headerDrawerVisible } =
-            commonStore;
+        const { scrollY } = useScrollPosition();
+        const {
+            headerHeight,
+            setHeaderHeight,
+            setHeaderDrawerVisible,
+            headerDrawerVisible,
+            headerVisible,
+        } = commonStore;
+
+        const { size } = useElementSize({ ref: headerRef });
 
         // const isMobile = useMediaQuery({
         //     minWidth: mediaBreakpoints.xsMedia,
@@ -33,21 +44,24 @@ const Header: FC<THeader> = inject("store")(
         // });
 
         useEffect(() => {
-            if (headerRef?.current) {
-                setHeaderHeight(
-                    Math.ceil(headerRef.current.getBoundingClientRect().height),
-                );
+            if (!isNil(size.height)) {
+                setHeaderHeight(Math.ceil(size.height));
             }
-        }, [headerRef?.current]);
+        }, [size]);
 
         return (
             <header
-                ref={headerRef as RefObject<HTMLDivElement>}
+                ref={headerRef}
                 className={cn(
                     `${classPrefix}_wrapper`,
                     `${pageClassPrefix}_${classPrefix}__wrapper`,
                     className,
+                    { _scrolled: scrollY > 20 },
+                    { _hidden: !headerVisible },
                 )}
+                style={{
+                    top: !headerVisible ? -headerHeight : 0,
+                }}
             >
                 <div className={cn(`${classPrefix}_inner-wrapper`)}>
                     <Container

@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react";
 import { TStore } from "@globalTypes/storeTypes";
 
 export type TAuthFormProps = {
@@ -7,8 +6,8 @@ export type TAuthFormProps = {
 } & TStore;
 
 export type TAuthFormTypes = {
-    setFormType: Dispatch<SetStateAction<EAuthFormType>>;
-    formType: EAuthFormType;
+    // setFormType: (value: EAuthFormType) => void;
+    // formType: EAuthFormType | string | undefined;
 };
 
 export type TAuthFooter = TAuthFormTypes;
@@ -17,8 +16,8 @@ export type TAuthHeader = TAuthFormTypes;
 export enum EAuthFormType {
     login = "login",
     register = "register",
-    forgotPassword = "forgotPassword",
-    resetPassword = "resetPassword",
-    changePassword = "changePassword",
-    sendEmailConfirmation = "sendEmailConfirmation",
+    forgotPassword = "forgot-password",
+    resetPassword = "reset-password",
+    changePassword = "change-password",
+    sendEmailConfirmation = "send-email-confirmation",
 }

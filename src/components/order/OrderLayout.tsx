@@ -10,7 +10,8 @@ import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
-import { ProductPriceParamsMockup } from "../../mockups/ProductPriceMockup";
+import { TGetOrderPriceRequest } from "@store/order/types";
+import { ProductPriceParamsMockup } from "src/mockups/ProductPriceMockup";
 
 const OrderLayout: FC<
     {
@@ -27,10 +28,10 @@ const OrderLayout: FC<
             leftSideContent,
             rightSideContent,
         }) => {
-            const { builderStore, authStore, productsStore, orderStore } =
+            const { builderStore, authStore, orderStore, productsStore } =
                 store as IRoot;
             const { builderCartData } = builderStore;
-            const { getDoorsData } = orderStore;
+            const { getDoorsData, getOrderPrice } = orderStore;
             const { getProductPriceRequest } = productsStore;
             const {
                 userDataFetching,
@@ -46,7 +47,14 @@ const OrderLayout: FC<
                 }
             }, [isAuthorized]);
 
+            const getPriceParams: TGetOrderPriceRequest = {
+                items: [{ id: 42, quantity: 1 }],
+                code: "testpromocode",
+            };
+
             useEffect(() => {
+                getOrderPrice(getPriceParams);
+                // ToDo Remove
                 getProductPriceRequest(ProductPriceParamsMockup);
             }, []);
 

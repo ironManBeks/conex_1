@@ -124,9 +124,9 @@ export class AuthStore implements IAuthStore {
         this.userSingleOrderDataFetching = value;
     };
 
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
-    //---------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
+    // -------------------------------------------------------------------------------
 
     authSignUpRequest = (formValues: TSignUpForm): Promise<void> => {
         this.setAuthRequestFetching(true);
@@ -345,7 +345,7 @@ export class AuthStore implements IAuthStore {
     getUserCartData = (): Promise<AxiosResponse<TUserCartItem[]>> => {
         this.setUserCartDataFetching(true);
         return axiosInstance
-            .get("/user/cart")
+            .get("/user/cart123123")
             .then((response: AxiosResponse<TUserCartItem[]>) => {
                 // const { data } = response;
                 // this.setUserCartData(data);
