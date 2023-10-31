@@ -1,4 +1,4 @@
-import { FC, useCallback, useEffect, useState } from "react";
+import { FC, useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { debounce, isString, uniq } from "lodash";
 
@@ -13,7 +13,7 @@ import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { TProductCartCard } from "@components/cards/types";
 import { ProductPriceParamsMockup } from "../../../../mockups/ProductPriceMockup";
-import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
+// import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -23,14 +23,14 @@ const CartList: FC<TSectionTypes> = inject("store")(
             commonStore,
             authStore,
             productsStore,
-            orderStore,
+            // orderStore,
         } = store as IRoot;
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
         const { isAuthorized, userCartData } = authStore;
         const { setProductPriceFetching, getProductPriceRequest } =
             productsStore;
-        const { createDoorRequest } = orderStore;
+        // const { createDoorRequest } = orderStore;
         const [selected, setSelected] = useState<string[]>([]);
         const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
 
