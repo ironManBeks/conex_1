@@ -5,16 +5,11 @@ import { H4, P } from "@components/Text";
 import { IconCalendar, IconMapPoint, IconPoint } from "@components/Icons";
 import CopyText from "@components/globalComponents/CopyText";
 import ButtonLink from "@components/buttons/ButtonLink";
-import AccountOrderStatus from "../../AccountOrderStatus";
+import AccountOrderStatus from "../../components/AccountOrderStatus";
 
 import { EButtonColor } from "@components/buttons/types";
 import { TAccountOrderItem } from "@store/auth/types";
-import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
-import {
-    AccountOrderIdKey,
-    AccountTabKey,
-} from "@components/pages/account/AccountPage/consts";
-import { EAccountTabsPaths } from "@components/pages/account/AccountPage/types";
+import { toSingleOrderPageId } from "@consts/pathsConsts";
 
 const AccountOrderItem: FC<
     TAccountOrderItem & { wrapperClassPrefix: string }
@@ -28,17 +23,17 @@ const AccountOrderItem: FC<
     moneyStatus,
     statusTimelapse,
 }) => {
-    const classPrefix = `${wrapperClassPrefix}__item`;
+    const classPrefix = `${wrapperClassPrefix}_item`;
     const [isOpen, setIsOpen] = useState<boolean>();
 
     return (
-        <div className={cn(`${classPrefix} _wrapper`)}>
+        <div className={cn(`${classPrefix}__wrapper`)}>
             <div
-                className={cn(`${classPrefix} _inner-wrapper`, {
+                className={cn(`${classPrefix}__inner-wrapper`, {
                     _open: isOpen,
                 })}
             >
-                <div className={cn(`${classPrefix} _title`)}>
+                <div className={cn(`${classPrefix}__title`)}>
                     <H4>
                         Order № {orderNumber}
                         <CopyText text={orderNumber} />
@@ -56,7 +51,7 @@ const AccountOrderItem: FC<
                         </P>
                     )}
                 </div>
-                <div className={cn(`${classPrefix} _info`)}>
+                <div className={cn(`${classPrefix}__info`)}>
                     <OrderInfoItem
                         title={`Order ${dateOfOrder}`}
                         description={"Date of order"}
@@ -69,21 +64,15 @@ const AccountOrderItem: FC<
                     />
                 </div>
                 <AccountOrderStatus
-                    wrapperClassName={cn(`${classPrefix} _status`)}
+                    wrapperClassName={cn(`${classPrefix}__status`)}
                     statusTimelapse={statusTimelapse}
                     onOpenChange={(value) => {
                         setIsOpen(value);
                     }}
                 />
-                <div className={cn(`${classPrefix} _actions`)}>
+                <div className={cn(`${classPrefix}__actions`)}>
                     <ButtonLink
-                        href={{
-                            pathname: PATH_MY_ACCOUNT_PAGE,
-                            query: {
-                                [AccountTabKey]: EAccountTabsPaths.orders,
-                                [AccountOrderIdKey]: id,
-                            },
-                        }}
+                        href={toSingleOrderPageId(id.toString())}
                         color={EButtonColor.secondary}
                     >
                         Read more

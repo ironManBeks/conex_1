@@ -12,7 +12,6 @@ import { notImplemented } from "@helpers/notImplemented";
 
 const AccountPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const classPrefix = `${pageClassPrefix}_payment`;
         const { authStore, commonStore } = store as IRoot;
 
         const { userCardsData, setSelectedCard } = authStore;
@@ -24,7 +23,7 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
 
         return (
             <>
-                <div className={`${classPrefix}__list`}>
+                <div className={`${pageClassPrefix}_list`}>
                     {userCardsData?.length ? (
                         userCardsData?.map((item) => (
                             <PaymentCard
@@ -45,7 +44,7 @@ const AccountPayment: FC<TSectionTypes> = inject("store")(
                             />
                         ))
                     ) : (
-                        <div className={`${classPrefix}__empty`}>
+                        <div className={`${pageClassPrefix}_empty`}>
                             You haven’t saved any cards yet
                         </div>
                     )}

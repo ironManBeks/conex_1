@@ -1,0 +1,102 @@
+.account-my-form-page{
+
+  &_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+
+    .account-page_section-wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(6);
+    }
+  }
+
+  &_form{
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+  }
+
+  &_fields{
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(8);
+    .form-field_wrapper{
+      width: 50%;
+      max-width: 308px;
+      margin-bottom: 0;
+    }
+  }
+
+  &_actions{
+    display: flex;
+    gap: space(5);
+  }
+
+}
+
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .account-my-form-page{
+
+    &_wrapper{
+      .account-page_section-wrapper{
+        gap: space(4);
+      }
+    }
+
+    &_form{
+      width: calc(100% + $space * 5 * 2);
+      margin: 0 space(-5);
+    }
+
+    &_fields{
+      gap: space(4);
+      .form-field_wrapper{
+        width: 100%;
+        max-width: 100%;
+      }
+    }
+
+    &_actions{
+      padding: 0 space(5);
+      justify-content: center;
+      margin-top: space(2);
+      .common-btn{
+        width: 50%;
+      }
+    }
+
+  }
+
+}
+
+@media (min-width: $sm-media) and (max-width: $sm-media-end) {
+
+  .account-my-form-page{
+
+    &_form{
+      width: calc(100% + $space * 4 * 2);
+      margin: 0 space(-4);
+      background: red;
+    }
+
+  }
+
+}
+
+
+@media (min-width: $xs-media) and (max-width: $xs-media-end) {
+
+  .account-my-form-page{
+    &_actions{
+      .common-btn{
+        padding-left: space(2);
+        padding-right: space(2);
+      }
+    }
+  }
+
+}

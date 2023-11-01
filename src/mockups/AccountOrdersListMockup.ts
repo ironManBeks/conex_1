@@ -1,4 +1,4 @@
-import { ESegmentedOptionsNames } from "@components/pages/account/AccountPage/types";
+import { ESegmentedOptionsNames } from "@components/pages/account/types";
 import {
     EAccountOrderMoneyStatus,
     EAccountOrderStatus,

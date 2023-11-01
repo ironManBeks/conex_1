@@ -1,7 +1,6 @@
 import cn from "classnames";
 import React, { FC } from "react";
 
-import { P } from "@components/Text";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";

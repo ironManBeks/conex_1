@@ -1,5 +1,8 @@
 import { ReactNode } from "react";
+import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { TOrderStatusTimelapse } from "@store/auth/types";
+
+export type TAccountLayoutProps = TSectionTypes;
 
 export enum ESegmentedOptionsNames {
     all = "all",
@@ -19,14 +22,13 @@ export type TStepsStatus = "wait" | "process" | "finish" | "error";
 export type TAccountMenuItem = {
     icon: ReactNode;
     title: string;
-    tabName: string | null;
-    pageClassPrefix: string;
     isActive?: boolean;
     className?: string;
     onClick?: () => void;
+    href?: string;
 };
 
-export type TAccountOrderStatus = {
+export type TAccountOrderStatusProps = {
     wrapperClassName?: string;
     statusTimelapse: TOrderStatusTimelapse[];
     onOpenChange?: (value: boolean) => void;

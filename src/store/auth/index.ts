@@ -28,10 +28,10 @@ import { TNullable } from "@globalTypes/commonTypes";
 import { UserCardsDataMockup } from "../../mockups/AuthDataMockup";
 import { AccountOrdersMockup } from "../../mockups/AccountOrdersListMockup";
 import { UserCartDataMockup } from "../../mockups/UserCartDataMockup";
-import { ESegmentedOptionsNames } from "@components/pages/account/AccountPage/types";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { copyWithout } from "@helpers/objectHelper";
 import { AccountSingleOrderMockup } from "../../mockups/AccountSingleOrderMockup";
+import { ESegmentedOptionsNames } from "@components/pages/account/types";
 
 export class AuthStore implements IAuthStore {
     isAuthorized: boolean = false;

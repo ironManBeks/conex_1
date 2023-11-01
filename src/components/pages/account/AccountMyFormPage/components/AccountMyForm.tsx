@@ -6,14 +6,14 @@ import FieldInputController from "@components/form/formControllers/FieldInputCon
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 import { H4 } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import AccountSectionWrapper from "@components/pages/account/AccountPage/components/AccountSectionWrapper";
+import AccountSectionWrapper from "@components/pages/account/components/AccountSectionWrapper";
 
 import {
     accountMyFormDefaultValues,
     accountMyFormResolver,
     EAccountMyFormFieldsNames,
     TAccountMyForm,
-} from "../../../formAttrs";
+} from "../formAttrs";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { phoneNumberMask } from "@consts/masksConsts";
 import { IRoot } from "@store/store";
@@ -23,7 +23,6 @@ import { showNotification } from "@helpers/notificarionHelper";
 
 const AccountMyForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const classPrefix = `${pageClassPrefix}_my-form`;
         const { authStore } = store as IRoot;
         const { userData, updateUserRequest, updateUserRequestFetching } =
             authStore;
@@ -71,7 +70,7 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
 
         const actionsContent = useMemo(() => {
             return (
-                <div className={`${classPrefix}__actions`}>
+                <div className={`${pageClassPrefix}_actions`}>
                     <ButtonPrimary
                         onClick={handleCancel}
                         color={EButtonColor.secondary}
@@ -92,17 +91,15 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
         }, [isDirty, updateUserRequestFetching]);
 
         return (
-            <div className={`${classPrefix}__wrapper`}>
+            <div className={`${pageClassPrefix}_wrapper`}>
                 <FormProvider {...methods}>
                     <form
                         onSubmit={handleSubmit(onSubmit)}
-                        className={`${classPrefix}__form`}
+                        className={`${pageClassPrefix}_form`}
                     >
-                        <AccountSectionWrapper
-                            pageClassPrefix={pageClassPrefix}
-                        >
+                        <AccountSectionWrapper>
                             <H4>Main info</H4>
-                            <div className={`${classPrefix}__fields`}>
+                            <div className={`${pageClassPrefix}_fields`}>
                                 <FieldInputController
                                     name={EAccountMyFormFieldsNames.first_name}
                                     placeholder="Name"
@@ -114,7 +111,7 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                                     label="Surname"
                                 />
                             </div>
-                            <div className={`${classPrefix}__fields`}>
+                            <div className={`${pageClassPrefix}_fields`}>
                                 <FieldInputController
                                     name={EAccountMyFormFieldsNames.email}
                                     placeholder="Email"
@@ -128,11 +125,9 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                                 />
                             </div>
                         </AccountSectionWrapper>
-                        <AccountSectionWrapper
-                            pageClassPrefix={pageClassPrefix}
-                        >
+                        <AccountSectionWrapper>
                             <H4>Delivery info</H4>
-                            <div className={`${classPrefix}__fields`}>
+                            <div className={`${pageClassPrefix}_fields`}>
                                 <FieldInputController
                                     name={EAccountMyFormFieldsNames.country}
                                     placeholder="Сountry"
@@ -144,7 +139,7 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                                     label="City"
                                 />
                             </div>
-                            <div className={`${classPrefix}__fields`}>
+                            <div className={`${pageClassPrefix}_fields`}>
                                 <FieldInputController
                                     name={EAccountMyFormFieldsNames.address}
                                     placeholder="Address"

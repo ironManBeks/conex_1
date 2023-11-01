@@ -1,0 +1,64 @@
+.account-payment-page{
+
+  &_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+  }
+
+  &_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(8);
+  }
+
+  &_empty{
+    font-size: $font-size-bs;
+    line-height: $line-height-lg;
+    font-weight: 500;
+  }
+
+  &_actions{
+    display: flex;
+    gap: space(5);
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .account-payment-page{
+
+    &_wrapper{
+      .account-page_section-wrapper {
+        width: calc(100% + $space * 5 * 2);
+        margin: 0 space(-5);
+        padding: space(5);
+      }
+    }
+
+    &_list{
+      gap: space(5);
+      .payment-card{
+        &_wrapper{
+          width: 100%;
+          max-width: 100%;
+        }
+        &_info{
+          .common-text{
+            flex-wrap: wrap;
+          }
+        }
+      }
+    }
+
+    &_actions{
+      .common-btn{
+        width: 100%;
+        margin-top: space(2);
+      }
+    }
+
+  }
+
+}

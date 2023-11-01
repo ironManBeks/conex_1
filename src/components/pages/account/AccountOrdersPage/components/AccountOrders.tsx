@@ -9,18 +9,17 @@ import { IRoot } from "@store/store";
 
 const AccountOrders: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const classPrefix = `${pageClassPrefix}_order`;
         const { authStore } = store as IRoot;
         const { userOrdersData } = authStore;
 
         return (
             <>
-                <div className={`${classPrefix}__list`}>
+                <div className={`${pageClassPrefix}_list`}>
                     {userOrdersData?.length ? (
                         userOrdersData.map((item) => (
                             <AccountOrderItem
                                 key={item.id}
-                                wrapperClassPrefix={classPrefix}
+                                wrapperClassPrefix={pageClassPrefix}
                                 id={item.id}
                                 orderNumber={item.orderNumber}
                                 dateOfOrder={item.dateOfOrder}

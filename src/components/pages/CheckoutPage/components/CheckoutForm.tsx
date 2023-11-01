@@ -23,10 +23,8 @@ import {
     TCheckoutForm,
 } from "@components/pages/CheckoutPage/formAttrs";
 import { IRoot } from "@store/store";
-import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
-import { AccountTabKey } from "@components/pages/account/AccountPage/consts";
+import { PATH_MY_ACCOUNT_ORDERS_PAGE } from "@consts/pathsConsts";
 import { showNotification } from "@helpers/notificarionHelper";
-import { EAccountTabsPaths } from "@components/pages/account/AccountPage/types";
 import { TCreateOrderRequest } from "@store/order/types";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
@@ -70,21 +68,14 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                 };
 
                 createOrderRequest(params).then(() => {
-                    router
-                        .push({
-                            pathname: PATH_MY_ACCOUNT_PAGE,
-                            query: {
-                                [AccountTabKey]: EAccountTabsPaths.orders,
+                    router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
+                        showNotification({
+                            mainProps: {
+                                message: `Your order has being shipped`,
+                                description: `You can view your orders on this page`,
                             },
-                        })
-                        .finally(() => {
-                            showNotification({
-                                mainProps: {
-                                    message: `Your order has being shipped`,
-                                    description: `You can view your orders on this page`,
-                                },
-                            });
                         });
+                    });
                 });
             }
         };

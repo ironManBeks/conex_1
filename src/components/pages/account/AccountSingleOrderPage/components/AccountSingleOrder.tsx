@@ -2,28 +2,23 @@ import { FC, ReactNode } from "react";
 import { inject, observer } from "mobx-react";
 import cn from "classnames";
 
-import AccountSectionWrapper from "../../AccountSectionWrapper";
+import AccountSectionWrapper from "../../components/AccountSectionWrapper";
+import { H3, H4, P } from "@components/Text";
+import AdditionalServices from "@components/globalComponents/AdditionalServices";
+import ImgWrapper from "@components/globalComponents/ImgWrapper";
+import AccountOrderStatus from "../../components/AccountOrderStatus";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
-import { H3, H4, P } from "@components/Text";
-import AccountOrderStatus from "@components/pages/account/AccountPage/components/AccountOrderStatus";
-import AdditionalServices from "@components/globalComponents/AdditionalServices";
-import ImgWrapper from "@components/globalComponents/ImgWrapper";
 
-const AccountSingleOrder: FC<TSectionTypes & { classPrefix: string }> = inject(
-    "store",
-)(
-    observer(({ store, pageClassPrefix, classPrefix }) => {
+const AccountSingleOrder: FC<TSectionTypes> = inject("store")(
+    observer(({ store, pageClassPrefix }) => {
         const { authStore } = store as IRoot;
         const { userSingleOrderData } = authStore;
 
         return (
             <>
-                <AccountSectionWrapper
-                    pageClassPrefix={pageClassPrefix}
-                    className={`${classPrefix}__head`}
-                >
+                <AccountSectionWrapper className={`${pageClassPrefix}_head`}>
                     <HeadInfoItem
                         label="Order number"
                         value={userSingleOrderData?.orderNumber}
@@ -38,14 +33,13 @@ const AccountSingleOrder: FC<TSectionTypes & { classPrefix: string }> = inject(
                     />
                 </AccountSectionWrapper>
                 <AccountSectionWrapper
-                    className={`${classPrefix}__section-wrapper`}
-                    pageClassPrefix={pageClassPrefix}
+                    className={`${pageClassPrefix}_section-wrapper`}
                 >
                     <H3>Order details</H3>{" "}
                     {userSingleOrderData?.details?.length && (
-                        <div className={`${classPrefix}__details`}>
+                        <div className={`${pageClassPrefix}_details`}>
                             <H4>Your order</H4>
-                            <div className={`${classPrefix}__list`}>
+                            <div className={`${pageClassPrefix}_list`}>
                                 {userSingleOrderData.details.map(
                                     (item, index) => (
                                         <DetailsItem
@@ -60,13 +54,13 @@ const AccountSingleOrder: FC<TSectionTypes & { classPrefix: string }> = inject(
                     )}
                     {userSingleOrderData?.statusTimelapse && (
                         <AccountOrderStatus
-                            wrapperClassName={`${classPrefix}__status`}
+                            wrapperClassName={`${pageClassPrefix}_status`}
                             statusTimelapse={
                                 userSingleOrderData.statusTimelapse
                             }
                         />
                     )}
-                    <div className={`${classPrefix}__images`}>
+                    <div className={`${pageClassPrefix}_images`}>
                         <ImgWrapper
                             src="https://conexwest-doors.opserver.store/uploads/metal_door_0d3db7abc9.jpg"
                             alt={"Door image"}
@@ -81,7 +75,7 @@ const AccountSingleOrder: FC<TSectionTypes & { classPrefix: string }> = inject(
                         />
                     </div>
                     <AdditionalServices
-                        className={`${classPrefix}__services`}
+                        className={`${pageClassPrefix}_services`}
                         options={[
                             {
                                 label: "Subtotal:",

@@ -13,15 +13,12 @@ import {
 import CollapsibleBlockWithTitle from "@components/globalComponents/CollapsibleBlockWithTitle";
 
 import {
-    TAccountOrderStatus,
-    TStepsStatus,
-} from "@components/pages/account/AccountPage/types";
-import {
     EAccountOrderStatusTimelapse,
     TOrderStatusTimelapse,
 } from "@store/auth/types";
+import { TAccountOrderStatusProps, TStepsStatus } from "../types";
 
-const AccountOrderStatus: FC<TAccountOrderStatus> = ({
+const AccountOrderStatus: FC<TAccountOrderStatusProps> = ({
     wrapperClassName,
     statusTimelapse,
     onOpenChange,

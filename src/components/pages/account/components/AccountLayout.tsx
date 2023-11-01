@@ -1,21 +1,22 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, PropsWithChildren, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { isNil } from "lodash";
 import { useRouter } from "next/router";
+import cn from "classnames";
 
-import { Layout } from "@components/segments/Layout";
 import Container from "@components/globalComponents/Container";
-import AuthForm from "@components/globalComponents/AuthForm";
+import { Layout } from "@components/segments/Layout";
 import Spin from "@components/globalComponents/Spin";
+import AccountMenu from "@components/pages/account/components/AccountMenu";
+import AuthForm from "@components/globalComponents/AuthForm";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import { P } from "@components/Text";
 
 import { IRoot } from "@store/store";
-import { TStore } from "@globalTypes/storeTypes";
 import { getStorage } from "@services/storage.service";
 import { JWT_TOKEN } from "@consts/storageNamesContsts";
 import { EButtonColor } from "@components/buttons/types";
-import { PATH_MY_ACCOUNT_FORM_PAGE } from "@consts/pathsConsts";
+import { ACCOUNT_CLASSPREFIX } from "../consts";
+import { TAccountLayoutProps } from "../types";
 
 const wrapperStyles = {
     display: "flex",
@@ -25,15 +26,15 @@ const wrapperStyles = {
     minHeight: "50vh",
 };
 
-const AccountPage: FC<TStore> = inject("store")(
-    observer(({ store }) => {
-        const router = useRouter();
+const AccountLayout: FC<PropsWithChildren<TAccountLayoutProps>> = inject(
+    "store",
+)(
+    observer(({ store, pageClassPrefix, children }) => {
         const { authStore } = store as IRoot;
         const { authRequestFetching, logOut } = authStore;
         const [tokenState, setTokenState] = useState<string>();
         const [loading, setLoading] = useState(true);
-        const classPrefix = "account-page";
-
+        const router = useRouter();
         const token = getStorage(JWT_TOKEN) as string;
 
         useEffect(() => {
@@ -43,7 +44,7 @@ const AccountPage: FC<TStore> = inject("store")(
             setLoading(false);
         }, [token]);
 
-        const accountContent = useMemo(() => {
+        const accountContent = () => {
             if (authRequestFetching || loading) {
                 return (
                     <div style={wrapperStyles}>
@@ -53,24 +54,25 @@ const AccountPage: FC<TStore> = inject("store")(
             }
 
             if (tokenState) {
-                router.push(PATH_MY_ACCOUNT_FORM_PAGE);
                 return (
-                    <div
-                        style={{
-                            ...wrapperStyles,
-                            flexDirection: "column",
-                        }}
-                    >
-                        <Spin size="large" />
-                        <P>Redirecting</P>
-                    </div>
+                    <>
+                        <AccountMenu />
+                        <div
+                            className={cn(
+                                `${ACCOUNT_CLASSPREFIX}_content__wrapper`,
+                                `${pageClassPrefix}_content__wrapper`,
+                            )}
+                        >
+                            {children}
+                        </div>
+                    </>
                 );
             }
 
             if (isNil(tokenState)) {
                 return (
                     <div style={wrapperStyles}>
-                        <AuthForm className={classPrefix} />
+                        <AuthForm className={ACCOUNT_CLASSPREFIX} />
                     </div>
                 );
             }
@@ -98,14 +100,17 @@ const AccountPage: FC<TStore> = inject("store")(
                     </div>
                 </div>
             );
-        }, [authRequestFetching, loading, tokenState]);
+        };
 
         return (
-            <Layout pageClassPrefix={classPrefix}>
-                <Container>{accountContent}</Container>
+            <Layout
+                pageClassPrefix={ACCOUNT_CLASSPREFIX}
+                layoutClassName={`${pageClassPrefix}_layout__wrapper`}
+            >
+                <Container>{accountContent()}</Container>
             </Layout>
         );
     }),
 );
 
-export default AccountPage;
+export default AccountLayout;
