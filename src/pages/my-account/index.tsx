@@ -1,7 +1,7 @@
 import { FC } from "react";
 
 import HeadMeta from "@components/segments/HeadMeta";
-import AccountPage from "@components/pages/AccountPage";
+import AccountPage from "src/components/pages/account/AccountPage";
 
 const AccountPageLayout: FC = () => {
     return (

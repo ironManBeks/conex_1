@@ -62,8 +62,6 @@ const Content = () => {
     const { currentForm } = useSelectAuthForm();
 
     switch (currentForm) {
-        case EAuthFormType.login:
-            return <SignInForm />;
         case EAuthFormType.register:
             return <SignUpForm />;
         case EAuthFormType.forgotPassword:
@@ -75,6 +73,6 @@ const Content = () => {
         case EAuthFormType.sendEmailConfirmation:
             return <EmailConfirmationForm />;
         default:
-            return <P style={{ textAlign: "center" }}>Form not found.</P>;
+            return <SignInForm />;
     }
 };

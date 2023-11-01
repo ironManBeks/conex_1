@@ -15,7 +15,7 @@ import CollapsibleBlockWithTitle from "@components/globalComponents/CollapsibleB
 import {
     TAccountOrderStatus,
     TStepsStatus,
-} from "@components/pages/AccountPage/types";
+} from "@components/pages/account/AccountPage/types";
 import {
     EAccountOrderStatusTimelapse,
     TOrderStatusTimelapse,

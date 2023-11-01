@@ -15,7 +15,7 @@ import AccountOrders from "./components/AccountOrders";
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { notImplemented } from "@helpers/notImplemented";
-import { ESegmentedOptionsNames } from "./../../types";
+import { ESegmentedOptionsNames } from "../../types";
 
 const AccountOrdersLayout: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {

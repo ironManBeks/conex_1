@@ -7,7 +7,7 @@ import AccountSectionWrapper from "../../AccountSectionWrapper";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
 import { H3, H4, P } from "@components/Text";
-import AccountOrderStatus from "@components/pages/AccountPage/components/AccountOrderStatus";
+import AccountOrderStatus from "@components/pages/account/AccountPage/components/AccountOrderStatus";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
 import ImgWrapper from "@components/globalComponents/ImgWrapper";
 

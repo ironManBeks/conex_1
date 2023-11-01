@@ -13,8 +13,8 @@ import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
 import {
     AccountOrderIdKey,
     AccountTabKey,
-} from "@components/pages/AccountPage/consts";
-import { EAccountTabsPaths } from "@components/pages/AccountPage/types";
+} from "@components/pages/account/AccountPage/consts";
+import { EAccountTabsPaths } from "@components/pages/account/AccountPage/types";
 
 const AccountOrderItem: FC<
     TAccountOrderItem & { wrapperClassPrefix: string }

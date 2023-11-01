@@ -6,7 +6,7 @@ import FieldInputController from "@components/form/formControllers/FieldInputCon
 import FieldInputMaskController from "@components/form/formControllers/FieldInputMaskController";
 import { H4 } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
-import AccountSectionWrapper from "@components/pages/AccountPage/components/AccountSectionWrapper";
+import AccountSectionWrapper from "@components/pages/account/AccountPage/components/AccountSectionWrapper";
 
 import {
     accountMyFormDefaultValues,

@@ -9,7 +9,7 @@ import AccountOrdersLayout from "./AccountOrdersLayout";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { AccountOrderIdKey, AccountTabKey } from "../consts";
 import { EAccountTabsPaths } from "../types";
-import AccountSingleOrderLayout from "@components/pages/AccountPage/components/AccountSingleOrderLayout";
+import AccountSingleOrderLayout from "@components/pages/account/AccountPage/components/AccountSingleOrderLayout";
 
 const AccountContent: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const router = useRouter();
