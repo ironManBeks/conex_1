@@ -1,0 +1,116 @@
+.account-single-order-page{
+
+  &_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+    .common-title._h3{
+      font-size: $font-size-lg-plus;
+      line-height: $line-height-lg-plus;
+    }
+  }
+
+  &_section-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(8);
+  }
+
+  &_head{
+    display: flex;
+    padding-left: space(3);
+    padding-right: space(3);
+    .single-order_head__item{
+      width: 33%;
+      position: relative;
+      padding: 0 space(10);
+      &:not(:last-child){
+        &:before{
+          position: absolute;
+          content: "";
+          width: 2px;
+          max-height: 32px;
+          height: 100%;
+          top: 50%;
+          transform: translateY(-50%);
+          right: -1px;
+          background: $border-color-secondary;
+          border-radius: borderRadius(1);
+        }
+      }
+      .common-title, .common-text{
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+      }
+      .common-text{
+        margin-bottom: space(1);
+        color: $text-color-secondary;
+      }
+    }
+  }
+
+  &_details{
+    .common-title{
+      margin-bottom: space(4);
+      font-size: $font-size-bs;
+      line-height: $line-height-lg;
+    }
+
+    .single-order_details__item{
+      display: flex;
+      gap: space(2);
+    }
+  }
+
+  &_list{
+    display: flex;
+    flex-direction: column;
+    gap: space(3);
+    .single-order_details__item{
+      display: flex;
+      gap: space(2);
+      font-size: $font-size-sm;
+      line-height: $line-height-md;
+    }
+  }
+
+  &_images{
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(5);
+    .img-custom_wrapper{
+      width: 80px;
+      height: 80px;
+    }
+  }
+
+  &_services{
+    border-top: 0;
+    .additional-services{
+      &_list{
+        .additional-services_item{
+          &:not(:last-child){
+            margin-bottom: space(2);
+          }
+        }
+      }
+      &_item{
+        .common-title, .common-text{
+          font-size: $font-size-sm;
+          line-height: $line-height-md;
+          color: $text-color-primary;
+        }
+      }
+      &_total{
+        border-top: 1px solid $border-color-primary;
+        padding-top: space(3);
+        .common-title, .common-text {
+          font-size: $font-size-lg;
+          line-height: $line-height-lg;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+}

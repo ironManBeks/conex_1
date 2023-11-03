@@ -1,4 +1,4 @@
-import { FC, useEffect, useRef } from "react";
+import { FC, useEffect, useMemo, useRef } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
@@ -16,13 +16,13 @@ import { EButtonColor } from "@components/buttons/types";
 import { ColorTheme } from "@assets/theme/colorTheme";
 import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import { IRoot } from "@store/store";
-import { THeader } from "./types";
+import { THeaderProps } from "./types";
 import { useScrollPosition } from "@hooks/useScrollPosition";
 import { useElementSize } from "@hooks/useElementSize";
 
 const MediaQuery = dynamic(() => import("react-responsive"), { ssr: false });
 
-const Header: FC<THeader> = inject("store")(
+const Header: FC<THeaderProps> = inject("store")(
     observer(({ store, pageClassPrefix, className }) => {
         const { commonStore } = store as IRoot;
         const classPrefix = `header`;
@@ -38,31 +38,14 @@ const Header: FC<THeader> = inject("store")(
 
         const { size } = useElementSize({ ref: headerRef });
 
-        // const isMobile = useMediaQuery({
-        //     minWidth: mediaBreakpoints.xsMedia,
-        //     maxWidth: mediaBreakpoints.mdMediaEnd,
-        // });
-
         useEffect(() => {
             if (!isNil(size.height)) {
                 setHeaderHeight(Math.ceil(size.height));
             }
         }, [size]);
 
-        return (
-            <header
-                ref={headerRef}
-                className={cn(
-                    `${classPrefix}_wrapper`,
-                    `${pageClassPrefix}_${classPrefix}__wrapper`,
-                    className,
-                    { _scrolled: scrollY > 20 },
-                    { _hidden: !headerVisible },
-                )}
-                style={{
-                    top: !headerVisible ? -headerHeight : 0,
-                }}
-            >
+        const content = useMemo(() => {
+            return (
                 <div className={cn(`${classPrefix}_inner-wrapper`)}>
                     <Container
                         flexDirection="row"
@@ -100,6 +83,24 @@ const Header: FC<THeader> = inject("store")(
                         />
                     </Container>
                 </div>
+            );
+        }, [headerDrawerVisible]);
+
+        return (
+            <header
+                ref={headerRef}
+                className={cn(
+                    `${classPrefix}_wrapper`,
+                    `${pageClassPrefix}_${classPrefix}__wrapper`,
+                    className,
+                    { _scrolled: scrollY > 20 },
+                    { _hidden: !headerVisible },
+                )}
+                style={{
+                    top: !headerVisible ? -headerHeight : 0,
+                }}
+            >
+                {content}
             </header>
         );
     }),

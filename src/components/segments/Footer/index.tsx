@@ -1,16 +1,18 @@
 import { FC } from "react";
 import cn from "classnames";
-import Link from "next/link";
 import { inject, observer } from "mobx-react";
 
 import Container from "@components/globalComponents/Container";
-import { P } from "@components/Text";
+import FooterTerms from "./components/FooterTerms";
 
-import { PATH_POLICY_PAGE, PATH_TERMS_PAGE } from "@consts/pathsConsts";
-import { TFooter } from "./types";
+import NewsSubscription from "@components/globalComponents/NewsSubscription";
+import FooterContacts from "./components/FooterContacts";
+import FooterNavs from "./components/FooterNavs";
 
-const Footer: FC<TFooter> = inject("store")(
-    observer(({ pageClassPrefix, className }) => {
+import { TFooterProps } from "./types";
+
+const Footer: FC<TFooterProps> = inject("store")(
+    observer(({ pageClassPrefix, className, isFullFooter = false }) => {
         const classPrefix = `footer`;
 
         return (
@@ -21,26 +23,23 @@ const Footer: FC<TFooter> = inject("store")(
                     className,
                 )}
             >
-                <div className={cn(`${classPrefix}_inner-wrapper`)}>
-                    <Container
-                        flexDirection="row"
-                        flexJustifyContent="space-between"
-                    >
-                        <div>
-                            <P>
-                                <Link href={PATH_POLICY_PAGE}>
-                                    Privacy Policy
-                                </Link>
-                            </P>
-                            <P>
-                                <Link href={PATH_TERMS_PAGE}>
-                                    Terms and conditions for purchasing services
-                                    on the website
-                                </Link>
-                            </P>
+                {isFullFooter && (
+                    <>
+                        <NewsSubscription />
+                        <div className={cn(`${classPrefix}_content__wrapper`)}>
+                            <Container
+                                flexDirection="row"
+                                flexJustifyContent="space-between"
+                            >
+                                <FooterContacts
+                                    wrapperClassPrefix={classPrefix}
+                                />
+                                <FooterNavs wrapperClassPrefix={classPrefix} />
+                            </Container>
                         </div>
-                    </Container>
-                </div>
+                    </>
+                )}
+                <FooterTerms wrapperClassPrefix={classPrefix} />
             </footer>
         );
     }),

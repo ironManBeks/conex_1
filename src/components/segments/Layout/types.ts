@@ -1,10 +1,9 @@
-import { TStore } from "@globalTypes/storeTypes";
-import { ReactNode } from "react";
+import { TSectionTypes } from "@globalTypes/sectionTypes";
+import { TFooterProps } from "@components/segments/Footer/types";
 
-export type TLayout = {
-    children: ReactNode;
-    pageClassPrefix: string;
+export type TLayoutProps = {
     headerClassName?: string;
     layoutClassName?: string;
     footerClassName?: string;
-} & TStore;
+    isFullFooter?: TFooterProps["isFullFooter"];
+} & TSectionTypes;

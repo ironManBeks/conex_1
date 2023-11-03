@@ -7,8 +7,8 @@ import { TResetPasswordForm } from "@components/globalComponents/AuthForm/compon
 import { TChangePasswordForm } from "@components/globalComponents/AuthForm/components/ChangePasswordForm/formAttrs";
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 import { TNullable } from "@globalTypes/commonTypes";
-import { ESegmentedOptionsNames } from "@components/pages/AccountPage/types";
 import { TPaymentCard } from "@components/globalComponents/types";
+import { ESegmentedOptionsNames } from "@components/pages/account/types";
 
 export enum EAccountOrderStatus {
     processed = "processed",

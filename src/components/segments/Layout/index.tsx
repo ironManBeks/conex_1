@@ -1,16 +1,16 @@
-import { FC, useEffect, useMemo, useState } from "react";
+import { FC, PropsWithChildren, useEffect, useMemo, useState } from "react";
 import cn from "classnames";
 import { inject, observer } from "mobx-react";
 
 import Header from "../Header";
 import ModalAuth from "@components/modals/components/ModalAuth";
-
-import { TLayout } from "./types";
 import DrawerHeader from "@components/drawers/components/DrawerHeader";
-import { IRoot } from "@store/store";
 import Footer from "@components/segments/Footer";
 
-export const Layout: FC<TLayout> = inject("store")(
+import { TLayoutProps } from "./types";
+import { IRoot } from "@store/store";
+
+export const Layout: FC<PropsWithChildren<TLayoutProps>> = inject("store")(
     observer(
         ({
             store,
@@ -19,6 +19,7 @@ export const Layout: FC<TLayout> = inject("store")(
             headerClassName,
             layoutClassName,
             footerClassName,
+            isFullFooter,
         }) => {
             const classPrefix = "layout";
             const { commonStore } = store as IRoot;
@@ -53,6 +54,7 @@ export const Layout: FC<TLayout> = inject("store")(
                         <Footer
                             pageClassPrefix={pageClassPrefix}
                             className={footerClassName}
+                            isFullFooter={isFullFooter}
                         />
                         <ModalAuth />
                         <DrawerHeader />

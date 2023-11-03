@@ -21,6 +21,10 @@ module.exports = withPlugins([], {
                 protocol: "https",
                 hostname: "conexwest-doors.opserver.store",
             },
+            {
+                protocol: "https",
+                hostname: "conexwest-doors-test.opserver.store",
+            },
         ],
     },
     webpack: (config) => {

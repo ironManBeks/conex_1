@@ -1,13 +1,16 @@
 .footer{
+
   &_wrapper{
-    padding: space(4) 0;
-    div{
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      gap: space(6);
+    & > div {
+      &:not(:last-child){
+        border-bottom: 1px solid $border-color-secondary;
+      }
     }
-    .common-text{
+  }
+
+  &_content{
+    &__wrapper{
+      padding: space(10) 0;
       font-size: $font-size-bs;
       line-height: $line-height-lg;
       font-weight: 500;
@@ -22,4 +25,67 @@
       }
     }
   }
+
+  &_navs{
+    &__title{
+      margin-bottom: space(4);
+    }
+    &__list{
+      display: flex;
+      flex-wrap: wrap;
+      gap: space(3) space(5);
+      .common-text{
+        width: calc(50% - $space * 2.5);
+      }
+    }
+  }
+
+  &_contacts{
+    &__wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(4);
+    }
+    &__info{
+      display: flex;
+      flex-direction: column;
+      gap: space(2);
+    }
+    &__social{
+      display: flex;
+      flex-wrap: wrap;
+      gap: space(5);
+    }
+    &__copyright{
+
+    }
+  }
+
+  &_terms{
+    &__wrapper{
+      padding: space(4) 0;
+      .container{
+        gap: space(4);
+      }
+      .common-text{
+        font-size: $font-size-bs;
+        line-height: $line-height-lg;
+        font-weight: 500;
+        color: $text-color-secondary;
+        &:not(:last-child){
+          border-right: 2px solid $border-color-secondary;
+          padding-right: space(4);
+        }
+        a{
+          color: inherit;
+          border-bottom: 1px solid transparent;
+          &:hover{
+            color: $text-color-primary;
+            border-color: $color-secondary-strong;
+          }
+        }
+      }
+    }
+  }
+
 }

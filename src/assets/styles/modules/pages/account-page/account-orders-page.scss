@@ -1,0 +1,151 @@
+.account-orders-page{
+
+  &_wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(6);
+  }
+
+  &_section-wrapper{
+    display: flex;
+    flex-direction: column;
+    gap: space(8);
+  }
+
+  &_segmented{
+    display: flex;
+    .ant-segmented-group{
+      width: auto;
+    }
+  }
+
+  &_list{
+    display: flex;
+    flex-wrap: wrap;
+    gap: space(6);
+  }
+
+  &_actions{
+    display: flex;
+    gap: space(5);
+  }
+
+  &_item{
+    &__wrapper{
+      width: calc(50% - 6 * $space / 2);
+    }
+    &__inner-wrapper{
+      display: flex;
+      flex-direction: column;
+      gap: space(5);
+      padding: space(6);
+      border: 1px solid $border-color-secondary;
+      border-radius: borderRadius(3);
+      background: $color-primary-strong;
+      transition: $transition;
+      &._open{
+        border-color: $color-accent-strong;
+        ._status{
+          .common-title{
+            color: $text-color-secondary;
+            .common-icon path{
+              fill: $icon-color-secondary;
+            }
+          }
+        }
+      }
+    }
+    &__title{
+      font-weight: 700;
+      .common-title{
+        display: flex;
+        margin-bottom: space(3);
+        font-size: $font-size-lg;
+        line-height: $line-height-lg;
+      }
+      .common-text{
+        display: flex;
+        align-items: center;
+        font-size: $font-size-sm;
+        line-height: $line-height-md;
+        margin-left: space(-1.5);
+        .common-icon{
+          margin-right: space(2);
+        }
+      }
+    }
+    &__info{
+      display: flex;
+      flex-direction: column;
+      gap: space(5);
+      .order-info-item{
+        &_wrapper{
+          display: flex;
+        }
+        &_icon{
+          margin-right: space(3);
+          flex: 0 0 auto;
+        }
+        &_text{
+          display: flex;
+          flex-direction: column;
+          gap: space(1);
+          .common-title{
+            font-size: $font-size-bs;
+            line-height: $line-height-lg;
+            font-weight: 500;
+          }
+          .common-text{
+            font-size: $line-height-sm;
+            line-height: $line-height-md;
+            font-weight: 500;
+            color: $text-color-secondary;
+            span{
+              margin-right: space(4);
+            }
+          }
+        }
+      }
+    }
+  }
+
+}
+
+@media (min-width: $xs-media) and (max-width: $sm-media-end) {
+
+  .account-orders-page{
+
+    &_section-wrapper{
+      width: calc(100% + $space * 5 * 2);
+      margin: 0 space(-5);
+      padding: space(6) space(5);
+      gap: space(5);
+    }
+
+    &_item{
+      &__wrapper{
+        width: 100%;
+      }
+      &__inner-wrapper{
+        gap: space(4);
+      }
+      &__info{
+        gap: space(4);
+      }
+      &__actions{
+        .common-btn{
+          width: 100%;
+        }
+      }
+    }
+
+    &_actions{
+      .common-btn{
+        width: 100%;
+        margin-top: space(2);
+      }
+    }
+
+  }
+
+}

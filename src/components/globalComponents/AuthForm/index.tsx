@@ -1,7 +1,6 @@
 import cn from "classnames";
 import React, { FC } from "react";
 
-import { P } from "@components/Text";
 import SignInForm from "./components/SignInForm";
 import SignUpForm from "./components/SignUpForm";
 import ForgotPasswordForm from "./components/ForgotPasswordForm";
@@ -62,8 +61,6 @@ const Content = () => {
     const { currentForm } = useSelectAuthForm();
 
     switch (currentForm) {
-        case EAuthFormType.login:
-            return <SignInForm />;
         case EAuthFormType.register:
             return <SignUpForm />;
         case EAuthFormType.forgotPassword:
@@ -75,6 +72,6 @@ const Content = () => {
         case EAuthFormType.sendEmailConfirmation:
             return <EmailConfirmationForm />;
         default:
-            return <P style={{ textAlign: "center" }}>Form not found.</P>;
+            return <SignInForm />;
     }
 };

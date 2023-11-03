@@ -54,17 +54,17 @@ const BuilderPage: FC<TStore> = inject("store")(
 
         const adminLastUpdate = getStorage(BUILDER_ADMIN_LAST_UPDATE);
 
-        useEffect(() => {
-            getBuilderSettings().then((settings) => {
-                if (settings.data.data.lastUpdate !== adminLastUpdate) {
+        const firstInitialized = () => {
+            getBuilderSettings().then(({ data }) => {
+                const { lastUpdate } = data.data;
+
+                if (lastUpdate !== adminLastUpdate) {
+                    // reset cart and builder data if admin was updated
                     handleClearBuilderStorage();
                     removeStorage(BUILDER_CART);
                 }
 
-                setStorage(
-                    BUILDER_ADMIN_LAST_UPDATE,
-                    settings.data.data.lastUpdate,
-                );
+                setStorage(BUILDER_ADMIN_LAST_UPDATE, lastUpdate);
 
                 getBuilderAllData().then(() => {
                     const history = getStorage(BUILDER_HISTORY) as TNullable<
@@ -113,6 +113,10 @@ const BuilderPage: FC<TStore> = inject("store")(
                     }
                 });
             });
+        };
+
+        useEffect(() => {
+            firstInitialized();
             return () => {
                 resetBuilderFormData();
                 if (!isNil(editBuilderCartItemData)) {

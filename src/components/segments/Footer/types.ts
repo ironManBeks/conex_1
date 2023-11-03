@@ -1,6 +1,6 @@
-import { TStore } from "@globalTypes/storeTypes";
+import { TSectionTypes } from "@globalTypes/sectionTypes";
 
-export type TFooter = {
-    pageClassPrefix: string;
+export type TFooterProps = {
     className?: string;
-} & TStore;
+    isFullFooter?: boolean;
+} & TSectionTypes;

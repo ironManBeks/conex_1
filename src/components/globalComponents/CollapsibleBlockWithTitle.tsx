@@ -1,4 +1,4 @@
-import { PropsWithChildren, useEffect, useRef, useState } from "react";
+import { PropsWithChildren, useRef, useState } from "react";
 import { useElementSize } from "@hooks/useElementSize";
 import { Transition, TransitionStatus } from "react-transition-group";
 import CSS from "csstype";
@@ -32,10 +32,6 @@ const CollapsibleBlockWithTitle = ({
         exiting: { height: 0 },
         exited: { height: 0 },
     };
-
-    useEffect(() => {
-        console.log("contentHeight", contentHeight);
-    }, [contentHeight]);
 
     const handleStatusOpen = () => {
         setIsOpen(!isOpen);

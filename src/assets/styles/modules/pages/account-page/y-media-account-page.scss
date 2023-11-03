@@ -1,6 +1,7 @@
 @media (min-width: $xs-media) and (max-width: $md-media-end) {
 
   .account-page{
+
     &_layout__inner-wrapper{
       .container{
         flex-wrap: wrap;
@@ -24,6 +25,7 @@
         }
       }
     }
+
   }
 
 }
@@ -45,118 +47,12 @@
       }
     }
 
-    &_my-form{
-      &__wrapper{
-        .account-page_section-wrapper{
-          gap: space(4);
-        }
-      }
-      &__form{
-        width: calc(100% + $space * 5 * 2);
-        margin: 0 space(-5);
-      }
-      &__fields{
-        gap: space(4);
-        .form-field_wrapper{
-          width: 100%;
-          max-width: 100%;
-        }
-      }
-      &__actions{
-        padding: 0 space(5);
-        justify-content: center;
-        margin-top: space(2);
-        .common-btn{
-          width: 50%;
-        }
-      }
-    }
-
-    &_order{
-      &__section-wrapper{
-        width: calc(100% + $space * 5 * 2);
-        margin: 0 space(-5);
-        padding: space(6) space(5);
-        gap: space(5);
-      }
-      &__item{
-        &._wrapper{
-          width: 100%;
-        }
-        &._inner-wrapper{
-          gap: space(4);
-        }
-        &._info{
-          gap: space(4);
-        }
-        &._actions{
-          .common-btn{
-            width: 100%;
-          }
-        }
-      }
-      &__actions{
-        .common-btn{
-          width: 100%;
-          margin-top: space(2);
-        }
-      }
-    }
-
-    &_payment{
-      &__wrapper{
-        .account-page_section-wrapper {
-          width: calc(100% + $space * 5 * 2);
-          margin: 0 space(-5);
-          padding: space(5);
-        }
-      }
-      &__list{
-        gap: space(5);
-        .payment-card{
-          &_wrapper{
-            width: 100%;
-            max-width: 100%;
-          }
-          &_info{
-            .common-text{
-              flex-wrap: wrap;
-            }
-          }
-        }
-      }
-      &__actions{
-        .common-btn{
-          width: 100%;
-          margin-top: space(2);
-        }
-      }
-    }
-
-  }
-
-}
-
-@media (min-width: $sm-media) and (max-width: $sm-media-end) {
-
-  .account-page_my-form__form{
-    width: calc(100% + $space * 4 * 2);
-    margin: 0 space(-4);
   }
 
 }
 
 
-@media (min-width: $xs-media) and (max-width: $xs-media-end) {
 
-  .account-page{
-    &_my-form__actions{
-      .common-btn{
-        padding-left: space(2);
-        padding-right: space(2);
-      }
-    }
-  }
 
-}
+
 

@@ -1,6 +1,5 @@
-import { TStore } from "@globalTypes/storeTypes";
+import { TSectionTypes } from "@globalTypes/sectionTypes";
 
-export type THeader = {
-    pageClassPrefix: string;
+export type THeaderProps = {
     className?: string;
-} & TStore;
+} & TSectionTypes;
