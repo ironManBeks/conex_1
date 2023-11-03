@@ -1,0 +1,42 @@
+.news-subscription{
+
+  &_wrapper{
+    padding: space(6) 0;
+    .common-text{
+      font-size: $font-size-sm;
+      line-height: $line-height-md;
+      font-weight: 500;
+      color: $text-color-secondary;
+    }
+  }
+
+  &_content{
+    width: 50%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: space(3);
+    .common-title{
+      font-size: $font-size-lg;
+      line-height: $line-height-lg;
+    }
+  }
+
+  &_form{
+    display: flex;
+    flex-direction: column;
+    gap: space(3);
+    width: 50%;
+    max-width: 445px;
+    flex: 0 0 auto;
+    &__field{
+      display: flex;
+      gap: space(3);
+    }
+    .form-field_wrapper{
+      margin-bottom: 0;
+      width: 100%;
+    }
+  }
+
+}

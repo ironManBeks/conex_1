@@ -34,6 +34,9 @@ import IconZoomOut from "./common/IconZoomOut";
 import IconMastercard from "./social/IconMastercard";
 import IconPaypal from "./social/IconPaypal";
 import IconAmazonPay from "./social/IconAmazonPay";
+import IconFacebook from "./social/IconFacebook";
+import IconYoutube from "./social/IconYoutube";
+import IconInstagram from "./social/IconInstagram";
 
 //---Logo
 import LogoMain from "./logo/LogoMain";
@@ -74,4 +77,7 @@ export {
     IconDrag,
     IconZoomIn,
     IconZoomOut,
+    IconFacebook,
+    IconInstagram,
+    IconYoutube,
 };

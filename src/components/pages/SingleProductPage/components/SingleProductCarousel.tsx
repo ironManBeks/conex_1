@@ -45,13 +45,13 @@ const SingleProductCarousel: FC<TSingleProductCarouselProps> = ({
                         slidesPerView: 4,
                     },
                     [mediaBreakpoints.smMediaEnd]: {
-                        slidesPerView: 5,
-                    },
-                    [mediaBreakpoints.lgMediaEnd]: {
                         slidesPerView: 6,
                     },
+                    [mediaBreakpoints.lgMediaEnd]: {
+                        slidesPerView: 8,
+                    },
                 }}
-                spaceBetween={12}
+                spaceBetween={4}
                 freeMode={true}
                 watchSlidesProgress={true}
                 modules={[FreeMode, Navigation, Thumbs]}
@@ -60,6 +60,7 @@ const SingleProductCarousel: FC<TSingleProductCarouselProps> = ({
                 initialSlide={2}
                 onSlideChange={(state) => setActiveSlide(state.activeIndex)}
                 direction={"vertical"}
+                slidesPerView={"auto"}
             >
                 {images.map((item, index) => (
                     <SwiperSlide key={index}>

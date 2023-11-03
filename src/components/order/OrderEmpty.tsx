@@ -4,7 +4,7 @@ import { H3, P } from "@components/Text";
 import ButtonLink from "@components/buttons/ButtonLink";
 
 import { EButtonColor } from "@components/buttons/types";
-import { PATH_BUILDER_PAGE } from "@consts/pathsConsts";
+import { PATH_CATALOG_PAGE } from "@consts/pathsConsts";
 import { ORDER_PAGE_CLASSPREFIX } from "./consts";
 
 const OrderEmpty: FC = () => {
@@ -19,7 +19,7 @@ const OrderEmpty: FC = () => {
             <div className={`${classPrefix}__actions`}>
                 <ButtonLink
                     color={EButtonColor.secondary}
-                    href={PATH_BUILDER_PAGE}
+                    href={PATH_CATALOG_PAGE}
                 >
                     Go to catalog
                 </ButtonLink>

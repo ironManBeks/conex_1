@@ -6,7 +6,7 @@ import NavLinkItem from "./NavLinkItem";
 import {
     PATH_BUILDER_PAGE,
     PATH_CATALOG_PAGE,
-    PATH_CONTACTS_US_PAGE,
+    PATH_CONTACT_US_PAGE,
     PATH_HOME_PAGE,
 } from "@consts/pathsConsts";
 import { TNavTypes } from "./types";
@@ -34,7 +34,7 @@ const NavLinks: FC<TNavTypes> = ({ wrapperClassPrefix, placement }) => {
                 classPrefix={classPrefix}
             />
             <NavLinkItem
-                href={PATH_CONTACTS_US_PAGE}
+                href={PATH_CONTACT_US_PAGE}
                 title="Contact us"
                 classPrefix={classPrefix}
             />

@@ -6,6 +6,9 @@
       .carousel{
         &_wrapper{
           height: 100%;
+          .swiper-wrapper{
+            align-items: center;
+          }
         }
         &_arrow{
           left: 50%;
@@ -15,16 +18,17 @@
           box-shadow: none;
           border: 0;
           width: 100%;
+          height: $carousel-vertical-arrow-height;
           border-radius: borderRadius(1);
           background: transparent;
           &:hover:not([disabled]){
             background: $color-secondary-40;
           }
           &._prev{
-            top: -$carousel-arrow-size;
+            top: calc(-5px - $carousel-vertical-arrow-height);
           }
           &._next{
-            bottom: -$carousel-arrow-size;
+            bottom: calc(-5px - $carousel-vertical-arrow-height);
           }
         }
       }

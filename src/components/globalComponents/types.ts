@@ -142,3 +142,7 @@ export type TPaymentIconProps = {
     src: string;
     alt: string;
 };
+
+export type TNewsSubscriptionProps = {
+    wrapperClassName?: string;
+} & TStore;

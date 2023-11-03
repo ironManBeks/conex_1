@@ -2,6 +2,10 @@ import { makeAutoObservable } from "mobx";
 
 import { ICommonStore, TUrlParams } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
+import axiosInstance from "../../api/api";
+import { AxiosResponse } from "axios";
+import { showNotification } from "@helpers/notificarionHelper";
+import { showAxiosNotificationError } from "@helpers/errorsHelper";
 
 export class CommonStore implements ICommonStore {
     headerHeight = 0;
@@ -16,6 +20,7 @@ export class CommonStore implements ICommonStore {
     modalMapPickupVisible = false;
     headerDrawerVisible = false;
     builderDrawerVisible = false;
+    newsSubscriptionFetching = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -27,6 +32,10 @@ export class CommonStore implements ICommonStore {
 
     setHeaderVisible = (value: boolean): void => {
         this.headerVisible = value;
+    };
+
+    setNewsSubscriptionFetching = (value: boolean): void => {
+        this.newsSubscriptionFetching = value;
     };
 
     // ToDo доработать
@@ -92,4 +101,27 @@ export class CommonStore implements ICommonStore {
     //  ***____***____***____
     //  ***____ END Modals and Drawers
     // -------------------------------------------------------------------------------
+
+    newsSubscriptionRequest = (value: string): Promise<void> => {
+        this.setNewsSubscriptionFetching(true);
+        return axiosInstance
+            .post("/newsSubscription", { email: value })
+            .then((data: AxiosResponse<{ ok: boolean }>) => {
+                console.log("forgotPasswordRequest", data);
+                showNotification({
+                    mainProps: {
+                        type: "success",
+                        message:
+                            "You have successfully subscribed to the newsletter",
+                    },
+                });
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setNewsSubscriptionFetching(false);
+            });
+    };
 }

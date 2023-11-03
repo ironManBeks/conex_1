@@ -1,6 +1,9 @@
 import { FC } from "react";
-import { TSectionTypes } from "@globalTypes/sectionTypes";
+
 import { H5, P } from "@components/Text";
+
+import { TSectionTypes } from "@globalTypes/sectionTypes";
+import { BRAND_MAIL, BRAND_PHONE } from "@consts/brandConsts";
 
 const ContactUsContacts: FC<TSectionTypes> = ({ pageClassPrefix }) => {
     const classPrefix = `${pageClassPrefix}_contacts`;
@@ -12,11 +15,11 @@ const ContactUsContacts: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                     <P>95 D'Arcy Pkwy, Lathrop, CA 95330</P>
                     <P>
                         <a
-                            href="mailto:info@conexwest.com"
+                            href={`mailto:${BRAND_MAIL}`}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            info@conexwest.com
+                            {BRAND_MAIL}
                         </a>
                     </P>
                 </div>
@@ -24,20 +27,20 @@ const ContactUsContacts: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                     <H5>Billing & Existing Orders</H5>
                     <P>
                         <a
-                            href="tel:(855) 878-5233 x 3"
+                            href={`tel:${BRAND_PHONE}`}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            (855) 878-5233 x 3
+                            {BRAND_PHONE}
                         </a>
                     </P>
                     <P>
                         <a
-                            href="mailto:info@conexwest.com"
+                            href={`mailto:${BRAND_MAIL}`}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            info@conexwest.com
+                            {BRAND_MAIL}
                         </a>
                     </P>
                     <P>Mon-Fri 9am-5pm PST</P>
@@ -46,20 +49,20 @@ const ContactUsContacts: FC<TSectionTypes> = ({ pageClassPrefix }) => {
                     <H5>Dispatch</H5>
                     <P>
                         <a
-                            href="tel:(855) 878-5233 x 6"
+                            href={`tel:${BRAND_PHONE}`}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            (855) 878-5233 x 6
+                            {BRAND_PHONE}
                         </a>
                     </P>
                     <P>
                         <a
-                            href="mailto:info@conexwest.com"
+                            href={`mailto:${BRAND_MAIL}`}
                             target="_blank"
                             rel="noreferrer"
                         >
-                            info@conexwest.com
+                            {BRAND_MAIL}
                         </a>
                     </P>
                     <P>Mon-Sat 7am-6pm PST</P>
