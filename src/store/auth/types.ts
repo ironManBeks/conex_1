@@ -47,14 +47,6 @@ export type TUserData = {
     zip: string;
     createdAt: string;
     updatedAt: string;
-    // name: string;
-    // surname: string;
-    // email: string;
-    // phone: string;
-    // country: string;
-    // city: string;
-    // address: string;
-    // index: string;
 } & TUserDataId;
 
 export type TAuthData = {

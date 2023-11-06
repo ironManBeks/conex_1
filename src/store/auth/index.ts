@@ -289,6 +289,12 @@ export class AuthStore implements IAuthStore {
         return axiosInstance
             .put(`/users/${params.id}`, copyWithout(params, "id"))
             .then((response: AxiosResponse) => {
+                if (this.userData) {
+                    this.setUserData({
+                        ...this.userData,
+                        ...copyWithout(params, "id"),
+                    });
+                }
                 return response;
             })
             .catch((err) => {

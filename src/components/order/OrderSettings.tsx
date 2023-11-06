@@ -164,9 +164,7 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                         at checkout
                     </P>
                 </div>
-                <OrderAdyen />
-
-                {/*{placement === "checkout" && <OrderAdyen />}*/}
+                {placement === "checkout" && <OrderAdyen />}
             </div>
         );
     }),

@@ -31,7 +31,7 @@ const OrderLayout: FC<
             const { builderStore, authStore, orderStore, productsStore } =
                 store as IRoot;
             const { builderCartData } = builderStore;
-            const { getDoorsData, getOrderPrice } = orderStore;
+            const { getDoorsData, getOrderPrice, doorsData } = orderStore;
             const { getProductPriceRequest } = productsStore;
             const {
                 userDataFetching,
@@ -43,44 +43,39 @@ const OrderLayout: FC<
             useEffect(() => {
                 if (isAuthorized) {
                     getDoorsData();
-                    getUserCartData();
+                    // getUserCartData();
                 }
             }, [isAuthorized]);
 
-            const getPriceParams: TGetOrderPriceRequest = {
-                items: [{ id: 42, quantity: 1 }],
-                code: "testpromocode",
-            };
-
             useEffect(() => {
-                getOrderPrice(getPriceParams);
-                // ToDo Remove
-                getProductPriceRequest(ProductPriceParamsMockup);
-            }, []);
+                if (doorsData) {
+                    getOrderPrice();
+                }
+                // // ToDo Remove
+                // getProductPriceRequest(ProductPriceParamsMockup);
+            }, [doorsData]);
 
             const content = (
                 <Container flexDirection="column">
-                    {builderCartData?.elements.length ? (
-                        <>
-                            <H2>{title}</H2>
+                    {/*{builderCartData?.elements.length ? (*/}
+                    <>
+                        <H2>{title}</H2>
+                        <div className={`${ORDER_PAGE_CLASSPREFIX}_content`}>
                             <div
-                                className={`${ORDER_PAGE_CLASSPREFIX}_content`}
+                                className={`${ORDER_PAGE_CLASSPREFIX}_left-side`}
                             >
-                                <div
-                                    className={`${ORDER_PAGE_CLASSPREFIX}_left-side`}
-                                >
-                                    {leftSideContent}
-                                </div>
-                                <div
-                                    className={`${ORDER_PAGE_CLASSPREFIX}_right-side`}
-                                >
-                                    {rightSideContent}
-                                </div>
+                                {leftSideContent}
                             </div>
-                        </>
-                    ) : (
-                        <OrderEmpty />
-                    )}
+                            <div
+                                className={`${ORDER_PAGE_CLASSPREFIX}_right-side`}
+                            >
+                                {rightSideContent}
+                            </div>
+                        </div>
+                    </>
+                    {/*) : (*/}
+                    {/*    <OrderEmpty />*/}
+                    {/*)}*/}
                 </Container>
             );
 

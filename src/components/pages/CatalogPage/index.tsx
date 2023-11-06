@@ -16,14 +16,6 @@ const CatalogPage = () => {
             <Container flexDirection={"column"}>
                 <Breadcrumb />
                 <H2>Catalog</H2>
-                {/*<div style={{ padding: "30px 0" }}>*/}
-                {/*    <ButtonLink*/}
-                {/*        href={toSingleProductPageId("single-product-page")}*/}
-                {/*        color={EButtonColor.primary}*/}
-                {/*    >*/}
-                {/*        Got to single product*/}
-                {/*    </ButtonLink>*/}
-                {/*</div>*/}
                 <div className={`${classPrefix}_list__wrapper`}>
                     {linksMockup.map((item, index) => (
                         <CatalogGroup
@@ -71,14 +63,15 @@ const linksMockup: TCatalogSingleGroup[] = [
                 title: "Test link",
                 href: PATH_CATALOG_PAGE,
             },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
+        ],
+    },
+    {
+        image: {
+            src: "https://conexwest-doors.opserver.store/uploads/metal_door_0d3db7abc9.jpg",
+            alt: "test iamge",
+        },
+        title: "Test title",
+        links: [
             {
                 title: "Test link",
                 href: PATH_CATALOG_PAGE,
@@ -157,43 +150,6 @@ const linksMockup: TCatalogSingleGroup[] = [
                 title: "Test link",
                 href: PATH_CATALOG_PAGE,
             },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-            {
-                title: "Test link",
-                href: PATH_CATALOG_PAGE,
-            },
-        ],
-    },
-    {
-        image: {
-            src: "https://conexwest-doors.opserver.store/uploads/metal_door_0d3db7abc9.jpg",
-            alt: "test iamge",
-        },
-        title: "Test title",
-        links: [
             {
                 title: "Test link",
                 href: PATH_CATALOG_PAGE,

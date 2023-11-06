@@ -30,8 +30,7 @@ const HeadMeta: FC<IHeadMeta> = ({
     locale = "en",
 }) => {
     const { asPath } = useRouter();
-    // ToDo переписать "siteName"
-    const siteName = "WEBSITE";
+    const siteName = "Conexwest";
     const pageTitle = title ? `${title} - ${siteName}` : siteName;
     const currentUrl = `${url || asPath}`;
 

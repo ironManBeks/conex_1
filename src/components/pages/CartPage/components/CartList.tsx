@@ -1,4 +1,4 @@
-import { FC, useCallback, useState } from "react";
+import { FC, useCallback, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { debounce, isString, uniq } from "lodash";
 
@@ -13,7 +13,8 @@ import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { TProductCartCard } from "@components/cards/types";
 import { ProductPriceParamsMockup } from "../../../../mockups/ProductPriceMockup";
-// import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
+import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
+import { toJS } from "mobx";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -23,14 +24,14 @@ const CartList: FC<TSectionTypes> = inject("store")(
             commonStore,
             authStore,
             productsStore,
-            // orderStore,
+            orderStore,
         } = store as IRoot;
         const { builderCartData, setElementsToBuilderCard } = builderStore;
         const { setModalConfirmVisible } = commonStore;
         const { isAuthorized, userCartData } = authStore;
         const { setProductPriceFetching, getProductPriceRequest } =
             productsStore;
-        // const { createDoorRequest } = orderStore;
+        const { createDoorRequest } = orderStore;
         const [selected, setSelected] = useState<string[]>([]);
         const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
 
@@ -64,21 +65,23 @@ const CartList: FC<TSectionTypes> = inject("store")(
             setModalConfirmVisible(true);
         }, []);
 
-        // useEffect(() => {
-        //     if (builderCartData?.elements.length) {
-        //         createDoorRequest(
-        //             convertDoorDataToCreateDoorRequest(
-        //                 builderCartData?.elements[0],
-        //             ),
-        //         );
-        //     }
-        // }, [builderCartData]);
+        useEffect(() => {
+            if (builderCartData?.elements.length) {
+                // createDoorRequest(
+                //     convertDoorDataToCreateDoorRequest(
+                //         builderCartData?.elements[0],
+                //     ),
+                // ).then(() => {
+                //     setElementsToBuilderCard(undefined, "clear");
+                // });
+            }
+            console.log("builderCartData", toJS(builderCartData));
+        }, [builderCartData]);
 
         const getCartList = useCallback((): TProductCartCard[] => {
-            // ToDo turn on !
-            // if (isAuthorized && userCartData) {
-            //     return userCartData;
-            // }
+            if (isAuthorized && userCartData) {
+                return userCartData;
+            }
 
             if (builderCartData?.elements) {
                 return builderCartData.elements.map((item) => ({

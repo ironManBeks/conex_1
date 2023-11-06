@@ -43,9 +43,6 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             reset,
         } = useFormContext();
         const router = useRouter();
-
-        const { setModalConfirmVisible } = commonStore;
-
         const {
             updateCurrentStepData,
             currentStepData,
@@ -66,6 +63,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
             builderCartData,
             setBuilderCartData,
         } = builderStore;
+        const { setModalConfirmVisible } = commonStore;
 
         const isEdit = !isNil(editBuilderCartItemData);
 

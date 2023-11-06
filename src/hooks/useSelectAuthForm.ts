@@ -1,7 +1,8 @@
+import { useCallback, useMemo } from "react";
 import { useRouter } from "next/router";
+
 import { AUTH_FORM_QUERY } from "@consts/queryNamesConsts";
 import { EAuthFormType } from "@components/globalComponents/AuthForm/types";
-import { useCallback, useMemo } from "react";
 
 export const useSelectAuthForm = () => {
     const router = useRouter();
