@@ -16,6 +16,7 @@ import { PRODUCT_CARD_CLASSNAME } from "../consts";
 import { TProductCartCard } from "../types";
 import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
 import { EButtonColor } from "@components/buttons/types";
+import CollapsibleBlockWithTitle from "@components/globalComponents/CollapsibleBlockWithTitle";
 
 const ProductCartCard: FC<TProductCartCard> = ({
     id,
@@ -106,7 +107,28 @@ const ProductCartCard: FC<TProductCartCard> = ({
                 <div className={`${classPrefix}_details__wrapper`}>
                     {titleContent}
                     {isMobile && price && <H5>${price}</H5>}
-                    {!isMobile && <ProductCardList optionsList={options} />}
+                    {!isMobile && (
+                        <div>
+                            <ProductCardList
+                                optionsList={options.slice(0, 3)}
+                            />
+                            {options.length > 3 && (
+                                <CollapsibleBlockWithTitle
+                                    title="See more"
+                                    defaultOpen={false}
+                                    wrapperClassName={"_list"}
+                                    titlePosition={"bottom"}
+                                >
+                                    <ProductCardList
+                                        optionsList={options.slice(
+                                            3,
+                                            options.length,
+                                        )}
+                                    />
+                                </CollapsibleBlockWithTitle>
+                            )}
+                        </div>
+                    )}
                     {!isMobile && detailsActionsContent}
                     {isMobile && countFieldContent}
                 </div>
