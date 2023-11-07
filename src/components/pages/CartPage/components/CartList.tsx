@@ -1,6 +1,6 @@
 import { FC, useCallback, useState } from "react";
 import { inject, observer } from "mobx-react";
-import { debounce, isString, uniq } from "lodash";
+import { debounce, isNumber, uniq } from "lodash";
 
 import ModalConfirm from "@components/modals/components/ModalConfirm";
 import FormFieldCheckbox from "@components/form/formFields/FormFieldCheckbox";
@@ -12,35 +12,33 @@ import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
 import { EButtonColor } from "@components/buttons/types";
 import { TProductCartCard } from "@components/cards/types";
-import { ProductPriceParamsMockup } from "../../../../mockups/ProductPriceMockup";
-// import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
+import { showNotification } from "@helpers/notificarionHelper";
+import { showAxiosNotificationError } from "@helpers/errorsHelper";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_list`;
-        const {
-            builderStore,
-            commonStore,
-            authStore,
-            productsStore,
-            // orderStore,
-        } = store as IRoot;
-        const { builderCartData, setElementsToBuilderCard } = builderStore;
+        const { commonStore, authStore, orderStore } = store as IRoot;
         const { setModalConfirmVisible } = commonStore;
-        const { isAuthorized, userCartData } = authStore;
-        const { setProductPriceFetching, getProductPriceRequest } =
-            productsStore;
-        // const { createDoorRequest } = orderStore;
-        const [selected, setSelected] = useState<string[]>([]);
-        const [itemsToDelete, setItemsToDelete] = useState<string[]>([]);
+        const { isAuthorized } = authStore;
+        const {
+            doorsData,
+            deleteDoorRequest,
+            setPriceParams,
+            setOrderPriceFetching,
+            priceParams,
+            setDoorsData,
+        } = orderStore;
+        const [selected, setSelected] = useState<number[]>([]);
+        const [itemsToDelete, setItemsToDelete] = useState<number[]>([]);
 
         const handleSelect = (
-            id: string | string[] | undefined,
+            id: number | number[] | undefined,
             action: "add" | "remove" | "clear",
         ) => {
             if (action === "add" && id) {
                 setSelected((oldList) =>
-                    isString(id) ? [...oldList, id] : uniq([...oldList, ...id]),
+                    isNumber(id) ? [...oldList, id] : uniq([...oldList, ...id]),
                 );
             }
             if (action === "remove" && id) {
@@ -52,75 +50,94 @@ const CartList: FC<TSectionTypes> = inject("store")(
         };
 
         const deleteElementFromCart = useCallback(() => {
-            if (itemsToDelete) {
-                setElementsToBuilderCard(undefined, {
-                    action: "remove",
-                    id: itemsToDelete,
-                });
+            if (itemsToDelete.length) {
+                Promise.all(
+                    itemsToDelete.map((item) => deleteDoorRequest(item)),
+                )
+                    .then((data) => {
+                        if (data.length) {
+                            const deletedDoors = data.map(
+                                (item) => item.data.data.id,
+                            );
+                            if (doorsData) {
+                                const newDoorsData = doorsData.filter(
+                                    (item) => !deletedDoors.includes(item.id),
+                                );
+                                setDoorsData(newDoorsData);
+                                if (priceParams) {
+                                    const newPriceItems =
+                                        priceParams.items.filter(
+                                            (item) =>
+                                                !deletedDoors.includes(item.id),
+                                        );
+                                    setPriceParams({
+                                        ...priceParams,
+                                        items: newPriceItems,
+                                    });
+                                }
+                            }
+                        }
+                        showNotification({
+                            mainProps: {
+                                type: "success",
+                                message: `${
+                                    itemsToDelete.length > 1 ? "Doors" : "Door"
+                                } successfully deleted`,
+                            },
+                        });
+                    })
+                    .catch((err) => {
+                        showAxiosNotificationError(err);
+                    })
+                    .finally(() => {
+                        handleSelect(undefined, "clear");
+                    });
             }
-        }, [itemsToDelete]);
+        }, [itemsToDelete, doorsData, priceParams]);
 
         const handleDelete = useCallback(() => {
             setModalConfirmVisible(true);
         }, []);
 
-        // useEffect(() => {
-        //     if (builderCartData?.elements.length) {
-        //         createDoorRequest(
-        //             convertDoorDataToCreateDoorRequest(
-        //                 builderCartData?.elements[0],
-        //             ),
-        //         );
-        //     }
-        // }, [builderCartData]);
-
         const getCartList = useCallback((): TProductCartCard[] => {
-            // ToDo turn on !
-            // if (isAuthorized && userCartData) {
-            //     return userCartData;
-            // }
-
-            if (builderCartData?.elements) {
-                return builderCartData.elements.map((item) => ({
-                    id: item.doorId,
-                    title: `title _id: ${item.doorId}`,
-                    price: 438,
-                    img:
-                        item.doorData[0]?.fields[0]?.elements[0].image?.url ||
-                        "",
-
-                    options: [
-                        {
-                            title: "Material",
-                            value: "wood",
-                        },
-                        {
-                            title: "Size",
-                            value: "20*20",
-                        },
-                        {
-                            title: "Color",
-                            value: "silver",
-                        },
-                    ],
+            if (doorsData?.length) {
+                return doorsData.map((item) => ({
+                    id: item.id,
+                    title: item.title,
+                    price: item.price,
+                    img: item.img || "",
+                    options: item.options.map((option) => ({
+                        title: option.title,
+                        value: option.value,
+                    })),
                     count: 1,
-                    createDate: "2023-08-30T09:34:14.281Z",
                 }));
             }
+
             return [];
-        }, [isAuthorized, builderCartData, userCartData]);
+        }, [isAuthorized, doorsData]);
 
         const cartList = getCartList();
 
-        const handleCountChange = (id: string, count: number) => {
-            console.log("id", count, "__________", id);
-            getProductPriceRequest(ProductPriceParamsMockup);
+        const handleCountChange = (id: number, count: number) => {
+            if (priceParams && count) {
+                setPriceParams({
+                    ...priceParams,
+                    items: priceParams.items.map((item) => {
+                        if (item.id === id) {
+                            return {
+                                id: item.id,
+                                quantity: count,
+                            };
+                        } else return item;
+                    }),
+                });
+            } else setOrderPriceFetching(false);
         };
 
-        const debounceLoadData = useCallback(
-            debounce(handleCountChange, 600),
-            [],
-        );
+        const debounceLoadData = useCallback(debounce(handleCountChange, 600), [
+            priceParams,
+        ]);
 
         return (
             <>
@@ -184,7 +201,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                     setItemsToDelete([item.id]);
                                 }}
                                 onCountChange={(value) => {
-                                    setProductPriceFetching(true);
+                                    setOrderPriceFetching(true);
                                     debounceLoadData(item.id, value);
                                 }}
                             />
@@ -205,6 +222,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
 
 export default CartList;
 
+// ToDo Remove
 // const handleEdit = ({
 //     doorId,
 //     doorData,

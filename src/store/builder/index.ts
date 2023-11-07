@@ -20,15 +20,7 @@ import {
 } from "./types";
 import axiosInstance from "../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
-import {
-    isArray,
-    isEmpty,
-    isNil,
-    isNumber,
-    isObject,
-    isString,
-    uniq,
-} from "lodash";
+import { isArray, isEmpty, isNil, isNumber, isObject, uniq } from "lodash";
 import { TNullable } from "@globalTypes/commonTypes";
 import { showNotification } from "@helpers/notificarionHelper";
 import { setStorage } from "@services/storage.service";
@@ -395,22 +387,22 @@ export class BuilderStore implements IBuilderStore {
         }
 
         if (isNil(data)) {
-            if (isObject(action) && action.action === "remove" && action.id) {
-                if (isString(action.id)) {
-                    this.setBuilderCartData({
-                        elements: newResult.elements.filter(
-                            (item) => item.doorId !== action.id,
-                        ),
-                    });
-                }
-                if (isArray(action.id)) {
-                    this.setBuilderCartData({
-                        elements: newResult.elements.filter(
-                            (item) => !action.id.includes(item.doorId),
-                        ),
-                    });
-                }
-            }
+            // if (isObject(action) && action.action === "remove" && action.id) {
+            //     if (isString(action.id)) {
+            //         this.setBuilderCartData({
+            //             elements: newResult.elements.filter(
+            //                 (item) => item.doorId !== action.id,
+            //             ),
+            //         });
+            //     }
+            //     if (isArray(action.id)) {
+            //         this.setBuilderCartData({
+            //             elements: newResult.elements.filter(
+            //                 (item) => !action.id.includes(item.doorId),
+            //             ),
+            //         });
+            //     }
+            // }
             return;
         }
 

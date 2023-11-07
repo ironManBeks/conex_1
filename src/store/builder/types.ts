@@ -81,7 +81,7 @@ export type TBuilderCartActions =
     | "add-to-start"
     | "add-to-end"
     | {
-          id: string | string[];
+          id: number | number[];
           action: "remove";
       }
     | "update"

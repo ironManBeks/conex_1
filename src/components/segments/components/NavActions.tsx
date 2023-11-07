@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
-import { isEmpty, isNil } from "lodash";
+import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 
 import { P } from "@components/Text";
@@ -18,35 +18,35 @@ import {
 import { EButtonColor } from "@components/buttons/types";
 import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
-import { getStorage } from "@services/storage.service";
-import { BUILDER_CART } from "@consts/storageNamesContsts";
 import { AUTH_FORM_QUERY, SEARCH_QUERY } from "@consts/queryNamesConsts";
-import { TNullable } from "@globalTypes/commonTypes";
-import { TBuilderCartData } from "@store/builder/types";
 import { EAuthFormType } from "@components/globalComponents/AuthForm/types";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
-        const { authStore, builderStore, productsStore } = store as IRoot;
+        const { authStore, productsStore, orderStore } = store as IRoot;
         const { setSearchParams, searchParams } = productsStore;
-        const { userData, userDataFetching } = authStore;
-        const { builderCartData, setBuilderCartData } = builderStore;
+        const { isAuthorized, userData, userDataFetching } = authStore;
+        // const { builderCartData, setBuilderCartData } = builderStore;
+        const { doorsData, getDoorsData } = orderStore;
         const classPrefix = `nav-actions`;
         const router = useRouter();
-        const cartLength = builderCartData?.elements?.length || 0;
+        const cartLength = doorsData?.length || 0;
 
         const handleSearchChange = (value: string) => {
             setSearchParams({ ...searchParams, text: value });
         };
 
         useEffect(() => {
-            const cartData = getStorage(
-                BUILDER_CART,
-            ) as TNullable<TBuilderCartData>;
-            if (isNil(builderCartData) && cartData) {
-                setBuilderCartData(cartData);
+            // const cartData = getStorage(
+            //     BUILDER_CART,
+            // ) as TNullable<TBuilderCartData>;
+            // if (isNil(builderCartData) && cartData) {
+            //     setBuilderCartData(cartData);
+            // }
+            if (isAuthorized && !doorsData) {
+                getDoorsData();
             }
-        }, []);
+        }, [isAuthorized]);
 
         const handleSearch = (value: string) => {
             setSearchParams({ ...searchParams, text: value });

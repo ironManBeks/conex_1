@@ -6,12 +6,11 @@ import Container from "@components/globalComponents/Container";
 import { H2 } from "@components/Text";
 import Spin from "@components/globalComponents/Spin";
 import OrderEmpty from "./OrderEmpty";
-import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
 
+import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
-import { TGetOrderPriceRequest } from "@store/order/types";
-import { ProductPriceParamsMockup } from "src/mockups/ProductPriceMockup";
+import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
 
 const OrderLayout: FC<
     {
@@ -28,39 +27,54 @@ const OrderLayout: FC<
             leftSideContent,
             rightSideContent,
         }) => {
-            const { builderStore, authStore, orderStore, productsStore } =
-                store as IRoot;
-            const { builderCartData } = builderStore;
-            const { getDoorsData, getOrderPrice } = orderStore;
-            const { getProductPriceRequest } = productsStore;
+            const { authStore, orderStore, builderStore } = store as IRoot;
             const {
-                userDataFetching,
-                userCartDataFetching,
-                isAuthorized,
-                getUserCartData,
-            } = authStore;
+                doorsData,
+                setPriceParams,
+                priceParams,
+                doorsDataFetching,
+                createDoorRequestFetching,
+                createDoorRequest,
+                getDoorsData,
+            } = orderStore;
+            const { builderCartData, setElementsToBuilderCard } = builderStore;
+            const { userDataFetching } = authStore;
 
             useEffect(() => {
-                if (isAuthorized) {
-                    getDoorsData();
-                    getUserCartData();
+                if (doorsData?.length && !priceParams) {
+                    setPriceParams({
+                        items: doorsData.map((item) => ({
+                            id: item.id,
+                            quantity: 1,
+                        })),
+                    });
                 }
-            }, [isAuthorized]);
-
-            const getPriceParams: TGetOrderPriceRequest = {
-                items: [{ id: 42, quantity: 1 }],
-                code: "testpromocode",
-            };
+            }, [doorsData, priceParams]);
 
             useEffect(() => {
-                getOrderPrice(getPriceParams);
-                // ToDo Remove
-                getProductPriceRequest(ProductPriceParamsMockup);
-            }, []);
+                if (builderCartData?.elements.length) {
+                    createDoorRequest(
+                        convertDoorDataToCreateDoorRequest(
+                            builderCartData?.elements[0],
+                        ),
+                    ).then(() => {
+                        setElementsToBuilderCard(undefined, "clear");
+                        getDoorsData().then(({ data }) => {
+                            setPriceParams({
+                                ...priceParams,
+                                items: data.map((item) => ({
+                                    id: item.id,
+                                    quantity: 1,
+                                })),
+                            });
+                        });
+                    });
+                }
+            }, [builderCartData]);
 
             const content = (
                 <Container flexDirection="column">
-                    {builderCartData?.elements.length ? (
+                    {doorsData?.length ? (
                         <>
                             <H2>{title}</H2>
                             <div
@@ -89,7 +103,9 @@ const OrderLayout: FC<
                     pageClassPrefix={pageClassPrefix}
                     layoutClassName={ORDER_PAGE_CLASSPREFIX}
                 >
-                    {userDataFetching || userCartDataFetching ? (
+                    {userDataFetching ||
+                    doorsDataFetching ||
+                    createDoorRequestFetching ? (
                         <Container flexJustifyContent="center">
                             <Spin size="large" />
                         </Container>

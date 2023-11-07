@@ -59,7 +59,7 @@ const BuilderPage: FC<TStore> = inject("store")(
                 const { lastUpdate } = data.data;
 
                 if (lastUpdate !== adminLastUpdate) {
-                    // reset cart and builder data if admin was updated
+                    // reset cart and builder data if admin panel was updated
                     handleClearBuilderStorage();
                     removeStorage(BUILDER_CART);
                 }
