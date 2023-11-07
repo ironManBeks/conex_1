@@ -9,12 +9,14 @@ import { IRoot } from "@store/store";
 
 const Logout: FC<TLogout> = inject("store")(
     observer(({ store, component, pageLink }) => {
-        const { authStore } = store as IRoot;
+        const { authStore, orderStore } = store as IRoot;
         const { logOut } = authStore;
+        const { setDoorsData } = orderStore;
         const router = useRouter();
 
         const onClick = () => {
             logOut();
+            setDoorsData(null);
             if (pageLink) {
                 router.push(pageLink);
             } else router.push(PATH_HOME_PAGE);

@@ -18,7 +18,7 @@ import { showNotification } from "@helpers/notificarionHelper";
 
 export class OrderStore implements IOrderStore {
     doorsData: TNullable<TGetDoorsDataResponse> = null;
-    doorsDataFetching = true;
+    doorsDataFetching = false;
     createDoorRequestFetching = false;
     deleteDoorRequestFetching = false;
     createOrderRequestFetching = false;
