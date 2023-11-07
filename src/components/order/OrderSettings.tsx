@@ -25,7 +25,6 @@ import { EArrowDirection } from "@components/Icons/types";
 import { TOptionsListItem } from "@components/globalComponents/types";
 import { CHECKOUT_SUBMIT_BUTTON_ID } from "@components/pages/CheckoutPage/consts";
 import { EOrderPriceNames } from "@store/order/types";
-import { toJS } from "mobx";
 
 const OrderSettings: FC<TOrderSettings> = inject("store")(
     observer(({ store, placement }) => {

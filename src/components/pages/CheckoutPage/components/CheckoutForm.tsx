@@ -29,7 +29,7 @@ import { TCreateOrderRequest } from "@store/order/types";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const { authStore, productsStore, orderStore } = store as IRoot;
+        const { authStore, productsStore } = store as IRoot;
         const { userData, userCardsData, getUserCardsData } = authStore;
         const {
             getProductServiceRequest,
@@ -37,7 +37,6 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             productService,
             productDelivery,
         } = productsStore;
-        const { createOrderRequest } = orderStore;
         const router = useRouter();
 
         const methods = useForm<TCheckoutForm>({
@@ -66,6 +65,8 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                     extras: [{ extra: 1 }],
                     items: [{ item: 1 }],
                 };
+
+                console.log("params", params);
 
                 router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
                     showNotification({

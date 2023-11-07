@@ -2,7 +2,7 @@ import { FC, useEffect } from "react";
 import cn from "classnames";
 import Link from "next/link";
 import { inject, observer } from "mobx-react";
-import { isEmpty, isNil } from "lodash";
+import { isEmpty } from "lodash";
 import { useRouter } from "next/router";
 
 import { P } from "@components/Text";
@@ -18,11 +18,7 @@ import {
 import { EButtonColor } from "@components/buttons/types";
 import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
-import { getStorage } from "@services/storage.service";
-import { BUILDER_CART } from "@consts/storageNamesContsts";
 import { AUTH_FORM_QUERY, SEARCH_QUERY } from "@consts/queryNamesConsts";
-import { TNullable } from "@globalTypes/commonTypes";
-import { TBuilderCartData } from "@store/builder/types";
 import { EAuthFormType } from "@components/globalComponents/AuthForm/types";
 
 const NavActions: FC<TNavTypes> = inject("store")(

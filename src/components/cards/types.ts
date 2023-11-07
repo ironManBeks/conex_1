@@ -1,7 +1,6 @@
 import { ReactNode } from "react";
 
 import { TProductDoorData } from "@store/products/types";
-import { TNullable } from "@globalTypes/commonTypes";
 
 export type TProductSearchCard = {
     className?: string;
