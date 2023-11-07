@@ -43,30 +43,6 @@ export type TProductServiceResponse = {
     data: TProductService[];
 } & TResponseMeta;
 
-export enum EProductPriceNames {
-    additionalCharges = "additionalCharges",
-    tax = "tax",
-    total = "total",
-    shippingCost = "shippingCost",
-    discountCode = "discountCode",
-    grandTotal = "grandTotal",
-}
-
-export type TProductPrice = {
-    [EProductPriceNames.additionalCharges]: number;
-    [EProductPriceNames.tax]: number;
-    [EProductPriceNames.total]: number;
-    [EProductPriceNames.grandTotal]: number;
-    [EProductPriceNames.shippingCost]?: number;
-    [EProductPriceNames.discountCode]?: number;
-};
-
-export type TProductPriceParams = {
-    products: TProductDataDTO[];
-    discountCode?: string;
-    address?: string;
-};
-
 export type TProductDelivery = {
     id: number;
     name: string;
@@ -158,8 +134,6 @@ export interface IProductsStore {
     searchParams: TNullable<TSearchParams>;
     productService: TNullable<TProductServiceResponse>;
     productServiceFetching: boolean;
-    productPrice: TNullable<TProductPrice>;
-    productPriceFetching: boolean;
     productDelivery: TNullable<TProductDelivery[]>;
     productDeliveryFetching: boolean;
     additionalProductList: TNullable<TAdditionalProductList>;
@@ -179,12 +153,6 @@ export interface IProductsStore {
     getProductServiceRequest: () => Promise<
         AxiosResponse<TProductServiceResponse>
     >;
-    //
-    setProductPrice: (data: TNullable<TProductPrice>) => void;
-    setProductPriceFetching: (value: boolean) => void;
-    getProductPriceRequest: (
-        params: TProductPriceParams,
-    ) => Promise<AxiosResponse<TProductPrice>>;
     //
     setProductDelivery: (data: TNullable<TProductDelivery[]>) => void;
     setProductDeliveryFetching: (value: boolean) => void;

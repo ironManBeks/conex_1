@@ -17,7 +17,6 @@ import {
     TResetPasswordRequest,
     TSingleOrderData,
     TUpdateUserRequest,
-    TUserCartItem,
     TUserData,
 } from "./types";
 import { JWT_TOKEN, JWT_TOKEN_EXP } from "@consts/storageNamesContsts";
@@ -27,7 +26,6 @@ import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/co
 import { TNullable } from "@globalTypes/commonTypes";
 import { UserCardsDataMockup } from "../../mockups/AuthDataMockup";
 import { AccountOrdersMockup } from "../../mockups/AccountOrdersListMockup";
-import { UserCartDataMockup } from "../../mockups/UserCartDataMockup";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { copyWithout } from "@helpers/objectHelper";
 import { AccountSingleOrderMockup } from "../../mockups/AccountSingleOrderMockup";
@@ -44,8 +42,6 @@ export class AuthStore implements IAuthStore {
     selectedCard: TNullable<TPaymentCard> = null;
     userOrdersData: TNullable<TAccountOrderItem[]> = null;
     userOrdersDataFetching = true;
-    userCartData: TNullable<TUserCartItem[]> = null;
-    userCartDataFetching: boolean = false;
     updateUserRequestFetching: boolean = false;
     userSingleOrderData: TNullable<TSingleOrderData> = null;
     userSingleOrderDataFetching: boolean = false;
@@ -102,14 +98,6 @@ export class AuthStore implements IAuthStore {
 
     setUserOrdersDataFetching = (value: boolean): void => {
         this.userOrdersDataFetching = value;
-    };
-
-    setUserCartData = (data: TNullable<TUserCartItem[]>): void => {
-        this.userCartData = data;
-    };
-
-    setUserCartDataFetching = (value: boolean): void => {
-        this.userCartDataFetching = value;
     };
 
     setUpdateUserRequestFetching = (value: boolean): void => {
@@ -345,28 +333,6 @@ export class AuthStore implements IAuthStore {
             .finally(() => {
                 this.setUserOrdersData(AccountOrdersMockup[status]);
                 this.setUserOrdersDataFetching(false);
-            });
-    };
-
-    getUserCartData = (): Promise<AxiosResponse<TUserCartItem[]>> => {
-        this.setUserCartDataFetching(true);
-        return axiosInstance
-            .get("/user/cart123123")
-            .then((response: AxiosResponse<TUserCartItem[]>) => {
-                // const { data } = response;
-                // this.setUserCartData(data);
-                return response;
-            })
-            .catch((err) => {
-                // ToDo turn on !
-                // showAxiosNotificationError(err);
-                throw err;
-            })
-            .finally(() => {
-                this.setUserCartData(UserCartDataMockup);
-                setTimeout(() => {
-                    this.setUserCartDataFetching(false);
-                }, 300);
             });
     };
 

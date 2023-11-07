@@ -1,4 +1,4 @@
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import cn from "classnames";
 import { useRouter } from "next/router";
@@ -22,25 +22,51 @@ import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
 import { IconArrowSingle, IconCross } from "@components/Icons";
 import { EArrowDirection } from "@components/Icons/types";
-import { ProductPriceParamsMockup } from "../../mockups/ProductPriceMockup";
 import { TOptionsListItem } from "@components/globalComponents/types";
-import { EProductPriceNames } from "@store/products/types";
 import { CHECKOUT_SUBMIT_BUTTON_ID } from "@components/pages/CheckoutPage/consts";
+import { EOrderPriceNames } from "@store/order/types";
+import { toJS } from "mobx";
 
 const OrderSettings: FC<TOrderSettings> = inject("store")(
     observer(({ store, placement }) => {
-        const { commonStore, productsStore } = store as IRoot;
+        const { commonStore, orderStore } = store as IRoot;
         const { headerHeight } = commonStore;
-        const { productPrice, productPriceFetching, getProductPriceRequest } =
-            productsStore;
+        const {
+            orderPrice,
+            getOrderPrice,
+            orderPriceFetching,
+            deleteDoorRequestFetching,
+            priceParams,
+            setPriceParams,
+        } = orderStore;
         const classPrefix = `${ORDER_PAGE_CLASSPREFIX}_settings`;
         const router = useRouter();
         const [discountCode, setDiscountCode] = useState<string>();
         const [isDiscountApply, setIsDiscountApply] = useState(false);
 
-        if (!productPrice) {
-            return null;
-        }
+        useEffect(() => {
+            if (priceParams?.items.length) {
+                getOrderPrice({
+                    ...priceParams,
+                    items: priceParams.items.map((item) => ({
+                        ...item,
+                        quantity: item.quantity ? item.quantity : 1,
+                    })),
+                })
+                    .then(({ data }) => {
+                        if (data.code) {
+                            setIsDiscountApply(true);
+                        }
+                    })
+                    .catch(() => {
+                        setDiscountCode("");
+                        setPriceParams({
+                            ...priceParams,
+                            code: undefined,
+                        });
+                    });
+            }
+        }, [priceParams]);
 
         const handleDiscountCode = () => {
             let discountParams = discountCode;
@@ -49,24 +75,22 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                 setIsDiscountApply(false);
                 discountParams = undefined;
             }
-            getProductPriceRequest({
-                ...ProductPriceParamsMockup,
-                discountCode: discountParams,
-            }).finally(() => {
-                if (!isDiscountApply) {
-                    setIsDiscountApply(true);
-                }
-            });
+            if (priceParams) {
+                setPriceParams({
+                    ...priceParams,
+                    code: discountParams,
+                });
+            }
         };
 
         const renderPriceValue = (
-            fieldName: EProductPriceNames,
+            fieldName: EOrderPriceNames,
             valuePrefix?: string,
         ): TOptionsListItem | undefined => {
-            if (!isNil(productPrice[fieldName])) {
+            if (!isNil(orderPrice) && orderPrice[fieldName]) {
                 return {
                     label: ProductPriceLabels[fieldName],
-                    value: `${valuePrefix ?? ""}$${productPrice[fieldName]}`,
+                    value: `${valuePrefix ?? ""}$${orderPrice[fieldName]}`,
                 };
             }
         };
@@ -90,32 +114,20 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                         {
                             // list: renderOptionsList(),
                             list: [
-                                renderPriceValue(EProductPriceNames.total),
                                 renderPriceValue(
-                                    EProductPriceNames.additionalCharges,
-                                ),
-                                renderPriceValue(
-                                    EProductPriceNames.shippingCost,
-                                ),
-                                renderPriceValue(EProductPriceNames.tax),
-                                renderPriceValue(
-                                    EProductPriceNames.discountCode,
+                                    EOrderPriceNames.discount,
                                     "- ",
                                 ),
                             ],
                         },
                     ]}
                 />
-                {productPrice && (
+                {orderPrice && (
                     <AdditionalServices
                         options={[]}
                         totalOption={{
-                            label: ProductPriceLabels[
-                                EProductPriceNames.grandTotal
-                            ],
-                            value: `$${
-                                productPrice[EProductPriceNames.grandTotal]
-                            }`,
+                            label: ProductPriceLabels[EOrderPriceNames.amount],
+                            value: `$${orderPrice[EOrderPriceNames.amount]}`,
                         }}
                     />
                 )}
@@ -142,7 +154,7 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                             setDiscountCode(val);
                         }}
                         onAddonClick={handleDiscountCode}
-                        addonDisabled={!discountCode || productPriceFetching}
+                        addonDisabled={!discountCode}
                     />
                 )}
                 <div className={cn(`${classPrefix}__actions`)}>
@@ -150,8 +162,12 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                         <ButtonPrimary
                             color={EButtonColor.primary}
                             onClick={handlePlaceOrder}
-                            disabled={productPriceFetching}
-                            isLoading={productPriceFetching}
+                            isLoading={
+                                deleteDoorRequestFetching || orderPriceFetching
+                            }
+                            disabled={
+                                deleteDoorRequestFetching || orderPriceFetching
+                            }
                         >
                             Place an order
                         </ButtonPrimary>
@@ -170,27 +186,3 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
     }),
 );
 export default OrderSettings;
-
-// ToDo Remove
-// const renderOptionsList = useCallback((): TOptionsListItem[] => {
-//     const result: TOptionsListItem[] = [];
-//     if (!productPrice) {
-//         return result;
-//     }
-//
-//     const exceptions = [EProductPriceNames.grandTotal];
-//
-//     for (const key in productPrice) {
-//         const curKey = key as keyof TProductPrice;
-//         if (
-//             !isNil(productPrice[curKey]) &&
-//             !exceptions.includes(curKey)
-//         ) {
-//             result.push({
-//                 label: ProductPriceLabels[curKey],
-//                 value: `$${productPrice[curKey]}`,
-//             });
-//         }
-//     }
-//     return result;
-// }, [productPrice]);

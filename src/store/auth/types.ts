@@ -103,22 +103,6 @@ export type TGetUserSingleOrderRequest = {
     id: number;
 };
 
-export type TUserCartId = {
-    id: string;
-};
-
-export type TUserCartItem = {
-    title: string;
-    price: number;
-    img: string;
-    options: {
-        title: string;
-        value: string;
-    }[];
-    createDate: string;
-    count: number;
-} & TUserCartId;
-
 export type TUpdateUserRequest = {
     first_name: string;
     last_name: string;
@@ -141,8 +125,6 @@ export interface IAuthStore {
     selectedCard: TNullable<TPaymentCard>;
     userOrdersData: TNullable<TAccountOrderItem[]>;
     userOrdersDataFetching: boolean;
-    userCartData: TNullable<TUserCartItem[]>;
-    userCartDataFetching: boolean;
     updateUserRequestFetching: boolean;
     userSingleOrderData: TNullable<TSingleOrderData>;
     userSingleOrderDataFetching: boolean;
@@ -173,10 +155,6 @@ export interface IAuthStore {
     ) => Promise<AxiosResponse<TAccountOrderItem[]>>;
     setUserOrdersData: (data: TNullable<TAccountOrderItem[]>) => void;
     setUserOrdersDataFetching: (value: boolean) => void;
-    //
-    getUserCartData: () => Promise<AxiosResponse<TUserCartItem[]>>;
-    setUserCartData: (data: TNullable<TUserCartItem[]>) => void;
-    setUserCartDataFetching: (value: boolean) => void;
     //
     getUserSingleOrderData: (
         params: TGetUserSingleOrderRequest,

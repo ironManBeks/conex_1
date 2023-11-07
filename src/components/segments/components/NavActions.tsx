@@ -27,26 +27,30 @@ import { EAuthFormType } from "@components/globalComponents/AuthForm/types";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
-        const { authStore, builderStore, productsStore } = store as IRoot;
+        const { authStore, productsStore, orderStore } = store as IRoot;
         const { setSearchParams, searchParams } = productsStore;
-        const { userData, userDataFetching } = authStore;
-        const { builderCartData, setBuilderCartData } = builderStore;
+        const { isAuthorized, userData, userDataFetching } = authStore;
+        // const { builderCartData, setBuilderCartData } = builderStore;
+        const { doorsData, getDoorsData } = orderStore;
         const classPrefix = `nav-actions`;
         const router = useRouter();
-        const cartLength = builderCartData?.elements?.length || 0;
+        const cartLength = doorsData?.length || 0;
 
         const handleSearchChange = (value: string) => {
             setSearchParams({ ...searchParams, text: value });
         };
 
         useEffect(() => {
-            const cartData = getStorage(
-                BUILDER_CART,
-            ) as TNullable<TBuilderCartData>;
-            if (isNil(builderCartData) && cartData) {
-                setBuilderCartData(cartData);
+            // const cartData = getStorage(
+            //     BUILDER_CART,
+            // ) as TNullable<TBuilderCartData>;
+            // if (isNil(builderCartData) && cartData) {
+            //     setBuilderCartData(cartData);
+            // }
+            if (isAuthorized && !doorsData) {
+                getDoorsData();
             }
-        }, []);
+        }, [isAuthorized]);
 
         const handleSearch = (value: string) => {
             setSearchParams({ ...searchParams, text: value });

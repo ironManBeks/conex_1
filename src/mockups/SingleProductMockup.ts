@@ -57,7 +57,7 @@ export const SingleProductMockup: TSingleProduct = {
                 { title: "Weight of goods (lb / kg)", value: "10,8 / 24" },
                 { title: "Short", value: 123 },
                 {
-                    title: "loooong text asfg aefg arg argargargargarg argargafg aefg arg argargargargarg argarga rgarg arg arg",
+                    title: "loooong text asfg  arg arg",
                     value: "Item without clasp/lock",
                 },
                 { title: "Degree of moisture resistance", value: "Low" },
@@ -69,7 +69,7 @@ export const SingleProductMockup: TSingleProduct = {
                 { title: "Weight of goods (lb / kg)", value: "10,8 / 24" },
                 { title: "Short", value: 123 },
                 {
-                    title: "loooong text asfg aefg arg argargargargarg argargargarg arg arg",
+                    title: "loooong text asfgrg argargargarg arg arg",
                     value: "Item without clasp/lock",
                 },
                 { title: "Degree of moisture resistance", value: "Low" },

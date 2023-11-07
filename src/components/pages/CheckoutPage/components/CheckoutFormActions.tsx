@@ -13,21 +13,20 @@ const CheckoutFormActions: FC<
 > = inject("store")(
     observer(({ store, onSubmitClick }) => {
         const { productsStore } = store as IRoot;
-        const { productPriceFetching } = productsStore;
         const [portalContainer, setPortalContainer] =
             useState<HTMLElement | null>(null);
 
         useEffect(() => {
-            setPortalContainer(
-                document.getElementById(CHECKOUT_SUBMIT_BUTTON_ID),
-            );
-        }, [document]);
+            if (document) {
+                setPortalContainer(
+                    document.getElementById(CHECKOUT_SUBMIT_BUTTON_ID),
+                );
+            }
+        }, []);
 
         const component = (
             <ButtonPrimary
                 type="submit"
-                disabled={productPriceFetching}
-                isLoading={productPriceFetching}
                 color={EButtonColor.primary}
                 onClick={onSubmitClick}
             >
@@ -35,7 +34,7 @@ const CheckoutFormActions: FC<
             </ButtonPrimary>
         );
 
-        return document && portalContainer
+        return portalContainer
             ? createPortal(component, portalContainer)
             : component;
     }),

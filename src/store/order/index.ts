@@ -6,14 +6,15 @@ import {
     TCreateDoorRequest,
     TCreateDoorResponse,
     TCreateOrderRequest,
+    TDeleteDoorResponse,
     TGetDoorsDataResponse,
     TGetOrderPriceRequest,
     TGetOrderPriceResponse,
-    TOrderPrice,
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
+import { showNotification } from "@helpers/notificarionHelper";
 
 export class OrderStore implements IOrderStore {
     doorsData: TNullable<TGetDoorsDataResponse> = null;
@@ -21,8 +22,9 @@ export class OrderStore implements IOrderStore {
     createDoorRequestFetching = false;
     deleteDoorRequestFetching = false;
     createOrderRequestFetching = false;
-    orderPrice: TNullable<TOrderPrice> = null;
+    orderPrice: TNullable<TGetOrderPriceResponse> = null;
     orderPriceFetching = false;
+    priceParams: TNullable<TGetOrderPriceRequest> = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -56,6 +58,10 @@ export class OrderStore implements IOrderStore {
         this.orderPriceFetching = value;
     };
 
+    setPriceParams = (data: TNullable<TGetOrderPriceRequest>): void => {
+        this.priceParams = data;
+    };
+
     // -------------------------------------------------------------------------------
 
     getDoorsData = (): Promise<AxiosResponse<TGetDoorsDataResponse>> => {
@@ -78,7 +84,6 @@ export class OrderStore implements IOrderStore {
     createDoorRequest = (
         params: TCreateDoorRequest,
     ): Promise<AxiosResponse<TCreateDoorResponse>> => {
-        console.log("123");
         this.setCreateDoorRequestFetching(true);
         return axiosInstance
             .post("/doors", { data: params })
@@ -94,15 +99,28 @@ export class OrderStore implements IOrderStore {
             });
     };
 
-    deleteDoorRequest = (id: number): Promise<AxiosResponse> => {
+    deleteDoorRequest = (
+        id: number,
+        showNotifications?: boolean,
+    ): Promise<AxiosResponse<TDeleteDoorResponse>> => {
         this.setDeleteDoorRequestFetching(true);
         return axiosInstance
             .delete(`/doors/${id}`)
-            .then((response: AxiosResponse) => {
+            .then((response: AxiosResponse<TDeleteDoorResponse>) => {
+                if (showNotifications) {
+                    showNotification({
+                        mainProps: {
+                            type: "success",
+                            message: "Door successfully deleted",
+                        },
+                    });
+                }
                 return response;
             })
             .catch((err) => {
-                showAxiosNotificationError(err);
+                if (showNotifications) {
+                    showAxiosNotificationError(err);
+                }
                 throw err;
             })
             .finally(() => {
@@ -118,7 +136,6 @@ export class OrderStore implements IOrderStore {
             .post(`/order/cart`, params)
             .then((response: AxiosResponse<TGetOrderPriceResponse>) => {
                 const { data } = response;
-                console.log("response_____", response);
                 this.setOrderPrice(data);
                 return response;
             })

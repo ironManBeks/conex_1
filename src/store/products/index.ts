@@ -7,8 +7,6 @@ import {
     TGetProductDeliveryResponse,
     TProductDelivery,
     TProductDoorData,
-    TProductPrice,
-    TProductPriceParams,
     TProductServiceResponse,
     TSearchParams,
     TSingleProduct,
@@ -17,7 +15,6 @@ import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
 
 import { ProductSearchListDataMockup } from "../../mockups/ProductSearchListDataMockup";
-import { ProductPriceMockup } from "../../mockups/ProductPriceMockup";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
 import { SingleProductMockup } from "../../mockups/SingleProductMockup";
 import { AdditionalProductListMockup } from "src/mockups/AdditionalProductListMockup";
@@ -28,8 +25,6 @@ export class ProductsStore implements IProductsStore {
     productListFetching = true;
     productService: TNullable<TProductServiceResponse> = null;
     productServiceFetching = true;
-    productPrice: TNullable<TProductPrice> = null;
-    productPriceFetching = true;
     productDelivery: TNullable<TProductDelivery[]> = null;
     productDeliveryFetching = true;
     singleProduct: TNullable<TSingleProduct> = null;
@@ -59,14 +54,6 @@ export class ProductsStore implements IProductsStore {
 
     setSearchParams = (value: TNullable<TSearchParams>): void => {
         this.searchParams = value;
-    };
-
-    setProductPrice = (data: TNullable<TProductPrice>): void => {
-        this.productPrice = data;
-    };
-
-    setProductPriceFetching = (value: boolean): void => {
-        this.productPriceFetching = value;
     };
 
     setProductDelivery = (data: TNullable<TProductDelivery[]>): void => {
@@ -138,33 +125,6 @@ export class ProductsStore implements IProductsStore {
             });
     };
 
-    getProductPriceRequest = (
-        params: TProductPriceParams,
-    ): Promise<AxiosResponse<TProductPrice>> => {
-        this.setProductPriceFetching(true);
-        return axiosInstance
-            .get("/product/price", { params })
-            .then((response: AxiosResponse<TProductPrice>) => {
-                // const { data } = response;
-                return response;
-            })
-            .catch((err) => {
-                // showAxiosNotificationError(err);
-                throw err;
-            })
-            .finally(() => {
-                const data = { ...ProductPriceMockup };
-                if (params.discountCode) {
-                    data.discountCode = 20;
-                }
-                if (params.address) {
-                    data.shippingCost = 40;
-                }
-                this.setProductPrice(data);
-                this.setProductPriceFetching(false);
-            });
-    };
-
     getProductDeliveryRequest = (): Promise<
         AxiosResponse<TGetProductDeliveryResponse>
     > => {
@@ -206,7 +166,7 @@ export class ProductsStore implements IProductsStore {
                 this.setSingleProduct(SingleProductMockup);
                 setTimeout(() => {
                     this.setSingleProductFetching(false);
-                }, 300);
+                }, 100);
             });
     };
 

@@ -67,16 +67,25 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                     items: [{ item: 1 }],
                 };
 
-                createOrderRequest(params).then(() => {
-                    router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
-                        showNotification({
-                            mainProps: {
-                                message: `Your order has being shipped`,
-                                description: `You can view your orders on this page`,
-                            },
-                        });
+                router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
+                    showNotification({
+                        mainProps: {
+                            message: `Your order has being shipped`,
+                            description: `You can view your orders on this page`,
+                        },
                     });
                 });
+
+                // createOrderRequest(params).then(() => {
+                //     router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
+                //         showNotification({
+                //             mainProps: {
+                //                 message: `Your order has being shipped`,
+                //                 description: `You can view your orders on this page`,
+                //             },
+                //         });
+                //     });
+                // });
             }
         };
 

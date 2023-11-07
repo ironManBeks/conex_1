@@ -155,7 +155,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
 
                 setResultDoorData(updatedResultDoorData);
 
-                //
+                //______________________________________________________________
                 // If last step and no queue (END -> go to cart)
                 //
                 if (
@@ -234,7 +234,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
-                //
+                // ______________________________________________________________
                 // If first (main) step
                 //
                 if (!stepHistory.length) {
@@ -253,7 +253,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                     return;
                 }
 
-                //
+                //______________________________________________________________
                 // In first way from the element, then from the queue
                 //
                 if (stepHistory.length) {
@@ -272,7 +272,7 @@ const BuilderActions: FC<TBuilderCompProps> = inject("store")(
                             return;
                         }
                     } else {
-                        //
+                        //______________________________________________________________
                         // If way has steps in queue
                         //
                         if (stepQueue.length) {
