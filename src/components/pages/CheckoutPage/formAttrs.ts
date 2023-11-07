@@ -62,7 +62,7 @@ export type TCheckoutFormDetails = {
 export type TCheckoutFormShipping = {
     [ECheckoutFormFieldsNames.deliveryService]?: string;
     [ECheckoutFormFieldsNames.state]?: string;
-    [ECheckoutFormFieldsNames.city]: string;
+    [ECheckoutFormFieldsNames.city]?: string;
     [ECheckoutFormFieldsNames.streetAddress]: string;
     [ECheckoutFormFieldsNames.commentsOrder]?: string;
 };
@@ -130,7 +130,7 @@ export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
             [ECheckoutFormFieldsNames.city]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
-                .required(requiredText)
+                // .required(requiredText)
                 .trim(),
             [ECheckoutFormFieldsNames.streetAddress]: yup
                 .string()
