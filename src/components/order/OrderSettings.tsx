@@ -52,8 +52,8 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                         quantity: item.quantity ? item.quantity : 1,
                     })),
                 })
-                    .then(({ data }) => {
-                        if (data.code) {
+                    .then(() => {
+                        if (priceParams.code) {
                             setIsDiscountApply(true);
                         }
                     })
