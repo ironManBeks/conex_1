@@ -27,6 +27,15 @@
       display: flex;
       flex-direction: column;
       gap: space(4);
+      .collapsible-block{
+        &_wrapper{
+          margin-top: space(2);
+        }
+        &_title{
+          font-size: $font-size-sm;
+          line-height: $line-height-md;
+        }
+      }
     }
     &__actions{
       margin-top: auto;

@@ -17,6 +17,7 @@ const CollapsibleBlockWithTitle = ({
     children,
     defaultOpen = false,
     onOpenChange,
+    titlePosition = "top",
 }: PropsWithChildren<TCollapsibleBlockWithTitleProps>) => {
     const classPrefix = `collapsible-block`;
     const contentRef = useRef<HTMLDivElement>(null);
@@ -40,25 +41,29 @@ const CollapsibleBlockWithTitle = ({
         }
     };
 
+    const titleContent = (
+        <H4
+            onClick={() => {
+                handleStatusOpen();
+            }}
+            className={cn(`${classPrefix}_title`, `_${titlePosition}`)}
+        >
+            {title}
+            <IconArrowSingle
+                direction={
+                    isOpen ? EArrowDirection.top : EArrowDirection.bottom
+                }
+            />
+        </H4>
+    );
+
     return (
         <div
             className={cn(`${classPrefix}_wrapper`, wrapperClassName, {
                 _open: isOpen,
             })}
         >
-            <H4
-                onClick={() => {
-                    handleStatusOpen();
-                }}
-                className={`${classPrefix}_title`}
-            >
-                {title}
-                <IconArrowSingle
-                    direction={
-                        isOpen ? EArrowDirection.top : EArrowDirection.bottom
-                    }
-                />
-            </H4>
+            {titlePosition === "top" && titleContent}
             <Transition in={isOpen} timeout={0}>
                 {(state) => (
                     <div
@@ -78,6 +83,7 @@ const CollapsibleBlockWithTitle = ({
                     </div>
                 )}
             </Transition>
+            {titlePosition === "bottom" && titleContent}
         </div>
     );
 };
