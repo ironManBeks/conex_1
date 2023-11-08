@@ -44,11 +44,20 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             defaultValues: checkoutFormDefaultValues(userData),
         });
 
-        const { handleSubmit, watch } = methods;
+        const {
+            handleSubmit,
+            watch,
+            formState: { errors },
+        } = methods;
+
+        useEffect(() => {
+            console.log("errors", errors);
+        }, [errors]);
 
         const getModeValue = watch(ECheckoutFormFieldsNames.getMode);
 
-        const onSubmit: SubmitHandler<TCheckoutForm> = () => {
+        const onSubmit: SubmitHandler<TCheckoutForm> = (data) => {
+            console.log("data", data);
             if (userData) {
                 const params: TCreateOrderRequest = {
                     userInfo: {

@@ -56,6 +56,7 @@ export type TGetOrderPriceResponse = {
     [EOrderPriceNames.discount]: number;
     code: TNullable<string>;
     percent: number;
+    error?: string;
 };
 
 export type TDeleteDoorResponse = { data: { id: number } } & TResponseMeta;

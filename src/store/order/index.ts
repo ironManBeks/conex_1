@@ -136,7 +136,16 @@ export class OrderStore implements IOrderStore {
             .post(`/order/cart`, params)
             .then((response: AxiosResponse<TGetOrderPriceResponse>) => {
                 const { data } = response;
-                this.setOrderPrice(data);
+                if (data.error) {
+                    showNotification({
+                        mainProps: {
+                            type: "error",
+                            message: data.error,
+                        },
+                    });
+                } else {
+                    this.setOrderPrice(data);
+                }
                 return response;
             })
             .catch((err) => {
