@@ -37,8 +37,8 @@ export type TCreateOrderRequest = {
         address: string;
         delivery_company: number;
     };
-    extras: { extra: number }[];
-    items: { item: number }[];
+    extras: { extra: number; quantity?: number }[];
+    items: { item: number; quantity: number }[];
 };
 
 export type TGetOrderPriceRequest = {

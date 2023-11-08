@@ -67,26 +67,27 @@ export type TCheckoutFormAdditionalServices = {
     [ECheckoutFormFieldsNames.additionalServices]: string[];
 };
 
+type TPickupOrShipping =
+    | TReferenceShippingProps<
+          ECheckoutGetMode.storePickup,
+          {
+              [ECheckoutFormFieldsNames.state]: string;
+              [ECheckoutFormFieldsNames.city]: string;
+          }
+      >
+    | TReferenceShippingProps<
+          ECheckoutGetMode.delivery,
+          {
+              [ECheckoutFormFieldsNames.deliveryService]?: string;
+              [ECheckoutFormFieldsNames.streetAddress]: string;
+              [ECheckoutFormFieldsNames.commentsOrder]?: string;
+          }
+      >;
+
 export type TCheckoutForm = TCheckoutFormDetails &
     TCheckoutFormPayment &
     TCheckoutFormAdditionalServices &
-    (
-        | TReferenceShippingProps<
-              ECheckoutGetMode.storePickup,
-              {
-                  [ECheckoutFormFieldsNames.state]: string;
-                  [ECheckoutFormFieldsNames.city]: string;
-              }
-          >
-        | TReferenceShippingProps<
-              ECheckoutGetMode.delivery,
-              {
-                  [ECheckoutFormFieldsNames.deliveryService]?: string;
-                  [ECheckoutFormFieldsNames.streetAddress]: string;
-                  [ECheckoutFormFieldsNames.commentsOrder]?: string;
-              }
-          >
-    );
+    TPickupOrShipping;
 
 export const checkoutFormDefaultValues = (
     data?: TNullable<TUserData>,

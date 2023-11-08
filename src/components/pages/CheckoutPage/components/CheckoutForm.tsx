@@ -29,8 +29,9 @@ import { TCreateOrderRequest } from "@store/order/types";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
-        const { authStore, productsStore } = store as IRoot;
+        const { authStore, productsStore, orderStore } = store as IRoot;
         const { userData, userCardsData, getUserCardsData } = authStore;
+        const { createOrderRequest, priceParams } = orderStore;
         const {
             getProductServiceRequest,
             getProductDeliveryRequest,
@@ -57,26 +58,43 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
         const getModeValue = watch(ECheckoutFormFieldsNames.getMode);
 
         const onSubmit: SubmitHandler<TCheckoutForm> = (data) => {
-            console.log("data", data);
-            if (userData) {
-                const params: TCreateOrderRequest = {
-                    userInfo: {
-                        firstName: userData.first_name,
-                        lastName: userData.last_name,
-                        email: userData.email,
-                        phone: userData.phone,
-                        promo: true,
-                    },
-                    shipping: {
-                        address: "address 1",
-                        delivery_company: 1,
-                    },
-                    extras: [{ extra: 1 }],
-                    items: [{ item: 1 }],
+            const modifiedItems =
+                priceParams?.items.map(({ id, quantity }) => ({
+                    item: id,
+                    quantity,
+                })) || [];
+
+            const modifiedExtras = data[
+                ECheckoutFormFieldsNames.additionalServices
+            ].map((extra) => ({ extra: Number(extra), quantity: 1 }));
+
+            const params: TCreateOrderRequest = {
+                userInfo: {
+                    firstName: data[ECheckoutFormFieldsNames.firstName],
+                    lastName: data[ECheckoutFormFieldsNames.lastName],
+                    email: data[ECheckoutFormFieldsNames.email],
+                    phone: data[ECheckoutFormFieldsNames.phone],
+                    promo: true,
+                },
+                shipping: {
+                    address: "",
+                    delivery_company: 0,
+                },
+                extras: modifiedExtras,
+                items: modifiedItems,
+            };
+
+            if (
+                data[ECheckoutFormFieldsNames.getMode] ===
+                ECheckoutGetMode.delivery
+            ) {
+                params.shipping = {
+                    address: data[ECheckoutFormFieldsNames.streetAddress],
+                    delivery_company: 1,
                 };
+            }
 
-                console.log("params", params);
-
+            createOrderRequest(params).then(() => {
                 router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
                     showNotification({
                         mainProps: {
@@ -85,18 +103,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                         },
                     });
                 });
-
-                // createOrderRequest(params).then(() => {
-                //     router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
-                //         showNotification({
-                //             mainProps: {
-                //                 message: `Your order has being shipped`,
-                //                 description: `You can view your orders on this page`,
-                //             },
-                //         });
-                //     });
-                // });
-            }
+            });
         };
 
         useEffect(() => {
