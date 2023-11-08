@@ -59,10 +59,6 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                     })
                     .catch(() => {
                         setDiscountCode("");
-                        setPriceParams({
-                            ...priceParams,
-                            code: undefined,
-                        });
                     });
             }
         }, [priceParams]);

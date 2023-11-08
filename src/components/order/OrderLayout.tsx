@@ -11,6 +11,9 @@ import { ORDER_PAGE_CLASSPREFIX } from "@components/order/consts";
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
 import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
+import { getStorage, setStorage } from "@services/storage.service";
+import { BUILDER_UNAUTHORIZED_CART } from "@consts/storageNamesContsts";
+import { TNullable } from "@globalTypes/commonTypes";
 
 const OrderLayout: FC<
     {
@@ -38,7 +41,7 @@ const OrderLayout: FC<
                 getDoorsData,
             } = orderStore;
             const { builderCartData, setElementsToBuilderCard } = builderStore;
-            const { userDataFetching } = authStore;
+            const { userDataFetching, isAuthorized } = authStore;
 
             useEffect(() => {
                 if (doorsData?.length && !priceParams) {
@@ -57,17 +60,38 @@ const OrderLayout: FC<
                         convertDoorDataToCreateDoorRequest(
                             builderCartData?.elements[0],
                         ),
-                    ).then(() => {
+                    ).then(({ data }) => {
                         setElementsToBuilderCard(undefined, "clear");
-                        getDoorsData().then(({ data }) => {
-                            setPriceParams({
-                                ...priceParams,
-                                items: data.map((item) => ({
-                                    id: item.id,
-                                    quantity: 1,
-                                })),
+                        if (!isAuthorized) {
+                            const unauthorizedCart =
+                                (getStorage(
+                                    BUILDER_UNAUTHORIZED_CART,
+                                ) as TNullable<number[]>) || [];
+
+                            setStorage(BUILDER_UNAUTHORIZED_CART, [
+                                ...unauthorizedCart,
+                                data.id,
+                            ]);
+                            getDoorsData().then(({ data }) => {
+                                setPriceParams({
+                                    ...priceParams,
+                                    items: data.map((item) => ({
+                                        id: item.id,
+                                        quantity: 1,
+                                    })),
+                                });
                             });
-                        });
+                        } else {
+                            getDoorsData().then(({ data }) => {
+                                setPriceParams({
+                                    ...priceParams,
+                                    items: data.map((item) => ({
+                                        id: item.id,
+                                        quantity: 1,
+                                    })),
+                                });
+                            });
+                        }
                     });
                 }
             }, [builderCartData]);
