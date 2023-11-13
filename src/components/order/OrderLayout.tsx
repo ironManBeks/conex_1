@@ -12,7 +12,10 @@ import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
 import { convertDoorDataToCreateDoorRequest } from "@helpers/orderHelper";
 import { getStorage, setStorage } from "@services/storage.service";
-import { BUILDER_UNAUTHORIZED_CART } from "@consts/storageNamesContsts";
+import {
+    BUILDER_UNAUTHORIZED_CART_ID,
+    BUILDER_UNAUTHORIZED_DOORS_IDS,
+} from "@consts/storageNamesContsts";
 import { TNullable } from "@globalTypes/commonTypes";
 
 const OrderLayout: FC<
@@ -33,26 +36,17 @@ const OrderLayout: FC<
             const { authStore, orderStore, builderStore } = store as IRoot;
             const {
                 doorsData,
-                setPriceParams,
-                priceParams,
                 doorsDataFetching,
                 createDoorRequestFetching,
                 createDoorRequest,
                 getDoorsData,
+                createOrderCart,
+                orderCart,
+                getOrderCart,
             } = orderStore;
             const { builderCartData, setElementsToBuilderCard } = builderStore;
-            const { userDataFetching, isAuthorized } = authStore;
-
-            useEffect(() => {
-                if (doorsData?.length && !priceParams) {
-                    setPriceParams({
-                        items: doorsData.map((item) => ({
-                            id: item.id,
-                            quantity: 1,
-                        })),
-                    });
-                }
-            }, [doorsData, priceParams]);
+            const { userDataFetching, isAuthorized, userData, setUserData } =
+                authStore;
 
             useEffect(() => {
                 if (builderCartData?.elements.length) {
@@ -63,32 +57,69 @@ const OrderLayout: FC<
                     ).then(({ data }) => {
                         setElementsToBuilderCard(undefined, "clear");
                         if (!isAuthorized) {
-                            const unauthorizedCart =
+                            // INFO(unauthorized user): add doorId to doors ids in storage
+                            const unauthorizedCartId = getStorage(
+                                BUILDER_UNAUTHORIZED_CART_ID,
+                            ) as string | undefined;
+
+                            const unauthorizedDoorsIds =
                                 (getStorage(
-                                    BUILDER_UNAUTHORIZED_CART,
+                                    BUILDER_UNAUTHORIZED_DOORS_IDS,
                                 ) as TNullable<number[]>) || [];
 
-                            setStorage(BUILDER_UNAUTHORIZED_CART, [
-                                ...unauthorizedCart,
+                            setStorage(BUILDER_UNAUTHORIZED_DOORS_IDS, [
+                                ...unauthorizedDoorsIds,
                                 data.id,
                             ]);
-                            getDoorsData().then(({ data }) => {
-                                setPriceParams({
-                                    ...priceParams,
-                                    items: data.map((item) => ({
-                                        id: item.id,
+
+                            const idsAsParams = [
+                                ...unauthorizedDoorsIds,
+                                data.id,
+                            ].join(",");
+
+                            getDoorsData({
+                                ids: idsAsParams,
+                            }).then(({ data: doorsData }) => {
+                                createOrderCart({
+                                    items: doorsData.map(({ id }) => ({
+                                        id,
                                         quantity: 1,
                                     })),
+                                    // INFO(unauthorized user): if userId doesn't exist then send undefined it will create new cart in back end
+                                    cartId: unauthorizedCartId
+                                        ? Number(unauthorizedCartId)
+                                        : undefined,
+                                }).then(({ data }) => {
+                                    // INFO(unauthorized user): after cart is created or updated, create cartId in storage (if it doesn't exist) then make request for cart with cartId
+                                    if (!unauthorizedCartId)
+                                        setStorage(
+                                            BUILDER_UNAUTHORIZED_CART_ID,
+                                            data.cartId,
+                                        );
+
+                                    getOrderCart(data.cartId);
                                 });
                             });
                         } else {
-                            getDoorsData().then(({ data }) => {
-                                setPriceParams({
-                                    ...priceParams,
-                                    items: data.map((item) => ({
-                                        id: item.id,
-                                        quantity: 1,
+                            getDoorsData().then(({ data: doorsData }) => {
+                                createOrderCart({
+                                    items: doorsData.map(({ id }) => ({
+                                        id,
+                                        quantity:
+                                            orderCart?.items.find(
+                                                (item) => item.id === id,
+                                            )?.quantity || 1,
                                     })),
+                                    cartId: userData?.cartId,
+                                }).then(({ data }) => {
+                                    if (userData) {
+                                        setUserData({
+                                            ...userData,
+                                            cartId: data.cartId,
+                                        });
+
+                                        getOrderCart(data.cartId);
+                                    }
                                 });
                             });
                         }

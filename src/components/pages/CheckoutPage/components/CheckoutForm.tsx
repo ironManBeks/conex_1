@@ -26,12 +26,26 @@ import { IRoot } from "@store/store";
 import { PATH_MY_ACCOUNT_ORDERS_PAGE } from "@consts/pathsConsts";
 import { showNotification } from "@helpers/notificarionHelper";
 import { TCreateOrderRequest } from "@store/order/types";
+import { getStorage, removeStorage } from "@services/storage.service";
+import {
+    BUILDER_UNAUTHORIZED_CART_ID,
+    BUILDER_UNAUTHORIZED_DOORS_IDS,
+} from "@consts/storageNamesContsts";
+import { TNullable } from "@globalTypes/commonTypes";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { authStore, productsStore, orderStore } = store as IRoot;
-        const { userData, userCardsData, getUserCardsData } = authStore;
-        const { createOrderRequest, priceParams } = orderStore;
+        const { userData, userCardsData, getUserCardsData, isAuthorized } =
+            authStore;
+        const {
+            createOrderRequest,
+            getOrderCart,
+            getDoorsData,
+            orderCart,
+            deleteOrderCart,
+            deleteDoorRequest,
+        } = orderStore;
         const {
             getProductServiceRequest,
             getProductDeliveryRequest,
@@ -59,7 +73,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
 
         const onSubmit: SubmitHandler<TCheckoutForm> = (data) => {
             const modifiedItems =
-                priceParams?.items.map(({ id, quantity }) => ({
+                orderCart?.items.map(({ id, quantity }) => ({
                     item: id,
                     quantity,
                 })) || [];
@@ -96,6 +110,27 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
 
             createOrderRequest(params).then(() => {
                 router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
+                    if (isAuthorized && userData) {
+                        deleteOrderCart(userData.cartId);
+                        getOrderCart().then(() => getDoorsData());
+                        const doorsId = orderCart?.items.map(({ id }) => id);
+                        doorsId?.length && deleteDoorRequest(doorsId);
+                    } else {
+                        const unauthorizedCartId = getStorage(
+                            BUILDER_UNAUTHORIZED_CART_ID,
+                        ) as string | undefined;
+
+                        const unauthorizedDoorsIds =
+                            (getStorage(
+                                BUILDER_UNAUTHORIZED_DOORS_IDS,
+                            ) as TNullable<number[]>) || [];
+
+                        removeStorage(BUILDER_UNAUTHORIZED_CART_ID);
+                        removeStorage(BUILDER_UNAUTHORIZED_DOORS_IDS);
+                        deleteDoorRequest(unauthorizedDoorsIds);
+                        deleteOrderCart(Number(unauthorizedCartId));
+                    }
+
                     showNotification({
                         mainProps: {
                             message: `Your order has being shipped`,

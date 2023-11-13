@@ -3,13 +3,9 @@ import {
     EAccountOrderMoneyStatus,
     EAccountOrderStatus,
     EAccountOrderStatusTimelapse,
-    TAccountOrderItem,
 } from "@store/auth/types";
 
-export const AccountOrdersMockup: Record<
-    ESegmentedOptionsNames,
-    TAccountOrderItem[]
-> = {
+export const AccountOrdersMockup = {
     [ESegmentedOptionsNames.all]: [
         {
             id: 1,

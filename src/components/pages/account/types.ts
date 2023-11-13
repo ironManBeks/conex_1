@@ -6,8 +6,8 @@ export type TAccountLayoutProps = TSectionTypes;
 
 export enum ESegmentedOptionsNames {
     all = "all",
-    transit = "transit",
-    inProgress = "inProgress",
+    transit = "in transit",
+    inProgress = "in progress",
     completed = "completed",
 }
 

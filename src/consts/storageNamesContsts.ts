@@ -11,4 +11,5 @@ export const BUILDER_ADMIN_LAST_UPDATE = "builderLastUpdate";
 export const BUILDER_CART = "builderCart"; // TNullable<TBuilderCartData>
 export const EDIT_BUILDER_CART_ITEM_DATA = "editBuilderCartItemData"; // TNullable<TEditBuilderCartItemData>
 // INFO: If user is not authorzied set created doors to localStorage
-export const BUILDER_UNAUTHORIZED_CART = "builderUnauthorizedCart";
+export const BUILDER_UNAUTHORIZED_DOORS_IDS = "builderUnauthorizedDoorsIds";
+export const BUILDER_UNAUTHORIZED_CART_ID = "builderUnauthorizedCart";

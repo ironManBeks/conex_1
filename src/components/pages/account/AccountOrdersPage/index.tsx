@@ -18,18 +18,20 @@ import { SegmentedLabeledOption } from "antd/lib/segmented";
 import { notImplemented } from "@helpers/notImplemented";
 import { ESegmentedOptionsNames } from "../types";
 
-const AccountPaymentPage: FC<TStore> = inject("store")(
+const AccountOrdersPage: FC<TStore> = inject("store")(
     observer(({ store }) => {
         const { authStore } = store as IRoot;
-        const { userOrdersData, userOrdersDataFetching, getUserOrdersData } =
-            authStore;
+        const {
+            userOrdersData,
+            userOrdersDataFetching,
+            getUserOrdersData,
+            isAuthorized,
+        } = authStore;
         const classPrefix = "account-orders-page";
 
         useEffect(() => {
-            if (isNil(userOrdersData)) {
-                getUserOrdersData(ESegmentedOptionsNames.all);
-            }
-        }, []);
+            if (isAuthorized) getUserOrdersData(ESegmentedOptionsNames.all);
+        }, [isAuthorized]);
 
         const orderSegmentedOptions: SegmentedLabeledOption[] = [
             {
@@ -101,4 +103,4 @@ const AccountPaymentPage: FC<TStore> = inject("store")(
     }),
 );
 
-export default AccountPaymentPage;
+export default AccountOrdersPage;

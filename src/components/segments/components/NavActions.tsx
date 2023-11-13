@@ -20,31 +20,50 @@ import { TNavTypes } from "./types";
 import { IRoot } from "@store/store";
 import { AUTH_FORM_QUERY, SEARCH_QUERY } from "@consts/queryNamesConsts";
 import { EAuthFormType } from "@components/globalComponents/AuthForm/types";
+import { getStorage } from "@services/storage.service";
+import {
+    BUILDER_UNAUTHORIZED_CART_ID,
+    BUILDER_UNAUTHORIZED_DOORS_IDS,
+} from "@consts/storageNamesContsts";
+import { TNullable } from "@globalTypes/commonTypes";
 
 const NavActions: FC<TNavTypes> = inject("store")(
     observer(({ store, wrapperClassPrefix }) => {
         const { authStore, productsStore, orderStore } = store as IRoot;
         const { setSearchParams, searchParams } = productsStore;
-        const { isAuthorized, userData, userDataFetching } = authStore;
-        // const { builderCartData, setBuilderCartData } = builderStore;
-        const { doorsData, getDoorsData } = orderStore;
+        const { isAuthorized, userData, setUserData, userDataFetching } =
+            authStore;
+        const { getOrderCart, orderCart, doorsData, getDoorsData } = orderStore;
         const classPrefix = `nav-actions`;
         const router = useRouter();
-        const cartLength = doorsData?.length || 0;
+        const cartLength = orderCart?.items.length || 0;
 
         const handleSearchChange = (value: string) => {
             setSearchParams({ ...searchParams, text: value });
         };
 
         useEffect(() => {
-            // const cartData = getStorage(
-            //     BUILDER_CART,
-            // ) as TNullable<TBuilderCartData>;
-            // if (isNil(builderCartData) && cartData) {
-            //     setBuilderCartData(cartData);
-            // }
-            if (isAuthorized && !doorsData) {
-                getDoorsData();
+            if (userData && isAuthorized) {
+                getOrderCart().then(({ data }) => {
+                    setUserData({ ...userData, cartId: data.cartId });
+                    getDoorsData();
+                });
+            } else {
+                // INFO(unauthorized user): get cartId and doors ids then make request order/cart, doors?ids=1,2,3
+                const unauthorizedCartId = getStorage(
+                    BUILDER_UNAUTHORIZED_CART_ID,
+                ) as string | undefined;
+
+                const unauthorizedDoorsIds =
+                    (getStorage(BUILDER_UNAUTHORIZED_DOORS_IDS) as TNullable<
+                        number[]
+                    >) || [];
+
+                if (unauthorizedCartId)
+                    getOrderCart(Number(unauthorizedCartId));
+                if (!doorsData && unauthorizedDoorsIds.length) {
+                    getDoorsData({ ids: unauthorizedDoorsIds.join(",") });
+                }
             }
         }, [isAuthorized]);
 

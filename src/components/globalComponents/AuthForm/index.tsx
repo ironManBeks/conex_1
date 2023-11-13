@@ -16,8 +16,6 @@ import { EAuthFormType, TAuthFormProps } from "./types";
 import { useSelectAuthForm } from "@hooks/useSelectAuthForm";
 
 const AuthForm: FC<TAuthFormProps> = ({ className }) => {
-    const { setForm } = useSelectAuthForm();
-
     return (
         <div
             style={{
@@ -39,18 +37,6 @@ const AuthForm: FC<TAuthFormProps> = ({ className }) => {
                 {/*<LoginWithGoogle />*/}
                 {/*<LoginWithApple />*/}
             </div>
-            <br />
-            <a onClick={() => setForm(EAuthFormType.resetPassword)}>
-                Reset password? (remove)
-            </a>
-            <br />
-            <a onClick={() => setForm(EAuthFormType.changePassword)}>
-                Change password? (remove)
-            </a>
-            <br />
-            <a onClick={() => setForm(EAuthFormType.sendEmailConfirmation)}>
-                Email confirmation? (remove)
-            </a>
         </div>
     );
 };

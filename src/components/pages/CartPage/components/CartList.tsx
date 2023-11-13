@@ -14,20 +14,27 @@ import { EButtonColor } from "@components/buttons/types";
 import { TProductCartCard } from "@components/cards/types";
 import { showNotification } from "@helpers/notificarionHelper";
 import { showAxiosNotificationError } from "@helpers/errorsHelper";
+import { getStorage, setStorage } from "@services/storage.service";
+import {
+    BUILDER_UNAUTHORIZED_CART_ID,
+    BUILDER_UNAUTHORIZED_DOORS_IDS,
+} from "@consts/storageNamesContsts";
 
 const CartList: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const classPrefix = `${pageClassPrefix}_list`;
         const { commonStore, authStore, orderStore } = store as IRoot;
         const { setModalConfirmVisible } = commonStore;
-        const { isAuthorized } = authStore;
+        const { isAuthorized, userData } = authStore;
         const {
             doorsData,
             deleteDoorRequest,
-            setPriceParams,
-            setOrderPriceFetching,
-            priceParams,
+            setOrderCartFetching,
+            orderCartParams,
             setDoorsData,
+            orderCart,
+            getOrderCart,
+            createOrderCart: updateOrderCart,
         } = orderStore;
         const [selected, setSelected] = useState<number[]>([]);
         const [itemsToDelete, setItemsToDelete] = useState<number[]>([]);
@@ -51,32 +58,34 @@ const CartList: FC<TSectionTypes> = inject("store")(
 
         const deleteElementFromCart = useCallback(() => {
             if (itemsToDelete.length) {
-                Promise.all(
-                    itemsToDelete.map((item) => deleteDoorRequest(item)),
-                )
-                    .then((data) => {
-                        if (data.length) {
-                            const deletedDoors = data.map(
-                                (item) => item.data.data.id,
+                deleteDoorRequest(itemsToDelete)
+                    .then(() => {
+                        if (doorsData) {
+                            const newDoorsData = doorsData.filter(
+                                (item) => !itemsToDelete.includes(item.id),
                             );
-                            if (doorsData) {
-                                const newDoorsData = doorsData.filter(
-                                    (item) => !deletedDoors.includes(item.id),
-                                );
-                                setDoorsData(newDoorsData);
-                                if (priceParams) {
-                                    const newPriceItems =
-                                        priceParams.items.filter(
-                                            (item) =>
-                                                !deletedDoors.includes(item.id),
-                                        );
-                                    setPriceParams({
-                                        ...priceParams,
-                                        items: newPriceItems,
-                                    });
-                                }
+                            setDoorsData(newDoorsData);
+
+                            if (!isAuthorized) {
+                                // INFO(unauthorized user): delete(filter) doors ids in storage
+                                setStorage(BUILDER_UNAUTHORIZED_DOORS_IDS, [
+                                    newDoorsData.map(({ id }) => id),
+                                ]);
                             }
                         }
+
+                        if (userData) {
+                            getOrderCart(userData.cartId);
+                        } else {
+                            // INFO(unauthorized user):get cartId from storage and make another request for get/order/cart/cartID
+                            const unauthorizedCartId = getStorage(
+                                BUILDER_UNAUTHORIZED_CART_ID,
+                            ) as string | undefined;
+
+                            if (unauthorizedCartId)
+                                getOrderCart(Number(unauthorizedCartId));
+                        }
+
                         showNotification({
                             mainProps: {
                                 type: "success",
@@ -93,7 +102,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                         handleSelect(undefined, "clear");
                     });
             }
-        }, [itemsToDelete, doorsData, priceParams]);
+        }, [itemsToDelete, doorsData, orderCartParams]);
 
         const handleDelete = useCallback(() => {
             setModalConfirmVisible(true);
@@ -110,33 +119,39 @@ const CartList: FC<TSectionTypes> = inject("store")(
                         title: option.title,
                         value: option.value,
                     })),
-                    count: 1,
+                    count:
+                        orderCart?.items.find((door) => door.id === item.id)
+                            ?.quantity || 1,
                 }));
             }
 
             return [];
-        }, [isAuthorized, doorsData]);
+        }, [isAuthorized, doorsData, orderCart]);
 
         const cartList = getCartList();
 
         const handleCountChange = (id: number, count: number) => {
-            if (priceParams && count) {
-                setPriceParams({
-                    ...priceParams,
-                    items: priceParams.items.map((item) => {
-                        if (item.id === id) {
-                            return {
-                                id: item.id,
-                                quantity: count,
-                            };
-                        } else return item;
-                    }),
-                });
-            } else setOrderPriceFetching(false);
+            const items =
+                orderCart?.items.map((cartItem) => {
+                    if (cartItem.id === id)
+                        return { ...cartItem, quantity: count };
+                    return cartItem;
+                }) || [];
+
+            const updateOrderCartParams = { items, cartId: userData?.cartId };
+
+            if (!isAuthorized)
+                updateOrderCartParams.cartId = Number(
+                    getStorage(BUILDER_UNAUTHORIZED_CART_ID) as string,
+                );
+
+            updateOrderCart(updateOrderCartParams).then(({ data }) =>
+                getOrderCart(data.cartId),
+            );
         };
 
         const debounceLoadData = useCallback(debounce(handleCountChange, 600), [
-            priceParams,
+            orderCart,
         ]);
 
         return (
@@ -201,7 +216,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                                     setItemsToDelete([item.id]);
                                 }}
                                 onCountChange={(value) => {
-                                    setOrderPriceFetching(true);
+                                    setOrderCartFetching(true);
                                     debounceLoadData(item.id, value);
                                 }}
                             />
