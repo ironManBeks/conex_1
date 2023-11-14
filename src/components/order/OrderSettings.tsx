@@ -72,7 +72,7 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
             }
 
             createOrderCart(createOrderCartParams).then(({ data }) => {
-                if (orderCart) {
+                if (orderCart && !data.error) {
                     setOrderCart({
                         ...orderCart,
                         amount: data[EOrderCartNames.amount],
