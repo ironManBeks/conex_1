@@ -36,7 +36,7 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
             name={name}
             control={control}
             render={({ field }) => {
-                const letter = field.value.length || 0;
+                const letter = field.value?.length || 0;
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.textArea}
