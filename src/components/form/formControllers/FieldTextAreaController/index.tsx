@@ -1,8 +1,7 @@
-import React, { FC, useState } from "react";
+import React, { FC } from "react";
 import { Input as AntInput } from "antd";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
-import { isNil } from "lodash";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
 
@@ -31,16 +30,13 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
         control,
         formState: { errors },
     } = useFormContext();
-    const [letterCount, setLetterCount] = useState(0);
 
     return (
         <Controller
             name={name}
             control={control}
             render={({ field }) => {
-                if (!isNil(field.value?.length)) {
-                    setLetterCount(field.value.length || 0);
-                }
+                const letter = field.value?.length || 0;
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.textArea}
@@ -61,7 +57,6 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
                             value={field.value}
                             onChange={(e) => {
                                 const val = e.target.value;
-                                setLetterCount(val.length);
                                 field.onChange(val);
                                 if (onChangeValue) onChangeValue(val);
                             }}
@@ -82,13 +77,11 @@ const FieldTextAreaController: FC<TFieldTextAreaController> = (props) => {
                                     `${FORM_FIELD_CLASSNAME_PREFIX}_char-counter`,
                                     {
                                         _disabled: disabled,
-                                        _error: letterCount === maxSymbolLength,
+                                        _error: letter === maxSymbolLength,
                                     },
                                 )}
                             >
-                                <span>
-                                    {`${letterCount} / ${maxSymbolLength}`}
-                                </span>
+                                <span>{`${letter} / ${maxSymbolLength}`}</span>
                             </div>
                         )}
                     </FormItemWrapper>

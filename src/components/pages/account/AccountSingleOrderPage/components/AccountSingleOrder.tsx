@@ -10,6 +10,7 @@ import AccountOrderStatus from "../../components/AccountOrderStatus";
 
 import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { IRoot } from "@store/store";
+import { EAccountOrderStatusTimelapse } from "@store/auth/types";
 
 const AccountSingleOrder: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -19,10 +20,8 @@ const AccountSingleOrder: FC<TSectionTypes> = inject("store")(
         return (
             <>
                 <AccountSectionWrapper className={`${pageClassPrefix}_head`}>
-                    <HeadInfoItem
-                        label="Order number"
-                        value={userSingleOrderData?.orderNumber}
-                    />
+                    {/* TODO: Change when back is ready */}
+                    <HeadInfoItem label="Order number" value={"orderNumber"} />
                     <HeadInfoItem
                         label="Total"
                         value={`$${userSingleOrderData?.total}`}
@@ -52,12 +51,17 @@ const AccountSingleOrder: FC<TSectionTypes> = inject("store")(
                             </div>
                         </div>
                     )}
-                    {userSingleOrderData?.statusTimelapse && (
+                    {/* TODO: Change when back is ready */}
+                    {false && (
                         <AccountOrderStatus
                             wrapperClassName={`${pageClassPrefix}_status`}
-                            statusTimelapse={
-                                userSingleOrderData.statusTimelapse
-                            }
+                            statusTimelapse={[
+                                {
+                                    status: EAccountOrderStatusTimelapse.processed,
+                                    time: "123",
+                                    description: "asdf",
+                                },
+                            ]}
                         />
                     )}
                     <div className={`${pageClassPrefix}_images`}>

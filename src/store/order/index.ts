@@ -5,11 +5,14 @@ import {
     IOrderStore,
     TCreateDoorRequest,
     TCreateDoorResponse,
+    TCreateOrderCartRequest,
+    TCreateOrderCartResponse,
     TCreateOrderRequest,
     TDeleteDoorResponse,
     TGetDoorsDataResponse,
-    TGetOrderPriceRequest,
-    TGetOrderPriceResponse,
+    TGetDoorsRequest,
+    TGetOrderCartRequest,
+    TGetOrderCartResponse,
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
@@ -22,9 +25,9 @@ export class OrderStore implements IOrderStore {
     createDoorRequestFetching = false;
     deleteDoorRequestFetching = false;
     createOrderRequestFetching = false;
-    orderPrice: TNullable<TGetOrderPriceResponse> = null;
-    orderPriceFetching = false;
-    priceParams: TNullable<TGetOrderPriceRequest> = null;
+    orderCart: TNullable<TGetOrderCartResponse> = null;
+    orderCartFetching = false;
+    orderCartParams: TNullable<TGetOrderCartRequest> = null;
 
     constructor() {
         makeAutoObservable(this);
@@ -50,24 +53,26 @@ export class OrderStore implements IOrderStore {
         this.createOrderRequestFetching = value;
     };
 
-    setOrderPrice = (data: TNullable<TGetOrderPriceResponse>): void => {
-        this.orderPrice = data;
+    setOrderCart = (data: TNullable<TGetOrderCartResponse>): void => {
+        this.orderCart = data;
     };
 
-    setOrderPriceFetching = (value: boolean): void => {
-        this.orderPriceFetching = value;
+    setOrderCartFetching = (value: boolean): void => {
+        this.orderCartFetching = value;
     };
 
-    setPriceParams = (data: TNullable<TGetOrderPriceRequest>): void => {
-        this.priceParams = data;
+    setOrderCartParams = (data: TNullable<TGetOrderCartRequest>): void => {
+        this.orderCartParams = data;
     };
 
     // -------------------------------------------------------------------------------
 
-    getDoorsData = (): Promise<AxiosResponse<TGetDoorsDataResponse>> => {
+    getDoorsData = (
+        params: TGetDoorsRequest,
+    ): Promise<AxiosResponse<TGetDoorsDataResponse>> => {
         this.setDoorsDataFetching(true);
         return axiosInstance
-            .get("/doors")
+            .get("/doors", { params })
             .then((response: AxiosResponse<TGetDoorsDataResponse>) => {
                 this.setDoorsData(response.data);
                 return response;
@@ -100,12 +105,12 @@ export class OrderStore implements IOrderStore {
     };
 
     deleteDoorRequest = (
-        id: number,
+        ids: number[],
         showNotifications?: boolean,
     ): Promise<AxiosResponse<TDeleteDoorResponse>> => {
         this.setDeleteDoorRequestFetching(true);
         return axiosInstance
-            .delete(`/doors/${id}`)
+            .post("/doors/bulk-delete", { ids })
             .then((response: AxiosResponse<TDeleteDoorResponse>) => {
                 if (showNotifications) {
                     showNotification({
@@ -128,15 +133,27 @@ export class OrderStore implements IOrderStore {
             });
     };
 
-    getOrderPrice = (
-        params: TGetOrderPriceRequest,
-    ): Promise<AxiosResponse<TGetOrderPriceResponse>> => {
-        this.setOrderPriceFetching(true);
+    getOrderCart = (
+        cartId?: number,
+    ): Promise<AxiosResponse<TGetOrderCartResponse>> => {
+        this.setOrderCartFetching(true);
+        const cartIdParam = cartId ? `/${cartId}` : "";
         return axiosInstance
-            .post(`/order/cart`, params)
-            .then((response: AxiosResponse<TGetOrderPriceResponse>) => {
+            .get(`/order/cart${cartIdParam}`)
+            .then((response: AxiosResponse<TGetOrderCartResponse>) => {
                 const { data } = response;
-                this.setOrderPrice(data);
+                if (data.error && data.error !== "Cart is empty") {
+                    showNotification({
+                        mainProps: {
+                            type: "error",
+                            message: data.error,
+                        },
+                    });
+                    this.setOrderCart(null);
+                }
+                if (!data.error) {
+                    this.setOrderCart(data);
+                }
                 return response;
             })
             .catch((err) => {
@@ -144,7 +161,65 @@ export class OrderStore implements IOrderStore {
                 throw err;
             })
             .finally(() => {
-                this.setOrderPriceFetching(false);
+                this.setOrderCartFetching(false);
+            });
+    };
+
+    deleteOrderCart = (
+        cartId: number,
+    ): Promise<AxiosResponse<TGetOrderCartResponse>> => {
+        this.setOrderCartFetching(true);
+        return axiosInstance
+            .delete(`/carts/${cartId}`, { headers: { Authorization: "false" } })
+            .then((response: AxiosResponse<TGetOrderCartResponse>) => {
+                const { data } = response;
+                if (data.error) {
+                    showNotification({
+                        mainProps: {
+                            type: "error",
+                            message: data.error,
+                        },
+                    });
+                } else {
+                    this.setOrderCart(null);
+                    this.setDoorsData(null);
+                }
+                return response;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                console.log({ err });
+                throw err;
+            })
+            .finally(() => {
+                this.setOrderCartFetching(false);
+            });
+    };
+
+    createOrderCart = (
+        params: TCreateOrderCartRequest,
+    ): Promise<AxiosResponse<TCreateOrderCartResponse>> => {
+        this.setOrderCartFetching(true);
+        return axiosInstance
+            .post("/order/cart", params)
+            .then((response: AxiosResponse<TCreateOrderCartResponse>) => {
+                const { data } = response;
+                if (data.error) {
+                    showNotification({
+                        mainProps: {
+                            type: "error",
+                            message: data.error,
+                        },
+                    });
+                }
+                return response;
+            })
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setOrderCartFetching(false);
             });
     };
 

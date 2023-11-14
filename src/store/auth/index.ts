@@ -10,7 +10,7 @@ import { TSignUpForm } from "@components/globalComponents/AuthForm/components/Si
 import { TSignInForm } from "@components/globalComponents/AuthForm/components/SignInForm/formAttrs";
 import {
     IAuthStore,
-    TAccountOrderItem,
+    TAccountOrders,
     TAuthData,
     TEmailConfirmationResponse,
     TGetUserSingleOrderRequest,
@@ -25,7 +25,6 @@ import { TChangePasswordForm } from "@components/globalComponents/AuthForm/compo
 import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/components/EmailConfirmationForm/formAttrs";
 import { TNullable } from "@globalTypes/commonTypes";
 import { UserCardsDataMockup } from "../../mockups/AuthDataMockup";
-import { AccountOrdersMockup } from "../../mockups/AccountOrdersListMockup";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { copyWithout } from "@helpers/objectHelper";
 import { AccountSingleOrderMockup } from "../../mockups/AccountSingleOrderMockup";
@@ -40,7 +39,7 @@ export class AuthStore implements IAuthStore {
     userCardsData: TNullable<TPaymentCard[]> = null;
     userCardsDataFetching = true;
     selectedCard: TNullable<TPaymentCard> = null;
-    userOrdersData: TNullable<TAccountOrderItem[]> = null;
+    userOrdersData: TNullable<TAccountOrders> = null;
     userOrdersDataFetching = true;
     updateUserRequestFetching: boolean = false;
     userSingleOrderData: TNullable<TSingleOrderData> = null;
@@ -92,7 +91,7 @@ export class AuthStore implements IAuthStore {
         this.userCardsDataFetching = value;
     };
 
-    setUserOrdersData = (data: TNullable<TAccountOrderItem[]>): void => {
+    setUserOrdersData = (data: TNullable<TAccountOrders>): void => {
         this.userOrdersData = data;
     };
 
@@ -316,22 +315,26 @@ export class AuthStore implements IAuthStore {
 
     getUserOrdersData = (
         status: ESegmentedOptionsNames,
-    ): Promise<AxiosResponse<TAccountOrderItem[]>> => {
+    ): Promise<AxiosResponse<TAccountOrders>> => {
         this.setUserOrdersDataFetching(true);
         return axiosInstance
-            .get("/user/orders")
-            .then((response: AxiosResponse<TAccountOrderItem[]>) => {
-                // const { data } = response;
-                // this.setUserOrdersData(data);
+            .get("/orders", {
+                params: {
+                    "filter[status]": status,
+                },
+            })
+            .then((response: AxiosResponse<TAccountOrders>) => {
+                const { data } = response;
+                this.setUserOrdersData(data);
                 return response;
             })
             .catch((err) => {
                 // ToDo turn on !
-                // showAxiosNotificationError(err);
+                showAxiosNotificationError(err);
                 throw err;
             })
             .finally(() => {
-                this.setUserOrdersData(AccountOrdersMockup[status]);
+                // this.setUserOrdersData(AccountOrdersMockup[status]);
                 this.setUserOrdersDataFetching(false);
             });
     };

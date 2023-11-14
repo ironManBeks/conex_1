@@ -11,22 +11,18 @@ const AccountOrders: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { authStore } = store as IRoot;
         const { userOrdersData } = authStore;
+        const ordersData = userOrdersData?.data;
 
         return (
             <>
                 <div className={`${pageClassPrefix}_list`}>
-                    {userOrdersData?.length ? (
-                        userOrdersData.map((item) => (
+                    {ordersData?.length ? (
+                        ordersData.map(({ id, attributes }) => (
                             <AccountOrderItem
-                                key={item.id}
+                                key={id}
+                                id={id}
+                                attributes={attributes}
                                 wrapperClassPrefix={pageClassPrefix}
-                                id={item.id}
-                                orderNumber={item.orderNumber}
-                                dateOfOrder={item.dateOfOrder}
-                                orderAddress={item.orderAddress}
-                                orderStatus={item.orderStatus}
-                                moneyStatus={item.moneyStatus}
-                                statusTimelapse={item.statusTimelapse}
                             />
                         ))
                     ) : (

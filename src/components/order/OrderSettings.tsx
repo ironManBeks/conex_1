@@ -1,15 +1,15 @@
-import { FC, useEffect, useState } from "react";
+import { FC, useState } from "react";
 import { inject, observer } from "mobx-react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { isNil } from "lodash";
+import dynamic from "next/dynamic";
 
 import { H3, P } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import AddedOptionsList from "@components/globalComponents/AddedOptionsList";
 import AdditionalServices from "@components/globalComponents/AdditionalServices";
 import FormFieldInput from "@components/form/formFields/FormFieldInput";
-import OrderAdyen from "./OrderAdyen";
 
 import {
     ORDER_PAGE_CLASSPREFIX,
@@ -24,72 +24,72 @@ import { IconArrowSingle, IconCross } from "@components/Icons";
 import { EArrowDirection } from "@components/Icons/types";
 import { TOptionsListItem } from "@components/globalComponents/types";
 import { CHECKOUT_SUBMIT_BUTTON_ID } from "@components/pages/CheckoutPage/consts";
-import { EOrderPriceNames } from "@store/order/types";
+import { EOrderCartNames } from "@store/order/types";
+import { BUILDER_UNAUTHORIZED_CART_ID } from "@consts/storageNamesContsts";
+import { getStorage } from "@services/storage.service";
+
+const OrderAdyen = dynamic(() => import("./OrderAdyen"), {
+    loading: () => <p>Loading...</p>,
+    ssr: false,
+});
 
 const OrderSettings: FC<TOrderSettings> = inject("store")(
     observer(({ store, placement }) => {
-        const { commonStore, orderStore } = store as IRoot;
+        const { commonStore, orderStore, authStore } = store as IRoot;
         const { headerHeight } = commonStore;
         const {
-            orderPrice,
-            getOrderPrice,
-            orderPriceFetching,
+            orderCart,
+            orderCartFetching,
             deleteDoorRequestFetching,
-            priceParams,
-            setPriceParams,
+            setOrderCart,
+            createOrderCart,
         } = orderStore;
+        const { isAuthorized, userData } = authStore;
         const classPrefix = `${ORDER_PAGE_CLASSPREFIX}_settings`;
         const router = useRouter();
         const [discountCode, setDiscountCode] = useState<string>();
         const [isDiscountApply, setIsDiscountApply] = useState(false);
 
-        useEffect(() => {
-            if (priceParams?.items.length) {
-                getOrderPrice({
-                    ...priceParams,
-                    items: priceParams.items.map((item) => ({
-                        ...item,
-                        quantity: item.quantity ? item.quantity : 1,
-                    })),
-                })
-                    .then(() => {
-                        if (priceParams.code) {
-                            setIsDiscountApply(true);
-                        }
-                    })
-                    .catch(() => {
-                        setDiscountCode("");
-                        setPriceParams({
-                            ...priceParams,
-                            code: undefined,
-                        });
-                    });
-            }
-        }, [priceParams]);
-
         const handleDiscountCode = () => {
-            let discountParams = discountCode;
             if (isDiscountApply) {
                 setDiscountCode("");
                 setIsDiscountApply(false);
-                discountParams = undefined;
             }
-            if (priceParams) {
-                setPriceParams({
-                    ...priceParams,
-                    code: discountParams,
-                });
+
+            const createOrderCartParams = {
+                items: orderCart?.items || [],
+                code: discountCode,
+                cartId: 0,
+            };
+            const unauthorizedCartId = getStorage(
+                BUILDER_UNAUTHORIZED_CART_ID,
+            ) as string | undefined;
+
+            if (isAuthorized && userData) {
+                createOrderCartParams.cartId = userData.cartId;
+            } else {
+                createOrderCartParams.cartId = Number(unauthorizedCartId);
             }
+
+            createOrderCart(createOrderCartParams).then(({ data }) => {
+                if (orderCart) {
+                    setOrderCart({
+                        ...orderCart,
+                        amount: data[EOrderCartNames.amount],
+                        discount: data[EOrderCartNames.discount],
+                    });
+                }
+            });
         };
 
         const renderPriceValue = (
-            fieldName: EOrderPriceNames,
+            fieldName: EOrderCartNames,
             valuePrefix?: string,
         ): TOptionsListItem | undefined => {
-            if (!isNil(orderPrice) && orderPrice[fieldName]) {
+            if (!isNil(orderCart) && orderCart[fieldName]) {
                 return {
                     label: ProductPriceLabels[fieldName],
-                    value: `${valuePrefix ?? ""}$${orderPrice[fieldName]}`,
+                    value: `${valuePrefix ?? ""}$${orderCart[fieldName]}`,
                 };
             }
         };
@@ -114,19 +114,19 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                             // list: renderOptionsList(),
                             list: [
                                 renderPriceValue(
-                                    EOrderPriceNames.discount,
+                                    EOrderCartNames.discount,
                                     "- ",
                                 ),
                             ],
                         },
                     ]}
                 />
-                {orderPrice && (
+                {orderCart && (
                     <AdditionalServices
                         options={[]}
                         totalOption={{
-                            label: ProductPriceLabels[EOrderPriceNames.amount],
-                            value: `$${orderPrice[EOrderPriceNames.amount]}`,
+                            label: ProductPriceLabels[EOrderCartNames.amount],
+                            value: `$${orderCart[EOrderCartNames.amount]}`,
                         }}
                     />
                 )}
@@ -162,10 +162,10 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                             color={EButtonColor.primary}
                             onClick={handlePlaceOrder}
                             isLoading={
-                                deleteDoorRequestFetching || orderPriceFetching
+                                deleteDoorRequestFetching || orderCartFetching
                             }
                             disabled={
-                                deleteDoorRequestFetching || orderPriceFetching
+                                deleteDoorRequestFetching || orderCartFetching
                             }
                         >
                             Place an order

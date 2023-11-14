@@ -47,9 +47,9 @@ export enum ECheckoutFormFieldsNames {
     additionalServices = "additionalServices",
 }
 
-export type TCheckoutFormGetMode = {
-    [ECheckoutFormFieldsNames.getMode]: ECheckoutGetMode;
-};
+export type TReferenceShippingProps<T extends ECheckoutGetMode, E> = {
+    [ECheckoutFormFieldsNames.getMode]: T;
+} & E;
 
 export type TCheckoutFormDetails = {
     [ECheckoutFormFieldsNames.firstName]: string;
@@ -57,14 +57,6 @@ export type TCheckoutFormDetails = {
     [ECheckoutFormFieldsNames.email]: string;
     [ECheckoutFormFieldsNames.phone]: string;
     [ECheckoutFormFieldsNames.receiveNews]: boolean;
-};
-
-export type TCheckoutFormShipping = {
-    [ECheckoutFormFieldsNames.deliveryService]?: string;
-    [ECheckoutFormFieldsNames.state]?: string;
-    [ECheckoutFormFieldsNames.city]?: string;
-    [ECheckoutFormFieldsNames.streetAddress]: string;
-    [ECheckoutFormFieldsNames.commentsOrder]?: string;
 };
 
 export type TCheckoutFormPayment = {
@@ -75,11 +67,27 @@ export type TCheckoutFormAdditionalServices = {
     [ECheckoutFormFieldsNames.additionalServices]: string[];
 };
 
-export type TCheckoutForm = TCheckoutFormGetMode &
-    TCheckoutFormDetails &
-    TCheckoutFormShipping &
+type TPickupOrShipping =
+    | TReferenceShippingProps<
+          ECheckoutGetMode.storePickup,
+          {
+              [ECheckoutFormFieldsNames.state]: string;
+              [ECheckoutFormFieldsNames.city]: string;
+          }
+      >
+    | TReferenceShippingProps<
+          ECheckoutGetMode.delivery,
+          {
+              [ECheckoutFormFieldsNames.deliveryService]?: string;
+              [ECheckoutFormFieldsNames.streetAddress]: string;
+              [ECheckoutFormFieldsNames.commentsOrder]?: string;
+          }
+      >;
+
+export type TCheckoutForm = TCheckoutFormDetails &
     TCheckoutFormPayment &
-    TCheckoutFormAdditionalServices;
+    TCheckoutFormAdditionalServices &
+    TPickupOrShipping;
 
 export const checkoutFormDefaultValues = (
     data?: TNullable<TUserData>,
@@ -94,8 +102,6 @@ export const checkoutFormDefaultValues = (
         [ECheckoutFormFieldsNames.receiveNews]: true,
         //
         [ECheckoutFormFieldsNames.deliveryService]: "",
-        [ECheckoutFormFieldsNames.state]: "",
-        [ECheckoutFormFieldsNames.city]: data?.city ?? "",
         [ECheckoutFormFieldsNames.streetAddress]: data?.address ?? "",
         [ECheckoutFormFieldsNames.commentsOrder]: "",
         //
@@ -108,6 +114,9 @@ export const checkoutFormDefaultValues = (
 export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
     const requiredText = "This field is required";
 
+    // ToDo Remove ts-ignore (should work, but for some reason in a typing error)
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+    // @ts-ignore
     return yupResolver(
         yup.object().shape({
             [ECheckoutFormFieldsNames.getMode]: yup
@@ -121,33 +130,63 @@ export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
             [ECheckoutFormFieldsNames.receiveNews]: yup
                 .boolean()
                 .required(requiredText),
-            [ECheckoutFormFieldsNames.deliveryService]: yup.string(),
+            // ____________________________________________________
             [ECheckoutFormFieldsNames.state]: yup
                 .string()
-                .max(50, renderValidationText("max", undefined, 50))
-                // .required(requiredText)
-                .trim(),
+                .when(ECheckoutFormFieldsNames.getMode, {
+                    is: ECheckoutGetMode.storePickup,
+                    then: (schema) =>
+                        schema
+                            .max(50, renderValidationText("max", undefined, 50))
+                            .required(requiredText)
+                            .trim(),
+                    otherwise: (schema) => schema,
+                }),
             [ECheckoutFormFieldsNames.city]: yup
                 .string()
-                .max(50, renderValidationText("max", undefined, 50))
-                // .required(requiredText)
-                .trim(),
+                .when(ECheckoutFormFieldsNames.getMode, {
+                    is: ECheckoutGetMode.storePickup,
+                    then: (schema) =>
+                        schema
+                            .max(50, renderValidationText("max", undefined, 50))
+                            .required(requiredText)
+                            .trim(),
+                    otherwise: (schema) => schema,
+                }),
+            // ____________________________________________________
+            [ECheckoutFormFieldsNames.deliveryService]: yup.string(),
             [ECheckoutFormFieldsNames.streetAddress]: yup
                 .string()
-                .max(100, renderValidationText("max", undefined, 100))
-                .required(requiredText)
-                .trim(),
+                .when(ECheckoutFormFieldsNames.getMode, {
+                    is: ECheckoutGetMode.delivery,
+                    then: (schema) =>
+                        schema
+                            .max(
+                                100,
+                                renderValidationText("max", undefined, 100),
+                            )
+                            .required(requiredText)
+                            .trim(),
+                    otherwise: (schema) => schema,
+                }),
             [ECheckoutFormFieldsNames.commentsOrder]: yup
                 .string()
-                .max(
-                    COMMENT_ORDER_MAX_MESSAGE_LENGTH,
-                    renderValidationText(
-                        "max",
-                        undefined,
-                        COMMENT_ORDER_MAX_MESSAGE_LENGTH,
-                    ),
-                )
-                .trim(),
+                .when(ECheckoutFormFieldsNames.getMode, {
+                    is: ECheckoutGetMode.delivery,
+                    then: (schema) =>
+                        schema
+                            .max(
+                                COMMENT_ORDER_MAX_MESSAGE_LENGTH,
+                                renderValidationText(
+                                    "max",
+                                    undefined,
+                                    COMMENT_ORDER_MAX_MESSAGE_LENGTH,
+                                ),
+                            )
+                            .trim(),
+                    otherwise: (schema) => schema,
+                }),
+            // ____________________________________________________
             [ECheckoutFormFieldsNames.paymentMethod]: yup
                 .string()
                 .required(requiredText),

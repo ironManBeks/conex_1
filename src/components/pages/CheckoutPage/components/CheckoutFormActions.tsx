@@ -13,7 +13,7 @@ const CheckoutFormActions: FC<
 > = inject("store")(
     observer(({ store, onSubmitClick }) => {
         const { orderStore } = store as IRoot;
-        const { orderPriceFetching } = orderStore;
+        const { orderCartFetching } = orderStore;
         const [portalContainer, setPortalContainer] =
             useState<HTMLElement | null>(null);
 
@@ -30,8 +30,8 @@ const CheckoutFormActions: FC<
                 type="submit"
                 color={EButtonColor.primary}
                 onClick={onSubmitClick}
-                disabled={orderPriceFetching}
-                isLoading={orderPriceFetching}
+                disabled={orderCartFetching}
+                isLoading={orderCartFetching}
             >
                 Place an order
             </ButtonPrimary>

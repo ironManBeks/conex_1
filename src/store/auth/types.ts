@@ -9,6 +9,7 @@ import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/co
 import { TNullable } from "@globalTypes/commonTypes";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { ESegmentedOptionsNames } from "@components/pages/account/types";
+import { TResponseMeta } from "@globalTypes/requestTypes";
 
 export enum EAccountOrderStatus {
     processed = "processed",
@@ -47,6 +48,7 @@ export type TUserData = {
     zip: string;
     createdAt: string;
     updatedAt: string;
+    cartId: number;
 } & TUserDataId;
 
 export type TAuthData = {
@@ -81,12 +83,23 @@ export type TOrderStatusTimelapse = {
 
 export type TAccountOrderItem = {
     id: number;
-    orderNumber: string;
-    dateOfOrder: string;
-    orderAddress: string;
-    orderStatus?: EAccountOrderStatus;
-    moneyStatus?: EAccountOrderMoneyStatus;
-    statusTimelapse: TOrderStatusTimelapse[];
+    attributes: {
+        createdAt: string;
+        updatedAt: string;
+        publishedAt: string;
+        status: string | null;
+    };
+    // orderNumber: string;
+    // dateOfOrder: string;
+    // orderAddress: string;
+    // orderStatus?: EAccountOrderStatus;
+    // moneyStatus?: EAccountOrderMoneyStatus;
+    // statusTimelapse: TOrderStatusTimelapse[];
+};
+
+export type TAccountOrders = TResponseMeta & {
+    // INFO: hopefully this response is temporery
+    data: TAccountOrderItem[];
 };
 
 export type TSingleOrderData = {
@@ -97,7 +110,7 @@ export type TSingleOrderData = {
         label: string;
         value: string;
     }[];
-} & TAccountOrderItem;
+} & TAccountOrders;
 
 export type TGetUserSingleOrderRequest = {
     id: number;
@@ -123,7 +136,7 @@ export interface IAuthStore {
     userCardsData: TNullable<TPaymentCard[]>;
     userCardsDataFetching: boolean;
     selectedCard: TNullable<TPaymentCard>;
-    userOrdersData: TNullable<TAccountOrderItem[]>;
+    userOrdersData: TNullable<TAccountOrders>;
     userOrdersDataFetching: boolean;
     updateUserRequestFetching: boolean;
     userSingleOrderData: TNullable<TSingleOrderData>;
@@ -152,8 +165,8 @@ export interface IAuthStore {
     //
     getUserOrdersData: (
         status: ESegmentedOptionsNames,
-    ) => Promise<AxiosResponse<TAccountOrderItem[]>>;
-    setUserOrdersData: (data: TNullable<TAccountOrderItem[]>) => void;
+    ) => Promise<AxiosResponse<TAccountOrders>>;
+    setUserOrdersData: (data: TNullable<TAccountOrders>) => void;
     setUserOrdersDataFetching: (value: boolean) => void;
     //
     getUserSingleOrderData: (

@@ -1,44 +1,27 @@
-import { FC, ReactNode, useState } from "react";
+import { FC, ReactNode } from "react";
 import cn from "classnames";
 
 import { H4, P } from "@components/Text";
-import { IconCalendar, IconMapPoint, IconPoint } from "@components/Icons";
-import CopyText from "@components/globalComponents/CopyText";
-import ButtonLink from "@components/buttons/ButtonLink";
-import AccountOrderStatus from "../../components/AccountOrderStatus";
 
-import { EButtonColor } from "@components/buttons/types";
 import { TAccountOrderItem } from "@store/auth/types";
-import { toSingleOrderPageId } from "@consts/pathsConsts";
+import { IconCalendar } from "@components/Icons";
+import dayjs from "dayjs";
 
 const AccountOrderItem: FC<
     TAccountOrderItem & { wrapperClassPrefix: string }
-> = ({
-    id,
-    wrapperClassPrefix,
-    orderNumber,
-    dateOfOrder,
-    orderAddress,
-    orderStatus,
-    moneyStatus,
-    statusTimelapse,
-}) => {
+> = ({ id, wrapperClassPrefix, attributes }) => {
     const classPrefix = `${wrapperClassPrefix}_item`;
-    const [isOpen, setIsOpen] = useState<boolean>();
+    // const [isOpen, setIsOpen] = useState<boolean>();
 
     return (
         <div className={cn(`${classPrefix}__wrapper`)}>
-            <div
-                className={cn(`${classPrefix}__inner-wrapper`, {
-                    _open: isOpen,
-                })}
-            >
+            <div className={cn(`${classPrefix}__inner-wrapper`)}>
                 <div className={cn(`${classPrefix}__title`)}>
                     <H4>
-                        Order № {orderNumber}
-                        <CopyText text={orderNumber} />
+                        Order № {id}
+                        {/* <CopyText text={id} /> */}
                     </H4>
-                    {moneyStatus && (
+                    {/* {moneyStatus && (
                         <P>
                             <IconPoint color="#FFD700" />
                             Your money’s being {moneyStatus}
@@ -49,9 +32,18 @@ const AccountOrderItem: FC<
                             <IconPoint color="#108700" />
                             Your order has been {orderStatus}
                         </P>
-                    )}
+                    )} */}
                 </div>
                 <div className={cn(`${classPrefix}__info`)}>
+                    <OrderInfoItem
+                        title={`Order ${dayjs(attributes.createdAt).format(
+                            "D MMMM",
+                        )}`}
+                        description={"Date of order"}
+                        icon={<IconCalendar />}
+                    />
+                </div>
+                {/* <div className={cn(`${classPrefix}__info`)}>
                     <OrderInfoItem
                         title={`Order ${dateOfOrder}`}
                         description={"Date of order"}
@@ -77,7 +69,7 @@ const AccountOrderItem: FC<
                     >
                         Read more
                     </ButtonLink>
-                </div>
+                </div> */}
             </div>
         </div>
     );
