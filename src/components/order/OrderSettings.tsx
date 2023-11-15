@@ -18,6 +18,7 @@ import {
 import { PATH_CHECKOUT_PAGE } from "@consts/pathsConsts";
 import { TOrderSettings } from "../pages/CheckoutPage/types";
 import { EButtonColor } from "@components/buttons/types";
+import Spin from "@components/globalComponents/Spin";
 
 import { IRoot } from "@store/store";
 import { IconArrowSingle, IconCross } from "@components/Icons";
@@ -29,7 +30,11 @@ import { BUILDER_UNAUTHORIZED_CART_ID } from "@consts/storageNamesContsts";
 import { getStorage } from "@services/storage.service";
 
 const OrderAdyen = dynamic(() => import("./OrderAdyen"), {
-    loading: () => <p>Loading...</p>,
+    loading: () => (
+        <div className={`${ORDER_PAGE_CLASSPREFIX}_preloader`}>
+            <Spin size="large" />
+        </div>
+    ),
     ssr: false,
 });
 

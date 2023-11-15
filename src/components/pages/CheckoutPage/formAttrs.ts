@@ -154,7 +154,9 @@ export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
                     otherwise: (schema) => schema,
                 }),
             // ____________________________________________________
-            [ECheckoutFormFieldsNames.deliveryService]: yup.string(),
+            [ECheckoutFormFieldsNames.deliveryService]: yup
+                .string()
+                .required(requiredText),
             [ECheckoutFormFieldsNames.streetAddress]: yup
                 .string()
                 .when(ECheckoutFormFieldsNames.getMode, {

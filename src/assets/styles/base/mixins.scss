@@ -30,3 +30,9 @@
 @function borderRadius($value){
   @return calc(#{$space} * #{$value});
 }
+
+@mixin flexCenter {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

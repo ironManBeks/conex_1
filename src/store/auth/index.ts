@@ -167,7 +167,7 @@ export class AuthStore implements IAuthStore {
     ): Promise<void> => {
         this.setAuthRequestFetching(true);
         return axiosInstance
-            .post("/auth/local", formValues)
+            .post("/auth/forgot-password", formValues)
             .then((data: AxiosResponse<{ ok: boolean }>) => {
                 console.log("forgotPasswordRequest", data);
                 showNotification({
@@ -325,7 +325,16 @@ export class AuthStore implements IAuthStore {
             })
             .then((response: AxiosResponse<TAccountOrders>) => {
                 const { data } = response;
-                this.setUserOrdersData(data);
+                if (status && status !== "all") {
+                    // INFO: filter should be on back end side, on back end is not working yet
+                    const filteredOrders = data.data.filter(
+                        ({ attributes }) => attributes.status === status,
+                    );
+
+                    this.setUserOrdersData({ ...data, data: filteredOrders });
+                } else {
+                    this.setUserOrdersData(data);
+                }
                 return response;
             })
             .catch((err) => {

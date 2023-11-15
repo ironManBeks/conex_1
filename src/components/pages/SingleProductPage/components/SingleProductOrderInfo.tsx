@@ -18,7 +18,7 @@ const SingleProductOrderInfo: FC<TSingleProductOrderInfoProps> = ({
         <div className={`${classPrefix}__wrapper`}>
             {delivery?.length && (
                 <CollapsibleBlockWithTitle
-                    title="Available for order"
+                    expandTitle="Available for order"
                     defaultOpen={true}
                     wrapperClassName={"_delivery"}
                 >
@@ -41,7 +41,7 @@ const SingleProductOrderInfo: FC<TSingleProductOrderInfoProps> = ({
             )}
             {payment?.length && (
                 <CollapsibleBlockWithTitle
-                    title="Payment"
+                    expandTitle="Payment"
                     defaultOpen={true}
                     wrapperClassName={"_payment"}
                 >

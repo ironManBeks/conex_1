@@ -1,37 +1,46 @@
-.order-page{
-  .layout_inner-wrapper{
+.order-page {
+  .layout_inner-wrapper {
     padding: space(10) 0;
   }
 
-  .common-title._h2{
+  .common-title._h2 {
     margin-bottom: space(10);
     font-size: $font-size-xl;
     line-height: $line-height-xl;
     display: flex;
     gap: space(2);
-    .common-btn{
+    .common-btn {
       min-width: space(8);
     }
   }
 
-  &_content{
+  &_not-loaded-component {
+    @include flexCenter
+  }
+  &_preloader {
+    @include flexCenter;
+
+    width: 100%;
+  }
+
+  &_content {
     display: flex;
     gap: space(10);
     width: 100%;
   }
 
-  &_left-side{
+  &_left-side {
     width: 100%;
   }
 
-  &_right-side{
+  &_right-side {
     max-width: 420px;
     width: 100%;
     flex: 0 0 auto;
   }
 
-  &_empty{
-    &__wrapper{
+  &_empty {
+    &__wrapper {
       display: flex;
       width: 100%;
       min-height: 50vh;
@@ -39,25 +48,25 @@
       justify-content: center;
       align-items: center;
       text-align: center;
-      .common-title{
+      .common-title {
         margin-bottom: space(3);
         font-size: $font-size-lg-plus;
         line-height: $line-height-lg-plus;
       }
-      .common-text{
+      .common-text {
         font-size: $font-size-bs;
         line-height: $line-height-lg;
         color: $text-color-secondary;
         font-weight: 500;
       }
     }
-    &__actions{
+    &__actions {
       margin-top: space(6);
     }
   }
 
-  &_settings{
-    &__wrapper{
+  &_settings {
+    &__wrapper {
       background: $color-primary-strong;
       border-radius: borderRadius(6);
       padding: space(6) space(8);
@@ -65,41 +74,40 @@
       display: flex;
       flex-direction: column;
       gap: space(4);
-      .added-options-list{
-        &_item__list{
+      .added-options-list {
+        &_item__list {
           gap: space(4);
         }
-        &_sub-item__wrapper{
-          .common-text{
+        &_sub-item__wrapper {
+          .common-text {
             font-size: $font-size-bs;
             line-height: $line-height-lg;
           }
         }
       }
-      .additional-services_wrapper{
-        .common-title{
+      .additional-services_wrapper {
+        .common-title {
           color: $text-color-primary;
         }
       }
-      .form-field_wrapper._input{
-        .form-field_field{
+      .form-field_wrapper._input {
+        .form-field_field {
           padding: space(3) space(4);
         }
       }
     }
-    &__actions{
+    &__actions {
       display: flex;
       flex-direction: column;
       gap: space(4);
       margin-top: space(1);
-      .common-text{
+      .common-text {
         font-size: $font-size-xs;
         line-height: $line-height-bs;
       }
-      .common-btn{
+      .common-btn {
         width: 100%;
       }
     }
   }
-
 }

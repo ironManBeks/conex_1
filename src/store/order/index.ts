@@ -142,7 +142,11 @@ export class OrderStore implements IOrderStore {
             .get(`/order/cart${cartIdParam}`)
             .then((response: AxiosResponse<TGetOrderCartResponse>) => {
                 const { data } = response;
-                if (data.error && data.error !== "Cart is empty") {
+                // INFO: "Cart is empty" message shouldn't come from back
+                const omitErrorMessages =
+                    data.error !== "Cart is empty" &&
+                    data.error !== "The user has no saved carts";
+                if (data.error && omitErrorMessages) {
                     showNotification({
                         mainProps: {
                             type: "error",
