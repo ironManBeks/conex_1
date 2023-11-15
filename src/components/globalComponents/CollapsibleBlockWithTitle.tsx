@@ -12,7 +12,8 @@ import { EArrowDirection } from "@components/Icons/types";
 import { TCollapsibleBlockWithTitleProps } from "@components/globalComponents/types";
 
 const CollapsibleBlockWithTitle = ({
-    title,
+    expandTitle,
+    closeTitle,
     wrapperClassName,
     children,
     defaultOpen = false,
@@ -24,6 +25,7 @@ const CollapsibleBlockWithTitle = ({
     const [isOpen, setIsOpen] = useState(defaultOpen);
     const { size } = useElementSize({ ref: contentRef });
     const contentHeight = size.height ?? 0;
+    const titleToClose = closeTitle || expandTitle;
 
     const listTransitionStyles: Partial<
         Record<TransitionStatus, CSS.Properties>
@@ -48,7 +50,7 @@ const CollapsibleBlockWithTitle = ({
             }}
             className={cn(`${classPrefix}_title`, `_${titlePosition}`)}
         >
-            {title}
+            {isOpen ? titleToClose : expandTitle}
             <IconArrowSingle
                 direction={
                     isOpen ? EArrowDirection.top : EArrowDirection.bottom

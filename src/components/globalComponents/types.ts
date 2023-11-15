@@ -130,7 +130,8 @@ export type TRowInfoProps = {
 };
 
 export type TCollapsibleBlockWithTitleProps = {
-    title: string;
+    expandTitle: string;
+    closeTitle?: string;
     titlePosition?: "top" | "bottom";
     wrapperClassName?: string;
     defaultOpen?: boolean;

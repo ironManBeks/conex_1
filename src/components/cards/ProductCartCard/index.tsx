@@ -114,7 +114,8 @@ const ProductCartCard: FC<TProductCartCard> = ({
                             />
                             {options.length > 3 && (
                                 <CollapsibleBlockWithTitle
-                                    title="See more"
+                                    expandTitle="View more"
+                                    closeTitle="View less"
                                     defaultOpen={false}
                                     wrapperClassName={"_list"}
                                     titlePosition={"bottom"}

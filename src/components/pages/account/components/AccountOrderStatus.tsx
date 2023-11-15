@@ -39,7 +39,7 @@ const AccountOrderStatus: FC<TAccountOrderStatusProps> = ({
             })}
         >
             <CollapsibleBlockWithTitle
-                title="Status"
+                expandTitle="Status"
                 onOpenChange={(val) => handleStatusOpen(val)}
             >
                 <OrderStatusTimelapse statusTimelapse={statusTimelapse} />
