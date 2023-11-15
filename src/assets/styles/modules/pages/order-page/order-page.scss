@@ -18,7 +18,9 @@
     @include flexCenter
   }
   &_preloader {
-    @include flexCenter
+    @include flexCenter;
+
+    width: 100%;
   }
 
   &_content {
