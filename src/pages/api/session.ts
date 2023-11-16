@@ -4,14 +4,14 @@ import { randomUUID } from "crypto";
 import { CheckoutAPI, Client, Config } from "@adyen/api-library";
 
 const config = new Config({
-    apiKey: process.env.ADYEN_API_KEY,
+    apiKey: "AQEohmfxLoPGbB1Dw0m/n3Q5qf3Va4RDCIsbJ3GL0EC8O2n7mhJ+FI88hBDBXVsNvuR83LVYjEgiTGAH-nr6pnZfCqD8jIApQfR6SvVYeJF1tfw4E6uni5E/faJI=-e4XWtPU>:$rfy;CK",
     environment: "TEST",
 });
 
 const client = new Client({ config });
 const checkout = new CheckoutAPI(client);
 
-const merchantAccount = process.env.ADYEN_MERCHANT_ACCOUNT ?? "";
+const merchantAccount = "Conex1_Payment_TEST" ?? "";
 
 export type SessionData = {
     id: string;

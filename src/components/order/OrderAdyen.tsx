@@ -35,8 +35,8 @@ const Checkout = () => {
         }
 
         const config = {
-            environment: process.env.NEXT_PUBLIC_ADYEN_ENVIRONMENT,
-            clientKey: process.env.NEXT_PUBLIC_ADYEN_CLIENT_KEY,
+            environment: "TEST",
+            clientKey: "test_XJ2JHGUGPNCLZERNNHHEXEQYGUGP37NR",
         };
 
         const createCheckout = async () => {
