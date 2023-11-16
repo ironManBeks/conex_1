@@ -33,7 +33,14 @@ const NavActions: FC<TNavTypes> = inject("store")(
         const { setSearchParams, searchParams } = productsStore;
         const { isAuthorized, userData, setUserData, userDataFetching } =
             authStore;
-        const { getOrderCart, orderCart, doorsData, getDoorsData } = orderStore;
+        const {
+            getOrderCart,
+            setOrderCart,
+            orderCart,
+            doorsData,
+            getDoorsData,
+            setDoorsData,
+        } = orderStore;
         const classPrefix = `nav-actions`;
         const router = useRouter();
         const cartLength = orderCart?.items.length || 0;
@@ -59,11 +66,15 @@ const NavActions: FC<TNavTypes> = inject("store")(
                         number[]
                     >) || [];
 
-                if (unauthorizedCartId)
+                if (unauthorizedCartId) {
                     getOrderCart(Number(unauthorizedCartId));
-                if (!doorsData && unauthorizedDoorsIds.length) {
-                    getDoorsData({ ids: unauthorizedDoorsIds.join(",") });
+                } else {
+                    setOrderCart(null);
+                    setDoorsData(null);
                 }
+
+                if (!doorsData && unauthorizedDoorsIds.flat().length)
+                    getDoorsData({ ids: unauthorizedDoorsIds.join(",") });
             }
         }, [isAuthorized]);
 
