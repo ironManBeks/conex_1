@@ -325,15 +325,17 @@ export class AuthStore implements IAuthStore {
             })
             .then((response: AxiosResponse<TAccountOrders>) => {
                 const { data } = response;
+                // INFO: Sorting -> back end
+                const dateSortedData = data.data.sort((a, b) => b.id - a.id);
                 if (status && status !== "all") {
                     // INFO: filter should be on back end side, on back end is not working yet
-                    const filteredOrders = data.data.filter(
+                    const filteredOrders = dateSortedData.filter(
                         ({ attributes }) => attributes.status === status,
                     );
 
                     this.setUserOrdersData({ ...data, data: filteredOrders });
                 } else {
-                    this.setUserOrdersData(data);
+                    this.setUserOrdersData({ ...data, data: dateSortedData });
                 }
                 return response;
             })

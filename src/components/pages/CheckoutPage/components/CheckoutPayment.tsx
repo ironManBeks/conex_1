@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState } from "react";
 import { inject, observer } from "mobx-react";
 import { useFormContext } from "react-hook-form";
+import dynamic from "next/dynamic";
 
 import FieldRadioButtonArrayController from "@components/form/formControllers/FieldRadioButtonArrayController";
 import CheckoutSectionWrapper from "./CheckoutSectionWrapper";
@@ -19,6 +20,18 @@ import { IRoot } from "@store/store";
 import { notImplemented } from "@helpers/notImplemented";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { PaymentMethodsMockup } from "@components/pages/CheckoutPage/consts";
+import Spin from "@components/globalComponents/Spin";
+
+import { EPaymentCardNames } from "../formAttrs";
+
+const CheckoutAdyenPayment = dynamic(() => import("./CheckoutAdyenPayment"), {
+    loading: () => (
+        <div className="component-preloader">
+            <Spin size="large" />
+        </div>
+    ),
+    ssr: false,
+});
 
 const CheckoutPayment: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -27,10 +40,14 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
         const { setModalConfirmVisible, setConfirmModalData } = commonStore;
         const classPrefix = `${pageClassPrefix}_payment`;
         const { watch } = useFormContext();
+        const [visibleCardPayment, setVisibleCardPayment] = useState(
+            EPaymentCardNames.saved,
+        );
         const [cardFormVisible, setCardFormVisible] = useState(false);
         const [selectedCard, setSelectedCard] = useState<TPaymentCard>();
 
         const selectedService = watch(ECheckoutFormFieldsNames.paymentMethod);
+        const isAdyenCard = visibleCardPayment === EPaymentCardNames.adyen;
 
         useEffect(() => {
             setCardFormVisible(false);
@@ -51,38 +68,50 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
 
                 {selectedService === EPaymentMethodValues.creditDebitCard && (
                     <>
-                        {userCardsData?.length && !cardFormVisible && (
-                            <>
-                                {userCardsData?.map((item) => (
-                                    <PaymentCard
-                                        key={item.id}
-                                        id={item.id}
-                                        cvv={item.cvv}
-                                        cardNumber={item.cardNumber}
-                                        expMonth={item.expMonth}
-                                        expYear={item.expYear}
-                                        onDelete={() => {
-                                            setModalConfirmVisible(true);
-                                            setConfirmModalData(item);
+                        {userCardsData?.length &&
+                            !cardFormVisible &&
+                            visibleCardPayment === EPaymentCardNames.saved && (
+                                <>
+                                    {userCardsData?.map((item) => (
+                                        <PaymentCard
+                                            key={item.id}
+                                            id={item.id}
+                                            cvv={item.cvv}
+                                            cardNumber={item.cardNumber}
+                                            expMonth={item.expMonth}
+                                            expYear={item.expYear}
+                                            onDelete={() => {
+                                                setModalConfirmVisible(true);
+                                                setConfirmModalData(item);
+                                            }}
+                                            onClick={() => {
+                                                setSelectedCard(item);
+                                            }}
+                                            isActive={
+                                                selectedCard?.id === item.id
+                                            }
+                                        />
+                                    ))}
+                                    <ModalConfirm
+                                        title="Do you want to remove the card?"
+                                        confirmColor={EButtonColor.primary}
+                                        onConfirm={(confirmModalData) => {
+                                            notImplemented(
+                                                `value: ${JSON.stringify(
+                                                    confirmModalData,
+                                                )}`,
+                                            );
                                         }}
-                                        onClick={() => {
-                                            setSelectedCard(item);
-                                        }}
-                                        isActive={selectedCard?.id === item.id}
                                     />
-                                ))}
-                                <ModalConfirm
-                                    title="Do you want to remove the card?"
-                                    confirmColor={EButtonColor.primary}
-                                    onConfirm={(confirmModalData) => {
-                                        notImplemented(
-                                            `value: ${JSON.stringify(
-                                                confirmModalData,
-                                            )}`,
-                                        );
-                                    }}
+                                </>
+                            )}
+
+                        {isAdyenCard && (
+                            <div className={`${classPrefix}__adyen-container`}>
+                                <CheckoutAdyenPayment
+                                    pageClassPrefix={pageClassPrefix}
                                 />
-                            </>
+                            </div>
                         )}
 
                         {!cardFormVisible && (
@@ -90,10 +119,29 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
                                 <ButtonPrimary
                                     color={EButtonColor.secondary}
                                     onClick={() => {
-                                        setCardFormVisible(true);
+                                        if (!isAdyenCard) {
+                                            setCardFormVisible(true);
+                                        } else {
+                                            setVisibleCardPayment(
+                                                EPaymentCardNames.saved,
+                                            );
+                                        }
                                     }}
                                 >
-                                    Add new card
+                                    {isAdyenCard
+                                        ? "Select Card"
+                                        : "Add new card"}
+                                </ButtonPrimary>
+
+                                <ButtonPrimary
+                                    color={EButtonColor.secondary}
+                                    onClick={() => {
+                                        setVisibleCardPayment(
+                                            EPaymentCardNames.adyen,
+                                        );
+                                    }}
+                                >
+                                    Pay now
                                 </ButtonPrimary>
                             </div>
                         )}

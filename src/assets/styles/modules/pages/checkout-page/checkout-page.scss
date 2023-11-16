@@ -96,6 +96,10 @@
   }
 
   &_payment{
+    &__adyen-container {
+      max-width: 420px;
+    }
+
     &__wrapper{
       .form-field_wrapper._radiobuttonarray {
         .form-field{
@@ -152,6 +156,11 @@
         max-width: 330px;
         width: 100%;
       }
+    }
+
+    &__actions {
+      display: flex;
+      gap: space(4);
     }
   }
 

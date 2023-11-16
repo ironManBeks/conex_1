@@ -4,14 +4,14 @@ import { randomUUID } from "crypto";
 import { CheckoutAPI, Client, Config } from "@adyen/api-library";
 
 const config = new Config({
-    apiKey: process.env.ADYEN_API_KEY,
+    apiKey: "AQEohmfxLoPGbB1Dw0m/n3Q5qf3Va4RDCIsbJ3GL0EC8O2n7mhJ+FI88hBDBXVsNvuR83LVYjEgiTGAH-nr6pnZfCqD8jIApQfR6SvVYeJF1tfw4E6uni5E/faJI=-e4XWtPU>:$rfy;CK",
     environment: "TEST",
 });
 
 const client = new Client({ config });
 const checkout = new CheckoutAPI(client);
 
-const merchantAccount = process.env.ADYEN_MERCHANT_ACCOUNT ?? "";
+const merchantAccount = "Conex1_Payment_TEST" ?? "";
 
 export type SessionData = {
     id: string;
@@ -22,9 +22,10 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<SessionData>,
 ) {
+    const price = req.query.price ? Number(req.query.price) * 100 : 0;
     // Using Adyen SDK to create a session
     const response = await checkout.sessions({
-        amount: { currency: "EUR", value: 10000 }, // value is 100€ in minor units
+        amount: { currency: "USD", value: price }, // value is 100€ in minor units
         countryCode: "NL",
         merchantAccount,
         reference: randomUUID(), // Merchant reference

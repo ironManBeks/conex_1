@@ -25,6 +25,11 @@ export enum EPaymentMethodValues {
     creditDebitCard = "creditDebitCard",
 }
 
+export enum EPaymentCardNames {
+    saved = "saved",
+    adyen = "adyen",
+}
+
 export enum ECheckoutFormFieldsNames {
     // Delivery
     getMode = "getMode",
