@@ -23,7 +23,10 @@ import {
     TCheckoutForm,
 } from "@components/pages/CheckoutPage/formAttrs";
 import { IRoot } from "@store/store";
-import { PATH_MY_ACCOUNT_ORDERS_PAGE } from "@consts/pathsConsts";
+import {
+    PATH_HOME_PAGE,
+    PATH_MY_ACCOUNT_ORDERS_PAGE,
+} from "@consts/pathsConsts";
 import { showNotification } from "@helpers/notificarionHelper";
 import { TCreateOrderRequest } from "@store/order/types";
 import { getStorage, removeStorage } from "@services/storage.service";
@@ -109,13 +112,26 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
             }
 
             createOrderRequest(params).then(() => {
-                router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
-                    if (isAuthorized && userData) {
-                        deleteOrderCart(userData.cartId);
-                        getOrderCart().then(() => getDoorsData());
-                        const doorsId = orderCart?.items.map(({ id }) => id);
-                        doorsId?.length && deleteDoorRequest(doorsId);
-                    } else {
+                if (isAuthorized) {
+                    router.push(PATH_MY_ACCOUNT_ORDERS_PAGE).finally(() => {
+                        if (userData) {
+                            deleteOrderCart(userData.cartId);
+                            getOrderCart().then(() => getDoorsData());
+                            const doorsId = orderCart?.items.map(
+                                ({ id }) => id,
+                            );
+                            doorsId?.length && deleteDoorRequest(doorsId);
+                        }
+                        showNotification({
+                            mainProps: {
+                                message: "Your order has being shipped",
+                                description:
+                                    "You can view your orders on this page",
+                            },
+                        });
+                    });
+                } else {
+                    router.push(PATH_HOME_PAGE).finally(() => {
                         const unauthorizedCartId = getStorage(
                             BUILDER_UNAUTHORIZED_CART_ID,
                         ) as string | undefined;
@@ -129,15 +145,15 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                         removeStorage(BUILDER_UNAUTHORIZED_DOORS_IDS);
                         deleteDoorRequest(unauthorizedDoorsIds);
                         deleteOrderCart(Number(unauthorizedCartId));
-                    }
-
-                    showNotification({
-                        mainProps: {
-                            message: `Your order has being shipped`,
-                            description: `You can view your orders on this page`,
-                        },
+                        showNotification({
+                            mainProps: {
+                                message: "Your order has being shipped",
+                                description:
+                                    "Order tracking information has been sent to your email",
+                            },
+                        });
                     });
-                });
+                }
             });
         };
 
