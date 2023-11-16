@@ -184,7 +184,10 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                     ) : (
                         <CheckoutPickup pageClassPrefix={pageClassPrefix} />
                     )}
-                    <CheckoutPayment pageClassPrefix={pageClassPrefix} />
+                    <CheckoutPayment
+                        pageClassPrefix={pageClassPrefix}
+                        onAdyenPayBtnClick={handleSubmit(onSubmit)}
+                    />
                     <CheckoutAdditionalServices
                         pageClassPrefix={pageClassPrefix}
                     />

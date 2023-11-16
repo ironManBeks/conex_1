@@ -16,13 +16,18 @@ import { EOrderCartNames } from "@store/order/types";
 
 const CheckoutAdyenPayment = ({
     pageClassPrefix,
+    onAdyenPayBtnClick,
 }: {
     pageClassPrefix: string;
+    onAdyenPayBtnClick: () => Promise<void>;
 }) => {
     return (
         <div id="payment-page">
             <div className="container">
-                <Checkout pageClassPrefix={pageClassPrefix} />
+                <Checkout
+                    onAdyenPayBtnClick={onAdyenPayBtnClick}
+                    pageClassPrefix={pageClassPrefix}
+                />
             </div>
         </div>
     );
@@ -31,12 +36,13 @@ const CheckoutAdyenPayment = ({
 const fetcher: Fetcher<SessionData, string> = (...args) =>
     fetch(...args).then((res) => res.json());
 
-const Checkout: FC<TSectionTypes> = inject("store")(
-    observer(({ store }) => {
-        console.log({ store });
+const Checkout: FC<
+    TSectionTypes & { onAdyenPayBtnClick: () => Promise<void> }
+> = inject("store")(
+    observer(({ store, onAdyenPayBtnClick }) => {
         const { orderStore } = store as IRoot;
-        const { orderCart } = orderStore;
         const paymentContainer = useRef(null);
+        const { orderCart } = orderStore;
         const { data: session, error } = useSWRImmutable(
             `/api/session?price=${orderCart?.[EOrderCartNames.amount]}`,
             fetcher,
@@ -61,6 +67,7 @@ const Checkout: FC<TSectionTypes> = inject("store")(
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     // @ts-ignore
                     onPaymentCompleted: (response: PaymentCompleteResponse) => {
+                        onAdyenPayBtnClick();
                         if (response.resultCode !== "Authorised") {
                             showNotification({
                                 mainProps: {

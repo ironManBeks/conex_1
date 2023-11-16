@@ -33,8 +33,10 @@ const CheckoutAdyenPayment = dynamic(() => import("./CheckoutAdyenPayment"), {
     ssr: false,
 });
 
-const CheckoutPayment: FC<TSectionTypes> = inject("store")(
-    observer(({ store, pageClassPrefix }) => {
+const CheckoutPayment: FC<
+    TSectionTypes & { onAdyenPayBtnClick: () => Promise<void> }
+> = inject("store")(
+    observer(({ store, pageClassPrefix, onAdyenPayBtnClick }) => {
         const { authStore, commonStore } = store as IRoot;
         const { userCardsData, userCardsDataFetching } = authStore;
         const { setModalConfirmVisible, setConfirmModalData } = commonStore;
@@ -110,6 +112,7 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
                             <div className={`${classPrefix}__adyen-container`}>
                                 <CheckoutAdyenPayment
                                     pageClassPrefix={pageClassPrefix}
+                                    onAdyenPayBtnClick={onAdyenPayBtnClick}
                                 />
                             </div>
                         )}
