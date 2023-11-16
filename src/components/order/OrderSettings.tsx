@@ -3,7 +3,6 @@ import { inject, observer } from "mobx-react";
 import cn from "classnames";
 import { useRouter } from "next/router";
 import { isNil } from "lodash";
-import dynamic from "next/dynamic";
 
 import { H3, P } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
@@ -18,7 +17,6 @@ import {
 import { PATH_CHECKOUT_PAGE } from "@consts/pathsConsts";
 import { TOrderSettings } from "../pages/CheckoutPage/types";
 import { EButtonColor } from "@components/buttons/types";
-import Spin from "@components/globalComponents/Spin";
 
 import { IRoot } from "@store/store";
 import { IconArrowSingle, IconCross } from "@components/Icons";
@@ -28,15 +26,6 @@ import { CHECKOUT_SUBMIT_BUTTON_ID } from "@components/pages/CheckoutPage/consts
 import { EOrderCartNames } from "@store/order/types";
 import { BUILDER_UNAUTHORIZED_CART_ID } from "@consts/storageNamesContsts";
 import { getStorage } from "@services/storage.service";
-
-const OrderAdyen = dynamic(() => import("./OrderAdyen"), {
-    loading: () => (
-        <div className={`${ORDER_PAGE_CLASSPREFIX}_preloader`}>
-            <Spin size="large" />
-        </div>
-    ),
-    ssr: false,
-});
 
 const OrderSettings: FC<TOrderSettings> = inject("store")(
     observer(({ store, placement }) => {
@@ -184,7 +173,6 @@ const OrderSettings: FC<TOrderSettings> = inject("store")(
                         at checkout
                     </P>
                 </div>
-                {placement === "checkout" && <OrderAdyen />}
             </div>
         );
     }),

@@ -153,6 +153,11 @@
         width: 100%;
       }
     }
+
+    &__actions {
+      display: flex;
+      gap: space(4);
+    }
   }
 
   &_pickup{

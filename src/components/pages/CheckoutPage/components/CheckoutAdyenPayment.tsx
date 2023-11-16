@@ -4,13 +4,13 @@ import useSWRImmutable from "swr/immutable";
 import AdyenCheckout from "@adyen/adyen-web";
 import "@adyen/adyen-web/dist/adyen.css";
 
-import { PaymentCompleteResponse, SessionData } from "./types";
+import { PaymentCompleteResponse, SessionData } from "../../../order/types";
 import Spin from "@components/globalComponents/Spin";
-import { ORDER_PAGE_CLASSPREFIX } from "./consts";
+import { ORDER_PAGE_CLASSPREFIX } from "../../../order/consts";
 import { showNotification } from "@helpers/notificarionHelper";
 import { P } from "@components/Text";
 
-const OrderAdyen = () => {
+const CheckoutAdyenPayment = () => {
     return (
         <div id="payment-page">
             <div className="container">
@@ -93,7 +93,7 @@ const Checkout = () => {
         );
     if (!session)
         return (
-            <div className={`${ORDER_PAGE_CLASSPREFIX}_preloader`}>
+            <div className="component-preloader">
                 <Spin size="large" />
             </div>
         );
@@ -105,4 +105,4 @@ const Checkout = () => {
     );
 };
 
-export default OrderAdyen;
+export default CheckoutAdyenPayment;
