@@ -107,7 +107,7 @@ const CheckoutPayment: FC<TSectionTypes> = inject("store")(
                             )}
 
                         {isAdyenCard && (
-                            <div>
+                            <div className={`${classPrefix}__adyen-container`}>
                                 <CheckoutAdyenPayment
                                     pageClassPrefix={pageClassPrefix}
                                 />
