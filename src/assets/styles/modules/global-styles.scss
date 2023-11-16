@@ -2,6 +2,7 @@
 *:before,
 *:after {
     box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 a,
@@ -9,9 +10,36 @@ button {
     text-decoration: none;
     outline: none !important;
     transition: $transition;
+    text-decoration: none;
+    outline: none !important;
+    transition: $transition;
+}
+
+a {
+    color: $color-secondary-strong;
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin-block-start: 0;
+    margin-block-end: 0;
 }
 
 body {
+    margin: 0;
+    font-family: $font-family-primary, sans-serif;
+    font-style: normal;
+    font-size: $font-size-bs;
+    line-height: $line-height-static;
+    color: $color-secondary-strong !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    letter-spacing: $letter-spacing-bs;
+    background: $color-secondary-40;
+    &.disable-scroll {
+        overflow: hidden !important;
+    }
     margin: 0;
     font-family: $font-family-primary, sans-serif;
     font-style: normal;
@@ -46,6 +74,19 @@ div#__next {
         margin-right: -15px;
         width: calc(100% + 30px);
     }
+    display: flex;
+    width: 100%;
+    max-width: 1230px;
+    margin: 0 auto;
+    padding: 0 space(4);
+    min-height: 100%;
+    .row {
+        display: flex;
+        flex-wrap: wrap;
+        margin-left: -15px;
+        margin-right: -15px;
+        width: calc(100% + 30px);
+    }
 }
 
 .link-absolute {
@@ -57,6 +98,9 @@ div#__next {
     z-index: 3;
 }
 
+._logout {
+    cursor: pointer;
+    transition: $transition;
 ._logout {
     cursor: pointer;
     transition: $transition;

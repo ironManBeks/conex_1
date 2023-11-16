@@ -47,6 +47,10 @@
       display: flex;
       flex-direction: column;
       gap: space(2);
+
+      &_container {
+        margin-top: space(2);
+      }
     }
   }
 }
