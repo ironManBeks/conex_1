@@ -22,9 +22,10 @@ export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse<SessionData>,
 ) {
+    const price = req.query.price ? Number(req.query.price) * 100 : 0;
     // Using Adyen SDK to create a session
     const response = await checkout.sessions({
-        amount: { currency: "EUR", value: 10000 }, // value is 100€ in minor units
+        amount: { currency: "USD", value: price }, // value is 100€ in minor units
         countryCode: "NL",
         merchantAccount,
         reference: randomUUID(), // Merchant reference
