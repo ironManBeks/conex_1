@@ -18,6 +18,7 @@ const CollapsibleBlockWithTitle = ({
     children,
     defaultOpen = false,
     onOpenChange,
+    titleContentClassName,
     titlePosition = "top",
 }: PropsWithChildren<TCollapsibleBlockWithTitleProps>) => {
     const classPrefix = `collapsible-block`;
@@ -48,7 +49,12 @@ const CollapsibleBlockWithTitle = ({
             onClick={() => {
                 handleStatusOpen();
             }}
-            className={cn(`${classPrefix}_title`, `_${titlePosition}`)}
+            className={cn(
+                `${classPrefix}_title`,
+                `_${titlePosition}`,
+                titleContentClassName,
+                { open_content: isOpen },
+            )}
         >
             {isOpen ? titleToClose : expandTitle}
             <IconArrowSingle
