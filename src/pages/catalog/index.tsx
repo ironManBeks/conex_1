@@ -6,7 +6,7 @@ import CatalogPage from "@components/pages/CatalogPage";
 const CatalogPageLayout: FC = () => {
     return (
         <>
-            <HeadMeta title="Cart" />
+            <HeadMeta title="Catalog" />
             <CatalogPage />
         </>
     );

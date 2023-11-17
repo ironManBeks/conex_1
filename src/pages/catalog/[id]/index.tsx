@@ -6,7 +6,7 @@ import SingleProductPage from "@components/pages/SingleProductPage";
 const SingleProductPageLayout: FC = () => {
     return (
         <>
-            <HeadMeta title="Cart" />
+            <HeadMeta title="Catalog" />
             <SingleProductPage />
         </>
     );
