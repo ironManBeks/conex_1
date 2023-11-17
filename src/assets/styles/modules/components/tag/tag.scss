@@ -1,0 +1,63 @@
+.tag-base {
+    @include flexCenter;
+
+    border-radius: borderRadius(6);
+    background-color: $color-primary-strong;
+    font-weight: 500;
+    transition: background-color 0.3s;
+    cursor: pointer;
+}
+
+.tag-active-base {
+    background-color: $color-accent-strong;
+}
+
+.tag {
+    @extend .tag-base;
+
+    padding: space(2) space(4);
+    font-size: $font-size-bs;
+    line-height: $line-height-lg;
+
+    &__icon-container.plus-icon {
+        margin-right: space(2);
+    }
+
+    &__icon-container.close-icon {
+        margin-left: space(1);
+    }
+
+    &__icon-container {
+        position: relative;
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+}
+.tag.active {
+    @extend .tag-active-base;
+}
+
+.tag_small {
+    @extend .tag-base;
+
+    padding: space(1) space(3);
+    font-size: $font-size-sm;
+    line-height: $line-height-md;
+
+    &__icon-container.plus-icon {
+        margin-right: space(2);
+    }
+
+    &__icon-container.close-icon {
+        margin-left: space(1);
+    }
+
+    &__icon-container {
+        position: relative;
+        width: 1rem;
+        height: 1rem;
+    }
+}
+.tag_small.active {
+    @extend .tag-active-base;
+}
