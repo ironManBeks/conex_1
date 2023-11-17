@@ -11,6 +11,8 @@ export type TFieldCheckboxArrayController = {
     name: string;
     options: TDefaultOption[];
     direction?: EDirection;
+    shownOptions?: number;
+    showContentClassName?: string;
 } & CheckboxProps &
     TFormWrapperClassName &
     TFormItemLabel &

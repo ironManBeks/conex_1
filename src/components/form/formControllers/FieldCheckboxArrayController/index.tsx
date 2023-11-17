@@ -1,15 +1,15 @@
 import { FC } from "react";
 import { Controller, useFormContext } from "react-hook-form";
 import cn from "classnames";
-import { Checkbox as AntCheckbox, Checkbox } from "antd";
+import { Checkbox } from "antd";
 
 import FormItemWrapper from "@components/form/FormItemWrapper";
-import { IconCheck } from "@components/Icons";
 
-import { FORM_FIELD_CLASSNAME_PREFIX } from "@components/form/consts";
 import { EDirection } from "@globalTypes/commonTypes";
 import { EFormFieldType } from "@components/form/types";
 import { TFieldCheckboxArrayController } from "./types";
+import CheckboxOption from "./CheckboxOption";
+import CollapsibleBlockWithTitle from "@components/globalComponents/CollapsibleBlockWithTitle";
 
 const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
     props,
@@ -22,6 +22,8 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
         options,
         direction,
         showError,
+        shownOptions,
+        showContentClassName,
         ...rest
     } = props;
     const {
@@ -46,6 +48,13 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
             name={name}
             control={control}
             render={({ field }) => {
+                const optionProps = {
+                    disabled,
+                    field,
+                    getIsChecked,
+                    ...rest,
+                };
+
                 return (
                     <FormItemWrapper
                         fieldType={EFormFieldType.checkboxArray}
@@ -69,49 +78,45 @@ const FieldCheckboxArrayController: FC<TFieldCheckboxArrayController> = (
                                 field.onChange(checkedValue);
                             }}
                         >
-                            {options.map((item, index) => {
-                                const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
-                                return (
-                                    <div
-                                        className={cn(
-                                            `${FORM_FIELD_CLASSNAME_PREFIX}_field`,
-                                            {
-                                                _checked: getIsChecked(
-                                                    item.value,
-                                                ),
-                                            },
-                                            {
-                                                _disabled: item.disabled,
-                                            },
-                                        )}
-                                        key={`${field.name}.${item.value}.${index}`}
-                                    >
-                                        <AntCheckbox
-                                            {...rest}
-                                            {...field}
-                                            id={checkboxId}
-                                            value={item.value}
-                                            disabled={disabled || item.disabled}
-                                        >
-                                            <IconCheck width={16} height={16} />
-                                        </AntCheckbox>
-                                        <div
-                                            className={cn(
-                                                `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label-wrapper`,
-                                            )}
-                                        >
-                                            <label
-                                                htmlFor={checkboxId}
-                                                className={cn(
-                                                    `${FORM_FIELD_CLASSNAME_PREFIX}_sub-label`,
-                                                )}
-                                            >
-                                                {item.label}
-                                            </label>
-                                        </div>
-                                    </div>
-                                );
-                            })}
+                            {options
+                                .slice(0, shownOptions)
+                                .map((item, index) => {
+                                    const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
+
+                                    return (
+                                        <CheckboxOption
+                                            checkboxId={checkboxId}
+                                            index={index}
+                                            item={item}
+                                            {...optionProps}
+                                        />
+                                    );
+                                })}
+                            {shownOptions && options.length > shownOptions && (
+                                <CollapsibleBlockWithTitle
+                                    expandTitle="Show more"
+                                    closeTitle="Show less"
+                                    defaultOpen={false}
+                                    wrapperClassName={"_list"}
+                                    titlePosition={"bottom"}
+                                    titleContentClassName={showContentClassName}
+                                >
+                                    {options
+                                        .slice(shownOptions)
+                                        .map((item, index) => {
+                                            const checkboxId = `id_${EFormFieldType.checkboxArray}.${field.name}.${item.value}`;
+
+                                            return (
+                                                <CheckboxOption
+                                                    checkboxId={checkboxId}
+                                                    index={index}
+                                                    item={item}
+                                                    {...optionProps}
+                                                />
+                                            );
+                                        })}
+                                </CollapsibleBlockWithTitle>
+                            )}
                         </Checkbox.Group>
                     </FormItemWrapper>
                 );
