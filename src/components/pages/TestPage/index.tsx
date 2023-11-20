@@ -28,6 +28,7 @@ import { convertCheckboxArrayToBoolean } from "@helpers/formHelpers";
 import { IconMapPoint } from "@components/Icons";
 import FieldSliderController from "@components/form/formControllers/FieldSliderController";
 import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
+import { Slider } from "antd";
 
 const TestPage: FC = () => {
     const classPrefix = "test-page";
@@ -362,6 +363,14 @@ const TestPage: FC = () => {
                                             transparent
                                         </ButtonPrimary>
                                         <br />
+                                    </div>
+                                    <div>
+                                        <Slider
+                                            range
+                                            step={10}
+                                            defaultValue={[20, 50]}
+                                            className="common-slider"
+                                        />
                                     </div>
                                     <div>
                                         <ButtonPrimary
