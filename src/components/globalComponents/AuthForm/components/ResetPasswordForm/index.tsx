@@ -16,9 +16,10 @@ import {
     resetPasswordFormResolver,
     TResetPasswordForm,
 } from "./formAttrs";
-import { AUTH_FORM_CLASSNAME_PREFIX } from "../../consts";
+import { AUTH_FORM_CLASSNAME_PREFIX, RESET_PASSWORD_QUERY } from "../../consts";
 import { TAuthFormProps, TAuthFormTypes } from "../../types";
 import { IRoot } from "@store/store";
+import { useRouter } from "next/router";
 
 const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
     observer(({ store, className, onAuth }) => {
@@ -28,11 +29,15 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
             resolver: resetPasswordFormResolver(),
             defaultValues: resetPasswordFormDefaultValues,
         });
+        const router = useRouter();
+
+        const resetPasswordCode = router.query[RESET_PASSWORD_QUERY];
 
         const { handleSubmit } = methods;
 
         const onSubmit: SubmitHandler<TResetPasswordForm> = (data) => {
-            resetPasswordRequest({ ...data, code: "what?" });
+            if (typeof resetPasswordCode === "string")
+                resetPasswordRequest({ ...data, code: resetPasswordCode });
             if (isFunction(onAuth)) {
                 onAuth();
             }

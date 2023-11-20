@@ -67,7 +67,7 @@ export type TAuthData = {
 };
 
 export type TResetPasswordRequest = {
-    code: string;
+    code?: string;
 } & TResetPasswordForm;
 
 export type TEmailConfirmationResponse = {
