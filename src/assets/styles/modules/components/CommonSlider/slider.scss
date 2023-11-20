@@ -1,0 +1,24 @@
+.common-slider-handle-base {
+    inset-block-start: 0;
+
+    &::after {
+        background-color: $color-blue-strong;
+        box-shadow: 0 0 0 2px $color-blue-strong;
+    }
+}
+
+.common-slider {
+    .ant-slider-handle.ant-slider-handle-1 {
+        @extend .common-slider-handle-base;
+    }
+    .ant-slider-handle.ant-slider-handle-2 {
+        @extend .common-slider-handle-base;
+    }
+    .ant-slider-track.ant-slider-track-1 {
+        background-color: $color-blue-strong;
+        height: 2px;
+    }
+    .ant-slider-rail {
+        height: 2px;
+    }
+}
