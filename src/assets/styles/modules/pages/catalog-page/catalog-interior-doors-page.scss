@@ -1,0 +1,133 @@
+.interior-doors-page {
+    &_filter-container-base {
+        background-color: $color-primary-strong;
+        border-radius: space(2);
+    }
+    &_layout__inner-wrapper {
+        padding: space(10) 0;
+        .common-title._h2 {
+            margin-bottom: space(5);
+            font-size: $font-size-xl;
+            line-height: $line-height-xl;
+        }
+    }
+
+    &_header-sub-text {
+        margin-left: space(4);
+        color: $color-secondary-360;
+        font-size: $font-size-bs;
+    }
+
+    &_filter-tags {
+        display: flex;
+        gap: space(3);
+    }
+
+    &_content {
+        display: flex;
+        gap: space(10);
+        width: 100%;
+        margin-top: space(10);
+    }
+
+    &_left-side {
+        color: $text-color-primary;
+        max-width: 20.625rem;
+        width: 100%;
+    }
+
+    &__filters-container {
+        display: flex;
+        flex-direction: column;
+        gap: space(4);
+    }
+
+    &__filters-wrapper {
+        @extend .interior-doors-page_filter-container-base;
+
+        padding: space(6) space(7);
+        padding-bottom: space(2);
+    }
+
+    &__doors-filters-wrapper {
+        @extend .interior-doors-page_filter-container-base;
+
+        padding: space(5) space(4);
+
+        .ant-collapse.ant-collapse-ghost {
+            display: flex;
+            flex-direction: column;
+            gap: space(3);
+        }
+
+        .ant-collapse-item {
+            .ant-collapse-header {
+                font-size: $font-size-bs;
+                line-height: $line-height-lg;
+                font-weight: 700;
+                padding: space(1) space(3);
+            }
+            .ant-collapse-content > .ant-collapse-content-box {
+                padding-block: 0;
+                padding: 0;
+                padding-left: space(4);
+            }
+        }
+        .ant-collapse
+            > .ant-collapse-item
+            > .ant-collapse-header
+            .ant-collapse-expand-icon {
+            padding-inline-end: space(1);
+            height: 16px;
+            margin: auto 0;
+        }
+        .ant-collapse-arrow {
+            transition: transform 0.3s;
+        }
+
+        .arrow-icon_active {
+            transform: rotate(-90deg);
+        }
+    }
+
+    &__doors-filters-list {
+        display: flex;
+        flex-direction: column;
+        gap: space(2);
+
+        li {
+            font-weight: 500;
+            font-size: $font-size-bs;
+            cursor: pointer;
+
+            padding: space(1) space(3);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        &-amount {
+            color: $text-color-disabled;
+            font-size: $font-size-sm;
+        }
+    }
+
+    &__checkbox-filter_title {
+        margin-bottom: space(4);
+    }
+
+    &__show-content-btn {
+        font-size: $font-size-sm;
+        font-weight: 500;
+        line-height: $line-height-md;
+    }
+
+    &__price-inputs-container {
+        display: flex;
+        gap: space(5);
+    }
+
+    &_right-side {
+        width: 100%;
+    }
+}
