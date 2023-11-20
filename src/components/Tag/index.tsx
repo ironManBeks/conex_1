@@ -48,7 +48,7 @@ const Tag: FC<PropsWithChildren<TagProps>> = ({
                     onClick={onCloseIconClick}
                     className={`${classPrefix}__icon-container close-icon`}
                 >
-                    <Image alt="plus curcle icon" src="/icons/close.svg" fill />
+                    <Image alt="plus circle icon" src="/icons/close.svg" fill />
                 </div>
             )}
         </div>
