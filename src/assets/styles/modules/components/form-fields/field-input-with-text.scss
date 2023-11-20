@@ -1,0 +1,42 @@
+.form-field {
+    &__input-text-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        gap: space(2);
+
+        &:has(input:focus) {
+            .form-field__input-text {
+                color: $text-color-primary;
+            }
+
+            .form-field__input-text-input-border {
+                background-color: $text-color-primary;
+            }
+        }
+    }
+
+    &__input-text {
+        margin-top: 7%;
+        transition: color 0.2s;
+        color: $color-secondary-360;
+    }
+
+    &__input-text-input {
+        &-border {
+            position: absolute;
+            top: 65%;
+            left: 0;
+            height: 1px;
+            width: 100%;
+            background-color: $color-secondary-360;
+            transition: background-color 0.2s;
+        }
+        &.form-field_field.ant-input {
+            border: none;
+            background-color: transparent;
+            padding: space(2) 0;
+            border-radius: 0px;
+        }
+    }
+}
