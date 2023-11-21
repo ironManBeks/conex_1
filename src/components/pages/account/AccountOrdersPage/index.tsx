@@ -30,7 +30,7 @@ const AccountOrdersPage: FC<TStore> = inject("store")(
         const classPrefix = "account-orders-page";
 
         useEffect(() => {
-            if (isAuthorized) getUserOrdersData(ESegmentedOptionsNames.all);
+            if (isAuthorized) getUserOrdersData();
         }, [isAuthorized]);
 
         const orderSegmentedOptions: SegmentedLabeledOption[] = [
@@ -54,7 +54,10 @@ const AccountOrdersPage: FC<TStore> = inject("store")(
 
         const handleSegmentChange = useCallback(
             (val: ESegmentedOptionsNames) => {
-                getUserOrdersData(val);
+                const ordersReqParams =
+                    val === ESegmentedOptionsNames.all ? undefined : val;
+
+                getUserOrdersData(ordersReqParams);
             },
             [],
         );

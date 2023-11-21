@@ -314,29 +314,18 @@ export class AuthStore implements IAuthStore {
     };
 
     getUserOrdersData = (
-        status: ESegmentedOptionsNames,
+        status?: ESegmentedOptionsNames,
     ): Promise<AxiosResponse<TAccountOrders>> => {
         this.setUserOrdersDataFetching(true);
         return axiosInstance
             .get("/orders", {
-                params: {
-                    "filter[status]": status,
-                },
+                params: { status },
             })
             .then((response: AxiosResponse<TAccountOrders>) => {
                 const { data } = response;
-                // INFO: Sorting -> back end
-                const dateSortedData = data.data.sort((a, b) => b.id - a.id);
-                if (status && status !== "all") {
-                    // INFO: filter should be on back end side, on back end is not working yet
-                    const filteredOrders = dateSortedData.filter(
-                        ({ attributes }) => attributes.status === status,
-                    );
 
-                    this.setUserOrdersData({ ...data, data: filteredOrders });
-                } else {
-                    this.setUserOrdersData({ ...data, data: dateSortedData });
-                }
+                this.setUserOrdersData(data);
+
                 return response;
             })
             .catch((err) => {

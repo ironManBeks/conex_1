@@ -9,7 +9,6 @@ import { TEmailConfirmationForm } from "@components/globalComponents/AuthForm/co
 import { TNullable } from "@globalTypes/commonTypes";
 import { TPaymentCard } from "@components/globalComponents/types";
 import { ESegmentedOptionsNames } from "@components/pages/account/types";
-import { TResponseMeta } from "@globalTypes/requestTypes";
 
 export enum EAccountOrderStatus {
     processed = "processed",
@@ -97,10 +96,7 @@ export type TAccountOrderItem = {
     // statusTimelapse: TOrderStatusTimelapse[];
 };
 
-export type TAccountOrders = TResponseMeta & {
-    // INFO: hopefully this response is temporery
-    data: TAccountOrderItem[];
-};
+export type TAccountOrders = TAccountOrderItem[];
 
 export type TSingleOrderData = {
     paymentMethod: string;
@@ -164,7 +160,7 @@ export interface IAuthStore {
     setUserCardsDataFetching: (value: boolean) => void;
     //
     getUserOrdersData: (
-        status: ESegmentedOptionsNames,
+        status?: ESegmentedOptionsNames,
     ) => Promise<AxiosResponse<TAccountOrders>>;
     setUserOrdersData: (data: TNullable<TAccountOrders>) => void;
     setUserOrdersDataFetching: (value: boolean) => void;

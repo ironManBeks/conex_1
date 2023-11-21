@@ -11,13 +11,12 @@ const AccountOrders: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
         const { authStore } = store as IRoot;
         const { userOrdersData } = authStore;
-        const ordersData = userOrdersData?.data;
 
         return (
             <>
                 <div className={`${pageClassPrefix}_list`}>
-                    {ordersData?.length ? (
-                        ordersData.map(({ id, attributes }) => (
+                    {userOrdersData?.length ? (
+                        userOrdersData.map(({ id, attributes }) => (
                             <AccountOrderItem
                                 key={id}
                                 id={id}
