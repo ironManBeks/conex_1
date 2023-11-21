@@ -2,7 +2,15 @@ import { TSingleOrderData } from "@store/auth/types";
 // TODO: Change when back is ready TS Error
 
 export const AccountSingleOrderMockup: TSingleOrderData = {
-    data: [],
+    item: {
+        attributes: {
+            createdAt: "",
+            publishedAt: "",
+            status: "",
+            updatedAt: "",
+        },
+        id: 12,
+    },
 
     // id: 1,
     // orderNumber: "XR-685069050596",
@@ -12,15 +20,15 @@ export const AccountSingleOrderMockup: TSingleOrderData = {
     paymentMethod: "Direct bank transfer",
     total: 1029.6,
     subtotal: 1287,
-    meta: {
-        pagination: {
-            page: 1,
-            pageCount: 1,
-            pageSize: 1,
-            total: 1,
-        },
-        date: 123,
-    },
+    // meta: {
+    //     pagination: {
+    //         page: 1,
+    //         pageCount: 1,
+    //         pageSize: 1,
+    //         total: 1,
+    //     },
+    //     date: 123,
+    // },
     details: [
         {
             label: "Material",

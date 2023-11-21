@@ -106,7 +106,8 @@ export type TSingleOrderData = {
         label: string;
         value: string;
     }[];
-} & TAccountOrders;
+    item: TAccountOrderItem;
+};
 
 export type TGetUserSingleOrderRequest = {
     id: number;
