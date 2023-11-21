@@ -154,10 +154,13 @@ export class OrderStore implements IOrderStore {
                         },
                     });
                     this.setOrderCart(null);
+                } else {
+                    this.setOrderCart(null);
                 }
                 if (!data.error) {
                     this.setOrderCart(data);
                 }
+
                 return response;
             })
             .catch((err) => {
