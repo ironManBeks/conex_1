@@ -7,9 +7,12 @@ import { inject, observer } from "mobx-react";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { P } from "@components/Text";
 import FieldPasswordController from "@components/form/formControllers/FieldPasswordController";
-import AuthActions from "../AuthActions";
 
 import { EButtonColor } from "@components/buttons/types";
+import { IRoot } from "@store/store";
+import { useRouter } from "next/router";
+import { PATH_LOGIN } from "@consts/pathsConsts";
+
 import {
     EResetPasswordFormFieldsNames,
     resetPasswordFormDefaultValues,
@@ -18,8 +21,7 @@ import {
 } from "./formAttrs";
 import { AUTH_FORM_CLASSNAME_PREFIX, RESET_PASSWORD_QUERY } from "../../consts";
 import { TAuthFormProps, TAuthFormTypes } from "../../types";
-import { IRoot } from "@store/store";
-import { useRouter } from "next/router";
+import AuthActions from "../AuthActions";
 
 const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
     observer(({ store, className, onAuth }) => {
@@ -37,7 +39,9 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
 
         const onSubmit: SubmitHandler<TResetPasswordForm> = (data) => {
             if (typeof resetPasswordCode === "string")
-                resetPasswordRequest({ ...data, code: resetPasswordCode });
+                resetPasswordRequest({ ...data, code: resetPasswordCode }).then(
+                    () => router.push(PATH_LOGIN),
+                );
             if (isFunction(onAuth)) {
                 onAuth();
             }

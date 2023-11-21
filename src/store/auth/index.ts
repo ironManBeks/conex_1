@@ -189,13 +189,10 @@ export class AuthStore implements IAuthStore {
 
     resetPasswordRequest = (
         formValues: TResetPasswordRequest,
-    ): Promise<void> => {
+    ): Promise<AxiosResponse> => {
         this.setAuthRequestFetching(true);
         return axiosInstance
             .post("/auth/reset-password", formValues)
-            .then((data: AxiosResponse<TAuthData>) => {
-                console.log("resetPasswordRequest", data);
-            })
             .catch((err) => {
                 showAxiosNotificationError(err);
                 throw err;
