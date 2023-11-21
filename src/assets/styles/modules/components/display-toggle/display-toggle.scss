@@ -1,0 +1,17 @@
+.common-display-toggle {
+    display: flex;
+    gap: space(1);
+    padding: space(1);
+    border-radius: space(1);
+
+    &__icon-container {
+        display: flex;
+        padding: space(2);
+        border-radius: space(1);
+        cursor: pointer;
+
+        &.active {
+            background-color: $color-primary-strong;
+        }
+    }
+}
