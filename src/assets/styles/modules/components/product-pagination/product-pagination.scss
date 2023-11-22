@@ -1,0 +1,34 @@
+.common-product-pagination {
+    &__wrapper {
+        // ANT DESIGN
+        .ant-pagination {
+            .ant-pagination-prev,
+            .ant-pagination-next,
+            .ant-pagination-item {
+                display: inline-flex;
+                justify-content: center;
+                align-items: center;
+                height: 3rem;
+                width: 3rem;
+                border-radius: space(1);
+                border: 1px solid $border-color-secondary;
+
+                &:active {
+                    background-color: $border-color-secondary;
+                }
+            }
+
+            .ant-pagination-prev.ant-pagination-disabled {
+                background-color: $color-secondary-40;
+            }
+
+            .ant-pagination-item.ant-pagination-item-active {
+                border-color: $color-accent-strong;
+                background-color: $color-primary-400;
+                a {
+                    color: $color-accent-strong;
+                }
+            }
+        }
+    }
+}
