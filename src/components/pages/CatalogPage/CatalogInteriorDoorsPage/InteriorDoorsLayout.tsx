@@ -7,6 +7,7 @@ import { tags } from "./FiltersMockUp";
 import Tag from "@components/Tag";
 
 import LeftSide from "./FiltersSide";
+import RightSide from "./ContentSide";
 
 interface InteriorDoorsLayoutProps extends TStore {
     pageClassPrefix: string;
@@ -41,7 +42,7 @@ const InteriorDoorsLayout: FC<
                         <LeftSide pageClassPrefix={pageClassPrefix} />
                     </div>
                     <div className={`${pageClassPrefix}_right-side`}>
-                        <div>Right side</div>
+                        <RightSide pageClassPrefix={pageClassPrefix} />
                     </div>
                 </div>
             </div>
