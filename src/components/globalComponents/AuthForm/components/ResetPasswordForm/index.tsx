@@ -11,7 +11,7 @@ import FieldPasswordController from "@components/form/formControllers/FieldPassw
 import { EButtonColor } from "@components/buttons/types";
 import { IRoot } from "@store/store";
 import { useRouter } from "next/router";
-import { PATH_LOGIN } from "@consts/pathsConsts";
+import { PATH_MY_ACCOUNT_PAGE } from "@consts/pathsConsts";
 
 import {
     EResetPasswordFormFieldsNames,
@@ -20,8 +20,9 @@ import {
     TResetPasswordForm,
 } from "./formAttrs";
 import { AUTH_FORM_CLASSNAME_PREFIX, RESET_PASSWORD_QUERY } from "../../consts";
-import { TAuthFormProps, TAuthFormTypes } from "../../types";
+import { EAuthFormType, TAuthFormProps, TAuthFormTypes } from "../../types";
 import AuthActions from "../AuthActions";
+import { AUTH_FORM_QUERY } from "@consts/queryNamesConsts";
 
 const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
     observer(({ store, className, onAuth }) => {
@@ -40,7 +41,10 @@ const ResetPasswordForm: FC<TAuthFormProps & TAuthFormTypes> = inject("store")(
         const onSubmit: SubmitHandler<TResetPasswordForm> = (data) => {
             if (typeof resetPasswordCode === "string")
                 resetPasswordRequest({ ...data, code: resetPasswordCode }).then(
-                    () => router.push(PATH_LOGIN),
+                    () =>
+                        router.push(PATH_MY_ACCOUNT_PAGE, {
+                            query: { [AUTH_FORM_QUERY]: EAuthFormType.login },
+                        }),
                 );
             if (isFunction(onAuth)) {
                 onAuth();
