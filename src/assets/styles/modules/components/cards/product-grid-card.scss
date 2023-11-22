@@ -1,0 +1,37 @@
+.product-grid-card {
+    &__wrapper {
+        width: 260px;
+        padding: space(4);
+        border-radius: space(4);
+        border: 1px solid $border-color-secondary;
+        background-color: $color-primary-strong;
+    }
+
+    &__content {
+        margin-top: space(4);
+        color: $text-color-primary;
+        line-height: $line-height-lg;
+    }
+    &__price {
+        font-family: Helvetica Neue;
+        font-size: $font-size-lg;
+        font-weight: 700;
+    }
+    &__text {
+        font-size: $font-size-bs;
+        font-weight: 500;
+    }
+    &__btn {
+        margin-top: space(5);
+        width: 100%;
+    }
+    &__delivery {
+        margin-top: space(4);
+        color: $text-color-secondary;
+        font-size: $font-size-xs;
+        line-height: $line-height-bs;
+        display: flex;
+        align-items: center;
+        gap: space(2);
+    }
+}
