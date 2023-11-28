@@ -1,3 +1,4 @@
+import { IconBox } from "@components/Icons";
 import { P } from "@components/Text";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
@@ -45,12 +46,7 @@ const ProductGridCard: FC<ProductGridCardProps> = ({
                     {btnText}
                 </ButtonPrimary>
                 <div className={`${classPrefix}__delivery`}>
-                    <Image
-                        alt="box icon"
-                        src="/icons/box.svg"
-                        width={14}
-                        height={16}
-                    />
+                    <IconBox color={"rgba(44, 44, 53, 0.36)"} />
                     <span>{deliveryText}</span>
                 </div>
             </div>
