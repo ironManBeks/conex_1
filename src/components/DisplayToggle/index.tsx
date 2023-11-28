@@ -1,13 +1,13 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import cn from "classnames";
 
 import { commonDisplayToggleClassPrefix, displayIcons } from "./const";
 import Image from "next/image";
-import { TDisplayIcon } from "./types";
+import { TDisplayIcon, TDisplayValue } from "./types";
 
 interface DisplayToggleProps extends React.HTMLAttributes<HTMLDivElement> {
-    display: "row" | "grid";
-    onIconClick: (value: string | number) => void;
+    onIconClick: (value: TDisplayValue) => void;
+    display?: TDisplayValue;
     icons?: TDisplayIcon[];
 }
 
@@ -18,6 +18,17 @@ const DisplayToggle: FC<DisplayToggleProps> = ({
     icons = displayIcons,
     ...props
 }) => {
+    const [currentDisplay, setCurrentDisplay] = useState(icons[0].value);
+
+    const onIconContainerClick = (value: TDisplayValue) => {
+        onIconClick(value);
+        setCurrentDisplay(String(value));
+    };
+
+    useEffect(() => {
+        if (display) setCurrentDisplay(display);
+    }, [display]);
+
     return (
         <div
             className={cn(commonDisplayToggleClassPrefix, className)}
@@ -27,9 +38,9 @@ const DisplayToggle: FC<DisplayToggleProps> = ({
                 <div
                     className={cn(
                         `${commonDisplayToggleClassPrefix}__icon-container`,
-                        { active: display === value },
+                        { active: currentDisplay === value },
                     )}
-                    onClick={() => onIconClick(value)}
+                    onClick={() => onIconContainerClick(value)}
                 >
                     <Image alt={imgAlt} src={imgSrc} width={24} height={24} />
                 </div>
