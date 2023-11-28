@@ -9,6 +9,7 @@ interface SortByProps extends React.HTMLAttributes<HTMLDivElement> {
     icon?: React.ReactElement;
     defaultIconClassName?: string;
     isActive?: boolean;
+    isDesc?: boolean;
 }
 
 const SortBy: FC<SortByProps> = ({
@@ -17,6 +18,7 @@ const SortBy: FC<SortByProps> = ({
     className,
     defaultIconClassName,
     isActive,
+    isDesc,
     ...props
 }) => {
     const activeIconClassName = `${commonSortByClassPrefix}__icon_active`;
@@ -37,7 +39,7 @@ const SortBy: FC<SortByProps> = ({
                     width={24}
                     height={24}
                     className={cn(
-                        { [activeIconClassName]: isActive },
+                        { [activeIconClassName]: isDesc },
                         defaultIconClassName,
                     )}
                 />
