@@ -90,7 +90,7 @@ function FiltersSidePrice({ pageClassPrefix }: FiltersSidePriceProps) {
                                             onBlur(e.target.value);
                                         }}
                                         value={value[0]}
-                                        min={0}
+                                        min={MIN_PRICE}
                                         max={value[1] - 10}
                                     />
                                 );
@@ -122,7 +122,7 @@ function FiltersSidePrice({ pageClassPrefix }: FiltersSidePriceProps) {
                                         onBlur={(e) => onBlur(e.target.value)}
                                         value={value[1]}
                                         min={value[0] + 10}
-                                        max={2000}
+                                        max={MAX_PRICE}
                                     />
                                 );
                             }}
