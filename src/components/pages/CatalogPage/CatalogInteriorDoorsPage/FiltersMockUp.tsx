@@ -1,6 +1,7 @@
 import { CollapseProps } from "antd";
+
 import FilterList from "./FilterList";
-import { TCategory } from "./types";
+import { TCategoryForm } from "./types";
 
 const tags = [
     { text: "With glass", value: "with_glass" },
@@ -101,8 +102,8 @@ const doorModification = [
 
 const collapseItems = (
     pageClassPrefix: string,
-    defaultValues: TCategory,
-    onClick: (value: object) => void,
+    defaultValues: TCategoryForm,
+    onClick: (name: keyof TCategoryForm, value: string[]) => void,
 ): CollapseProps["items"] => [
     {
         key: "1",
@@ -112,7 +113,7 @@ const collapseItems = (
                 filterData={interiorDoors}
                 defaultValues={defaultValues.doors}
                 pageClassPrefix={pageClassPrefix}
-                onListClick={(filters: string[]) => onClick({ doors: filters })}
+                onListClick={(filters: string[]) => onClick("doors", filters)}
             />
         ),
     },
@@ -125,7 +126,7 @@ const collapseItems = (
                 defaultValues={defaultValues.interior_doors}
                 pageClassPrefix={pageClassPrefix}
                 onListClick={(filters: string[]) =>
-                    onClick({ interior_doors: filters })
+                    onClick("interior_doors", filters)
                 }
             />
         ),
@@ -139,7 +140,7 @@ const collapseItems = (
                 defaultValues={defaultValues.panel_header_3}
                 pageClassPrefix={pageClassPrefix}
                 onListClick={(filters: string[]) =>
-                    onClick({ panel_header_3: filters })
+                    onClick("panel_header_3", filters)
                 }
             />
         ),

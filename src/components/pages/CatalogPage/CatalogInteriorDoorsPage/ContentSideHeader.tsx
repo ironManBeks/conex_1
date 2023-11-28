@@ -1,11 +1,13 @@
-import SortBy from "@components/SortBy";
+import { useForm } from "react-hook-form";
+import { Controller, FormProvider } from "react-hook-form";
 import { FC, useEffect } from "react";
-import { sortFormDefaultValues, sortTypes } from "./const";
+
+import SortBy from "@components/SortBy";
 import DisplayToggle from "@components/DisplayToggle";
 import { useRouter } from "next/router";
 import { ITEMS_DISPLAY } from "@consts/queryNamesConsts";
-import { useForm } from "react-hook-form";
-import { Controller, FormProvider } from "react-hook-form";
+
+import { sortFormDefaultValues, sortTypes } from "./const";
 import { changeSortChange } from "./helper/changeSortChange";
 import { addSearchQueryParams } from "./helper/addSearchQueryParams";
 import { TSortFormDefaultValues } from "./types";
@@ -75,7 +77,8 @@ const ContentSideHeader: FC<ContentSideHeaderProps> = ({ pageClassPrefix }) => {
                         ),
                     )}
                 </FormProvider>
-            </div>{" "}
+            </div>
+
             <div className={`${classNameBase}__display`}>
                 <DisplayToggle
                     onIconClick={onDisplayToggle}

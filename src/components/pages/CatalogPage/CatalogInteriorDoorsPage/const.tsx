@@ -1,9 +1,6 @@
 import Image from "next/image";
-import {
-    TCategoriesFormDefaultValues,
-    TSortFormDefaultValues,
-    TTagsFormDefaultValues,
-} from "./types";
+
+import { TSortFormDefaultValues, TTagsFormDefaultValues } from "./types";
 
 const sortTypes = [
     { text: "By popularity", value: "by_popularity" },
@@ -42,11 +39,7 @@ const tagsFormDefaultValues: TTagsFormDefaultValues = {
 const SLIDER_STEPS = 100;
 const MAX_PRICE = 10000;
 const MIN_PRICE = 0;
-const categoriesFormDefaultValues: Omit<
-    TCategoriesFormDefaultValues,
-    "door_modification"
-> = {
-    eyelet_included: [],
+const categoriesFormDefaultValues = {
     price: [MIN_PRICE, MAX_PRICE],
     categories: {
         doors: [],

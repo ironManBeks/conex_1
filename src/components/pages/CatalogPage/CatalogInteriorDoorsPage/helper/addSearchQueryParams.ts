@@ -11,6 +11,8 @@ export const addSearchQueryParams = (
         ...queryParams,
     };
 
+    console.log({ query: router.query, queryParams });
+
     router.replace(
         {
             query: omitBy(filteredQueryParams, isUndefined),

@@ -1,15 +1,16 @@
-import { inject, observer } from "mobx-react";
-import ContentSideHeader from "./ContentSideHeader";
-import { TStore } from "@globalTypes/storeTypes";
-import { FC } from "react";
-import Banner from "./Banner";
-import ProductCartCard from "@components/cards/ProductCartCard";
-import ProductGridCard from "@components/cards/ProductGridCard";
 import ProductPagination from "@components/ProductPagination";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
-import { useRouter } from "next/router";
+import ProductCartCard from "@components/cards/ProductCartCard";
+import ProductGridCard from "@components/cards/ProductGridCard";
 import { ITEMS_DISPLAY } from "@consts/queryNamesConsts";
+import { TStore } from "@globalTypes/storeTypes";
+import { inject, observer } from "mobx-react";
+import { useRouter } from "next/router";
+import { FC } from "react";
+
+import Banner from "./Banner";
+import ContentSideHeader from "./ContentSideHeader";
 import { productGridData, productRowData } from "./FiltersMockUp";
 
 interface ContentSideProps extends TStore {
