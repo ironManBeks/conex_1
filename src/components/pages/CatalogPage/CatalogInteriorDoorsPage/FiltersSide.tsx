@@ -73,7 +73,6 @@ const FilterSide: FC<FilterSideProps> = inject("store")(
             listenToFormValue(queryKey, router, arr, isDirty);
 
         useEffect(() => {
-            console.log("effect", formCategoriesDoorsValue);
             if (isDirty)
                 addSearchQueryParams(router, {
                     ["category_doors"]: joinArr(formCategoriesDoorsValue.doors),
