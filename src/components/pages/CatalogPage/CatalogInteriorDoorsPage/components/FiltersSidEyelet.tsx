@@ -7,9 +7,9 @@ import FieldCheckboxArrayController from "@components/form/formControllers/Field
 import { EDirection } from "@globalTypes/commonTypes";
 
 import { eyeletIncluded } from "./FiltersMockUp";
-import { formatFilterData } from "./helper/formatFilter";
-import { listenToFormValue } from "./helper/listenToFormValues";
-import { TEyeletIncludedForm } from "./types";
+import { formatFilterData } from "../helper/formatFilter";
+import { listenToFormValue } from "../helper/listenToFormValues";
+import { TEyeletIncludedForm } from "../types";
 
 interface FiltersSideEyeletProps {
     pageClassPrefix: string;

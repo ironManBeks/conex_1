@@ -8,9 +8,9 @@ import { useRouter } from "next/router";
 import { ITEMS_DISPLAY } from "@consts/queryNamesConsts";
 
 import { sortFormDefaultValues, sortTypes } from "./const";
-import { changeSortChange } from "./helper/changeSortChange";
-import { addSearchQueryParams } from "./helper/addSearchQueryParams";
-import { TSortFormDefaultValues } from "./types";
+import { changeSortChange } from "../helper/changeSortChange";
+import { addSearchQueryParams } from "../helper/addSearchQueryParams";
+import { TSortFormDefaultValues } from "../types";
 
 interface ContentSideHeaderProps {
     pageClassPrefix: string;

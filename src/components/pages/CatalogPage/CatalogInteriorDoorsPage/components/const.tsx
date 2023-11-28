@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-import { TSortFormDefaultValues, TTagsFormDefaultValues } from "./types";
+import { TSortFormDefaultValues, TTagsFormDefaultValues } from "../types";
 
 const sortTypes = [
     { text: "By popularity", value: "by_popularity" },

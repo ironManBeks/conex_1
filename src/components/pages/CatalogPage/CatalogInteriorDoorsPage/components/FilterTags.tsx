@@ -6,8 +6,8 @@ import Tag from "@components/Tag";
 
 import { tags } from "./FiltersMockUp";
 import { tagsFormDefaultValues } from "./const";
-import { addSearchQueryParams } from "./helper/addSearchQueryParams";
-import { TTagsFormDefaultValues } from "./types";
+import { addSearchQueryParams } from "../helper/addSearchQueryParams";
+import { TTagsFormDefaultValues } from "../types";
 
 interface FilterTagsProps {
     pageClassPrefix: string;

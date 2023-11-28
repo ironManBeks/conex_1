@@ -7,9 +7,9 @@ import FieldCheckboxArrayController from "@components/form/formControllers/Field
 import { EDirection } from "@globalTypes/commonTypes";
 
 import { doorModification } from "./FiltersMockUp";
-import { formatFilterData } from "./helper/formatFilter";
-import { listenToFormValue } from "./helper/listenToFormValues";
-import { TDoorModificationForm } from "./types";
+import { formatFilterData } from "../helper/formatFilter";
+import { listenToFormValue } from "../helper/listenToFormValues";
+import { TDoorModificationForm } from "../types";
 
 interface FiltersSideDoorModificationProps {
     pageClassPrefix: string;

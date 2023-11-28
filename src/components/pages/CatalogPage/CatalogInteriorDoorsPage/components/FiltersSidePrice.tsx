@@ -8,8 +8,8 @@ import { H4 } from "@components/Text";
 import FormFieldInputWithText from "@components/form/formFields/FormFieldInputWithText";
 
 import { MAX_PRICE, MIN_PRICE, SLIDER_STEPS } from "./const";
-import { addSearchQueryParams } from "./helper/addSearchQueryParams";
-import { TPriceForm } from "./types";
+import { addSearchQueryParams } from "../helper/addSearchQueryParams";
+import { TPriceForm } from "../types";
 
 interface FiltersSidePriceProps {
     pageClassPrefix: string;

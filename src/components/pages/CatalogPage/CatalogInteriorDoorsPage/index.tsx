@@ -1,7 +1,7 @@
 import Container from "@components/globalComponents/Container";
 import { Layout } from "@components/segments/Layout";
 
-import InteriorDoorsLayout from "./InteriorDoorsLayout";
+import InteriorDoorsLayout from "./components/InteriorDoorsLayout";
 
 const CatalogInteriorDoorsPage = () => {
     const classPrefix = "interior-doors-page";

@@ -1,7 +1,7 @@
 import { CollapseProps } from "antd";
 
 import FilterList from "./FilterList";
-import { TCategoryForm } from "./types";
+import { TCategoryForm } from "../types";
 
 const tags = [
     { text: "With glass", value: "with_glass" },

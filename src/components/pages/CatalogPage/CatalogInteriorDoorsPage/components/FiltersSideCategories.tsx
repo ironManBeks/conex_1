@@ -6,8 +6,8 @@ import { useEffect } from "react";
 import { FormProvider, useForm } from "react-hook-form";
 
 import { collapseItems } from "./FiltersMockUp";
-import { listenToFormValue } from "./helper/listenToFormValues";
-import { TCategoryForm } from "./types";
+import { listenToFormValue } from "../helper/listenToFormValues";
+import { TCategoryForm } from "../types";
 
 interface FiltersSideCategoriesProps {
     pageClassPrefix: string;
