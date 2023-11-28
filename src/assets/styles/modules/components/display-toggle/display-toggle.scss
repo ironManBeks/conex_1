@@ -9,6 +9,7 @@
         padding: space(2);
         border-radius: space(1);
         cursor: pointer;
+        transition: background-color 0.4s;
 
         &.active {
             background-color: $color-primary-strong;
