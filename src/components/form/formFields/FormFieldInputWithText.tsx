@@ -5,7 +5,9 @@ import { TFormFieldInput } from "../types";
 
 const FormFieldInputWithText: FC<TFormFieldInput> = (props) => {
     return (
-        <div className={`${FORM_FIELD_CLASSNAME_PREFIX}__input-text-container`}>
+        <label
+            className={`${FORM_FIELD_CLASSNAME_PREFIX}__input-text-container`}
+        >
             <div className={`${FORM_FIELD_CLASSNAME_PREFIX}__input-text`}>
                 From
             </div>
@@ -16,7 +18,7 @@ const FormFieldInputWithText: FC<TFormFieldInput> = (props) => {
             <div
                 className={`${FORM_FIELD_CLASSNAME_PREFIX}__input-text-input-border`}
             />
-        </div>
+        </label>
     );
 };
 
