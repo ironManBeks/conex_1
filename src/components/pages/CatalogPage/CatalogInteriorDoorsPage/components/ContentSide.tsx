@@ -20,17 +20,17 @@ interface ContentSideProps extends TStore {
 const ContentSide: FC<ContentSideProps> = inject("store")(
     observer(({ pageClassPrefix }) => {
         const router = useRouter();
-        const isDisplayGrid = router.query[ITEMS_DISPLAY] === "grid";
+        const isDisplayRow = router.query[ITEMS_DISPLAY] === "row";
 
         const productsArray = (amount: number) =>
             Array.from({ length: amount })
                 .fill(null)
                 .map((_, index) => (
                     <>
-                        {isDisplayGrid ? (
-                            <ProductGridCard key={index} {...productGridData} />
-                        ) : (
+                        {isDisplayRow ? (
                             <ProductCartCard key={index} {...productRowData} />
+                        ) : (
+                            <ProductGridCard key={index} {...productGridData} />
                         )}
                     </>
                 ));

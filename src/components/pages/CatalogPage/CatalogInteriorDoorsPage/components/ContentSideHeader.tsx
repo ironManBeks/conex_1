@@ -82,7 +82,7 @@ const ContentSideHeader: FC<ContentSideHeaderProps> = ({ pageClassPrefix }) => {
             <div className={`${classNameBase}__display`}>
                 <DisplayToggle
                     onIconClick={onDisplayToggle}
-                    display={defaultDisplay}
+                    display={defaultDisplay || "grid"}
                     className={`${classNameBase}__display-toggle`}
                 />
             </div>
