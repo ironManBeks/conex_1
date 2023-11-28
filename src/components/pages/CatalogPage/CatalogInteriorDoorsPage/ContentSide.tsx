@@ -8,6 +8,9 @@ import ProductGridCard from "@components/cards/ProductGridCard";
 import ProductPagination from "@components/ProductPagination";
 import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { EButtonColor, EButtonSize } from "@components/buttons/types";
+import { useRouter } from "next/router";
+import { ITEMS_DISPLAY } from "@consts/queryNamesConsts";
+import { productGridData, productRowData } from "./FiltersMockUp";
 
 interface ContentSideProps extends TStore {
     pageClassPrefix: string;
@@ -15,35 +18,33 @@ interface ContentSideProps extends TStore {
 
 const ContentSide: FC<ContentSideProps> = inject("store")(
     observer(({ pageClassPrefix }) => {
+        const router = useRouter();
+        const isDisplayGrid = router.query[ITEMS_DISPLAY] === "grid";
+
+        const productsArray = (amount: number) =>
+            Array.from({ length: amount })
+                .fill(null)
+                .map((_, index) => (
+                    <>
+                        {isDisplayGrid ? (
+                            <ProductGridCard key={index} {...productGridData} />
+                        ) : (
+                            <ProductCartCard key={index} {...productRowData} />
+                        )}
+                    </>
+                ));
+
         return (
             <div>
                 <ContentSideHeader pageClassPrefix={pageClassPrefix} />
                 <div className={`${pageClassPrefix}__card-container`}>
-                    {Array.from({ length: 3 })
-                        .fill(null)
-                        .map((_, index) => (
-                            <ProductGridCard
-                                key={index}
-                                imageSrc="/images/png/door-test.png"
-                                price={345}
-                                text="2 panel interior door with frame"
-                            />
-                        ))}
+                    {productsArray(3)}
                 </div>
                 <div className={`${pageClassPrefix}__banner-container`}>
                     <Banner pageClassPrefix={pageClassPrefix} />
                 </div>
                 <div className={`${pageClassPrefix}__card-container`}>
-                    {Array.from({ length: 12 })
-                        .fill(null)
-                        .map((_, index) => (
-                            <ProductGridCard
-                                key={index}
-                                imageSrc="/images/png/door-test.png"
-                                price={345}
-                                text="2 panel interior door with frame"
-                            />
-                        ))}
+                    {productsArray(12)}
                 </div>
                 <div className={`${pageClassPrefix}__pagination-container`}>
                     <ProductPagination />
@@ -57,14 +58,6 @@ const ContentSide: FC<ContentSideProps> = inject("store")(
                         </ButtonPrimary>
                     </div>
                 </div>
-                {/* <ProductCartCard
-                    count={1}
-                    id={1}
-                    img=""
-                    options={[{ title: "title", value: "value" }]}
-                    price={234}
-                    title="title"
-                /> */}
             </div>
         );
     }),
