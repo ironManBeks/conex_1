@@ -2,7 +2,7 @@ import cn from "classnames";
 import Image from "next/image";
 import { FC, PropsWithChildren } from "react";
 
-interface TagProps {
+interface TagProps extends React.HTMLAttributes<HTMLDivElement> {
     size?: "small";
     isActive?: boolean;
     isPlusIcon?: boolean;
@@ -21,14 +21,21 @@ const Tag: FC<PropsWithChildren<TagProps>> = ({
     containerClassName,
     onPlusIconClick,
     onCloseIconClick,
+    ...rest
 }) => {
     const classPrefix = size ? `tag_${size}` : "tag";
+
+    const onClose = (e: React.MouseEvent) => {
+        e.stopPropagation();
+        onCloseIconClick && onCloseIconClick();
+    };
 
     return (
         <div
             className={cn(classPrefix, containerClassName, {
                 active: isActive,
             })}
+            {...rest}
         >
             {isPlusIcon && (
                 <div
@@ -45,7 +52,7 @@ const Tag: FC<PropsWithChildren<TagProps>> = ({
             <div>{children}</div>
             {isCloseIcon && (
                 <div
-                    onClick={onCloseIconClick}
+                    onClick={onClose}
                     className={`${classPrefix}__icon-container close-icon`}
                 >
                     <Image alt="plus circle icon" src="/icons/close.svg" fill />
