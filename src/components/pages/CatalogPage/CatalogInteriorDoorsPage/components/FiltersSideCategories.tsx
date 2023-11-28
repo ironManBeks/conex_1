@@ -26,11 +26,9 @@ function FiltersSideCategories({
         formState: { isDirty },
     } = methods;
 
-    const defaultCategoryDoors = router.query.category_doors as string;
-    const defaultCategoryInteriorDoors = router.query
-        .category_interior_doors as string;
-    const defaultCategoryPanelHeader = router.query
-        .category_panel_header_3 as string;
+    const defaultCategoryDoors = router.query.doors as string;
+    const defaultCategoryInteriorDoors = router.query.interior_doors as string;
+    const defaultCategoryPanelHeader = router.query.panel_header_3 as string;
 
     const formDoorsValue = watch("doors");
     const formInteriorDoorsValue = watch("interior_doors");
@@ -40,13 +38,18 @@ function FiltersSideCategories({
         listenToFormValue(queryKey, router, arr, isDirty);
 
     addListenerToValue("doors", formDoorsValue);
-    addListenerToValue("category_interior_doors", formInteriorDoorsValue);
-    addListenerToValue("category_panel_header_3", formPanelHeader3Value);
+    addListenerToValue("interior_doors", formInteriorDoorsValue);
+    addListenerToValue("panel_header_3", formPanelHeader3Value);
 
     const checkAndSetValue = (name: keyof TCategoryForm, values?: string) => {
         if (values) setValue(name, values.split(","));
     };
     useEffect(() => {
+        console.log({
+            defaultCategoryDoors,
+            defaultCategoryInteriorDoors,
+            defaultCategoryPanelHeader,
+        });
         if (!isDirty) {
             checkAndSetValue("doors", defaultCategoryDoors);
             checkAndSetValue("interior_doors", defaultCategoryInteriorDoors);
@@ -70,8 +73,8 @@ function FiltersSideCategories({
                     items={collapseItems(
                         pageClassPrefix,
                         {
-                            interior_doors: getValues().doors || [],
-                            doors: getValues().interior_doors || [],
+                            doors: getValues().doors || [],
+                            interior_doors: getValues().interior_doors || [],
                             panel_header_3: getValues().panel_header_3 || [],
                         },
                         onListClick,
