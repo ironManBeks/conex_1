@@ -1,10 +1,10 @@
 @import "variables-media";
 
 $space: 4px;
-$transition: .2s;
+$transition: 0.2s;
 $iconOpacity: 0.36;
 
-$color-white: #FFFFFF;
+$color-white: #ffffff;
 $color-black: #000000;
 $color-black-300: #333334;
 
@@ -29,6 +29,7 @@ $color-accent-40: rgba($color-accent-strong, 0.04);
 $color-accent-80: rgba($color-accent-strong, 0.08);
 $color-accent-100: rgba($color-accent-strong, 0.1);
 $color-accent-200: rgba($color-accent-strong, 0.2);
+$color-accent-360: rgba($color-accent-strong, 0.36);
 $color-accent-400: rgba($color-accent-strong, 0.4);
 $color-accent-600: rgba($color-accent-strong, 0.6);
 $color-accent-800: rgba($color-accent-strong, 0.8);
@@ -125,14 +126,26 @@ $letter-spacing-bs: 0.02em;
 
 // -----------------------------------------------------------------------------
 //// Box-shadow
-$box-shadow-sm:  0 0 10px 0 rgba(87, 110, 124, 0.23), 0 0 10px 0 rgba(250, 187, 30, 0.12);
-$box-shadow-sm-hover:  0 0 10px 0 rgba(87, 110, 124, 0.3), 0 0 10px 0 rgba(250, 187, 30, 0.2);
+$box-shadow-sm:
+    0 0 10px 0 rgba(87, 110, 124, 0.23),
+    0 0 10px 0 rgba(250, 187, 30, 0.12);
+$box-shadow-sm-hover:
+    0 0 10px 0 rgba(87, 110, 124, 0.3),
+    0 0 10px 0 rgba(250, 187, 30, 0.2);
 
-$box-shadow-bs: 0 0 20px 0 rgba(87, 110, 124, 0.23), 0 0 20px 0 rgba(250, 187, 30, 0.12);
-$box-shadow-bs-hover: 0 0 20px 2px rgba(87, 110, 124, 0.3), 0 0 20px 2px rgba(250, 187, 30, 0.2);
+$box-shadow-bs:
+    0 0 20px 0 rgba(87, 110, 124, 0.23),
+    0 0 20px 0 rgba(250, 187, 30, 0.12);
+$box-shadow-bs-hover:
+    0 0 20px 2px rgba(87, 110, 124, 0.3),
+    0 0 20px 2px rgba(250, 187, 30, 0.2);
 
-$box-shadow-md: 0 0 20px 0 rgba(87, 110, 124, 0.23), 0 0 20px 0 rgba(250, 187, 30, 0.17);
-$box-shadow-md-hover: 0 0 22px 0 rgba(87, 110, 124, 0.53), 0 0 22px 0 rgba(250, 187, 30, 0.37);
+$box-shadow-md:
+    0 0 20px 0 rgba(87, 110, 124, 0.23),
+    0 0 20px 0 rgba(250, 187, 30, 0.17);
+$box-shadow-md-hover:
+    0 0 22px 0 rgba(87, 110, 124, 0.53),
+    0 0 22px 0 rgba(250, 187, 30, 0.37);
 
 // -----------------------------------------------------------------------------
 // Z-indexes
