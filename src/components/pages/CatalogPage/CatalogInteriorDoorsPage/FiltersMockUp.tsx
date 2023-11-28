@@ -1,7 +1,13 @@
 import { CollapseProps } from "antd";
 import FilterList from "./FilterList";
+import { TCategory } from "./types";
 
-const tags = ["With glass", "Monolith", "Gray door", "Stained doors"];
+const tags = [
+    { text: "With glass", value: "with_glass" },
+    { text: "Monolith", value: "monolith" },
+    { text: "Gray door", value: "gray_door" },
+    { text: "Stained doors", value: "stained_doors" },
+];
 
 const eyeletIncluded = [
     {
@@ -93,14 +99,20 @@ const doorModification = [
     },
 ];
 
-const collapseItems = (pageClassPrefix: string): CollapseProps["items"] => [
+const collapseItems = (
+    pageClassPrefix: string,
+    defaultValues: TCategory,
+    onClick: (value: object) => void,
+): CollapseProps["items"] => [
     {
         key: "1",
         label: "Doors",
         children: (
             <FilterList
                 filterData={interiorDoors}
+                defaultValues={defaultValues.doors}
                 pageClassPrefix={pageClassPrefix}
+                onListClick={(filters: string[]) => onClick({ doors: filters })}
             />
         ),
     },
@@ -110,7 +122,11 @@ const collapseItems = (pageClassPrefix: string): CollapseProps["items"] => [
         children: (
             <FilterList
                 filterData={interiorDoors}
+                defaultValues={defaultValues.interior_doors}
                 pageClassPrefix={pageClassPrefix}
+                onListClick={(filters: string[]) =>
+                    onClick({ interior_doors: filters })
+                }
             />
         ),
     },
@@ -120,10 +136,50 @@ const collapseItems = (pageClassPrefix: string): CollapseProps["items"] => [
         children: (
             <FilterList
                 filterData={interiorDoors}
+                defaultValues={defaultValues.panel_header_3}
                 pageClassPrefix={pageClassPrefix}
+                onListClick={(filters: string[]) =>
+                    onClick({ panel_header_3: filters })
+                }
             />
         ),
     },
 ];
 
-export { tags, doorModification, eyeletIncluded, interiorDoors, collapseItems };
+const productGridData = {
+    imageSrc: "/images/png/door-test.png",
+    price: 345,
+    text: "2 panel interior door with frame",
+};
+
+const productRowData = {
+    count: 1,
+    id: 1,
+    title: "2 panel interior door with frame",
+    img: "/images/png/door-test.png",
+    options: [
+        {
+            title: "Material",
+            value: "Metail",
+        },
+        {
+            title: "Size",
+            value: "Single 20*20",
+        },
+        {
+            title: "Color",
+            value: "Silver",
+        },
+    ],
+    price: 345,
+};
+
+export {
+    tags,
+    doorModification,
+    eyeletIncluded,
+    interiorDoors,
+    collapseItems,
+    productGridData,
+    productRowData,
+};
