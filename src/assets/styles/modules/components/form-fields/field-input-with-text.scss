@@ -5,7 +5,12 @@
         justify-content: center;
         gap: space(2);
 
-        &:has(input:focus) {
+        &:has(input:placeholder-shown) {
+            background-color: $color-secondary-200;
+        }
+
+        &:has(input:focus),
+        &:hover {
             .form-field__input-text {
                 color: $text-color-primary;
             }
@@ -29,8 +34,12 @@
             left: 0;
             height: 1px;
             width: 100%;
-            background-color: $color-secondary-360;
+            background-color: $color-secondary-strong;
             transition: background-color 0.2s;
+
+            &.filled {
+                background-color: $color-secondary-strong;
+            }
         }
         &.form-field_field.ant-input {
             border: none;
