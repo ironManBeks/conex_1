@@ -28,9 +28,18 @@ const ContentSide: FC<ContentSideProps> = inject("store")(
                 .map((_, index) => (
                     <>
                         {isDisplayRow ? (
-                            <ProductCartCard key={index} {...productRowData} />
+                            <ProductCartCard
+                                isAdded={index % 2 === 0}
+                                key={index}
+                                {...productRowData}
+                            />
                         ) : (
-                            <ProductGridCard key={index} {...productGridData} />
+                            <ProductGridCard
+                                key={index}
+                                count={1}
+                                isAdded={index % 2 === 0}
+                                {...productGridData}
+                            />
                         )}
                     </>
                 ));

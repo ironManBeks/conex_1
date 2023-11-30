@@ -15,7 +15,7 @@ import ButtonPrimary from "@components/buttons/ButtonPrimary";
 import { PRODUCT_CARD_CLASSNAME } from "../consts";
 import { TProductCartCard } from "../types";
 import { mediaBreakpoints } from "@assets/theme/mediaBreakpointsTheme";
-import { EButtonColor } from "@components/buttons/types";
+import { EButtonColor, EButtonSize } from "@components/buttons/types";
 import CollapsibleBlockWithTitle from "@components/globalComponents/CollapsibleBlockWithTitle";
 
 const ProductCartCard: FC<TProductCartCard> = ({
@@ -29,6 +29,9 @@ const ProductCartCard: FC<TProductCartCard> = ({
     options,
     count,
     onCountChange,
+    isAdded,
+    btnText = "Add to card",
+    onBtnClick,
 }) => {
     const classPrefix = "product-cart-card";
 
@@ -68,11 +71,26 @@ const ProductCartCard: FC<TProductCartCard> = ({
                     onCountChange(val);
                 }
             }}
+            className={`${classPrefix}__number-input`}
             defaultValue={count}
             min={1}
             max={100}
         />
     );
+
+    const addButton = (
+        <ButtonPrimary
+            size={EButtonSize.sm}
+            color={EButtonColor.primary}
+            type="submit"
+            className={`${classPrefix}__btn`}
+            onClick={onBtnClick}
+        >
+            {btnText}
+        </ButtonPrimary>
+    );
+
+    const btnOrCountContent = isAdded ? countFieldContent : addButton;
 
     return (
         <div
@@ -131,11 +149,11 @@ const ProductCartCard: FC<TProductCartCard> = ({
                         </div>
                     )}
                     {!isMobile && detailsActionsContent}
-                    {isMobile && countFieldContent}
+                    {isMobile && btnOrCountContent}
                 </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
                     {!isMobile && price && <H5>${price}</H5>}
-                    {!isMobile && countFieldContent}
+                    {!isMobile && btnOrCountContent}
                     {isMobile && detailsActionsContent}
                 </div>
             </div>

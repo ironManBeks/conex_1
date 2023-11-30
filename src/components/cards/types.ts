@@ -14,12 +14,15 @@ export type TProductCartCard = {
     };
     onDeleteClick?: () => void;
     onCountChange?: (value: number) => void;
+    onBtnClick?: () => void;
     id: number;
     title: string;
     price: number;
     img: string;
     options: { title: string; value: ReactNode }[];
     count: number;
+    isAdded?: boolean;
+    btnText?: string;
 };
 
 export type TProductCarouselCard = {

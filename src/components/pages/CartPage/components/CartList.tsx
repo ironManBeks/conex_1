@@ -202,6 +202,7 @@ const CartList: FC<TSectionTypes> = inject("store")(
                             <ProductCartCard
                                 {...item}
                                 key={item.id}
+                                isAdded
                                 select={{
                                     isSelect: !!selected?.includes(item.id),
                                     onSelectChange: (id, value) => {
