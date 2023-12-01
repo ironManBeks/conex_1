@@ -152,7 +152,7 @@ const ProductCartCard: FC<TProductCartCard> = ({
                     {isMobile && btnOrCountContent}
                 </div>
                 <div className={`${classPrefix}_actions__wrapper`}>
-                    {!isMobile && price && <H5>${price}</H5>}
+                    {!isMobile && price && <H5>${price.toFixed(2)}</H5>}
                     {!isMobile && btnOrCountContent}
                     {isMobile && detailsActionsContent}
                 </div>
