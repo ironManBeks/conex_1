@@ -80,7 +80,34 @@ export type TCreateOrderCartResponse = {
     error?: string;
 };
 
+export type TGetPaymentSessionAdyenResponse = {
+    methods: object;
+    session: {
+        amount: {
+            currency: string;
+            value: number;
+        };
+        countryCode: string;
+        expiresAt: string;
+        id: string;
+        merchantAccount: string;
+        reference: string;
+        returnUrl: string;
+        sessionData: string;
+    };
+};
+
 export type TDeleteDoorResponse = { data: { id: number } } & TResponseMeta;
+
+export type TGetPaymentSessionParams = {
+    amount: number;
+};
+
+export type TVerifyPaymentParams = {
+    // orderId;
+    sessionId: string;
+    sessionResult: string;
+};
 
 export interface IOrderStore {
     doorsData: TNullable<TGetDoorsDataResponse>;
@@ -92,6 +119,7 @@ export interface IOrderStore {
     orderCartParams: TNullable<TGetOrderCartRequest>;
     //
     createOrderRequestFetching: boolean;
+    getPaymentSessionFetching: boolean;
     // -------------------------------------------------------------------------------
     getDoorsData: (
         params?: TGetDoorsRequest,
@@ -123,4 +151,13 @@ export interface IOrderStore {
     //
     createOrderRequest: (params: TCreateOrderRequest) => Promise<AxiosResponse>;
     setCreateOrderRequestFetching: (value: boolean) => void;
+    //
+    getPaymentSession: (
+        params: TGetPaymentSessionParams,
+    ) => Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>>;
+    setGetPaymentSessionFetching: (value: boolean) => void;
+    //
+    verifyPayment: (
+        params: TVerifyPaymentParams,
+    ) => Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>>;
 }

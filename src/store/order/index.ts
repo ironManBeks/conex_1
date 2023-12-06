@@ -13,6 +13,9 @@ import {
     TGetDoorsRequest,
     TGetOrderCartRequest,
     TGetOrderCartResponse,
+    TGetPaymentSessionAdyenResponse,
+    TGetPaymentSessionParams,
+    TVerifyPaymentParams,
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
@@ -28,6 +31,7 @@ export class OrderStore implements IOrderStore {
     orderCart: TNullable<TGetOrderCartResponse> = null;
     orderCartFetching = false;
     orderCartParams: TNullable<TGetOrderCartRequest> = null;
+    getPaymentSessionFetching = false;
 
     constructor() {
         makeAutoObservable(this);
@@ -63,6 +67,10 @@ export class OrderStore implements IOrderStore {
 
     setOrderCartParams = (data: TNullable<TGetOrderCartRequest>): void => {
         this.orderCartParams = data;
+    };
+
+    setGetPaymentSessionFetching = (value: boolean) => {
+        this.getPaymentSessionFetching = value;
     };
 
     // -------------------------------------------------------------------------------
@@ -244,6 +252,36 @@ export class OrderStore implements IOrderStore {
             })
             .finally(() => {
                 this.setCreateOrderRequestFetching(false);
+            });
+    };
+
+    getPaymentSession = (
+        data: TGetPaymentSessionParams,
+    ): Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>> => {
+        this.setGetPaymentSessionFetching(true);
+        return axiosInstance
+            .post("/order/payment-session", data)
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setGetPaymentSessionFetching(false);
+            });
+    };
+
+    verifyPayment = (
+        data: TVerifyPaymentParams,
+    ): Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>> => {
+        this.setGetPaymentSessionFetching(true);
+        return axiosInstance
+            .post("/order/verify-payment", data)
+            .catch((err) => {
+                showAxiosNotificationError(err);
+                throw err;
+            })
+            .finally(() => {
+                this.setGetPaymentSessionFetching(false);
             });
     };
 }
