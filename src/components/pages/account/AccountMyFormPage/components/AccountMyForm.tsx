@@ -113,10 +113,17 @@ const AccountMyForm: FC<TSectionTypes> = inject("store")(
                             </div>
                             <div className={`${pageClassPrefix}_fields`}>
                                 <FieldInputController
+                                    name={EAccountMyFormFieldsNames.username}
+                                    placeholder="Username"
+                                    label="Username"
+                                />
+                                <FieldInputController
                                     name={EAccountMyFormFieldsNames.email}
                                     placeholder="Email"
                                     label="Email"
                                 />
+                            </div>
+                            <div className={`${pageClassPrefix}_fields`}>
                                 <FieldInputMaskController
                                     name={EAccountMyFormFieldsNames.phone}
                                     placeholder="Phone"

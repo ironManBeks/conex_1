@@ -122,6 +122,7 @@ export type TUpdateUserRequest = {
     country: string;
     address: string;
     zip: string;
+    username: string;
 } & TUserDataId;
 
 export interface IAuthStore {

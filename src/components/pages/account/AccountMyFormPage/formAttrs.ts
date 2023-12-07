@@ -19,6 +19,7 @@ export enum EAccountMyFormFieldsNames {
     city = "city",
     address = "address",
     zip = "zip",
+    username = "username",
 }
 
 export type TAccountMyForm = {
@@ -30,6 +31,7 @@ export type TAccountMyForm = {
     [EAccountMyFormFieldsNames.city]: string;
     [EAccountMyFormFieldsNames.address]: string;
     [EAccountMyFormFieldsNames.zip]: string;
+    [EAccountMyFormFieldsNames.username]: string;
 };
 
 export const accountMyFormDefaultValues = (
@@ -44,6 +46,7 @@ export const accountMyFormDefaultValues = (
         [EAccountMyFormFieldsNames.city]: data?.city ?? "",
         [EAccountMyFormFieldsNames.address]: data?.address ?? "",
         [EAccountMyFormFieldsNames.zip]: data?.zip ?? "",
+        [EAccountMyFormFieldsNames.username]: data?.username ?? "",
     };
 };
 
@@ -56,6 +59,7 @@ export const accountMyFormResolver = (): Resolver<TAccountMyForm> => {
             [EAccountMyFormFieldsNames.last_name]: yupNameRequired(true),
             [EAccountMyFormFieldsNames.email]: yupEmailRequired(),
             [EAccountMyFormFieldsNames.phone]: yupPhoneRequired(),
+            [EAccountMyFormFieldsNames.username]: yupNameRequired(),
             [EAccountMyFormFieldsNames.country]: yup
                 .string()
                 .max(50, renderValidationText("max", undefined, 50))
