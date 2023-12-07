@@ -194,9 +194,10 @@ export const checkoutFormResolver = (): Resolver<TCheckoutForm> => {
                     otherwise: (schema) => schema,
                 }),
             // ____________________________________________________
-            [ECheckoutFormFieldsNames.paymentMethod]: yup
-                .string()
-                .required(requiredText),
+            // INFO: For now this field is deleted (after logic is added should be uncommented)
+            // [ECheckoutFormFieldsNames.paymentMethod]: yup
+            //     .string()
+            //     .required(requiredText),
             [ECheckoutFormFieldsNames.additionalServices]: yup
                 .array()
                 .of(yup.string().required(requiredText))

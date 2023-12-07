@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useRef, useState } from "react";
 import AdyenCheckout from "@adyen/adyen-web";
 import "@adyen/adyen-web/dist/adyen.css";
+import { useFormContext } from "react-hook-form";
 
 import Spin from "@components/globalComponents/Spin";
 import { showNotification } from "@helpers/notificarionHelper";
@@ -10,13 +11,14 @@ import { TSectionTypes } from "@globalTypes/sectionTypes";
 import { EOrderCartNames } from "@store/order/types";
 
 import { PaymentCompleteResponse } from "../../../order/types";
+import { TSessionsData } from "../types";
 
 const CheckoutAdyenPayment = ({
     pageClassPrefix,
     onAdyenPayBtnClick,
 }: {
     pageClassPrefix: string;
-    onAdyenPayBtnClick: () => Promise<void>;
+    onAdyenPayBtnClick: (additionalData: TSessionsData) => void;
 }) => {
     return (
         <div id="payment-page">
@@ -29,13 +31,21 @@ const CheckoutAdyenPayment = ({
 };
 
 const Checkout: FC<
-    TSectionTypes & { onAdyenPayBtnClick: () => Promise<void> }
+    TSectionTypes & {
+        onAdyenPayBtnClick: (additionalData: TSessionsData) => void;
+    }
 > = inject("store")(
     observer(({ store, onAdyenPayBtnClick }) => {
         const { orderStore } = store as IRoot;
         const paymentContainer = useRef(null);
         const { orderCart, getPaymentSession, verifyPayment } = orderStore;
         const [session, setSession] = useState({ sessionData: "", id: "" });
+        const canPayRef = useRef(false);
+
+        const {
+            formState: { isValid },
+            trigger,
+        } = useFormContext();
 
         useEffect(() => {
             // INFO: sometimes there is an error "getPayment is not a function", so I added it in condition
@@ -54,6 +64,10 @@ const Checkout: FC<
         }, []);
 
         useEffect(() => {
+            if (isValid) canPayRef.current = true;
+        }, [isValid]);
+
+        useEffect(() => {
             let ignore = false;
 
             if (!session.sessionData || !paymentContainer.current) {
@@ -70,12 +84,22 @@ const Checkout: FC<
                     const checkout = await AdyenCheckout({
                         ...config,
                         session,
+                        beforeSubmit(state, element, actions) {
+                            trigger();
+                            if (canPayRef.current)
+                                return actions.resolve(state);
+
+                            return actions.reject();
+                        },
                         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                         // @ts-ignore
                         onPaymentCompleted: (
                             response: PaymentCompleteResponse,
                         ) => {
-                            onAdyenPayBtnClick();
+                            onAdyenPayBtnClick({
+                                sessionResult: response.sessionResult || "",
+                                sessionId: session.id,
+                            });
                             if (response.resultCode !== "Authorised") {
                                 showNotification({
                                     mainProps: {

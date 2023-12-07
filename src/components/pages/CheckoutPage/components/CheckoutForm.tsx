@@ -1,6 +1,6 @@
 import { FC, useEffect } from "react";
 import { inject, observer } from "mobx-react";
-import { FormProvider, SubmitHandler, useForm } from "react-hook-form";
+import { FormProvider, useForm } from "react-hook-form";
 import cn from "classnames";
 import { isNil } from "lodash";
 import { useRouter } from "next/router";
@@ -35,6 +35,7 @@ import {
     BUILDER_UNAUTHORIZED_DOORS_IDS,
 } from "@consts/storageNamesContsts";
 import { TNullable } from "@globalTypes/commonTypes";
+import { TCustomSubmitHandler } from "../types";
 
 const CheckoutForm: FC<TSectionTypes> = inject("store")(
     observer(({ store, pageClassPrefix }) => {
@@ -60,6 +61,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
         const methods = useForm<TCheckoutForm>({
             resolver: checkoutFormResolver(),
             defaultValues: checkoutFormDefaultValues(userData),
+            mode: "onBlur",
         });
 
         const {
@@ -74,7 +76,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
 
         const getModeValue = watch(ECheckoutFormFieldsNames.getMode);
 
-        const onSubmit: SubmitHandler<TCheckoutForm> = (data) => {
+        const onSubmit: TCustomSubmitHandler = (data, additionalData) => {
             const modifiedItems =
                 orderCart?.items.map(({ id, quantity }) => ({
                     item: id,
@@ -99,6 +101,7 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                 },
                 extras: modifiedExtras,
                 items: modifiedItems,
+                ...additionalData,
             };
 
             if (
@@ -172,7 +175,8 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
         return (
             <FormProvider {...methods}>
                 <form
-                    onSubmit={handleSubmit(onSubmit)}
+                    // INFO: temporary commented
+                    // onSubmit={() => handleSubmit((data) => onSubmit(data))()}
                     className={cn(`${pageClassPrefix}_form`)}
                 >
                     <CheckoutGetMode pageClassPrefix={pageClassPrefix} />
@@ -184,16 +188,15 @@ const CheckoutForm: FC<TSectionTypes> = inject("store")(
                     ) : (
                         <CheckoutPickup pageClassPrefix={pageClassPrefix} />
                     )}
-                    <CheckoutPayment
-                        pageClassPrefix={pageClassPrefix}
-                        onAdyenPayBtnClick={handleSubmit(onSubmit)}
-                    />
                     <CheckoutAdditionalServices
                         pageClassPrefix={pageClassPrefix}
                     />
-                    <CheckoutFormActions
+                    <CheckoutFormActions pageClassPrefix={pageClassPrefix} />
+                    <CheckoutPayment
                         pageClassPrefix={pageClassPrefix}
-                        onSubmitClick={handleSubmit(onSubmit)}
+                        onAdyenPayBtnClick={(params) =>
+                            handleSubmit((data) => onSubmit(data, params))()
+                        }
                     />
                     <ModalMapPickup />
                 </form>

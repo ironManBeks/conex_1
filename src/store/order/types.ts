@@ -45,6 +45,8 @@ export type TCreateOrderRequest = {
     };
     extras: { extra: number; quantity?: number }[];
     items: { item: number; quantity: number }[];
+    sessionId: string;
+    sessionResult: string;
 };
 
 export type TGetOrderCartRequest = {
