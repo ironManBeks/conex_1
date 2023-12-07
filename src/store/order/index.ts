@@ -15,7 +15,6 @@ import {
     TGetOrderCartResponse,
     TGetPaymentSessionAdyenResponse,
     TGetPaymentSessionParams,
-    TVerifyPaymentParams,
 } from "./types";
 import { TNullable } from "@globalTypes/commonTypes";
 import axiosInstance from "../../api/api";
@@ -261,21 +260,6 @@ export class OrderStore implements IOrderStore {
         this.setGetPaymentSessionFetching(true);
         return axiosInstance
             .post("/order/payment-session", data)
-            .catch((err) => {
-                showAxiosNotificationError(err);
-                throw err;
-            })
-            .finally(() => {
-                this.setGetPaymentSessionFetching(false);
-            });
-    };
-
-    verifyPayment = (
-        data: TVerifyPaymentParams,
-    ): Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>> => {
-        this.setGetPaymentSessionFetching(true);
-        return axiosInstance
-            .post("/order/verify-payment", data)
             .catch((err) => {
                 showAxiosNotificationError(err);
                 throw err;

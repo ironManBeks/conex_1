@@ -38,7 +38,7 @@ const Checkout: FC<
     observer(({ store, onAdyenPayBtnClick }) => {
         const { orderStore } = store as IRoot;
         const paymentContainer = useRef(null);
-        const { orderCart, getPaymentSession, verifyPayment } = orderStore;
+        const { orderCart, getPaymentSession } = orderStore;
         const [session, setSession] = useState({ sessionData: "", id: "" });
         const canPayRef = useRef(false);
 
@@ -54,7 +54,7 @@ const Checkout: FC<
                 typeof getPaymentSession === "function"
             )
                 getPaymentSession({
-                    amount: orderCart[EOrderCartNames.amount] || 0,
+                    amount: orderCart[EOrderCartNames.amount] * 100 || 0,
                 }).then(({ data }) =>
                     setSession({
                         sessionData: data.session.sessionData,
@@ -96,10 +96,6 @@ const Checkout: FC<
                         onPaymentCompleted: (
                             response: PaymentCompleteResponse,
                         ) => {
-                            onAdyenPayBtnClick({
-                                sessionResult: response.sessionResult || "",
-                                sessionId: session.id,
-                            });
                             if (response.resultCode !== "Authorised") {
                                 showNotification({
                                     mainProps: {
@@ -114,9 +110,9 @@ const Checkout: FC<
                                 });
                                 return;
                             }
-                            verifyPayment({
-                                sessionId: session.id,
+                            onAdyenPayBtnClick({
                                 sessionResult: response.sessionResult || "",
+                                sessionId: session.id,
                             });
                         },
                         onError: (error: { message: string }) => {

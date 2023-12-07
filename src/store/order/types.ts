@@ -105,12 +105,6 @@ export type TGetPaymentSessionParams = {
     amount: number;
 };
 
-export type TVerifyPaymentParams = {
-    // orderId;
-    sessionId: string;
-    sessionResult: string;
-};
-
 export interface IOrderStore {
     doorsData: TNullable<TGetDoorsDataResponse>;
     doorsDataFetching: boolean;
@@ -158,8 +152,4 @@ export interface IOrderStore {
         params: TGetPaymentSessionParams,
     ) => Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>>;
     setGetPaymentSessionFetching: (value: boolean) => void;
-    //
-    verifyPayment: (
-        params: TVerifyPaymentParams,
-    ) => Promise<AxiosResponse<TGetPaymentSessionAdyenResponse>>;
 }
